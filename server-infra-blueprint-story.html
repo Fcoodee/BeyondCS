@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>رحلة fcoodee.net عبر الزمن | 2003 – 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a1826;
+    --bg-grid: #12293e;
+    --panel: #0f2438;
+    --panel-line: #1c3b57;
+    --ink: #e7eef5;
+    --ink-dim: #8fa6bb;
+    --gold: #d3a94e;
+    --gold-dim: #8a7038;
+
+    --lane-identity: #9b8cf2;
+    --lane-identity-bg: rgba(155,140,242,0.10);
+    --lane-files: #4fd0c8;
+    --lane-files-bg: rgba(79,208,200,0.10);
+    --lane-gateway: #f2a65a;
+    --lane-gateway-bg: rgba(242,166,90,0.10);
+    --lane-comms: #ef8c7a;
+    --lane-comms-bg: rgba(239,140,122,0.10);
+
+    --c0: #7a8a99;
+    --c1: #6d7fd6;
+    --c2: #3fb6c9;
+    --c3: #e0a458;
+    --c4: #e0637a;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Cairo',sans-serif;}
+
+  body{
+    background-image:
+      linear-gradient(var(--bg-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    padding: 36px 28px 60px;
+  }
+
+  .wrap{max-width:1600px;margin:0 auto;}
+
+  header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    border-bottom:2px solid var(--panel-line);
+    padding-bottom:18px;
+    margin-bottom:28px;
+    gap:24px;
+    flex-wrap:wrap;
+  }
+  .title-block .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--gold);
+    font-size:12px;
+    letter-spacing:2px;
+    margin-bottom:8px;
+  }
+  h1{font-size:30px;font-weight:800;margin:0 0 6px;line-height:1.3;}
+  .subtitle{color:var(--ink-dim);font-size:14px;max-width:600px;}
+  .domain-code{
+    font-family:'JetBrains Mono',monospace;
+    text-align:left;
+    direction:ltr;
+    color:var(--ink-dim);
+    font-size:11px;
+    line-height:1.9;
+    border:1px solid var(--panel-line);
+    border-radius:4px;
+    padding:10px 14px;
+    background:var(--panel);
+  }
+  .domain-code b{color:var(--gold);}
+
+  /* Chapter banner strip */
+  .chapters-strip{
+    position:relative;
+    display:grid;
+    grid-template-columns: 170px 1fr;
+    margin-bottom:0;
+  }
+  .chapters-strip .spacer{}
+  .chapters-track{position:relative;height:46px;}
+  .chapter-tag{
+    position:absolute;
+    top:0;
+    height:46px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:0 12px;
+    border-radius:6px 6px 0 0;
+    font-family:'JetBrains Mono',monospace;
+  }
+  .chapter-tag .cnum{font-size:10px;letter-spacing:1px;opacity:.85;}
+  .chapter-tag .cname{font-size:12px;font-weight:700;color:var(--ink);margin-top:2px;font-family:'Cairo',sans-serif;}
+
+  /* Timeline axis */
+  .axis{position:relative;display:grid;grid-template-columns: 170px 1fr;margin-bottom:2px;}
+  .axis .years{position:relative;height:30px;border-bottom:1px solid var(--panel-line);}
+  .axis .years span{
+    position:absolute;top:0;transform:translateX(50%);
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);font-weight:700;
+  }
+
+  /* Trigger flags row */
+  .triggers{position:relative;grid-column: 2 / -1;}
+
+  .board{position:relative;display:grid;grid-template-columns: 170px 1fr;}
+
+  .lane-labels{display:flex;flex-direction:column;}
+  .lane-label{
+    height:150px;display:flex;align-items:center;justify-content:flex-end;
+    padding-inline-end:14px;border-bottom:1px solid var(--panel-line);
+  }
+  .lane-label .tag{font-weight:700;font-size:14px;text-align:right;line-height:1.5;}
+  .lane-label .tag small{
+    display:block;font-family:'JetBrains Mono',monospace;font-weight:400;
+    font-size:10px;color:var(--ink-dim);letter-spacing:1px;margin-top:3px;
+  }
+  .lane-label.identity{border-inline-end:4px solid var(--lane-identity);}
+  .lane-label.files{border-inline-end:4px solid var(--lane-files);}
+  .lane-label.gateway{border-inline-end:4px solid var(--lane-gateway);}
+  .lane-label.comms{border-inline-end:4px solid var(--lane-comms);}
+
+  .lanes{position:relative;}
+  .lane{
+    position:relative;height:150px;border-bottom:1px solid var(--panel-line);
+    display:flex;align-items:center;padding:0 18px;
+  }
+  .lane.identity{background:var(--lane-identity-bg);}
+  .lane.files{background:var(--lane-files-bg);}
+  .lane.gateway{background:var(--lane-gateway-bg);}
+  .lane.comms{background:var(--lane-comms-bg);}
+
+  .lane-track{position:relative;width:100%;height:2px;background:var(--panel-line);}
+
+  .node{
+    position:absolute;top:50%;transform:translate(50%,-50%);width:185px;
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:6px;
+    padding:9px 11px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,0.35);
+    cursor:default;
+  }
+  .node .period{
+    font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--gold);
+    margin-bottom:3px;letter-spacing:0.5px;
+  }
+  .node .name{font-weight:700;font-size:12px;line-height:1.4;}
+  .node.identity{border-top:3px solid var(--lane-identity);}
+  .node.files{border-top:3px solid var(--lane-files);}
+  .node.gateway{border-top:3px solid var(--lane-gateway);}
+  .node.comms{border-top:3px solid var(--lane-comms);}
+
+  .dot{
+    position:absolute;top:50%;width:9px;height:9px;border-radius:50%;
+    transform:translate(50%,-50%);background:var(--gold);box-shadow:0 0 0 3px var(--bg);
+  }
+
+  /* Chapter background bands behind lanes */
+  .chapter-band{position:absolute;top:0;bottom:0;opacity:.55;pointer-events:none;}
+
+  /* vertical trigger lines (colored per event type) */
+  .trigger-line{position:absolute;top:0;bottom:0;width:0;border-right:1px dashed var(--gold-dim);}
+  .trigger-flag{position:absolute;top:-66px;transform:translateX(50%);width:150px;text-align:center;}
+  .trigger-flag .yr{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;}
+  .trigger-flag .lbl{font-size:10.5px;color:var(--ink-dim);line-height:1.3;margin-top:2px;}
+
+  .board-outer{
+    position:relative;border:1px solid var(--panel-line);border-radius:8px;
+    overflow:visible;margin-top:78px;background:var(--panel);
+  }
+
+  .legend{
+    display:flex;gap:20px;flex-wrap:wrap;margin-top:26px;padding-top:18px;
+    border-top:1px solid var(--panel-line);font-size:12px;color:var(--ink-dim);
+  }
+  .legend .item{display:flex;align-items:center;gap:7px;}
+  .legend .swatch{width:12px;height:12px;border-radius:3px;}
+
+  .note{
+    margin-top:22px;background:var(--panel);border:1px solid var(--panel-line);
+    border-radius:8px;padding:16px 20px;font-size:13px;color:var(--ink-dim);line-height:1.9;
+  }
+  .note b{color:var(--ink);}
+  .note code{
+    font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.06);
+    padding:1px 6px;border-radius:4px;color:var(--gold);direction:ltr;display:inline-block;
+  }
+
+  /* ===== Narrative detail cards (rich storytelling, blueprint-themed) ===== */
+  .story-header{
+    margin-top:56px;
+    padding-bottom:14px;
+    border-bottom:2px solid var(--panel-line);
+  }
+  .story-header .eyebrow{
+    font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px;letter-spacing:2px;margin-bottom:6px;
+  }
+  .story-header h2{font-size:22px;font-weight:800;margin:0;}
+
+  .story-grid{display:flex;flex-direction:column;gap:18px;margin-top:22px;}
+
+  .story-card{
+    position:relative;
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    border-radius:10px;
+    overflow:hidden;
+  }
+  .story-card::before{
+    content:"";position:absolute;top:0;bottom:0;right:0;width:5px;
+  }
+  .story-card.sc0::before{background:var(--c0);}
+  .story-card.sc1::before{background:var(--c1);}
+  .story-card.sc2::before{background:var(--c2);}
+  .story-card.sc3::before{background:var(--c3);}
+  .story-card.sc4::before{background:var(--c4);}
+
+  .story-card-head{
+    padding:18px 22px 14px;
+    border-bottom:1px solid var(--panel-line);
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+  .sc-title-block{max-width:640px;}
+  .sc-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;margin-bottom:6px;}
+  .sc0 .sc-num{color:var(--c0);} .sc1 .sc-num{color:var(--c1);} .sc2 .sc-num{color:var(--c2);}
+  .sc3 .sc-num{color:var(--c3);} .sc4 .sc-num{color:var(--c4);}
+  .sc-title{font-size:19px;font-weight:800;margin-bottom:6px;}
+  .sc-hook{font-size:13px;color:var(--ink-dim);font-style:italic;line-height:1.8;}
+  .sc-years{
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);font-weight:700;
+    background:rgba(211,169,78,0.08);border:1px solid var(--gold-dim);border-radius:20px;
+    padding:6px 16px;white-space:nowrap;
+  }
+
+  .sc-body{
+    padding:18px 22px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+  }
+  @media (max-width:1100px){.sc-body{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:640px){.sc-body{grid-template-columns:1fr;}}
+
+  .sc-domain{
+    background:rgba(255,255,255,0.03);
+    border-radius:8px;
+    padding:12px 14px;
+    border-inline-start:3px solid transparent;
+  }
+  .sc-domain.identity{border-inline-start-color:var(--lane-identity);}
+  .sc-domain.files{border-inline-start-color:var(--lane-files);}
+  .sc-domain.gateway{border-inline-start-color:var(--lane-gateway);}
+  .sc-domain.comms{border-inline-start-color:var(--lane-comms);}
+  .sc-dlabel{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.5px;margin-bottom:5px;}
+  .sc-domain.identity .sc-dlabel{color:var(--lane-identity);}
+  .sc-domain.files .sc-dlabel{color:var(--lane-files);}
+  .sc-domain.gateway .sc-dlabel{color:var(--lane-gateway);}
+  .sc-domain.comms .sc-dlabel{color:var(--lane-comms);}
+  .sc-dtech{font-weight:700;font-size:13px;margin-bottom:5px;line-height:1.4;}
+  .sc-dnote{font-size:12px;color:var(--ink-dim);line-height:1.7;}
+
+  .sc-lore{
+    grid-column:1/-1;
+    background:rgba(211,169,78,0.05);
+    border:1px dashed var(--gold-dim);
+    border-radius:8px;
+    padding:14px 16px;
+  }
+  .sc-lore-title{font-weight:700;font-size:12.5px;color:var(--gold);margin-bottom:8px;}
+  .sc-lore-fact{font-size:12.5px;color:var(--ink);line-height:1.8;margin-bottom:9px;}
+  .sc-lore-fact b{color:var(--gold);}
+  .sc-lore-joke{
+    font-size:12.5px;color:var(--ink-dim);line-height:1.8;font-style:italic;
+    border-top:1px solid rgba(255,255,255,0.08);padding-top:9px;
+  }
+  .sc-lore-joke b{color:var(--ink);font-style:normal;}
+
+  .sc-foot{
+    padding:13px 22px 18px;
+    font-size:12.5px;
+    color:var(--ink-dim);
+    display:flex;
+    gap:8px;
+  }
+  .sc-foot b{color:var(--ink);}
+
+  .role-strip{
+    display:flex;align-items:center;gap:6px;margin-top:24px;flex-wrap:wrap;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;
+  }
+  .role-strip .role{
+    background:var(--panel);border:1px solid var(--panel-line);color:var(--ink);
+    padding:7px 14px;border-radius:20px;white-space:nowrap;
+  }
+  .role-strip .arrow{color:var(--gold);font-size:15px;}
+
+  /* ===== Full chronological timeline appendix ===== */
+  .full-timeline{margin-top:56px;}
+  .tl-list{position:relative;margin-top:22px;}
+  .tl-list::before{content:"";position:absolute;top:6px;bottom:6px;right:6px;width:1px;background:var(--panel-line);}
+  .tl-item{
+    position:relative;display:flex;gap:16px;align-items:baseline;flex-wrap:wrap;
+    padding:12px 18px 12px 14px;padding-inline-end:30px;border-radius:8px;
+    border-inline-start:3px solid transparent;
+  }
+  .tl-item:nth-child(odd){background:rgba(255,255,255,0.015);}
+  .tl-item .tl-dot{
+    position:absolute;right:2px;top:19px;width:9px;height:9px;border-radius:50%;
+    background:var(--gold);box-shadow:0 0 0 3px var(--bg);z-index:2;
+  }
+  .tl-item .tl-year{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--gold);
+    font-weight:700;min-width:108px;flex-shrink:0;
+  }
+  .tl-item .tl-text{font-size:13px;color:var(--ink-dim);line-height:1.8;flex:1;min-width:200px;}
+  .tl-item .tl-text b{color:var(--ink);font-weight:700;}
+
+  .tl-item.tl-c0{border-inline-start-color:var(--c0);}
+  .tl-item.tl-c0 .tl-dot{background:var(--c0);}
+  .tl-item.tl-c0 .tl-year{color:var(--c0);}
+  .tl-item.tl-c1{border-inline-start-color:var(--c1);}
+  .tl-item.tl-c1 .tl-dot{background:var(--c1);}
+  .tl-item.tl-c1 .tl-year{color:var(--c1);}
+  .tl-item.tl-c2{border-inline-start-color:var(--c2);}
+  .tl-item.tl-c2 .tl-dot{background:var(--c2);}
+  .tl-item.tl-c2 .tl-year{color:var(--c2);}
+  .tl-item.tl-c3{border-inline-start-color:var(--c3);}
+  .tl-item.tl-c3 .tl-dot{background:var(--c3);}
+  .tl-item.tl-c3 .tl-year{color:var(--c3);}
+  .tl-item.tl-c4{border-inline-start-color:var(--c4);}
+  .tl-item.tl-c4 .tl-dot{background:var(--c4);}
+  .tl-item.tl-c4 .tl-year{color:var(--c4);}
+
+  .tl-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;font-size:11.5px;color:var(--ink-dim);}
+  .tl-legend .li{display:flex;align-items:center;gap:6px;}
+  .tl-legend .sw{width:10px;height:10px;border-radius:3px;}
+
+  @media (max-width: 1200px){
+    .board-outer{overflow-x:auto;}
+    .board, .axis, .chapters-strip{min-width:1300px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="title-block">
+      <div class="eyebrow">SERVER INFRASTRUCTURE // BLUEPRINT NARRATIVE MAP</div>
+      <h1>رحلة fcoodee.net: من يقظة الحجب الأولى إلى عصر الذكاء الاصطناعي</h1>
+      <div class="subtitle">خمس محطات، أربعة مسارات تقنية، وستة أحداث تحوّل مشتركة — من قوائم الحجب اليدوية للبروكسي البدائي (2003) إلى حماية البيانات من نماذج الذكاء الاصطناعي التوليدي (2026)</div>
+    </div>
+    <div class="domain-code">
+      <div>DOMAIN: <b>fcoodee.net</b></div>
+      <div>SPAN: <b>2003 → 2026</b></div>
+      <div>LANES: <b>04</b> · CHAPTERS: <b>05</b> · TRIGGERS: <b>06</b></div>
+    </div>
+  </header>
+
+  <div class="board-outer">
+
+    <!-- Chapter banner strip -->
+    <div class="chapters-strip">
+      <div class="spacer"></div>
+      <div class="chapters-track">
+        <div class="chapter-tag" style="right:0%; width:26%; background:color-mix(in srgb, var(--c0) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c0);">CH.00 · 2003–2009</div>
+          <div class="cname">يقظة الحجب الأولى</div>
+        </div>
+        <div class="chapter-tag" style="right:26%; width:14%; background:color-mix(in srgb, var(--c1) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c1);">CH.01 · 2010–13</div>
+          <div class="cname">السيادة المحلية</div>
+        </div>
+        <div class="chapter-tag" style="right:40%; width:14%; background:color-mix(in srgb, var(--c2) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c2);">CH.02 · 2013–16</div>
+          <div class="cname">الانفجار السحابي</div>
+        </div>
+        <div class="chapter-tag" style="right:54%; width:26%; background:color-mix(in srgb, var(--c3) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c3);">CH.03 · 2016–22</div>
+          <div class="cname">التحول الكامل وZero Trust</div>
+        </div>
+        <div class="chapter-tag" style="right:80%; width:18%; background:color-mix(in srgb, var(--c4) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c4);">CH.04 · 2022–26</div>
+          <div class="cname">فجر الذكاء الاصطناعي</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trigger flags row -->
+    <div class="axis" style="margin-top:6px;">
+      <div class="spacer"></div>
+      <div class="triggers" style="grid-column: 2/-1; height:0;">
+        <div class="trigger-flag" style="right:10%;"><div class="yr">2005</div><div class="lbl">🌐 حجب Friendster/Hi5/MySpace</div></div>
+        <div class="trigger-flag" style="right:27%;"><div class="yr">2009</div><div class="lbl">📱 صدام BES ضد iPhone</div></div>
+        <div class="trigger-flag" style="right:39%;"><div class="yr">2012</div><div class="lbl">⚖️ دعوى Apple×Samsung 1.05B</div></div>
+        <div class="trigger-flag" style="right:51%;"><div class="yr">2015</div><div class="lbl">⚠️ توقف دعم TMG</div></div>
+        <div class="trigger-flag" style="right:72%;"><div class="yr">2020</div><div class="lbl">🌍 الجائحة والعمل عن بُعد</div></div>
+        <div class="trigger-flag" style="right:84%;"><div class="yr">2023</div><div class="lbl">🤖 فجر GPT-3.5 وZero Trust</div></div>
+      </div>
+    </div>
+
+    <!-- Year axis -->
+    <div class="axis">
+      <div class="spacer"></div>
+      <div class="years">
+        <span style="right:0%;">2003</span>
+        <span style="right:22%;">2009</span>
+        <span style="right:43%;">2013</span>
+        <span style="right:55%;">2016</span>
+        <span style="right:80%;">2022</span>
+        <span style="right:98%;">2026</span>
+      </div>
+    </div>
+
+    <!-- Board -->
+    <div class="board">
+      <div class="lane-labels">
+        <div class="lane-label identity"><div class="tag">الهوية والصلاحيات<small>IDENTITY · BES → ENTRA ID</small></div></div>
+        <div class="lane-label files"><div class="tag">المشاركة والـ FTP<small>FILES · SHARES → PURVIEW/DLP</small></div></div>
+        <div class="lane-label gateway"><div class="tag">بوابة الإنترنت والحماية<small>GATEWAY · PROXY → ZERO TRUST</small></div></div>
+        <div class="lane-label comms"><div class="tag">الاتصالات<small>COMMS · PBX → TEAMS PHONE</small></div></div>
+      </div>
+
+      <div class="lanes">
+
+        <!-- Chapter background bands -->
+        <div class="chapter-band" style="right:0%; width:26%; background:var(--c0); opacity:.06;"></div>
+        <div class="chapter-band" style="right:26%; width:14%; background:var(--c1); opacity:.07;"></div>
+        <div class="chapter-band" style="right:40%; width:14%; background:var(--c2); opacity:.07;"></div>
+        <div class="chapter-band" style="right:54%; width:26%; background:var(--c3); opacity:.07;"></div>
+        <div class="chapter-band" style="right:80%; width:18%; background:var(--c4); opacity:.08;"></div>
+
+        <!-- Trigger vertical lines -->
+        <div class="trigger-line" style="right:10%;"></div>
+        <div class="trigger-line" style="right:27%;"></div>
+        <div class="trigger-line" style="right:39%;"></div>
+        <div class="trigger-line" style="right:51%;"></div>
+        <div class="trigger-line" style="right:72%;"></div>
+        <div class="trigger-line" style="right:84%;"></div>
+
+        <!-- IDENTITY lane -->
+        <div class="lane identity">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node identity" style="right:2%;" title="لا Active Directory موحّد بعد. البريد التنفيذي محصور بأجهزة BlackBerry مُدارة مركزياً عبر BES.">
+              <div class="period">2003–2009</div>
+              <div class="name">لا AD موحّد<br>BlackBerry + BES</div>
+            </div>
+            <div class="dot" style="right:31%;"></div>
+            <div class="node identity" style="right:31%;" title="معركة BES المُحكمة ضد فوضى iPhone 4 وGalaxy S الوافدة عبر Exchange ActiveSync — أول موجة BYOD حقيقية.">
+              <div class="period">2010–2013</div>
+              <div class="name">Windows Server 2008 R2<br>BES ضد iPhone/Galaxy</div>
+            </div>
+            <div class="dot" style="right:43%;"></div>
+            <div class="node identity" style="right:43%;" title="أول ربط هجين بين fcoodee.net وAzure AD عبر DirSync ثم Azure AD Connect.">
+              <div class="period">2013–2016</div>
+              <div class="name">Azure AD Connect<br>بيئة هجينة</div>
+            </div>
+            <div class="dot" style="right:55%;"></div>
+            <div class="node identity" style="right:55%;" title="Azure AD يدار بنسبة 90% من السحاب؛ فحص أمان الهاتف قبل السماح بالوصول (Zero Trust).">
+              <div class="period">2016–2022</div>
+              <div class="name">Azure AD سحابي 90%<br>Zero Trust Access</div>
+            </div>
+            <div class="dot" style="right:80%;"></div>
+            <div class="node identity" style="right:80%;" title="Microsoft Entra ID مع سياسات هوية جديدة لحماية الحسابات من التسريب عبر أدوات AI.">
+              <div class="period">2022–2026</div>
+              <div class="name">Microsoft Entra ID<br>حماية من تسريب AI</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FILES lane -->
+        <div class="lane files">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node files" style="right:2%;" title="مشاركات محلية بسيطة على Windows NT/2000؛ لا FTP معياري بعد، النقل غالباً عبر أقراص خارجية.">
+              <div class="period">2003–2009</div>
+              <div class="name">مشاركات NT/2000<br>لا FTP معياري</div>
+            </div>
+            <div class="dot" style="right:31%;"></div>
+            <div class="node files" style="right:31%;" title="فتح المنفذين 20 و21 يدوياً على ISA Server — صداع أمني دائم بسبب الهجمات البدائية.">
+              <div class="period">2010–2013</div>
+              <div class="name">IIS 7.5 + FTP<br>منفذي 20/21 يدوياً</div>
+            </div>
+            <div class="dot" style="right:43%;"></div>
+            <div class="node files" style="right:43%;" title="نقل الملفات القديمة من FTP البطيء إلى SharePoint Online وOneDrive.">
+              <div class="period">2013–2016</div>
+              <div class="name">SharePoint/OneDrive<br>نهاية عصر FTP</div>
+            </div>
+            <div class="dot" style="right:55%;"></div>
+            <div class="node files" style="right:55%;" title="لا وجود لـFTP إطلاقاً؛ روابط مشفرة وصلاحيات متقدمة عبر Microsoft Purview.">
+              <div class="period">2016–2022</div>
+              <div class="name">Microsoft Purview<br>روابط مشفرة</div>
+            </div>
+            <div class="dot" style="right:80%;"></div>
+            <div class="node files" style="right:80%;" title="سياسات DLP لمنع رفع الملفات الحساسة إلى ChatGPT وأدوات AI عامة.">
+              <div class="period">2022–2026</div>
+              <div class="name">DLP موجّه لـAI<br>منع تسريب البيانات</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GATEWAY lane -->
+        <div class="lane gateway">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node gateway" style="right:2%;" title="Proxy بدائي (WinGate/Squid) بقوائم حجب يدوية — أول ضحاياها Friendster وHi5 وMySpace.">
+              <div class="period">2003–2009</div>
+              <div class="name">Proxy بدائي<br>حجب Friendster/Hi5/MySpace</div>
+            </div>
+            <div class="dot" style="right:31%;"></div>
+            <div class="node gateway" style="right:31%;" title="ISA 2006 ثم TMG 2010 يدير إنترنت محدود — سرعات 4-8Mbps تُعتبر ممتازة وقتها.">
+              <div class="period">2010–2013</div>
+              <div class="name">ISA 2006 / TMG 2010<br>إنترنت 4–8Mbps</div>
+            </div>
+            <div class="dot" style="right:43%;"></div>
+            <div class="node gateway" style="right:43%;" title="توقف دعم TMG نهائياً 2015، فأول جدار ناري حديث Fortigate لضبط انفجار السوشيال ميديا.">
+              <div class="period">2013–2016</div>
+              <div class="name">Fortigate NGFW<br>بعد توقف دعم TMG</div>
+            </div>
+            <div class="dot" style="right:55%;"></div>
+            <div class="node gateway" style="right:55%;" title="نموذج Zero Trust: لا تثق بأحد، تحقق دائماً — يحل محل جدار المحيط التقليدي.">
+              <div class="period">2016–2022</div>
+              <div class="name">Zero Trust Model<br>لا تثق، تحقق دائماً</div>
+            </div>
+            <div class="dot" style="right:80%;"></div>
+            <div class="node gateway" style="right:80%;" title="سياسات حجب/تنظيم استخدام أدوات AI التوليدي لحماية الملكية الفكرية.">
+              <div class="period">2022–2026</div>
+              <div class="name">سياسات AI التوليدي<br>حماية الملكية الفكرية</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMMS lane -->
+        <div class="lane comms">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node comms" style="right:2%;" title="سنترالات PBX تناظرية/رقمية محلية؛ Cisco لاعب شبكات لا اتصالات موحدة بعد.">
+              <div class="period">2003–2009</div>
+              <div class="name">PBX تقليدية<br>Analog / Digital</div>
+            </div>
+            <div class="dot" style="right:31%;"></div>
+            <div class="node comms" style="right:31%;" title="Cisco CUCM 8.x يعمل بكفاءة على سيرفرات MCS مخصصة.">
+              <div class="period">2010–2013</div>
+              <div class="name">Cisco CUCM 8.x<br>سيرفرات MCS</div>
+            </div>
+            <div class="dot" style="right:43%;"></div>
+            <div class="node comms" style="right:43%;" title="تحديث السنترال ليدعم تطبيق Cisco Jabber على الهواتف الذكية.">
+              <div class="period">2013–2016</div>
+              <div class="name">Cisco Jabber<br>على الهواتف الذكية</div>
+            </div>
+            <div class="dot" style="right:55%;"></div>
+            <div class="node comms" style="right:55%;" title="مرحلة كورونا 2020: تراجع حاد لدور السنترال المكتبي، صعود Teams وWebex Calling.">
+              <div class="period">2016–2022</div>
+              <div class="name">Teams / Webex Calling<br>تراجع السنترال زمن كورونا</div>
+            </div>
+            <div class="dot" style="right:80%;"></div>
+            <div class="node comms" style="right:80%;" title="Teams Phone سحابي بالكامل — الاتصال والهوية مندمجان في منصة واحدة.">
+              <div class="period">2022–2026</div>
+              <div class="name">Teams Phone سحابي<br>هوية موحدة</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="item"><span class="swatch" style="background:var(--lane-identity)"></span> الهوية والصلاحيات</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-files)"></span> الملفات والـ FTP</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-gateway)"></span> البوابة والحماية</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-comms)"></span> الاتصالات</div>
+    <div class="item">┄┄ خط ذهبي متقطع = حدث تحوّل مشترك أثّر على كل المسارات في وقت واحد</div>
+    <div class="item">💡 مرّر المؤشر فوق أي بطاقة لقراءة السياق السردي الكامل</div>
+  </div>
+
+  <div class="note">
+    <b>لإعادة بنائه في Microsoft Visio:</b> هذا التصميم <b>Swimlane Timeline</b> ممتد من 2003 إلى 2026 — أقرب قالب جاهز هو
+    <code>File → New → Schedule → Timeline</code> أو <code>Cross-Functional Flowchart (Horizontal Swimlanes)</code>.
+    اجعل كل مسار (Identity / Files / Gateway / Comms) <b>Swimlane</b> مستقلة، ولوّن خلفية كل نطاق زمني بلون المحطة القصصية المقابلة (5 محطات)،
+    وأضف 6 عناصر <b>Milestone</b> عمودية تقطع كل المسارات عند سنوات 2005، 2009، 2012، 2015، 2020، 2023 لتمثيل نقاط التحوّل المشتركة.
+  </div>
+
+  <!-- ============ RICH NARRATIVE SECTION ============ -->
+  <div class="story-header">
+    <div class="eyebrow">FULL NARRATIVE // كل محطة بتفاصيلها الكاملة</div>
+    <h2>الرحلة الكاملة: خمس محطات قصصية</h2>
+  </div>
+
+  <div class="role-strip">
+    <div class="role">🗂️ مسؤول شبكات تقليدي — يحجب المواقع بقائمة سوداء يدوية</div>
+    <span class="arrow">←</span>
+    <div class="role">👤 مدير سيرفرات — يتحكم في كل بت داخل الشبكة</div>
+    <span class="arrow">←</span>
+    <div class="role">☁️ مهندس ربط هجين وسحابي</div>
+    <span class="arrow">←</span>
+    <div class="role">🛡️ مهندس أمن سيبراني — Zero Trust</div>
+    <span class="arrow">←</span>
+    <div class="role">🤖 حارس بيانات في عصر الذكاء الاصطناعي التوليدي</div>
+  </div>
+
+  <div class="story-grid">
+
+    <!-- STORY CARD 0 -->
+    <div class="story-card sc0">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 00 // PRE-DOMAIN ERA</div>
+          <div class="sc-title">ما قبل الدومين: يقظة الحجب الأولى</div>
+          <div class="sc-hook">لا يوجد fcoodee.net بعد. الشبكة صغيرة، والقلق الأول ليس الاختراق بل "ماذا يفتح الموظف على المتصفح؟"</div>
+        </div>
+        <div class="sc-years">2003 — 2009</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">IDENTITY</div>
+          <div class="sc-dtech">لا AD موحّد بعد</div>
+          <div class="sc-dnote">البريد التنفيذي محصور بأجهزة BlackBerry مُدارة مركزياً عبر BlackBerry Enterprise Server (BES) — تحكم كامل، تشفير قوي، وملك الشركات غير المنازَع.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">FILES / FTP</div>
+          <div class="sc-dtech">مشاركات محلية بسيطة (Windows NT/2000)</div>
+          <div class="sc-dnote">لا FTP معياري بعد؛ نقل الملفات الكبيرة غالباً عبر أقراص خارجية أو CD.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">GATEWAY</div>
+          <div class="sc-dtech">Proxy بدائي (WinGate / Squid)</div>
+          <div class="sc-dnote">قوائم حجب يدوية — أول ضحاياها Friendster وHi5 وMySpace (2005-2007)، قبل أن يُصبح "حجب مواقع التواصل" مفهوماً راسخاً لاحقاً في ISA/TMG.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">COMMS</div>
+          <div class="sc-dtech">سنترالات PBX تقليدية</div>
+          <div class="sc-dnote">تناظرية/رقمية محلية؛ Cisco لاعب في عالم الشبكات، لم يفرض بعد هيمنته على الاتصالات الموحدة.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> جهاز صغير أسود بلوحة مفاتيح فيزيائية يهتز في جيب المدير التنفيذي — لا أحد يعرف بعد أن جهازاً آخر بشاشة لمس سيقلب كل شيء رأساً على عقب بعد سنتين.</div>
+    </div>
+
+    <!-- STORY CARD 1 -->
+    <div class="story-card sc1">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 01 // ON-PREMISES ERA</div>
+          <div class="sc-title">السيادة المحلية المطلقة</div>
+          <div class="sc-hook">السيرفرات لها صوت مرتفع في الغرفة، وأنت تتحكم في كل بت يمر عبر أسلاك الشبكة.</div>
+        </div>
+        <div class="sc-years">2010 — 2013</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">IDENTITY</div>
+          <div class="sc-dtech">Windows Server 2008 R2 · AD محلي مستقر</div>
+          <div class="sc-dnote">معركة BES المُحكمة (تحكم كامل، سياسات صارمة) ضد فوضى iPhone 4 وGalaxy S الوافدة عبر Exchange ActiveSync — أول موجة حقيقية لظاهرة BYOD.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">FILES / FTP</div>
+          <div class="sc-dtech">IIS 7.5 + FTP</div>
+          <div class="sc-dnote">فتح المنفذين 20 و21 يدوياً على الـ ISA Server — صداع أمني دائم بسبب الهجمات الاختراقية البدائية آنذاك.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">GATEWAY</div>
+          <div class="sc-dtech">ISA 2006 / TMG 2010</div>
+          <div class="sc-dnote">يدير إنترنت محدود — سرعات 4 إلى 8 ميغا كانت تُعتبر ممتازة للشركات وقتها.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">COMMS</div>
+          <div class="sc-dtech">Cisco CUCM 8.x</div>
+          <div class="sc-dnote">يعمل بكفاءة على سيرفرات MCS مخصصة.</div>
+        </div>
+
+        <div class="sc-lore">
+          <div class="sc-lore-title">⚖️ خلفية 2011–2012: حرب البراءات Apple × Samsung</div>
+          <div class="sc-lore-fact"><b>الحقيقة الموثقة:</b> دخول Samsung Galaxy S إلى الشركة كأول منافس Android جاد لـ iPhone دفع فعلياً لاحقاً نحو أدوات MDM موحّدة بدل الاعتماد على BES وحده. في أغسطس 2012 حكمت هيئة محلفين أمريكية بتعويض لصالح آبل بلغ نحو 1.05 مليار دولار بسبب انتهاك سامسونج براءات تصميم متعلقة بشاشة اللمس وزر Home — وهو حكم غير نهائي خضع لاستئنافات طويلة وتخفيضات لاحقة.</div>
+          <div class="sc-lore-joke"><b>🃏 دعابة تلك الحقبة (وليست حقيقة):</b> انتشرت وقتها قصة طريفة مفادها أن سامسونج أرسلت المليار دولار لآبل بشكل عملات معدنية بواسطة 30 شاحنة، مع جملة ساخرة منسوبة لرئيسها التنفيذي بأن تُصهر لتصنع منها آيفون. القصة خرافة (Hoax) بدأت كميم ساخر على الإنترنت — رياضياً وحدها كانت تحتاج نحو 21 مليار قطعة معدنية بوزن يفوق 100 ألف طن، ولم تُدفع أي غرامة فعلياً بهذه الطريقة.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> جهازان يتنافسان على مكتب كل موظف — والمعركة القانونية بينهما تتصدر عناوين الأخبار، بينما مدير النظام يواجه معركته الخاصة: كيف يوحّد إدارة كليهما.</div>
+    </div>
+
+    <!-- STORY CARD 2 -->
+    <div class="story-card sc2">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 02 // CLOUD EXPLOSION</div>
+          <div class="sc-title">الانفجار السحابي والتحول الهجين</div>
+          <div class="sc-hook">جدران غرفة السيرفرات الفيزيائية بدأت تتداعى — "السحاب" لم يعد رفاهية بل واقعاً.</div>
+        </div>
+        <div class="sc-years">2013 — 2016</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">IDENTITY</div>
+          <div class="sc-dtech">Office 365 + DirSync ثم Azure AD Connect</div>
+          <div class="sc-dnote">أول عملية ربط هجين (Hybrid) بين fcoodee.net وAzure AD.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">FILES / FTP</div>
+          <div class="sc-dtech">SharePoint Online + OneDrive</div>
+          <div class="sc-dnote">نقل الملفات القديمة من الـ FTP المزعج والبطيء — ارتاح الموظفون أخيراً.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">GATEWAY</div>
+          <div class="sc-dtech">Fortigate NGFW</div>
+          <div class="sc-dnote">توقف دعم ISA/TMG نهائياً في 2015، فاضطررت لأول جدار ناري حديث لضبط انفجار استخدام فيسبوك وتويتر داخل الشبكة.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">COMMS</div>
+          <div class="sc-dtech">Cisco Jabber</div>
+          <div class="sc-dnote">تحديث السنترال ليدعم التطبيق على الهواتف الذكية.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> آخر جهاز FTP يُطفأ — والملفات تطير إلى السحاب بلا رجعة.</div>
+    </div>
+
+    <!-- STORY CARD 3 -->
+    <div class="story-card sc3">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 03 // ZERO TRUST ERA</div>
+          <div class="sc-title">التحول الرقمي الكامل وولادة الذكاء الاصطناعي</div>
+          <div class="sc-hook">لم تعد مدير سيرفرات محلي — أصبحت مهندساً سحابياً وأمن سيبراني.</div>
+        </div>
+        <div class="sc-years">2016 — 2022</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">IDENTITY</div>
+          <div class="sc-dtech">Azure AD — 90% سحابي</div>
+          <div class="sc-dnote">فحص هاتف الموظف والتأكد من أمانه قبل السماح له بلمس ملفات fcoodee.net.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">FILES / FTP</div>
+          <div class="sc-dtech">Microsoft Purview / Information Protection</div>
+          <div class="sc-dnote">لا وجود للـ FTP إطلاقاً — روابط مشفرة وصلاحيات متقدمة بدل المجلدات المشتركة.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">GATEWAY</div>
+          <div class="sc-dtech">Zero Trust Model</div>
+          <div class="sc-dnote">"لا تثق بأحد، تحقق دائماً" — مبدأ يحل محل جدار المحيط التقليدي.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">COMMS</div>
+          <div class="sc-dtech">Microsoft Teams / Cisco Webex Calling</div>
+          <div class="sc-dnote">مرحلة كورونا 2020: تراجع حاد لدور السنترال المكتبي مع العمل من المنزل.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> نهاية 2022 — GPT-3.5 يظهر للعالم، والسؤال يتغيّر للأبد.</div>
+    </div>
+
+    <!-- STORY CARD 4 -->
+    <div class="story-card sc4">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 04 // GENERATIVE AI DAWN</div>
+          <div class="sc-title">فجر الذكاء الاصطناعي التوليدي</div>
+          <div class="sc-hook">السؤال لم يعد "كيف أمنح الموظف وصولاً؟" بل "كيف أحمي بياناتنا من أن يغذّيها لنماذج AI عامة؟"</div>
+        </div>
+        <div class="sc-years">2022 — 2026</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">IDENTITY</div>
+          <div class="sc-dtech">Microsoft Entra ID</div>
+          <div class="sc-dnote">سياسات هوية جديدة لحماية حسابات الموظفين من التسريب عبر أدوات AI المتصلة.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">FILES / FTP</div>
+          <div class="sc-dtech">DLP الموجّه لأدوات AI</div>
+          <div class="sc-dnote">منع رفع الملفات الحساسة إلى ChatGPT وأدوات مشابهة، لا فقط منع التسريب التقليدي.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">GATEWAY</div>
+          <div class="sc-dtech">سياسات حجب/تنظيم AI التوليدي</div>
+          <div class="sc-dnote">حماية الملكية الفكرية لدومين fcoodee.net من التسرب عبر النماذج العامة.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">COMMS</div>
+          <div class="sc-dtech">Teams Phone سحابي بالكامل</div>
+          <div class="sc-dnote">الاتصال والهوية أصبحا مندمجين في منصة واحدة.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> غرفة السيرفرات الفارغة اليوم — والمعركة الحقيقية أصبحت في البيانات، لا في الكابلات.</div>
+    </div>
+
+  </div>
+
+  <!-- ============ FULL CHRONOLOGICAL TIMELINE ============ -->
+  <div class="story-header full-timeline">
+    <div class="eyebrow">APPENDIX // مرجع سريع بكل التواريخ</div>
+    <h2>الخط الزمني الكامل: كل الأحداث بالترتيب</h2>
+  </div>
+
+  <div class="tl-list">
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">2003–2009</div><div class="tl-text">حقبة ما قبل الدومين — إدارة البريد عبر <b>BlackBerry وBES</b>، وحجب <b>Friendster وHi5 وMySpace</b> عبر Proxy بدائي</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">2010</div><div class="tl-text">تأسيس دومين <b>fcoodee.net</b> على Windows Server 2008 R2، مع ISA/TMG وCisco CUCM 8.x</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">2009–2013</div><div class="tl-text">معركة <b>BES ضد iPhone/Galaxy</b> عبر Exchange ActiveSync — أول موجة BYOD حقيقية</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">أغسطس 2012</div><div class="tl-text">حكم قضائي بتعويض <b>1.05 مليار دولار</b> لصالح آبل ضد سامسونج (دعابة "العملات المعدنية" خرافة غير حقيقية)</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">2013</div><div class="tl-text">أول ربط هجين عبر <b>DirSync ثم Azure AD Connect</b>؛ بداية الانتقال لـSharePoint/OneDrive</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">2015</div><div class="tl-text">توقف دعم <b>TMG نهائياً</b>؛ اعتماد أول جدار ناري حديث (Fortigate NGFW)</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">2016–2020</div><div class="tl-text">التحول لـ<b>Microsoft Purview</b> وZero Trust؛ لا وجود لـFTP بعد الآن</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">2020</div><div class="tl-text">الجائحة — تراجع حاد للسنترال المكتبي، صعود <b>Microsoft Teams / Cisco Webex Calling</b></div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">نهاية 2022</div><div class="tl-text">إطلاق <b>GPT-3.5</b> — السؤال الأمني يتحول من "من يصل للملفات؟" إلى "كيف نحمي البيانات من AI؟"</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2022–2026</div><div class="tl-text"><b>Microsoft Entra ID</b>، وسياسات DLP موجّهة لأدوات الذكاء الاصطناعي، وTeams Phone سحابي بالكامل</div></div>
+  </div>
+
+  <div class="tl-legend">
+    <div class="li"><span class="sw" style="background:var(--c0);"></span>ما قبل الدومين</div>
+    <div class="li"><span class="sw" style="background:var(--c1);"></span>السيادة المحلية المطلقة</div>
+    <div class="li"><span class="sw" style="background:var(--c2);"></span>الانفجار السحابي</div>
+    <div class="li"><span class="sw" style="background:var(--c3);"></span>التحول الكامل وZero Trust</div>
+    <div class="li"><span class="sw" style="background:var(--c4);"></span>فجر الذكاء الاصطناعي</div>
+  </div>
+
+</div>
+</body>
+</html>

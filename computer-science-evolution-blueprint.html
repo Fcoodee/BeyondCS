@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>علوم الحاسوب: من الآلة الحاسبة إلى الذكاء الاصطناعي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a1826;
+    --bg-grid: #12293e;
+    --panel: #0f2438;
+    --panel-line: #1c3b57;
+    --ink: #e7eef5;
+    --ink-dim: #8fa6bb;
+    --gold: #d3a94e;
+    --gold-dim: #8a7038;
+
+    --lane-identity: #9b8cf2;
+    --lane-identity-bg: rgba(155,140,242,0.10);
+    --lane-files: #4fd0c8;
+    --lane-files-bg: rgba(79,208,200,0.10);
+    --lane-gateway: #f2a65a;
+    --lane-gateway-bg: rgba(242,166,90,0.10);
+    --lane-comms: #ef8c7a;
+    --lane-comms-bg: rgba(239,140,122,0.10);
+
+    --c0: #7a8a99;
+    --c1: #6d7fd6;
+    --c2: #3fb6c9;
+    --c3: #e0a458;
+    --c4: #e0637a;
+    --quantum: #b28dff;
+    --history: #7fd9ff;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Cairo',sans-serif;}
+
+  body{
+    background-image:
+      linear-gradient(var(--bg-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    padding: 36px 28px 60px;
+  }
+
+  .wrap{max-width:1600px;margin:0 auto;}
+
+  header{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    border-bottom:2px solid var(--panel-line);padding-bottom:18px;margin-bottom:28px;
+    gap:24px;flex-wrap:wrap;
+  }
+  .title-block .eyebrow{
+    font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px;
+    letter-spacing:2px;margin-bottom:8px;
+  }
+  h1{font-size:28px;font-weight:800;margin:0 0 6px;line-height:1.3;}
+  .subtitle{color:var(--ink-dim);font-size:14px;max-width:640px;}
+  .domain-code{
+    font-family:'JetBrains Mono',monospace;text-align:left;direction:ltr;
+    color:var(--ink-dim);font-size:11px;line-height:1.9;
+    border:1px solid var(--panel-line);border-radius:4px;padding:10px 14px;background:var(--panel);
+  }
+  .domain-code b{color:var(--gold);}
+
+  /* Chapter banner strip */
+  .chapters-strip{position:relative;display:grid;grid-template-columns: 190px 1fr;margin-bottom:0;}
+  .chapters-track{position:relative;height:46px;}
+  .chapter-tag{
+    position:absolute;top:0;height:46px;display:flex;flex-direction:column;justify-content:center;
+    padding:0 12px;border-radius:6px 6px 0 0;font-family:'JetBrains Mono',monospace;overflow:hidden;
+  }
+  .chapter-tag .cnum{font-size:10px;letter-spacing:1px;opacity:.85;}
+  .chapter-tag .cname{font-size:11.5px;font-weight:700;color:var(--ink);margin-top:2px;font-family:'Cairo',sans-serif;}
+
+  .axis{position:relative;display:grid;grid-template-columns: 190px 1fr;margin-bottom:2px;}
+  .axis .years{position:relative;height:30px;border-bottom:1px solid var(--panel-line);}
+  .axis .years span{
+    position:absolute;top:0;transform:translateX(50%);
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);font-weight:700;
+  }
+
+  .triggers{position:relative;grid-column: 2 / -1;}
+
+  .board{position:relative;display:grid;grid-template-columns: 190px 1fr;}
+
+  .lane-labels{display:flex;flex-direction:column;}
+  .lane-label{
+    height:150px;display:flex;align-items:center;justify-content:flex-end;
+    padding-inline-end:14px;border-bottom:1px solid var(--panel-line);
+  }
+  .lane-label .tag{font-weight:700;font-size:13.5px;text-align:right;line-height:1.5;}
+  .lane-label .tag small{
+    display:block;font-family:'JetBrains Mono',monospace;font-weight:400;
+    font-size:9.5px;color:var(--ink-dim);letter-spacing:1px;margin-top:3px;
+  }
+  .lane-label.identity{border-inline-end:4px solid var(--lane-identity);}
+  .lane-label.files{border-inline-end:4px solid var(--lane-files);}
+  .lane-label.gateway{border-inline-end:4px solid var(--lane-gateway);}
+  .lane-label.comms{border-inline-end:4px solid var(--lane-comms);}
+
+  .lanes{position:relative;}
+  .lane{
+    position:relative;height:150px;border-bottom:1px solid var(--panel-line);
+    display:flex;align-items:center;padding:0 18px;
+  }
+  .lane.identity{background:var(--lane-identity-bg);}
+  .lane.files{background:var(--lane-files-bg);}
+  .lane.gateway{background:var(--lane-gateway-bg);}
+  .lane.comms{background:var(--lane-comms-bg);}
+
+  .lane-track{position:relative;width:100%;height:2px;background:var(--panel-line);}
+
+  .node{
+    position:absolute;top:50%;transform:translate(50%,-50%);width:180px;
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:6px;
+    padding:9px 11px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,0.35);cursor:default;
+  }
+  .node .period{
+    font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--gold);
+    margin-bottom:3px;letter-spacing:0.5px;
+  }
+  .node .name{font-weight:700;font-size:11.5px;line-height:1.4;}
+  .node.empty{opacity:.55;font-style:italic;}
+  .node.identity{border-top:3px solid var(--lane-identity);}
+  .node.files{border-top:3px solid var(--lane-files);}
+  .node.gateway{border-top:3px solid var(--lane-gateway);}
+  .node.comms{border-top:3px solid var(--lane-comms);}
+
+  .dot{
+    position:absolute;top:50%;width:9px;height:9px;border-radius:50%;
+    transform:translate(50%,-50%);background:var(--gold);box-shadow:0 0 0 3px var(--bg);
+  }
+
+  .chapter-band{position:absolute;top:0;bottom:0;opacity:.55;pointer-events:none;}
+
+  .trigger-line{position:absolute;top:0;bottom:0;width:0;border-right:1px dashed var(--gold-dim);}
+  .trigger-flag{position:absolute;top:-66px;transform:translateX(50%);width:160px;text-align:center;}
+  .trigger-flag .yr{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;}
+  .trigger-flag .lbl{font-size:10.5px;color:var(--ink-dim);line-height:1.3;margin-top:2px;}
+
+  .board-outer{
+    position:relative;border:1px solid var(--panel-line);border-radius:8px;
+    overflow:visible;margin-top:78px;background:var(--panel);
+  }
+
+  .legend{
+    display:flex;gap:20px;flex-wrap:wrap;margin-top:26px;padding-top:18px;
+    border-top:1px solid var(--panel-line);font-size:12px;color:var(--ink-dim);
+  }
+  .legend .item{display:flex;align-items:center;gap:7px;}
+  .legend .swatch{width:12px;height:12px;border-radius:3px;}
+
+  .note{
+    margin-top:22px;background:var(--panel);border:1px solid var(--panel-line);
+    border-radius:8px;padding:16px 20px;font-size:13px;color:var(--ink-dim);line-height:1.9;
+  }
+  .note b{color:var(--ink);}
+  .note code{
+    font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.06);
+    padding:1px 6px;border-radius:4px;color:var(--gold);direction:ltr;display:inline-block;
+  }
+
+  /* ===== Narrative detail cards ===== */
+  .story-header{margin-top:56px;padding-bottom:14px;border-bottom:2px solid var(--panel-line);}
+  .story-header .eyebrow{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px;letter-spacing:2px;margin-bottom:6px;}
+  .story-header h2{font-size:22px;font-weight:800;margin:0;}
+
+  .story-grid{display:flex;flex-direction:column;gap:18px;margin-top:22px;}
+
+  .story-card{position:relative;background:var(--panel);border:1px solid var(--panel-line);border-radius:10px;overflow:hidden;}
+  .story-card::before{content:"";position:absolute;top:0;bottom:0;right:0;width:5px;}
+  .story-card.sc0::before{background:var(--c0);}
+  .story-card.sc1::before{background:var(--c1);}
+  .story-card.sc2::before{background:var(--c2);}
+  .story-card.sc3::before{background:var(--c3);}
+  .story-card.sc4::before{background:var(--c4);}
+
+  .story-card-head{
+    padding:18px 22px 14px;border-bottom:1px solid var(--panel-line);
+    display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;
+  }
+  .sc-title-block{max-width:680px;}
+  .sc-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;margin-bottom:6px;}
+  .sc0 .sc-num{color:var(--c0);} .sc1 .sc-num{color:var(--c1);} .sc2 .sc-num{color:var(--c2);}
+  .sc3 .sc-num{color:var(--c3);} .sc4 .sc-num{color:var(--c4);}
+  .sc-title{font-size:19px;font-weight:800;margin-bottom:6px;}
+  .sc-hook{font-size:13px;color:var(--ink-dim);font-style:italic;line-height:1.8;}
+  .sc-years{
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);font-weight:700;
+    background:rgba(211,169,78,0.08);border:1px solid var(--gold-dim);border-radius:20px;
+    padding:6px 16px;white-space:nowrap;
+  }
+
+  .sc-body{padding:18px 22px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media (max-width:1100px){.sc-body{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:640px){.sc-body{grid-template-columns:1fr;}}
+
+  .sc-domain{background:rgba(255,255,255,0.03);border-radius:8px;padding:12px 14px;border-inline-start:3px solid transparent;}
+  .sc-domain.identity{border-inline-start-color:var(--lane-identity);}
+  .sc-domain.files{border-inline-start-color:var(--lane-files);}
+  .sc-domain.gateway{border-inline-start-color:var(--lane-gateway);}
+  .sc-domain.comms{border-inline-start-color:var(--lane-comms);}
+  .sc-dlabel{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.5px;margin-bottom:5px;}
+  .sc-domain.identity .sc-dlabel{color:var(--lane-identity);}
+  .sc-domain.files .sc-dlabel{color:var(--lane-files);}
+  .sc-domain.gateway .sc-dlabel{color:var(--lane-gateway);}
+  .sc-domain.comms .sc-dlabel{color:var(--lane-comms);}
+  .sc-dtech{font-weight:700;font-size:13px;margin-bottom:5px;line-height:1.4;}
+  .sc-dnote{font-size:12px;color:var(--ink-dim);line-height:1.7;}
+
+  .sc-foot{padding:13px 22px 18px;font-size:12.5px;color:var(--ink-dim);display:flex;gap:8px;}
+  .sc-foot b{color:var(--ink);}
+
+  .role-strip{
+    display:flex;align-items:center;gap:6px;margin-top:24px;flex-wrap:wrap;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;
+  }
+  .role-strip .role{
+    background:var(--panel);border:1px solid var(--panel-line);color:var(--ink);
+    padding:7px 14px;border-radius:20px;white-space:nowrap;
+  }
+  .role-strip .arrow{color:var(--gold);font-size:15px;}
+
+  /* Impact-on-sciences grid */
+  .impact-grid{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:22px;
+  }
+  @media (max-width:1100px){.impact-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:640px){.impact-grid{grid-template-columns:1fr;}}
+  .impact-card{
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:10px;
+    padding:16px;
+  }
+  .impact-card .icon{font-size:22px;margin-bottom:8px;}
+  .impact-card .iname{font-weight:800;font-size:14px;margin-bottom:6px;color:var(--gold);}
+  .impact-card .idesc{font-size:12px;color:var(--ink-dim);line-height:1.7;}
+
+  .chapter-tag.quantum-tag{
+    border:1px dashed var(--quantum);
+    background:rgba(178,141,255,0.08) !important;
+  }
+  .chapter-band.quantum-band{
+    background:transparent !important;
+    border:1px dashed var(--quantum);
+    opacity:.9 !important;
+  }
+  .node.quantum-node{
+    border-style:dashed;
+    border-color:var(--quantum);
+    opacity:.92;
+  }
+  .node.quantum-node .period{color:var(--quantum);}
+  .dot.quantum-dot{background:var(--quantum);}
+
+  .qmark{
+    position:absolute;
+    top:50%;
+    transform:translate(50%,-50%);
+    width:11px;height:11px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:11px;
+    cursor:default;
+    z-index:3;
+  }
+  .qmark-label{
+    position:absolute;
+    top:-20px;
+    transform:translateX(50%);
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px;
+    color:var(--quantum);
+    white-space:nowrap;
+  }
+
+  @media (max-width: 1200px){
+    .board-outer{overflow-x:auto;}
+    .board, .axis, .chapters-strip{min-width:1400px;}
+  }
+  .node.history-node{
+    border-top-color:var(--history);
+  }
+  .node.history-node .period{color:var(--history);}
+  .dot.history-dot{background:var(--history);}
+
+  .source-box{
+    margin-top:22px;
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    border-radius:8px;
+    padding:16px 20px;
+    font-size:13px;
+    color:var(--ink-dim);
+    line-height:1.9;
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+  }
+  .source-box .sicon{font-size:20px;}
+  .source-box b{color:var(--ink);}
+  .source-box a{color:var(--history);text-decoration:none;border-bottom:1px dashed var(--history);}
+  .source-box a:hover{color:var(--ink);}
+
+  /* ===== Full chronological timeline appendix ===== */
+  .full-timeline{
+    margin-top:56px;
+  }
+  .tl-list{
+    position:relative;
+    margin-top:22px;
+  }
+  .tl-list::before{
+    content:"";
+    position:absolute;
+    top:6px;bottom:6px;right:6px;
+    width:1px;
+    background:var(--panel-line);
+  }
+  .tl-item{
+    position:relative;
+    display:flex;
+    gap:16px;
+    align-items:baseline;
+    flex-wrap:wrap;
+    padding:12px 18px 12px 14px;
+    margin-inline-end:0;
+    padding-inline-end:30px;
+    border-radius:8px;
+    border-inline-start:3px solid transparent;
+  }
+  .tl-item:nth-child(odd){background:rgba(255,255,255,0.015);}
+  .tl-item .tl-dot{
+    position:absolute;
+    right:2px;
+    top:19px;
+    width:9px;height:9px;
+    border-radius:50%;
+    background:var(--gold);
+    box-shadow:0 0 0 3px var(--bg);
+    z-index:2;
+  }
+  .tl-item .tl-year{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    color:var(--gold);
+    font-weight:700;
+    min-width:108px;
+    flex-shrink:0;
+  }
+  .tl-item .tl-text{font-size:13px;color:var(--ink-dim);line-height:1.8;flex:1;min-width:200px;}
+  .tl-item .tl-text b{color:var(--ink);font-weight:700;}
+
+  /* Per-chapter color coding */
+  .tl-item.tl-c0{border-inline-start-color:var(--c0);}
+  .tl-item.tl-c0 .tl-dot{background:var(--c0);}
+  .tl-item.tl-c0 .tl-year{color:var(--c0);}
+
+  .tl-item.tl-c1{border-inline-start-color:var(--c1);}
+  .tl-item.tl-c1 .tl-dot{background:var(--c1);}
+  .tl-item.tl-c1 .tl-year{color:var(--c1);}
+
+  .tl-item.tl-c2{border-inline-start-color:var(--c2);}
+  .tl-item.tl-c2 .tl-dot{background:var(--c2);}
+  .tl-item.tl-c2 .tl-year{color:var(--c2);}
+
+  .tl-item.tl-c3{border-inline-start-color:var(--c3);}
+  .tl-item.tl-c3 .tl-dot{background:var(--c3);}
+  .tl-item.tl-c3 .tl-year{color:var(--c3);}
+
+  .tl-item.tl-c4{border-inline-start-color:var(--c4);}
+  .tl-item.tl-c4 .tl-dot{background:var(--c4);}
+  .tl-item.tl-c4 .tl-year{color:var(--c4);}
+
+  .tl-item.tl-c5{border-inline-start-color:var(--c5);}
+  .tl-item.tl-c5 .tl-dot{background:var(--c5);}
+  .tl-item.tl-c5 .tl-year{color:var(--c5);}
+
+  .tl-item.tl-history{border-inline-start-color:var(--history);}
+  .tl-item.tl-history .tl-dot{background:var(--history);}
+  .tl-item.tl-history .tl-year{color:var(--history);}
+
+  .tl-item.tl-quantum{border-inline-start-color:var(--quantum);}
+  .tl-item.tl-quantum .tl-dot{background:var(--quantum);}
+  .tl-item.tl-quantum .tl-year{color:var(--quantum);}
+
+  .tl-legend{
+    display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;
+    font-size:11.5px;color:var(--ink-dim);
+  }
+  .tl-legend .li{display:flex;align-items:center;gap:6px;}
+  .tl-legend .sw{width:10px;height:10px;border-radius:3px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="title-block">
+      <div class="eyebrow">COMPUTER SCIENCE // BLUEPRINT NARRATIVE MAP</div>
+      <h1>علوم الحاسوب: من الآلة الحاسبة إلى الذكاء الاصطناعي</h1>
+      <div class="subtitle">علمٌ وُلد كأداة مساعدة لتبسيط الحساب، ثم فرض نفسه على كل العلوم الأخرى ليصبح المؤثر الأول في تطورها — رحلة من أنتيكيثيرا اليونانية القديمة إلى نماذج الذكاء الاصطناعي التوليدي</div>
+    </div>
+    <div class="domain-code">
+      <div>SUBJECT: <b>COMPUTER SCIENCE</b></div>
+      <div>SPAN: <b>150 BC → 2026+</b></div>
+      <div>TRACKS: <b>04</b> · CHAPTERS: <b>05+1</b> · TRIGGERS: <b>05</b> + <b>03</b> quantum</div>
+    </div>
+  </header>
+
+  <div class="board-outer">
+
+    <!-- Chapter banner strip -->
+    <div class="chapters-strip">
+      <div></div>
+      <div class="chapters-track">
+        <div class="chapter-tag" style="right:0%; width:18%; background:color-mix(in srgb, var(--c0) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c0);">CH.00 · قبل 1837</div>
+          <div class="cname">العصور الميكانيكية</div>
+        </div>
+        <div class="chapter-tag" style="right:18%; width:12%; background:color-mix(in srgb, var(--c1) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c1);">CH.01 · 1943–50s</div>
+          <div class="cname">ميلاد الحوسبة الرقمية</div>
+        </div>
+        <div class="chapter-tag" style="right:30%; width:21%; background:color-mix(in srgb, var(--c2) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c2);">CH.02 · 1950s–1991</div>
+          <div class="cname">عصر البرمجيات واللغات</div>
+        </div>
+        <div class="chapter-tag" style="right:51%; width:16%; background:color-mix(in srgb, var(--c3) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c3);">CH.03 · 1991–2000s</div>
+          <div class="cname">عصر الشبكات والويب</div>
+        </div>
+        <div class="chapter-tag" style="right:67%; width:21%; background:color-mix(in srgb, var(--c4) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c4);">CH.04 · 2000s–2026</div>
+          <div class="cname">ثورة البيانات والذكاء الاصطناعي</div>
+        </div>
+        <div class="chapter-tag quantum-tag" style="right:88%; width:12%;">
+          <div class="cnum" style="color:var(--quantum);">CH.05 · أفق ناشئ</div>
+          <div class="cname">الحوسبة الكمية؟</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trigger flags row -->
+    <div class="axis" style="margin-top:6px;">
+      <div></div>
+      <div class="triggers" style="grid-column: 2/-1; height:0;">
+        <div class="trigger-flag" style="right:18%;"><div class="yr">1947</div><div class="lbl">⚡ اختراع الترانزستور</div></div>
+        <div class="trigger-flag" style="right:40%;"><div class="yr">1969</div><div class="lbl">🌐 إطلاق ARPANET</div></div>
+        <div class="trigger-flag" style="right:51%;"><div class="yr">1991</div><div class="lbl">🕸️ ولادة الويب العالمي WWW</div></div>
+        <div class="trigger-flag" style="right:67%;"><div class="yr">2000s</div><div class="lbl">📊 انفجار البيانات الضخمة</div></div>
+        <div class="trigger-flag" style="right:81%;"><div class="yr">2012–2022</div><div class="lbl">🤖 نهضة تعلم الآلة وAI التوليدي</div></div>
+      </div>
+    </div>
+
+    <!-- Year axis -->
+    <div class="axis">
+      <div></div>
+      <div class="years">
+        <span style="right:0%;">150 ق.م</span>
+        <span style="right:18%;">1837</span>
+        <span style="right:30%;">1947</span>
+        <span style="right:51%;">1991</span>
+        <span style="right:88%;">2026</span>
+        <span style="right:98%; color:var(--quantum);">؟</span>
+      </div>
+    </div>
+
+    <!-- Board -->
+    <div class="board">
+      <div class="lane-labels">
+        <div class="lane-label identity"><div class="tag">الأجهزة والحوسبة<small>HARDWARE · ANTIKYTHERA → GPU/AI</small></div></div>
+        <div class="lane-label files"><div class="tag">البرمجيات ولغات البرمجة<small>SOFTWARE · LOVELACE → PYTHON/ML</small></div></div>
+        <div class="lane-label gateway"><div class="tag">الشبكات والإنترنت<small>NETWORKS · NONE → EDGE/IoT</small></div></div>
+        <div class="lane-label comms"><div class="tag">البيانات والذكاء الاصطناعي<small>DATA & AI · NONE → GENERATIVE AI</small></div></div>
+      </div>
+
+      <div class="lanes">
+
+        <!-- Chapter background bands -->
+        <div class="chapter-band" style="right:0%; width:18%; background:var(--c0); opacity:.06;"></div>
+        <div class="chapter-band" style="right:18%; width:12%; background:var(--c1); opacity:.07;"></div>
+        <div class="chapter-band" style="right:30%; width:21%; background:var(--c2); opacity:.07;"></div>
+        <div class="chapter-band" style="right:51%; width:16%; background:var(--c3); opacity:.07;"></div>
+        <div class="chapter-band" style="right:67%; width:21%; background:var(--c4); opacity:.08;"></div>
+        <div class="chapter-band quantum-band" style="right:88%; width:12%;"></div>
+
+        <!-- Trigger vertical lines -->
+        <div class="trigger-line" style="right:18%;"></div>
+        <div class="trigger-line" style="right:40%;"></div>
+        <div class="trigger-line" style="right:51%;"></div>
+        <div class="trigger-line" style="right:67%;"></div>
+        <div class="trigger-line" style="right:81%;"></div>
+
+        <!-- HARDWARE lane -->
+        <div class="lane identity">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node identity" style="right:2%;" title="من آلة أنتيكيثيرا اليونانية (150-200 ق.م) والمعداد الصيني، إلى آلة باسكالين (1642)، وصولاً لتصور باباج للمحرك التحليلي في ثلاثينيات القرن التاسع عشر.">
+              <div class="period">150 ق.م – 1830s</div>
+              <div class="name">أنتيكيثيرا وباسكالين<br>المحرك التحليلي لباباج</div>
+            </div>
+            <div class="dot history-dot" style="right:13%;"></div>
+            <div class="node identity history-node" style="right:13%;" title="Colossus (1943): أول حاسوب إلكتروني قابل للبرمجة في العالم، بناه المهندس توماس فلاورز في بلتشلي بارك لكسر تشفير Lorenz الألماني خلال الحرب العالمية الثانية. WITCH (1951): أقدم حاسوب رقمي أصلي لا يزال يعمل حتى اليوم. المصدر: المتحف الوطني للحوسبة، بريطانيا (Google Arts & Culture).">
+              <div class="period">1943–1951</div>
+              <div class="name">Colossus وWITCH<br>أول حواسيب إلكترونية فعلية</div>
+            </div>
+            <div class="dot" style="right:24%;"></div>
+            <div class="node identity" style="right:24%;" title="اختراع الترانزستور 1947 وظهور الحواسيب الإلكترونية الرقمية الضخمة التي كانت تشغل غرفاً بأكملها.">
+              <div class="period">1947–1950s</div>
+              <div class="name">اختراع الترانزستور<br>حواسيب رقمية ضخمة</div>
+            </div>
+
+            <!-- Secondary quantum markers (hardware lane only) -->
+            <div class="qmark" style="right:34%; color:var(--quantum);" title="فاينمان يقترح نظرياً إمكانية محاكاة الأنظمة الكمية بحاسوب كمي (1981).">⚛️<span class="qmark-label">1981</span></div>
+            <div class="qmark" style="right:53%; color:var(--quantum);" title="خوارزمية شور (Shor's Algorithm) — أول دليل رياضي على تفوق كمي محتمل في كسر التشفير (1994).">⚛️<span class="qmark-label">1994</span></div>
+            <div class="qmark" style="right:80%; color:var(--quantum);" title="إعلان جوجل ما يُسمى 'التفوق الكمي' (Quantum Supremacy) — 2019.">⚛️<span class="qmark-label">2019</span></div>
+
+            <div class="dot" style="right:40%;"></div>
+            <div class="node identity" style="right:40%;" title="أجهزة أكاديمية وبحثية تُشغَّل عبر لغات البرمجة الجديدة الناشئة.">
+              <div class="period">1950s–1991</div>
+              <div class="name">أجهزة أكاديمية وبحثية<br>تُشغَّل باللغات الجديدة</div>
+            </div>
+            <div class="dot" style="right:59%;"></div>
+            <div class="node identity" style="right:59%;" title="الحوسبة الموزعة عبر الشبكة العالمية تربط الأجهزة ببعضها على مستوى عالمي.">
+              <div class="period">1991–2000s</div>
+              <div class="name">حوسبة موزّعة<br>عبر الشبكة العالمية</div>
+            </div>
+            <div class="dot" style="right:77%;"></div>
+            <div class="node identity" style="right:77%;" title="حوسبة سحابية ومعالجات GPU متخصصة تُشغّل نماذج الذكاء الاصطناعي الضخمة.">
+              <div class="period">2000s–2026</div>
+              <div class="name">حوسبة سحابية وGPU<br>تُشغّل نماذج AI</div>
+            </div>
+            <div class="dot quantum-dot" style="right:94%;"></div>
+            <div class="node identity quantum-node" style="right:94%;" title="معالجات كيوبت تجريبية من IBM وGoogle وIonQ — عصر NISQ (أجهزة كمية صاخبة محدودة الحجم)، لا حوسبة كمية تجارية ناضجة بعد.">
+              <div class="period">2019 – ؟</div>
+              <div class="name">معالجات كيوبت تجريبية<br>عصر NISQ</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SOFTWARE lane -->
+        <div class="lane files">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node files empty" style="right:2%;" title="آدا لوفليس، بالتعاون مع باباج، وضعت أسس البرمجة النظرية — أول خوارزمية مكتوبة في التاريخ.">
+              <div class="period">1830s</div>
+              <div class="name">خوارزمية آدا لوفليس<br>أول برنامج نظري بالتاريخ</div>
+            </div>
+            <div class="dot" style="right:24%;"></div>
+            <div class="node files" style="right:24%;" title="بدأت الجامعات والمؤسسات البحثية تدرك أن التعامل مع الحواسيب يتطلب علماً مستقلاً بذاته يهتم بالخوارزميات وهياكل البيانات.">
+              <div class="period">1940s–1950s</div>
+              <div class="name">نشأة تخصص الخوارزميات<br>وهياكل البيانات أكاديمياً</div>
+            </div>
+            <div class="dot" style="right:40%;"></div>
+            <div class="node files" style="right:40%;" title="فورتران (منتصف الخمسينيات)، كوبول (أواخر الخمسينيات)، سي (أوائل السبعينيات)، جافا (منتصف التسعينيات).">
+              <div class="period">1957–1995</div>
+              <div class="name">Fortran → Cobol → C → Java<br>عصر لغات البرمجة الكبرى</div>
+            </div>
+            <div class="dot" style="right:59%;"></div>
+            <div class="node files" style="right:59%;" title="برمجة الويب وتطوير التطبيقات الموزّعة مع انتشار الشبكة العنكبوتية العالمية.">
+              <div class="period">1991–2000s</div>
+              <div class="name">برمجة الويب<br>تطبيقات موزّعة</div>
+            </div>
+            <div class="dot" style="right:77%;"></div>
+            <div class="node files" style="right:77%;" title="أطر عمل تعلم الآلة الحديثة مثل Python وTensorFlow وPyTorch تقود عصر الذكاء الاصطناعي.">
+              <div class="period">2000s–2026</div>
+              <div class="name">أطر تعلم الآلة<br>Python / TensorFlow / PyTorch</div>
+            </div>
+            <div class="dot quantum-dot" style="right:94%;"></div>
+            <div class="node files quantum-node" style="right:94%;" title="لغات وأطر برمجة كمومية مثل Qiskit وCirq؛ التحدي الأكبر اليوم هو تصحيح الأخطاء الكمية (Quantum Error Correction).">
+              <div class="period">2019 – ؟</div>
+              <div class="name">Qiskit / Cirq<br>تحدي تصحيح الأخطاء الكمية</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NETWORKS lane -->
+        <div class="lane gateway">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node gateway empty" style="right:2%;" title="لا مفهوم شبكات بعد؛ كل آلة حاسوبية معزولة تماماً عن غيرها.">
+              <div class="period">—</div>
+              <div class="name">لا مفهوم شبكات بعد<br>آلات معزولة</div>
+            </div>
+            <div class="dot" style="right:24%;"></div>
+            <div class="node gateway empty" style="right:24%;" title="الحواسيب الرقمية الأولى لا تزال مستقلة تماماً، كل جهاز في غرفته الخاصة.">
+              <div class="period">1940s–1950s</div>
+              <div class="name">لا شبكات بعد<br>كل حاسوب في غرفته</div>
+            </div>
+            <div class="dot" style="right:40%;"></div>
+            <div class="node gateway" style="right:40%;" title="إطلاق شبكة الأربانت (ARPANET) في أواخر الستينيات — أول شبكة حواسيب متصلة في التاريخ.">
+              <div class="period">1969</div>
+              <div class="name">إطلاق ARPANET<br>أول شبكة حواسيب متصلة</div>
+            </div>
+            <div class="dot" style="right:59%;"></div>
+            <div class="node gateway" style="right:59%;" title="تطور ARPANET إلى الشبكة العنكبوتية العالمية (WWW) في أوائل التسعينيات، وبروز أمن الشبكات كتخصص مستقل.">
+              <div class="period">1991–2000s</div>
+              <div class="name">الويب العالمي WWW<br>أمن الشبكات كتخصص</div>
+            </div>
+            <div class="dot" style="right:77%;"></div>
+            <div class="node gateway" style="right:77%;" title="إنترنت الأشياء والحوسبة الطرفية تغذّي نماذج الذكاء الاصطناعي بتدفقات بيانات مستمرة من كل الاتجاهات.">
+              <div class="period">2000s–2026</div>
+              <div class="name">إنترنت الأشياء<br>شبكات تغذّي نماذج AI</div>
+            </div>
+            <div class="dot quantum-dot" style="right:94%;"></div>
+            <div class="node gateway quantum-node" style="right:94%;" title="أبحاث أولية في 'الإنترنت الكمي' لنقل مفاتيح تشفير كمومية (Quantum Key Distribution) — لا بنية تحتية تجارية بعد.">
+              <div class="period">بحثي مبكر</div>
+              <div class="name">أبحاث الإنترنت الكمي<br>توزيع مفاتيح QKD</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DATA & AI lane -->
+        <div class="lane comms">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node comms empty" style="right:2%;" title="لا بيانات رقمية بعد — الآلات الميكانيكية تعالج أرقاماً فردية فقط.">
+              <div class="period">—</div>
+              <div class="name">لا بيانات رقمية بعد</div>
+            </div>
+            <div class="dot" style="right:24%;"></div>
+            <div class="node comms empty" style="right:24%;" title="الحوسبة الرقمية للتو تولد؛ لا وجود بعد لمفهوم البيانات الضخمة أو الذكاء الاصطناعي.">
+              <div class="period">1940s–1950s</div>
+              <div class="name">لا وجود بعد<br>للبيانات أو AI</div>
+            </div>
+            <div class="dot" style="right:40%;"></div>
+            <div class="node comms empty" style="right:40%;" title="قواعد بيانات مبكرة بسيطة ترافق نشوء اللغات، دون أي ملامح لذكاء اصطناعي حقيقي.">
+              <div class="period">1950s–1991</div>
+              <div class="name">قواعد بيانات مبكرة<br>لا ذكاء اصطناعي بعد</div>
+            </div>
+            <div class="dot" style="right:59%;"></div>
+            <div class="node comms" style="right:59%;" title="قواعد بيانات موزعة عبر الشبكة العالمية، وبدايات مبكرة للتنقيب في البيانات (Data Mining).">
+              <div class="period">1990s–2000s</div>
+              <div class="name">قواعد بيانات موزّعة<br>بدايات التنقيب بالبيانات</div>
+            </div>
+            <div class="dot" style="right:77%;"></div>
+            <div class="node comms" style="right:77%;" title="من البيانات الضخمة إلى علم البيانات، وصولاً لتعلم الآلة الذي يتيح للحاسوب أن يتعلم ويقرر ويحل المشكلات كالبشر تقريباً.">
+              <div class="period">2000s–2026</div>
+              <div class="name">Big Data → Data Science<br>ML/AI يتعلم ويقرر</div>
+            </div>
+            <div class="dot quantum-dot" style="right:94%;"></div>
+            <div class="node comms quantum-node" style="right:94%;" title="تقاطع بحثي مبكر بين الحوسبة الكمية وتعلم الآلة (Quantum Machine Learning) — لا تطبيقات تجارية ناضجة بعد.">
+              <div class="period">بحثي مبكر</div>
+              <div class="name">Quantum Machine Learning<br>لا تطبيقات ناضجة بعد</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="item"><span class="swatch" style="background:var(--lane-identity)"></span> الأجهزة والحوسبة</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-files)"></span> البرمجيات واللغات</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-gateway)"></span> الشبكات والإنترنت</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-comms)"></span> البيانات والذكاء الاصطناعي</div>
+    <div class="item">┄┄ خط ذهبي متقطع = حدث تحوّل مشترك أثّر على مسار العلم بأكمله</div>
+    <div class="item">⚛️ علامة بنفسجية = محطة ثانوية في تاريخ الحوسبة الكمية (على مسار الأجهزة فقط)</div>
+    <div class="item"><span class="swatch" style="background:var(--history);"></span> عقدة بلون سماوي = حدث موثّق من مصدر متحفي خارجي (انظر قسم المصادر أدناه)</div>
+    <div class="item"><span class="swatch" style="background:var(--quantum); opacity:.5; border:1px dashed var(--quantum);"></span> حدود متقطعة = أفق ناشئ لم ينضج بعد كتقنية سائدة</div>
+    <div class="item">💡 مرّر المؤشر فوق أي بطاقة لقراءة السياق الكامل</div>
+  </div>
+
+  <div class="note">
+    <b>لإعادة بنائه في Microsoft Visio:</b> نفس نمط <b>Swimlane Timeline</b> غير الخطي (Non-Linear) — استخدم
+    <code>File → New → Schedule → Timeline</code> مع تجاهل التناسب الزمني الدقيق (فالمسافة من 150 ق.م إلى 1837 لا تُقاس بنفس منطق 2000-2026)،
+    واعتمد على <b>عرض نسبي بالمحطات</b> بدل عرض نسبي بالسنوات. أضف 6 عناصر <b>Milestone</b> عند 1943، 1947، 1969، 1991، أوائل الألفية، و2012-2022،
+    بالإضافة إلى 3 علامات ثانوية بلون مختلف على مسار الأجهزة فقط (1981، 1994، 2019) لتاريخ الحوسبة الكمية، ومحطة سادسة بحدود متقطعة (Dashed Border)
+    في نهاية الجدول لتمييزها كأفق بحثي ناشئ لا تاريخاً مكتملاً.
+  </div>
+
+  <div class="source-box">
+    <div class="sicon">🏛️</div>
+    <div>
+      <b>مصدر موثّق — سدّ فجوة تاريخية:</b> عقدة "Colossus وWITCH" (1943–1951) في مسار الأجهزة مبنية على معرض
+      <a href="https://artsandculture.google.com/story/history-of-computing-the-national-museum-of-computing/KAVhfuJJZGQ-rw" target="_blank" rel="noopener">History of Computing</a>
+      من المتحف الوطني للحوسبة في بلتشلي بارك، بريطانيا (عبر Google Arts & Culture). يوثّق المعرض قصة Colossus — أول حاسوب إلكتروني قابل للبرمجة،
+      بُني لكسر تشفير Lorenz الألماني خلال الحرب العالمية الثانية — وWITCH، أقدم حاسوب رقمي أصلي لا يزال يعمل حتى اليوم. يتضمن المعرض جولات بانورامية تفاعلية داخل قاعات المتحف الفعلية.
+    </div>
+  </div>
+
+  <!-- ============ RICH NARRATIVE SECTION ============ -->
+  <div class="story-header">
+    <div class="eyebrow">FULL NARRATIVE // كل محطة بتفاصيلها الكاملة</div>
+    <h2>الرحلة الكاملة: من أداة حسابية إلى المؤثر الأول في كل العلوم</h2>
+  </div>
+
+  <div class="role-strip">
+    <div class="role">🧮 أداة حسابية بسيطة تبسّط العمليات المعقدة</div>
+    <span class="arrow">←</span>
+    <div class="role">💻 آلة برمجية قابلة للتفكير المنطقي</div>
+    <span class="arrow">←</span>
+    <div class="role">🌐 عقدة في شبكة عالمية مترابطة</div>
+    <span class="arrow">←</span>
+    <div class="role">📊 نظام يحلل بيانات لا يقوى بشر على معالجتها</div>
+    <span class="arrow">←</span>
+    <div class="role">🤖 نظام يتعلم ويقرر ويؤثر في كل علم آخر</div>
+  </div>
+
+  <div class="story-grid">
+
+    <!-- STORY CARD 0 -->
+    <div class="story-card sc0">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 00 // MECHANICAL ERA</div>
+          <div class="sc-title">العصور الميكانيكية: بذرة فكرة الحوسبة</div>
+          <div class="sc-hook">لم يكن دور الآلة الحاسوبية الأولى يتجاوز تبسيط العمليات الحسابية المعقدة — ولم يكن أحد يتخيل أن هذه البكرة الصغيرة ستمهد لعلم كامل.</div>
+        </div>
+        <div class="sc-years">150 ق.م — 1830s</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech">أنتيكيثيرا اليونانية (150–200 ق.م)</div>
+          <div class="sc-dnote">تلتها المعداد الصيني (الأباكس)، ثم آلة باسكالين التي اخترعها بليز باسكال عام 1642 — الهدف الأوحد كان معالجة الأرقام بسرعة ودقة.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">SOFTWARE</div>
+          <div class="sc-dtech">تصوّر تشارلز باباج لـ"المحرك التحليلي"</div>
+          <div class="sc-dnote">في ثلاثينيات القرن التاسع عشر، ورغم أن آلاته لم تكتمل في حياته، إلا أن أفكاره حول البرمجة — بمساعدة آدا لوفليس — وضعت الأسس النظرية للحوسبة.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">NETWORKS</div>
+          <div class="sc-dtech">لا مفهوم شبكات بعد</div>
+          <div class="sc-dnote">كل آلة حاسوبية معزولة تماماً؛ فكرة ربط الآلات ببعضها لم تولد بعد.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">DATA & AI</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">الآلات تعالج أرقاماً فردية فقط — لا بيانات، ولا ذكاء اصطناعي، ولا حتى تصوّر لهما.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> تروس متشابكة وبكرة صغيرة في آلة باباج غير المكتملة — لا أحد يتخيل أن هذه الأفكار النظرية ستتحول بعد قرن من الزمن إلى علم مستقل بذاته.</div>
+    </div>
+
+    <!-- STORY CARD 1 -->
+    <div class="story-card sc1">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 01 // DIGITAL BIRTH</div>
+          <div class="sc-title">ميلاد الحوسبة الرقمية وولادة علم مستقل</div>
+          <div class="sc-hook">آلات ضخمة تشغل غرفاً بأكملها تُظهر قدرات حسابية غير مسبوقة — وهنا تبدأ الجامعات تدرك أن التعامل معها يتطلب أكثر من مجرد الهندسة.</div>
+        </div>
+        <div class="sc-years">1943 — 1950s</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech">Colossus (1943) وWITCH (1951) ثم الترانزستور (1947)</div>
+          <div class="sc-dnote">قبل الترانزستور بأربع سنوات، بنى المهندس توماس فلاورز في بلتشلي بارك حاسوب Colossus — أول حاسوب إلكتروني قابل للبرمجة في العالم — لكسر تشفير Lorenz الألماني سراً خلال الحرب. بعدها بسنوات ظهر WITCH، أقدم حاسوب رقمي أصلي لا يزال يعمل حتى اليوم. ثم جاء الترانزستور (1947) ليفتح الباب أمام حواسيب رقمية ضخمة تشغل غرفاً بأكملها.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">SOFTWARE</div>
+          <div class="sc-dtech">نشأة تخصص علوم الحاسوب</div>
+          <div class="sc-dnote">بدأت الجامعات والمؤسسات البحثية تدرك أن التعامل مع هذه الآلات يتطلب أكثر من الهندسة؛ فنشأ تخصص جديد يهتم بالخوارزميات وهياكل البيانات ونظرية الحوسبة نفسها.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">NETWORKS</div>
+          <div class="sc-dtech">لا شبكات بعد</div>
+          <div class="sc-dnote">كل حاسوب لا يزال مستقلاً تماماً في غرفته الخاصة.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">DATA & AI</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">الحوسبة الرقمية للتو تولد؛ الطريق لا يزال طويلاً أمام أي تصوّر لبيانات ضخمة أو ذكاء اصطناعي.</div>
+        </div>
+
+        <div class="sc-cross">
+          <b>🏛️ مصدر موثّق:</b> قصة Colossus وWITCH موثّقة بتفصيل في معرض
+          <a href="https://artsandculture.google.com/story/history-of-computing-the-national-museum-of-computing/KAVhfuJJZGQ-rw" target="_blank" rel="noopener" style="color:var(--history);">History of Computing</a>
+          من المتحف الوطني للحوسبة، بلتشلي بارك (Google Arts & Culture) — يتضمن جولة بانورامية تفاعلية داخل قاعات المتحف الفعلية.
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> هنا، وفي هذه اللحظة بالذات، بدأت تتشكل ملامح علوم الحاسوب كعلم مستقل — لم يعد الأمر مجرد آلة، بل تخصص أكاديمي وليد.</div>
+    </div>
+
+    <!-- STORY CARD 2 -->
+    <div class="story-card sc2">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 02 // SOFTWARE & LANGUAGES ERA</div>
+          <div class="sc-title">عصر البرمجيات ولغات البرمجة: توسع وتعمق</div>
+          <div class="sc-hook">لم تعد الحواسيب مجرد آلات حاسبة، بل أصبحت أدوات لمعالجة النصوص، إدارة قواعد البيانات، وتصميم الرسومات.</div>
+        </div>
+        <div class="sc-years">1950s — 1991</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech">أجهزة أكاديمية وبحثية متنامية</div>
+          <div class="sc-dnote">تتطور تدريجياً لتُشغَّل عبر لغات البرمجة الجديدة الناشئة تباعاً.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">SOFTWARE</div>
+          <div class="sc-dtech">Fortran → Cobol → C → Java</div>
+          <div class="sc-dnote">فورتران (منتصف الخمسينيات)، كوبول (أواخر الخمسينيات)، ثم سي (أوائل السبعينيات) وجافا (منتصف التسعينيات) — مكّنت المطورين من بناء تطبيقات متنوعة.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">NETWORKS</div>
+          <div class="sc-dtech">إطلاق شبكة الأربانت ARPANET (1969)</div>
+          <div class="sc-dnote">نقطة تحول هائلة ربطت الحواسيب ببعضها لأول مرة، وأدت لظهور مفاهيم جديدة كالحوسبة الموزعة وأمن الشبكات.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">DATA & AI</div>
+          <div class="sc-dtech">قواعد بيانات مبكرة</div>
+          <div class="sc-dnote">لا ذكاء اصطناعي حقيقي بعد؛ التركيز على تخزين البيانات لا تحليلها أو التعلّم منها.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> لأول مرة، حاسوبان يتبادلان رسالة عبر الأسلاك — بداية خيط رفيع سيتحول بعد عقدين إلى شبكة تربط العالم بأكمله.</div>
+    </div>
+
+    <!-- STORY CARD 3 -->
+    <div class="story-card sc3">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 03 // NETWORKED WORLD</div>
+          <div class="sc-title">عصر الشبكات والويب: العالم يتشابك</div>
+          <div class="sc-hook">لم يعد التركيز فقط على جعل الحاسوب يعمل أسرع، بل على جعله يتفاعل بفعالية مع حواسيب أخرى ومع البشر أنفسهم.</div>
+        </div>
+        <div class="sc-years">1991 — 2000s</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech">حوسبة موزّعة عبر الشبكة العالمية</div>
+          <div class="sc-dnote">الأجهزة لم تعد جزراً منعزلة؛ أصبحت عقداً في شبكة أوسع تتبادل المهام والبيانات.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">SOFTWARE</div>
+          <div class="sc-dtech">برمجة الويب والتطبيقات الموزّعة</div>
+          <div class="sc-dnote">ظهرت الحاجة لبرمجيات تتفاعل عبر الشبكة، لا تعمل بمعزل داخل جهاز واحد فقط.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">NETWORKS</div>
+          <div class="sc-dtech">تطور ARPANET إلى الويب العالمي WWW (1991)</div>
+          <div class="sc-dnote">أدى إلى ظهور مفاهيم جديدة تماماً في علوم الحاسوب: الحوسبة الموزعة، أمن الشبكات، وتطوير الويب.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">DATA & AI</div>
+          <div class="sc-dtech">قواعد بيانات موزّعة</div>
+          <div class="sc-dnote">بدايات مبكرة للتنقيب في البيانات (Data Mining)، لكن دون أي بنية تحتية لذكاء اصطناعي حقيقي بعد.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> أول صفحة ويب تُفتح على شاشة بعيدة عن مكان إنشائها — العالم يكتشف للتو أن المسافة لم تعد عائقاً أمام تدفق المعلومة.</div>
+    </div>
+
+    <!-- STORY CARD 4 -->
+    <div class="story-card sc4">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 04 // DATA & AI REVOLUTION</div>
+          <div class="sc-title">ثورة البيانات والذكاء الاصطناعي: آفاق لا حدود لها</div>
+          <div class="sc-hook">لم يعد الهدف مجرد جعل الحاسوب يقوم بمهام مبرمجة مسبقاً، بل جعله يتعلم من البيانات، يتخذ القرارات، ويحل المشكلات بطرق تشبه التفكير البشري.</div>
+        </div>
+        <div class="sc-years">2000s — 2026</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech">حوسبة سحابية ومعالجات GPU متخصصة</div>
+          <div class="sc-dnote">بنية تحتية ضخمة مصممة خصيصاً لتشغيل نماذج الذكاء الاصطناعي الحديثة.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">SOFTWARE</div>
+          <div class="sc-dtech">أطر عمل تعلم الآلة الحديثة</div>
+          <div class="sc-dnote">Python وTensorFlow وPyTorch تقود عصراً كاملاً من التطبيقات الذكية.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">NETWORKS</div>
+          <div class="sc-dtech">إنترنت الأشياء والحوسبة الطرفية</div>
+          <div class="sc-dnote">شبكات تغذّي نماذج الذكاء الاصطناعي بتدفقات بيانات مستمرة من كل زاوية في حياتنا.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">DATA & AI</div>
+          <div class="sc-dtech">Big Data → Data Science → ML/AI</div>
+          <div class="sc-dnote">من أنظمة التعرف على الصور والكلام، إلى السيارات ذاتية القيادة، والروبوتات، والمساعدين الافتراضيين — الحاسوب أصبح يتعلم ويقرر لا فقط يُنفّذ.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> من بكرة صغيرة في آلة يونانية قديمة إلى نظام يكتب ويرسم ويقرر — علوم الحاسوب لم تعد تخدم العلوم الأخرى فحسب، بل أصبحت اللغة المشتركة التي تجمعها كلها.</div>
+    </div>
+
+  </div>
+
+  <!-- ============ IMPACT ON OTHER SCIENCES ============ -->
+  <div class="story-header">
+    <div class="eyebrow">CROSS-DISCIPLINARY IMPACT // من خادم مطيع إلى قوة دافعة</div>
+    <h2>التأثير على العلوم الأخرى: المؤثر الأول لا المتلقي</h2>
+  </div>
+
+  <div class="impact-grid">
+    <div class="impact-card">
+      <div class="icon">🩺</div>
+      <div class="iname">الطب</div>
+      <div class="idesc">التشخيص بالرنين المغناطيسي والأشعة المقطعية، تطوير الأدوية والمحاكاة الجزيئية، الجراحة الروبوتية، وقواعد البيانات الصحية الضخمة.</div>
+    </div>
+    <div class="impact-card">
+      <div class="icon">🔭</div>
+      <div class="iname">الفيزياء</div>
+      <div class="idesc">محاكاة الظواهر الكونية المعقدة، تحليل بيانات مسرّعات الجسيمات، وتصميم مواد جديدة بخصائص فريدة.</div>
+    </div>
+    <div class="impact-card">
+      <div class="icon">🧪</div>
+      <div class="iname">الكيمياء</div>
+      <div class="idesc">تصميم جزيئات جديدة، محاكاة التفاعلات الكيميائية، وتحليل الأطياف المعقدة لاكتشاف مواد وعمليات تصنيع أكثر كفاءة.</div>
+    </div>
+    <div class="impact-card">
+      <div class="icon">🌌</div>
+      <div class="iname">الفلك</div>
+      <div class="idesc">خوارزميات وذكاء اصطناعي لتحليل بيانات التلسكوبات، اكتشاف كواكب جديدة، وفهم تطور المجرات.</div>
+    </div>
+    <div class="impact-card">
+      <div class="icon">🏭</div>
+      <div class="iname">الصناعة</div>
+      <div class="idesc">تصميم المنتجات، سلاسل الإمداد الذكية، الروبوتات والأتمتة، والتحليلات الضخمة لإدارة المصانع.</div>
+    </div>
+  </div>
+
+  <!-- ============ EXPLICIT QUANTUM EPILOGUE ============ -->
+  <div class="story-header">
+    <div class="eyebrow">EPILOGUE // غير مكتمل بعد — أفق بحثي لا تاريخ راسخ</div>
+    <h2>ماذا بعد؟ أفق الحوسبة الكمية</h2>
+  </div>
+
+  <div class="story-grid">
+    <div class="story-card" style="border-style:dashed; border-color:var(--quantum);">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num" style="color:var(--quantum);">المحطة 05 // QUANTUM HORIZON (غير مكتملة)</div>
+          <div class="sc-title">حين يتوقف "البت" عن أن يكون 0 أو 1 فقط</div>
+          <div class="sc-hook">هذه المحطة مختلفة عن سابقاتها: لا تروي تاريخاً حسم أمره، بل أفقاً لا يزال قيد التشكّل. كل ما فيها قابل للتغيّر خلال سنوات قليلة — وهذا بالضبط ما يجعلها مثيرة.</div>
+        </div>
+        <div class="sc-years" style="color:var(--quantum); border-color:var(--quantum); background:rgba(178,141,255,0.08);">2019 — وما بعد</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech">معالجات كيوبت تجريبية (IBM · Google · IonQ)</div>
+          <div class="sc-dnote">نعيش اليوم عصر NISQ (Noisy Intermediate-Scale Quantum) — أجهزة كمية صغيرة الحجم عرضة للأخطاء، بعيدة عن الاستقرار الذي تتمتع به المعالجات التقليدية.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">SOFTWARE</div>
+          <div class="sc-dtech">Qiskit وCirq</div>
+          <div class="sc-dnote">أطر برمجة كمومية ناشئة، لكن التحدي الأكبر الذي يعيق النضج الفعلي هو تصحيح الأخطاء الكمية (Quantum Error Correction).</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">NETWORKS</div>
+          <div class="sc-dtech">أبحاث "الإنترنت الكمي"</div>
+          <div class="sc-dnote">محاولات أولية لتوزيع مفاتيح تشفير كمومية (QKD) — لا بنية تحتية تجارية منتشرة بعد.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">DATA & AI</div>
+          <div class="sc-dtech">Quantum Machine Learning</div>
+          <div class="sc-dnote">تقاطع بحثي مبكر بين الحوسبة الكمية وتعلم الآلة، لا يزال في المختبرات الأكاديمية أكثر من كونه واقعاً تجارياً.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد مفتوح (لا إغلاق):</b> على عكس كل محطة سابقة انتهت بحدث حاسم، هذه المحطة لا تزال تُكتب سطورها. قد تصبح الفصل السادس الكامل لهذه الرحلة خلال عقد — أو قد تبقى أفقاً بحثياً لعقود أطول. الأمانة العلمية تقتضي تركها هكذا: علامة استفهام، لا نقطة نهاية.</div>
+    </div>
+  </div>
+
+  <!-- ============ FULL CHRONOLOGICAL TIMELINE ============ -->
+  <div class="story-header full-timeline">
+    <div class="eyebrow">APPENDIX // مرجع سريع بكل التواريخ</div>
+    <h2>الخط الزمني الكامل: كل الأحداث بالترتيب</h2>
+  </div>
+
+  <div class="tl-list">
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">150–200 ق.م</div><div class="tl-text"><b>آلة أنتيكيثيرا</b> اليونانية — أقدم آلة حسابية معروفة</div></div>
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">قبل الميلاد–</div><div class="tl-text"><b>المعداد الصيني (الأباكس)</b> — أداة حساب يدوية منتشرة عبر العصور</div></div>
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">1642</div><div class="tl-text"><b>آلة باسكالين</b> — اخترعها بليز باسكال لمعالجة الأرقام آلياً</div></div>
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">1830s</div><div class="tl-text"><b>المحرك التحليلي</b> لتشارلز باباج، وخوارزمية <b>آدا لوفليس</b> النظرية — أول أسس البرمجة</div></div>
+    <div class="tl-item tl-history"><div class="tl-dot"></div><div class="tl-year">1943</div><div class="tl-text"><b>Colossus</b> — أول حاسوب إلكتروني قابل للبرمجة، لكسر تشفير Lorenz خلال الحرب العالمية الثانية 🏛️</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1947</div><div class="tl-text"><b>اختراع الترانزستور</b> — بداية الحواسيب الإلكترونية الرقمية الضخمة</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1940s–1950s</div><div class="tl-text">نشأة <b>تخصص علوم الحاسوب</b> أكاديمياً داخل الجامعات</div></div>
+    <div class="tl-item tl-history"><div class="tl-dot"></div><div class="tl-year">1951</div><div class="tl-text"><b>WITCH</b> — أقدم حاسوب رقمي أصلي لا يزال يعمل حتى اليوم 🏛️</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1957</div><div class="tl-text"><b>Fortran</b> — أول لغة برمجة عليا للحوسبة العلمية</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1959</div><div class="tl-text"><b>Cobol</b> — لغة برمجة لعالم الأعمال والمحاسبة</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1969</div><div class="tl-text"><b>إطلاق ARPANET</b> — أول شبكة حواسيب متصلة في التاريخ</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">أوائل 1970s</div><div class="tl-text"><b>لغة C</b> — أساس أنظمة التشغيل والبرمجيات منخفضة المستوى</div></div>
+    <div class="tl-item tl-quantum"><div class="tl-dot"></div><div class="tl-year">1981</div><div class="tl-text">ريتشارد فاينمان يقترح نظرياً <b>محاكاة الأنظمة الكمية</b> بحاسوب كمي ⚛️</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">1991</div><div class="tl-text"><b>الشبكة العنكبوتية العالمية (WWW)</b> — تطور ARPANET إلى الويب كما نعرفه</div></div>
+    <div class="tl-item tl-quantum"><div class="tl-dot"></div><div class="tl-year">1994</div><div class="tl-text"><b>خوارزمية شور</b> — أول دليل رياضي على تفوق كمي محتمل في كسر التشفير ⚛️</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">منتصف 1990s</div><div class="tl-text"><b>Java</b> تظهر كلغة متعددة المنصات — "اكتب مرة، شغّل في أي مكان"</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">أوائل 2000s</div><div class="tl-text">انفجار <b>البيانات الضخمة (Big Data)</b> وبروز علم البيانات كتخصص حيوي</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2012–2022</div><div class="tl-text">نهضة <b>تعلم الآلة</b> والذكاء الاصطناعي التوليدي</div></div>
+    <div class="tl-item tl-quantum"><div class="tl-dot"></div><div class="tl-year">2019</div><div class="tl-text">إعلان جوجل <b>"التفوق الكمي"</b> (Quantum Supremacy) ⚛️</div></div>
+    <div class="tl-item tl-quantum"><div class="tl-dot"></div><div class="tl-year">2019 – ؟</div><div class="tl-text"><b>عصر NISQ</b> — معالجات كيوبت تجريبية، أفق بحثي لم يكتمل بعد</div></div>
+  </div>
+
+  <div class="tl-legend">
+    <div class="li"><span class="sw" style="background:var(--c0);"></span>العصور الميكانيكية</div>
+    <div class="li"><span class="sw" style="background:var(--c1);"></span>ميلاد الحوسبة الرقمية</div>
+    <div class="li"><span class="sw" style="background:var(--c2);"></span>عصر البرمجيات واللغات</div>
+    <div class="li"><span class="sw" style="background:var(--c3);"></span>عصر الشبكات والويب</div>
+    <div class="li"><span class="sw" style="background:var(--c4);"></span>ثورة البيانات والذكاء الاصطناعي</div>
+    <div class="li"><span class="sw" style="background:var(--history);"></span>حدث تاريخي موثّق (مصدر متحفي)</div>
+    <div class="li"><span class="sw" style="background:var(--quantum);"></span>أفق الحوسبة الكمية</div>
+  </div>
+
+</div>
+</body>
+</html>

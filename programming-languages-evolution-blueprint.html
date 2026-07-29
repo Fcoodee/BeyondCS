@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>لغات البرمجة: من الأسمبلي إلى البيانات الضخمة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a1826;
+    --bg-grid: #12293e;
+    --panel: #0f2438;
+    --panel-line: #1c3b57;
+    --ink: #e7eef5;
+    --ink-dim: #8fa6bb;
+    --gold: #d3a94e;
+    --gold-dim: #8a7038;
+
+    --lane-identity: #9b8cf2;
+    --lane-identity-bg: rgba(155,140,242,0.10);
+    --lane-files: #4fd0c8;
+    --lane-files-bg: rgba(79,208,200,0.10);
+    --lane-gateway: #f2a65a;
+    --lane-gateway-bg: rgba(242,166,90,0.10);
+    --lane-comms: #ef8c7a;
+    --lane-comms-bg: rgba(239,140,122,0.10);
+
+    --c0: #7a8a99;
+    --c1: #6d7fd6;
+    --c2: #3fb6c9;
+    --c3: #a879e0;
+    --c4: #e0a458;
+    --c5: #e0637a;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Cairo',sans-serif;}
+
+  body{
+    background-image:
+      linear-gradient(var(--bg-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    padding: 36px 28px 60px;
+  }
+
+  .wrap{max-width:1650px;margin:0 auto;}
+
+  header{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    border-bottom:2px solid var(--panel-line);padding-bottom:18px;margin-bottom:28px;
+    gap:24px;flex-wrap:wrap;
+  }
+  .title-block .eyebrow{
+    font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px;
+    letter-spacing:2px;margin-bottom:8px;
+  }
+  h1{font-size:27px;font-weight:800;margin:0 0 6px;line-height:1.3;}
+  .subtitle{color:var(--ink-dim);font-size:14px;max-width:660px;}
+  .domain-code{
+    font-family:'JetBrains Mono',monospace;text-align:left;direction:ltr;
+    color:var(--ink-dim);font-size:11px;line-height:1.9;
+    border:1px solid var(--panel-line);border-radius:4px;padding:10px 14px;background:var(--panel);
+  }
+  .domain-code b{color:var(--gold);}
+
+  .chapters-strip{position:relative;display:grid;grid-template-columns: 200px 1fr;margin-bottom:0;}
+  .chapters-track{position:relative;height:46px;}
+  .chapter-tag{
+    position:absolute;top:0;height:46px;display:flex;flex-direction:column;justify-content:center;
+    padding:0 10px;border-radius:6px 6px 0 0;font-family:'JetBrains Mono',monospace;overflow:hidden;
+  }
+  .chapter-tag .cnum{font-size:9.5px;letter-spacing:1px;opacity:.85;}
+  .chapter-tag .cname{font-size:11px;font-weight:700;color:var(--ink);margin-top:2px;font-family:'Cairo',sans-serif;}
+
+  .axis{position:relative;display:grid;grid-template-columns: 200px 1fr;margin-bottom:2px;}
+  .axis .years{position:relative;height:30px;border-bottom:1px solid var(--panel-line);}
+  .axis .years span{
+    position:absolute;top:0;transform:translateX(50%);
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);font-weight:700;
+  }
+
+  .triggers{position:relative;grid-column: 2 / -1;}
+
+  .board{position:relative;display:grid;grid-template-columns: 200px 1fr;}
+
+  .lane-labels{display:flex;flex-direction:column;}
+  .lane-label{
+    height:150px;display:flex;align-items:center;justify-content:flex-end;
+    padding-inline-end:14px;border-bottom:1px solid var(--panel-line);
+  }
+  .lane-label .tag{font-weight:700;font-size:13px;text-align:right;line-height:1.5;}
+  .lane-label .tag small{
+    display:block;font-family:'JetBrains Mono',monospace;font-weight:400;
+    font-size:9px;color:var(--ink-dim);letter-spacing:0.5px;margin-top:3px;
+  }
+  .lane-label.identity{border-inline-end:4px solid var(--lane-identity);}
+  .lane-label.files{border-inline-end:4px solid var(--lane-files);}
+  .lane-label.gateway{border-inline-end:4px solid var(--lane-gateway);}
+  .lane-label.comms{border-inline-end:4px solid var(--lane-comms);}
+
+  .lanes{position:relative;}
+  .lane{
+    position:relative;height:150px;border-bottom:1px solid var(--panel-line);
+    display:flex;align-items:center;padding:0 18px;
+  }
+  .lane.identity{background:var(--lane-identity-bg);}
+  .lane.files{background:var(--lane-files-bg);}
+  .lane.gateway{background:var(--lane-gateway-bg);}
+  .lane.comms{background:var(--lane-comms-bg);}
+
+  .lane-track{position:relative;width:100%;height:2px;background:var(--panel-line);}
+
+  .node{
+    position:absolute;top:50%;transform:translate(50%,-50%);width:172px;
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:6px;
+    padding:8px 10px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,0.35);cursor:default;
+  }
+  .node .period{
+    font-family:'JetBrains Mono',monospace;font-size:8.8px;color:var(--gold);
+    margin-bottom:3px;letter-spacing:0.5px;
+  }
+  .node .name{font-weight:700;font-size:11px;line-height:1.4;}
+  .node.empty{opacity:.5;font-style:italic;}
+  .node.identity{border-top:3px solid var(--lane-identity);}
+  .node.files{border-top:3px solid var(--lane-files);}
+  .node.gateway{border-top:3px solid var(--lane-gateway);}
+  .node.comms{border-top:3px solid var(--lane-comms);}
+
+  .dot{
+    position:absolute;top:50%;width:9px;height:9px;border-radius:50%;
+    transform:translate(50%,-50%);background:var(--gold);box-shadow:0 0 0 3px var(--bg);
+  }
+
+  .chapter-band{position:absolute;top:0;bottom:0;opacity:.55;pointer-events:none;}
+
+  .trigger-line{position:absolute;top:0;bottom:0;width:0;border-right:1px dashed var(--gold-dim);}
+  .trigger-flag{position:absolute;top:-66px;transform:translateX(50%);width:160px;text-align:center;}
+  .trigger-flag .yr{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;}
+  .trigger-flag .lbl{font-size:10.5px;color:var(--ink-dim);line-height:1.3;margin-top:2px;}
+
+  .board-outer{
+    position:relative;border:1px solid var(--panel-line);border-radius:8px;
+    overflow:visible;margin-top:78px;background:var(--panel);
+  }
+
+  .legend{
+    display:flex;gap:20px;flex-wrap:wrap;margin-top:26px;padding-top:18px;
+    border-top:1px solid var(--panel-line);font-size:12px;color:var(--ink-dim);
+  }
+  .legend .item{display:flex;align-items:center;gap:7px;}
+  .legend .swatch{width:12px;height:12px;border-radius:3px;}
+
+  .note{
+    margin-top:22px;background:var(--panel);border:1px solid var(--panel-line);
+    border-radius:8px;padding:16px 20px;font-size:13px;color:var(--ink-dim);line-height:1.9;
+  }
+  .note b{color:var(--ink);}
+  .note code{
+    font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.06);
+    padding:1px 6px;border-radius:4px;color:var(--gold);direction:ltr;display:inline-block;
+  }
+
+  .story-header{margin-top:56px;padding-bottom:14px;border-bottom:2px solid var(--panel-line);}
+  .story-header .eyebrow{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px;letter-spacing:2px;margin-bottom:6px;}
+  .story-header h2{font-size:22px;font-weight:800;margin:0;}
+
+  .story-grid{display:flex;flex-direction:column;gap:18px;margin-top:22px;}
+
+  .story-card{position:relative;background:var(--panel);border:1px solid var(--panel-line);border-radius:10px;overflow:hidden;}
+  .story-card::before{content:"";position:absolute;top:0;bottom:0;right:0;width:5px;}
+  .story-card.sc0::before{background:var(--c0);}
+  .story-card.sc1::before{background:var(--c1);}
+  .story-card.sc2::before{background:var(--c2);}
+  .story-card.sc3::before{background:var(--c3);}
+  .story-card.sc4::before{background:var(--c4);}
+  .story-card.sc5::before{background:var(--c5);}
+
+  .story-card-head{
+    padding:18px 22px 14px;border-bottom:1px solid var(--panel-line);
+    display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;
+  }
+  .sc-title-block{max-width:700px;}
+  .sc-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;margin-bottom:6px;}
+  .sc0 .sc-num{color:var(--c0);} .sc1 .sc-num{color:var(--c1);} .sc2 .sc-num{color:var(--c2);}
+  .sc3 .sc-num{color:var(--c3);} .sc4 .sc-num{color:var(--c4);} .sc5 .sc-num{color:var(--c5);}
+  .sc-title{font-size:18px;font-weight:800;margin-bottom:6px;}
+  .sc-hook{font-size:13px;color:var(--ink-dim);font-style:italic;line-height:1.8;}
+  .sc-years{
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);font-weight:700;
+    background:rgba(211,169,78,0.08);border:1px solid var(--gold-dim);border-radius:20px;
+    padding:6px 16px;white-space:nowrap;
+  }
+
+  .sc-body{padding:18px 22px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media (max-width:1100px){.sc-body{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:640px){.sc-body{grid-template-columns:1fr;}}
+
+  .sc-domain{background:rgba(255,255,255,0.03);border-radius:8px;padding:12px 14px;border-inline-start:3px solid transparent;}
+  .sc-domain.identity{border-inline-start-color:var(--lane-identity);}
+  .sc-domain.files{border-inline-start-color:var(--lane-files);}
+  .sc-domain.gateway{border-inline-start-color:var(--lane-gateway);}
+  .sc-domain.comms{border-inline-start-color:var(--lane-comms);}
+  .sc-dlabel{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.5px;margin-bottom:5px;}
+  .sc-domain.identity .sc-dlabel{color:var(--lane-identity);}
+  .sc-domain.files .sc-dlabel{color:var(--lane-files);}
+  .sc-domain.gateway .sc-dlabel{color:var(--lane-gateway);}
+  .sc-domain.comms .sc-dlabel{color:var(--lane-comms);}
+  .sc-dtech{font-weight:700;font-size:13px;margin-bottom:5px;line-height:1.4;}
+  .sc-dnote{font-size:12px;color:var(--ink-dim);line-height:1.7;}
+
+  .sc-cross{
+    grid-column:1/-1;
+    background:rgba(211,169,78,0.05);
+    border:1px dashed var(--gold-dim);
+    border-radius:8px;
+    padding:11px 14px;
+    font-size:12px;
+    color:var(--ink-dim);
+    line-height:1.7;
+  }
+  .sc-cross b{color:var(--gold);}
+
+  .sc-foot{padding:13px 22px 18px;font-size:12.5px;color:var(--ink-dim);display:flex;gap:8px;}
+  .sc-foot b{color:var(--ink);}
+
+  .role-strip{
+    display:flex;align-items:center;gap:6px;margin-top:24px;flex-wrap:wrap;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;
+  }
+  .role-strip .role{
+    background:var(--panel);border:1px solid var(--panel-line);color:var(--ink);
+    padding:7px 14px;border-radius:20px;white-space:nowrap;
+  }
+  .role-strip .arrow{color:var(--gold);font-size:15px;}
+
+  /* ===== Full chronological timeline appendix ===== */
+  .full-timeline{margin-top:56px;}
+  .tl-list{position:relative;margin-top:22px;}
+  .tl-list::before{content:"";position:absolute;top:6px;bottom:6px;right:6px;width:1px;background:var(--panel-line);}
+  .tl-item{
+    position:relative;display:flex;gap:16px;align-items:baseline;flex-wrap:wrap;
+    padding:12px 18px 12px 14px;padding-inline-end:30px;border-radius:8px;
+    border-inline-start:3px solid transparent;
+  }
+  .tl-item:nth-child(odd){background:rgba(255,255,255,0.015);}
+  .tl-item .tl-dot{
+    position:absolute;right:2px;top:19px;width:9px;height:9px;border-radius:50%;
+    background:var(--gold);box-shadow:0 0 0 3px var(--bg);z-index:2;
+  }
+  .tl-item .tl-year{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--gold);
+    font-weight:700;min-width:108px;flex-shrink:0;
+  }
+  .tl-item .tl-text{font-size:13px;color:var(--ink-dim);line-height:1.8;flex:1;min-width:200px;}
+  .tl-item .tl-text b{color:var(--ink);font-weight:700;}
+
+  .tl-item.tl-c0{border-inline-start-color:var(--c0);}
+  .tl-item.tl-c0 .tl-dot{background:var(--c0);}
+  .tl-item.tl-c0 .tl-year{color:var(--c0);}
+  .tl-item.tl-c1{border-inline-start-color:var(--c1);}
+  .tl-item.tl-c1 .tl-dot{background:var(--c1);}
+  .tl-item.tl-c1 .tl-year{color:var(--c1);}
+  .tl-item.tl-c2{border-inline-start-color:var(--c2);}
+  .tl-item.tl-c2 .tl-dot{background:var(--c2);}
+  .tl-item.tl-c2 .tl-year{color:var(--c2);}
+  .tl-item.tl-c3{border-inline-start-color:var(--c3);}
+  .tl-item.tl-c3 .tl-dot{background:var(--c3);}
+  .tl-item.tl-c3 .tl-year{color:var(--c3);}
+  .tl-item.tl-c4{border-inline-start-color:var(--c4);}
+  .tl-item.tl-c4 .tl-dot{background:var(--c4);}
+  .tl-item.tl-c4 .tl-year{color:var(--c4);}
+  .tl-item.tl-c5{border-inline-start-color:var(--c5);}
+  .tl-item.tl-c5 .tl-dot{background:var(--c5);}
+  .tl-item.tl-c5 .tl-year{color:var(--c5);}
+
+  .tl-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;font-size:11.5px;color:var(--ink-dim);}
+  .tl-legend .li{display:flex;align-items:center;gap:6px;}
+  .tl-legend .sw{width:10px;height:10px;border-radius:3px;}
+
+  @media (max-width: 1300px){
+    .board-outer{overflow-x:auto;}
+    .board, .axis, .chapters-strip{min-width:1500px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="title-block">
+      <div class="eyebrow">PROGRAMMING LANGUAGES // BLUEPRINT NARRATIVE MAP</div>
+      <h1>لغات البرمجة: من الأسمبلي إلى البيانات الضخمة</h1>
+      <div class="subtitle">رحلة أربعة مسارات متوازية — اللغات، بيئات التطوير المرئية، قواعد البيانات، والويب — من البرمجة المباشرة على الذاكرة إلى تحدي البيانات غير المهيكلة اليوم</div>
+    </div>
+    <div class="domain-code">
+      <div>SUBJECT: <b>PROGRAMMING LANGUAGES</b></div>
+      <div>SPAN: <b>1947 → 2026</b></div>
+      <div>TRACKS: <b>04</b> · CHAPTERS: <b>06</b> · TRIGGERS: <b>05</b></div>
+    </div>
+  </header>
+
+  <div class="board-outer">
+
+    <!-- Chapter banner strip -->
+    <div class="chapters-strip">
+      <div></div>
+      <div class="chapters-track">
+        <div class="chapter-tag" style="right:0%; width:15%; background:color-mix(in srgb, var(--c0) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c0);">CH.00 · 1940s</div>
+          <div class="cname">العصر الآلي: الأسمبلي</div>
+        </div>
+        <div class="chapter-tag" style="right:15%; width:15%; background:color-mix(in srgb, var(--c1) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c1);">CH.01 · 1957–64</div>
+          <div class="cname">ميلاد اللغات العليا</div>
+        </div>
+        <div class="chapter-tag" style="right:30%; width:20%; background:color-mix(in srgb, var(--c2) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c2);">CH.02 · 1970–84</div>
+          <div class="cname">البنيوية وقواعد البيانات المكتبية</div>
+        </div>
+        <div class="chapter-tag" style="right:50%; width:18%; background:color-mix(in srgb, var(--c3) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c3);">CH.03 · 1991–2002</div>
+          <div class="cname">البرمجة المرئية و.NET</div>
+        </div>
+        <div class="chapter-tag" style="right:68%; width:16%; background:color-mix(in srgb, var(--c4) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c4);">CH.04 · 1995–2000s</div>
+          <div class="cname">قواعد البيانات والويب المبكر</div>
+        </div>
+        <div class="chapter-tag" style="right:84%; width:16%; background:color-mix(in srgb, var(--c5) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c5);">CH.05 · 2000s–2026</div>
+          <div class="cname">البيانات الضخمة والتنقيب</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trigger flags row -->
+    <div class="axis" style="margin-top:6px;">
+      <div></div>
+      <div class="triggers" style="grid-column: 2/-1; height:0;">
+        <div class="trigger-flag" style="right:15%;"><div class="yr">1957</div><div class="lbl">📗 Fortran — أول لغة عليا</div></div>
+        <div class="trigger-flag" style="right:30%;"><div class="yr">1972</div><div class="lbl">⚙️ C — لغة أنظمة التشغيل</div></div>
+        <div class="trigger-flag" style="right:50%;"><div class="yr">1991</div><div class="lbl">🖱️ Visual Basic + HTML معاً</div></div>
+        <div class="trigger-flag" style="right:68%;"><div class="yr">1995</div><div class="lbl">🔗 Java + MySQL + PHP معاً</div></div>
+        <div class="trigger-flag" style="right:84%;"><div class="yr">2000s</div><div class="lbl">📊 انفجار البيانات الضخمة</div></div>
+      </div>
+    </div>
+
+    <!-- Year axis -->
+    <div class="axis">
+      <div></div>
+      <div class="years">
+        <span style="right:0%;">1947</span>
+        <span style="right:15%;">1957</span>
+        <span style="right:30%;">1970</span>
+        <span style="right:50%;">1991</span>
+        <span style="right:68%;">1995</span>
+        <span style="right:98%;">2026</span>
+      </div>
+    </div>
+
+    <!-- Board -->
+    <div class="board">
+      <div class="lane-labels">
+        <div class="lane-label identity"><div class="tag">لغات البرمجة الأساسية<small>CORE LANGUAGES · ASM → PYTHON</small></div></div>
+        <div class="lane-label files"><div class="tag">بيئات التطوير والبرمجة المرئية<small>IDE / VISUAL · FOXPRO → CLOUD IDE</small></div></div>
+        <div class="lane-label gateway"><div class="tag">قواعد البيانات والبيانات<small>DATABASES · DBF → UNSTRUCTURED</small></div></div>
+        <div class="lane-label comms"><div class="tag">الويب والبيانات الضخمة<small>WEB & BIG DATA · HTML → MINING</small></div></div>
+      </div>
+
+      <div class="lanes">
+
+        <!-- Chapter background bands -->
+        <div class="chapter-band" style="right:0%; width:15%; background:var(--c0); opacity:.06;"></div>
+        <div class="chapter-band" style="right:15%; width:15%; background:var(--c1); opacity:.07;"></div>
+        <div class="chapter-band" style="right:30%; width:20%; background:var(--c2); opacity:.07;"></div>
+        <div class="chapter-band" style="right:50%; width:18%; background:var(--c3); opacity:.07;"></div>
+        <div class="chapter-band" style="right:68%; width:16%; background:var(--c4); opacity:.08;"></div>
+        <div class="chapter-band" style="right:84%; width:16%; background:var(--c5); opacity:.08;"></div>
+
+        <!-- Trigger vertical lines -->
+        <div class="trigger-line" style="right:15%;"></div>
+        <div class="trigger-line" style="right:30%;"></div>
+        <div class="trigger-line" style="right:50%;"></div>
+        <div class="trigger-line" style="right:68%;"></div>
+        <div class="trigger-line" style="right:84%;"></div>
+
+        <!-- CORE LANGUAGES lane -->
+        <div class="lane identity">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node identity" style="right:2%;" title="برمجة مباشرة على مستوى المسجلات والذاكرة — لا تجريد، ولا أخطاء تُغتفر.">
+              <div class="period">أواخر 1940s</div>
+              <div class="name">لغة الآلة والأسمبلي</div>
+            </div>
+            <div class="dot" style="right:18%;"></div>
+            <div class="node identity" style="right:18%;" title="فورتران (1957) أول لغة عليا حقيقية للحوسبة العلمية، ثم كوبول (1959) للأعمال، ثم بيسك (1964) لتبسيط تعلّم البرمجة.">
+              <div class="period">1957–1964</div>
+              <div class="name">Fortran → Cobol<br>→ BASIC</div>
+            </div>
+            <div class="dot" style="right:34%;"></div>
+            <div class="node identity" style="right:34%;" title="باسكال (1970) صُممت لتعليم البرمجة المنضبطة، ثم سي (1972) أصبحت لغة أنظمة التشغيل والبرمجيات منخفضة المستوى.">
+              <div class="period">1970–1972</div>
+              <div class="name">Pascal للتعليم<br>C لأنظمة التشغيل</div>
+            </div>
+            <div class="dot" style="right:58%;"></div>
+            <div class="node identity" style="right:58%;" title="جافا (1995) تدخل كلغة متعددة المنصات (Write Once, Run Anywhere) موازية لموجة البرمجة المرئية في نفس الحقبة.">
+              <div class="period">1995</div>
+              <div class="name">Java كتقاطع<br>لغة متعددة المنصات</div>
+            </div>
+            <div class="dot" style="right:71%;"></div>
+            <div class="node identity" style="right:71%;" title="نضوج C وJava كلغتي مؤسسات، وتحوّلهما ليصبحا الأساس الخلفي (Backend) لأنظمة الويب الكبرى.">
+              <div class="period">1995–2000s</div>
+              <div class="name">نضوج C/Java<br>أساس أنظمة الويب الخلفية</div>
+            </div>
+            <div class="dot" style="right:90%;"></div>
+            <div class="node identity" style="right:90%;" title="بايثون تتصدر المشهد كلغة موحّدة لعلم البيانات والذكاء الاصطناعي، بفضل بساطتها وأطر عملها الغنية.">
+              <div class="period">2000s–2026</div>
+              <div class="name">Python تتصدر<br>لغة موحّدة لـ Data/AI</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- IDE / VISUAL lane -->
+        <div class="lane files">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node files empty" style="right:2%;" title="لا بيئات تطوير بعد؛ البرمجة تتم عبر البطاقات المثقّبة وأشرطة الورق.">
+              <div class="period">أواخر 1940s</div>
+              <div class="name">لا بيئات تطوير بعد<br>بطاقات مثقّبة</div>
+            </div>
+            <div class="dot" style="right:18%;"></div>
+            <div class="node files empty" style="right:18%;" title="مترجمات نصية بسيطة (Compilers) بلا أي واجهة مرئية — البرمجة سطر أوامر بحت.">
+              <div class="period">1957–1964</div>
+              <div class="name">مترجمات نصية فقط<br>لا واجهات مرئية</div>
+            </div>
+            <div class="dot" style="right:34%;"></div>
+            <div class="node files" style="right:34%;" title="FoxBASE ثم FoxPro (1984) — أول دمج حقيقي بين لغة برمجة وقاعدة بيانات مدمجة في تطبيق مكتبي واحد.">
+              <div class="period">1984</div>
+              <div class="name">FoxBASE / FoxPro<br>برمجة + قاعدة بيانات معاً</div>
+            </div>
+            <div class="dot" style="right:51%;"></div>
+            <div class="node files" style="right:51%;" title="Visual Basic (1991) يُدخل مفهوم البرمجة المرئية بالسحب والإفلات — ثورة في سهولة بناء واجهات سطح المكتب.">
+              <div class="period">1991</div>
+              <div class="name">Visual Basic<br>البرمجة المرئية Drag & Drop</div>
+            </div>
+            <div class="dot" style="right:65%;"></div>
+            <div class="node files" style="right:65%;" title=".NET Framework (2002) يوحّد لغات مايكروسوفت (C# وVB.NET) تحت بيئة تطوير واحدة متكاملة.">
+              <div class="period">2002</div>
+              <div class="name">.NET Framework<br>C# و VB.NET</div>
+            </div>
+            <div class="dot" style="right:76%;"></div>
+            <div class="node files" style="right:76%;" title="ذروة نضج تطبيقات سطح المكتب عبر Windows Forms وWPF، قبل أن يبدأ الاهتمام بالتحول تدريجياً نحو الويب.">
+              <div class="period">2000s</div>
+              <div class="name">تطبيقات سطح المكتب<br>Windows Forms / WPF</div>
+            </div>
+            <div class="dot" style="right:90%;"></div>
+            <div class="node files" style="right:90%;" title="بيئات تطوير سحابية ودفاتر تفاعلية (Jupyter) وVS Code تحل محل بيئات سطح المكتب التقليدية.">
+              <div class="period">2010s–2026</div>
+              <div class="name">بيئات سحابية<br>Jupyter / VS Code</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DATABASES lane -->
+        <div class="lane gateway">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node gateway empty" style="right:2%;" title="لا مفهوم قواعد بيانات بعد؛ البيانات تُخزَّن كأشرطة أو بطاقات تسلسلية.">
+              <div class="period">أواخر 1940s</div>
+              <div class="name">لا قواعد بيانات بعد</div>
+            </div>
+            <div class="dot" style="right:18%;"></div>
+            <div class="node gateway empty" style="right:18%;" title="ملفات مسطحة (Flat Files) بسيطة تُقرأ تسلسلياً — لا مفهوم SQL أو العلاقات بعد.">
+              <div class="period">1957–1964</div>
+              <div class="name">ملفات مسطحة<br>لا مفهوم SQL بعد</div>
+            </div>
+            <div class="dot" style="right:34%;"></div>
+            <div class="node gateway" style="right:34%;" title="قواعد بيانات FoxPro المحلية بصيغة DBF — أول تجربة واسعة الانتشار لقاعدة بيانات مكتبية بسيطة.">
+              <div class="period">1984</div>
+              <div class="name">قواعد بيانات FoxPro<br>صيغة DBF محلية</div>
+            </div>
+            <div class="dot" style="right:58%;"></div>
+            <div class="node gateway empty" style="right:58%;" title="بدايات توسع قواعد البيانات العلائقية المؤسسية (Oracle, SQL Server) موازية لموجة سطح المكتب المرئي.">
+              <div class="period">1991–1995</div>
+              <div class="name">توسع قواعد البيانات<br>العلائقية المؤسسية</div>
+            </div>
+            <div class="dot" style="right:71%;"></div>
+            <div class="node gateway" style="right:71%;" title="SQL يصبح معياراً موحّداً، وMySQL (1995) يفتح الباب للمشاريع مفتوحة المصدر — يترسّخ هنا مفهوم 'البيانات المهيكلة'.">
+              <div class="period">1995</div>
+              <div class="name">SQL معياراً + MySQL<br>ميلاد "البيانات المهيكلة"</div>
+            </div>
+            <div class="dot" style="right:90%;"></div>
+            <div class="node gateway" style="right:90%;" title="البيانات غير المهيكلة (نصوص، صور، فيديو، سجلات استشعار) تتجاوز طاقة SQL التقليدي، وتفرض أدوات جديدة كلياً.">
+              <div class="period">2000s–2026</div>
+              <div class="name">بيانات غير مهيكلة<br>تتجاوز طاقة SQL التقليدي</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WEB & BIG DATA lane -->
+        <div class="lane comms">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node comms empty" style="right:2%;" title="لا وجود لمفهوم الويب أو الشبكات بعد.">
+              <div class="period">—</div>
+              <div class="name">لا وجود للويب بعد</div>
+            </div>
+            <div class="dot" style="right:18%;"></div>
+            <div class="node comms empty" style="right:18%;" title="لا وجود بعد؛ الحواسيب لا تزال معزولة عن بعضها.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:34%;"></div>
+            <div class="node comms empty" style="right:34%;" title="لا وجود بعد لمفهوم الويب كما نعرفه اليوم، رغم وجود شبكات أكاديمية بحثية محدودة.">
+              <div class="period">1970–1984</div>
+              <div class="name">لا وجود بعد<br>شبكات أكاديمية محدودة</div>
+            </div>
+            <div class="dot" style="right:58%;"></div>
+            <div class="node comms" style="right:58%;" title="HTML (1991) يظهر بالتزامن الغريب مع Visual Basic في نفس العام — بداية تصميم صفحات الويب الثابتة.">
+              <div class="period">1991</div>
+              <div class="name">HTML يظهر<br>صفحات ويب ثابتة</div>
+            </div>
+            <div class="dot" style="right:71%;"></div>
+            <div class="node comms" style="right:71%;" title="PHP (1995) يضيف منطقاً برمجياً خلف صفحات HTML — ميلاد الويب الديناميكي التفاعلي المرتبط بقواعد البيانات.">
+              <div class="period">1995</div>
+              <div class="name">PHP<br>الويب الديناميكي التفاعلي</div>
+            </div>
+            <div class="dot" style="right:90%;"></div>
+            <div class="node comms" style="right:90%;" title="البيانات الضخمة (Big Data) والتنقيب فيها (Data Mining) يصبحان ضرورة لتحليل التدفقات الهائلة من الويب والتطبيقات.">
+              <div class="period">2000s–2026</div>
+              <div class="name">Big Data<br>+ Data Mining</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="item"><span class="swatch" style="background:var(--lane-identity)"></span> لغات البرمجة الأساسية</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-files)"></span> بيئات التطوير والبرمجة المرئية</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-gateway)"></span> قواعد البيانات والبيانات</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-comms)"></span> الويب والبيانات الضخمة</div>
+    <div class="item">┄┄ خط ذهبي متقطع = حدث تحوّل مشترك أثّر على أكثر من مسار في نفس اللحظة (لاحظ تزامن 1991 و1995)</div>
+    <div class="item">💡 مرّر المؤشر فوق أي بطاقة لقراءة السياق الكامل</div>
+  </div>
+
+  <div class="note">
+    <b>لإعادة بنائه في Microsoft Visio:</b> نفس نمط <b>Swimlane Timeline</b> — أقرب قالب <code>File → New → Schedule → Timeline</code>
+    أو <code>Cross-Functional Flowchart</code>. لاحظ نقطتي التزامن المثيرتين للاهتمام كمعالم بصرية: <b>1991</b> (Visual Basic وHTML في نفس العام،
+    مسارين مختلفين تماماً)، و<b>1995</b> (Java وMySQL وPHP في نفس العام) — تستحقان تصميم Milestone مشترك بارز في Visio.
+    <br><br>
+    <b>ملاحظة تقاطع مع صفحة "علوم الحاسوب":</b> لغتا C وJava مذكورتان أيضاً في تلك الصفحة ضمن سياق أوسع (تطور الحوسبة عموماً)؛
+    هنا تُعرضان من زاوية مختلفة تحديداً — أثرهما على تطور لغات البرمجة وبيئات التطوير نفسها.
+  </div>
+
+  <!-- ============ RICH NARRATIVE SECTION ============ -->
+  <div class="story-header">
+    <div class="eyebrow">FULL NARRATIVE // كل محطة بتفاصيلها الكاملة</div>
+    <h2>الرحلة الكاملة: من سطر أوامر معزول إلى نظام يحلل ملايين السجلات</h2>
+  </div>
+
+  <div class="role-strip">
+    <div class="role">⌨️ مبرمج يكتب مباشرة بلغة الآلة</div>
+    <span class="arrow">←</span>
+    <div class="role">📐 مطوّر لغات عليا هيكلية</div>
+    <span class="arrow">←</span>
+    <div class="role">🖱️ مصمم واجهات مرئية لسطح المكتب</div>
+    <span class="arrow">←</span>
+    <div class="role">🌐 مهندس قواعد بيانات وويب ديناميكي</div>
+    <span class="arrow">←</span>
+    <div class="role">📊 محلل بيانات ضخمة ومنقّب فيها</div>
+  </div>
+
+  <div class="story-grid">
+
+    <!-- STORY CARD 0 -->
+    <div class="story-card sc0">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 00 // MACHINE ERA</div>
+          <div class="sc-title">العصر الآلي: حين كانت البرمجة حواراً مباشراً مع المعالج</div>
+          <div class="sc-hook">لا متغيرات بأسماء مفهومة، لا حلقات تكرار مريحة — فقط عناوين ذاكرة ومسجلات، وكل خطأ يعني إعادة كتابة كل شيء من الصفر تقريباً.</div>
+        </div>
+        <div class="sc-years">أواخر 1940s</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">CORE LANGUAGES</div>
+          <div class="sc-dtech">لغة الآلة والأسمبلي</div>
+          <div class="sc-dnote">أقرب لغة ممكنة للعتاد الفعلي؛ كل أمر يقابل تعليمة واحدة يفهمها المعالج مباشرة دون أي طبقة وسيطة.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">IDE / VISUAL</div>
+          <div class="sc-dtech">بطاقات مثقّبة</div>
+          <div class="sc-dnote">لا محرر نصوص ولا بيئة تطوير؛ البرنامج فعلياً كومة من البطاقات الورقية المثقّبة تُغذّى للحاسوب يدوياً.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">DATABASES</div>
+          <div class="sc-dtech">لا قواعد بيانات بعد</div>
+          <div class="sc-dnote">البيانات تُخزَّن على أشرطة مغناطيسية تُقرأ تسلسلياً من البداية للنهاية.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">WEB & BIG DATA</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">فكرة ربط الحواسيب ببعضها لم تولد بعد، فضلاً عن تحليل بيانات ضخمة.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> مبرمج يراجع مئات البطاقات المثقّبة بحثاً عن خطأ واحد صغير — لا أحد يتخيل بعد أن جملة برمجية واحدة مقروءة ستكفي يوماً لفعل ما يحتاج اليوم مئة بطاقة.</div>
+    </div>
+
+    <!-- STORY CARD 1 -->
+    <div class="story-card sc1">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 01 // HIGH-LEVEL BIRTH</div>
+          <div class="sc-title">ميلاد اللغات العليا: البرمجة تبدأ تشبه اللغة الإنسانية</div>
+          <div class="sc-hook">لأول مرة، يكتب المبرمج جملة تشبه الرياضيات أو الإنجليزية المبسّطة، والحاسوب هو من يتكفّل بترجمتها إلى لغة الآلة.</div>
+        </div>
+        <div class="sc-years">1957 — 1964</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">CORE LANGUAGES</div>
+          <div class="sc-dtech">Fortran (1957) → Cobol (1959) → BASIC (1964)</div>
+          <div class="sc-dnote">فورتران للحوسبة العلمية والهندسية، كوبول لعالم الأعمال والمحاسبة، ثم بيسك لتبسيط تعلّم البرمجة للمبتدئين.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">IDE / VISUAL</div>
+          <div class="sc-dtech">مترجمات نصية فقط</div>
+          <div class="sc-dnote">لا واجهات مرئية؛ البرمجة لا تزال سطر أوامر بحت، لكن الآن عبر لغة مقروءة لا رموزاً ثنائية.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">DATABASES</div>
+          <div class="sc-dtech">ملفات مسطحة (Flat Files)</div>
+          <div class="sc-dnote">لا مفهوم SQL أو العلاقات بين الجداول بعد؛ كل تطبيق يدير ملفاته الخاصة بمنطقه الخاص.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">WEB & BIG DATA</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">الحواسيب لا تزال معزولة تماماً كل عن الآخر.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> طالب في الجامعة يكتب أول برنامج له بلغة BASIC خلال دقائق — شيء كان يستحيل تخيّله بلغة الآلة قبل سنوات قليلة فقط.</div>
+    </div>
+
+    <!-- STORY CARD 2 -->
+    <div class="story-card sc2">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 02 // STRUCTURED ERA</div>
+          <div class="sc-title">البرمجة البنيوية وقواعد البيانات المكتبية</div>
+          <div class="sc-hook">الانضباط البرمجي يصبح قيمة بذاتها، وفي الوقت نفسه يظهر أول تطبيق يدمج "لغة برمجة" و"قاعدة بيانات" في منتج واحد يستخدمه غير المبرمجين.</div>
+        </div>
+        <div class="sc-years">1970 — 1984</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">CORE LANGUAGES</div>
+          <div class="sc-dtech">Pascal (1970) · C (1972)</div>
+          <div class="sc-dnote">باسكال صُممت خصيصاً لتعليم البرمجة المنضبطة (Structured Programming)، بينما سي فتحت الباب لكتابة أنظمة تشغيل كاملة — بما فيها يونكس لاحقاً.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">IDE / VISUAL</div>
+          <div class="sc-dtech">FoxBASE ثم FoxPro (1984)</div>
+          <div class="sc-dnote">أول موجة "برمجة + قاعدة بيانات" في تطبيق واحد على سطح المكتب — أصحاب المحال والمكاتب الصغيرة يديرون بياناتهم بأنفسهم دون مبرمج متخصص دائم.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">DATABASES</div>
+          <div class="sc-dtech">قواعد بيانات FoxPro (DBF)</div>
+          <div class="sc-dnote">صيغة تخزين محلية بسيطة، لكنها أول تجربة واسعة الانتشار لمفهوم "قاعدة بيانات" لدى غير المتخصصين.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">WEB & BIG DATA</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">شبكات أكاديمية بحثية محدودة فقط (كأربانت)، لا مفهوم ويب عام بعد.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> صاحب متجر صغير يبني نظام مخزونه الخاص بلغة FoxPro دون أن يكون مبرمجاً محترفاً — بداية ديمقراطية البرمجة.</div>
+    </div>
+
+    <!-- STORY CARD 3 -->
+    <div class="story-card sc3">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 03 // VISUAL & .NET ERA</div>
+          <div class="sc-title">عصر البرمجة المرئية و.NET: الفأرة تشارك لوحة المفاتيح</div>
+          <div class="sc-hook">بناء واجهة برنامج لم يعد يتطلب كتابة عشرات الأسطر لرسم زر واحد — يكفي سحبه وإفلاته، بينما يتكفّل الكود بنفسه خلف الكواليس.</div>
+        </div>
+        <div class="sc-years">1991 — 2002</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">CORE LANGUAGES</div>
+          <div class="sc-dtech">Java (1995) كتقاطع تاريخي</div>
+          <div class="sc-dnote">تظهر جافا بفلسفة مختلفة تماماً عن VB — "اكتب مرة، شغّل في أي مكان" — لتصبح لاحقاً لغة مؤسسات كبرى موازية لعالم مايكروسوفت المرئي.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">IDE / VISUAL</div>
+          <div class="sc-dtech">Visual Basic (1991) → .NET Framework (2002)</div>
+          <div class="sc-dnote">VB يُدخل البرمجة المرئية بالسحب والإفلات؛ بعدها بعقد يُطلق .NET Framework ليوحّد لغتي C# وVB.NET تحت بيئة تطوير واحدة متكاملة لتطبيقات سطح المكتب.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">DATABASES</div>
+          <div class="sc-dtech">توسع قواعد البيانات العلائقية المؤسسية</div>
+          <div class="sc-dnote">Oracle وSQL Server يكبران بالتوازي مع موجة سطح المكتب المرئي، خدمةً لتطبيقات الشركات الكبرى.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">WEB & BIG DATA</div>
+          <div class="sc-dtech">HTML يظهر (1991)</div>
+          <div class="sc-dnote">بتزامن لافت مع نفس عام Visual Basic — لكن هذا مسار مختلف تماماً سيتطور بمعزل عن سطح المكتب في الفصل القادم.</div>
+        </div>
+
+        <div class="sc-cross">
+          <b>💡 نقطة تزامن مثيرة:</b> عام 1991 شهد ولادة Visual Basic (سطح المكتب) وHTML (الويب) في نفس السنة تقريباً — طريقان متوازيان بدآ معاً، لكنهما سيتنافسان لاحقاً على مستقبل تطوير البرمجيات.
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> مطوّر يبني نموذجاً أولياً كاملاً لتطبيق مبيعات خلال ساعة بدل أسبوع — البرمجة المرئية غيّرت سرعة التطوير جذرياً، لكنها لا تعلم بعد أن الويب سيسحب البساط تدريجياً خلال عقد.</div>
+    </div>
+
+    <!-- STORY CARD 4 -->
+    <div class="story-card sc4">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 04 // DATABASES & EARLY WEB</div>
+          <div class="sc-title">قواعد البيانات العلائقية والويب المبكر: البيانات تصبح "مهيكلة"</div>
+          <div class="sc-hook">للمرة الأولى، تُصبح البيانات نفسها موضوعاً له معاييره الخاصة — وتُصبح صفحات الويب أكثر من مجرد نصوص ثابتة.</div>
+        </div>
+        <div class="sc-years">1995 — 2000s</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">CORE LANGUAGES</div>
+          <div class="sc-dtech">نضوج C وJava</div>
+          <div class="sc-dnote">تتحولان تدريجياً لتصبحا الأساس الخلفي (Backend) لأنظمة الويب والمؤسسات الكبرى.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">IDE / VISUAL</div>
+          <div class="sc-dtech">ذروة تطبيقات سطح المكتب</div>
+          <div class="sc-dnote">Windows Forms وWPF يمثلان قمة نضج تطبيقات سطح المكتب المرئية، قبل أن يبدأ الاهتمام بالانتقال تدريجياً نحو الويب.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">DATABASES</div>
+          <div class="sc-dtech">SQL معياراً موحّداً + MySQL (1995)</div>
+          <div class="sc-dnote">MySQL مفتوحة المصدر تفتح الباب أمام مشاريع صغيرة ومتوسطة، ويترسّخ هنا مفهوم "البيانات المهيكلة" (Structured Data) كمعيار صناعي.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">WEB & BIG DATA</div>
+          <div class="sc-dtech">PHP (1995)</div>
+          <div class="sc-dnote">يضيف منطقاً برمجياً خلف صفحات HTML الثابتة — ميلاد الويب الديناميكي التفاعلي المرتبط مباشرة بقواعد البيانات مثل MySQL.</div>
+        </div>
+
+        <div class="sc-cross">
+          <b>💡 نقطة تزامن مثيرة أخرى:</b> عام 1995 وحده شهد ظهور Java وMySQL وPHP معاً — ثلاثة أعمدة ستشكّل لاحقاً معظم بنية الويب التحتية لعقدين قادمين.
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> أول موقع تجاري بسيط يعرض منتجاته من قاعدة بيانات MySQL عبر صفحات PHP — النموذج الذي سيهيمن على الويب لعقدين قادمين وُلد للتو.</div>
+    </div>
+
+    <!-- STORY CARD 5 -->
+    <div class="story-card sc5">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 05 // BIG DATA & MINING</div>
+          <div class="sc-title">عصر البيانات الضخمة والتنقيب: حين لا تكفي الجداول والأعمدة</div>
+          <div class="sc-hook">السؤال لم يعد "كيف أخزّن البيانات؟" بل "كيف أفهم معنى مليارات السجلات التي لا تشبه بعضها بنية أو شكلاً؟"</div>
+        </div>
+        <div class="sc-years">2000s — 2026</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">CORE LANGUAGES</div>
+          <div class="sc-dtech">Python تتصدر المشهد</div>
+          <div class="sc-dnote">بفضل بساطتها وأطر عملها الغنية، تصبح اللغة الموحّدة تقريباً لعلم البيانات والذكاء الاصطناعي.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">IDE / VISUAL</div>
+          <div class="sc-dtech">بيئات سحابية ودفاتر تفاعلية</div>
+          <div class="sc-dnote">Jupyter وVS Code وبيئات التطوير السحابية تحل محل بيئات سطح المكتب التقليدية المثبّتة محلياً.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">DATABASES</div>
+          <div class="sc-dtech">البيانات غير المهيكلة تتصدر</div>
+          <div class="sc-dnote">نصوص، صور، فيديو، وسجلات استشعار لا تتوافق مع جداول SQL التقليدية — تظهر قواعد بيانات NoSQL ومستودعات بيانات ضخمة كاستجابة مباشرة.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">WEB & BIG DATA</div>
+          <div class="sc-dtech">Big Data + Data Mining</div>
+          <div class="sc-dnote">التنقيب في تدفقات البيانات الهائلة القادمة من الويب والتطبيقات والأجهزة الذكية يصبح تخصصاً قائماً بذاته لا مجرد استعلام SQL بسيط.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> من بطاقة مثقّبة واحدة تحمل سطراً برمجياً واحداً، إلى نظام يُنقّب في مليارات السجلات غير المتجانسة كل ثانية — الرحلة نفسها أصبحت قصة عن تسارع الزمن لا مجرد تطور تقني.</div>
+    </div>
+
+  </div>
+
+  <!-- ============ FULL CHRONOLOGICAL TIMELINE ============ -->
+  <div class="story-header full-timeline">
+    <div class="eyebrow">APPENDIX // مرجع سريع بكل التواريخ</div>
+    <h2>الخط الزمني الكامل: كل الأحداث بالترتيب</h2>
+  </div>
+
+  <div class="tl-list">
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">أواخر 1940s</div><div class="tl-text"><b>لغة الآلة والأسمبلي</b> — برمجة مباشرة على المسجلات والذاكرة</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1957</div><div class="tl-text"><b>Fortran</b> — أول لغة برمجة عليا للحوسبة العلمية</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1959</div><div class="tl-text"><b>Cobol</b> — لغة عالم الأعمال والمحاسبة</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1964</div><div class="tl-text"><b>BASIC</b> — لتبسيط تعلّم البرمجة للمبتدئين</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1969</div><div class="tl-text"><b>إطلاق ARPANET</b> — أول شبكة حواسيب متصلة</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1970</div><div class="tl-text"><b>Pascal</b> — لتعليم البرمجة البنيوية المنضبطة</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1972</div><div class="tl-text"><b>لغة C</b> — أساس أنظمة التشغيل والبرمجيات منخفضة المستوى</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1984</div><div class="tl-text"><b>FoxBASE / FoxPro</b> — أول دمج بين لغة برمجة وقاعدة بيانات مكتبية</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">1991</div><div class="tl-text"><b>Visual Basic</b> (البرمجة المرئية) و<b>HTML</b> (الويب الثابت) — تزامن تاريخي لافت في نفس العام</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">1995</div><div class="tl-text"><b>Java وMySQL وPHP</b> معاً — ثلاثة أعمدة ستشكّل بنية الويب التحتية لعقدين قادمين</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">2002</div><div class="tl-text"><b>.NET Framework</b> — يوحّد C# وVB.NET تحت بيئة تطوير واحدة</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2000s</div><div class="tl-text">ذروة تطبيقات سطح المكتب عبر <b>Windows Forms / WPF</b></div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot"></div><div class="tl-year">2000s–2026</div><div class="tl-text"><b>Big Data + Data Mining</b>؛ صعود Python وبيئات التطوير السحابية (Jupyter, VS Code)</div></div>
+  </div>
+
+  <div class="tl-legend">
+    <div class="li"><span class="sw" style="background:var(--c0);"></span>العصر الآلي: الأسمبلي</div>
+    <div class="li"><span class="sw" style="background:var(--c1);"></span>ميلاد اللغات العليا</div>
+    <div class="li"><span class="sw" style="background:var(--c2);"></span>البنيوية وقواعد البيانات المكتبية</div>
+    <div class="li"><span class="sw" style="background:var(--c3);"></span>البرمجة المرئية و.NET</div>
+    <div class="li"><span class="sw" style="background:var(--c4);"></span>قواعد البيانات والويب المبكر</div>
+    <div class="li"><span class="sw" style="background:var(--c5);"></span>البيانات الضخمة والتنقيب</div>
+  </div>
+
+</div>
+</body>
+</html>
