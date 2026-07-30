@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>البيانات — من الكلمة المنطوقة إلى المورد الرقمي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a1826;
+    --bg-grid: #12293e;
+    --panel: #0f2438;
+    --panel-line: #1c3b57;
+    --ink: #e7eef5;
+    --ink-dim: #8fa6bb;
+    --gold: #d3a94e;
+    --gold-dim: #8a7038;
+
+    --lane-identity: #9b8cf2;
+    --lane-identity-bg: rgba(155,140,242,0.10);
+    --lane-files: #4fd0c8;
+    --lane-files-bg: rgba(79,208,200,0.10);
+    --lane-gateway: #f2a65a;
+    --lane-gateway-bg: rgba(242,166,90,0.10);
+    --lane-comms: #ef8c7a;
+    --lane-comms-bg: rgba(239,140,122,0.10);
+
+    --c0: #7a8a99;
+    --c1: #6d7fd6;
+    --c2: #3fb6c9;
+    --c3: #a879e0;
+    --c4: #e0a458;
+    --c5: #e0637a;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Cairo',sans-serif;}
+
+  body{
+    background-image:
+      linear-gradient(var(--bg-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    padding: 36px 28px 60px;
+  }
+
+  .wrap{max-width:1650px;margin:0 auto;}
+
+  .home-btn{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;
+    color:var(--ink-dim);text-decoration:none;
+    border:1px solid var(--panel-line);border-radius:20px;
+    padding:6px 14px;margin-bottom:14px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .home-btn:hover{color:var(--gold);border-color:var(--gold-dim);}
+  .home-btn .arrow{font-size:13px;}
+
+  header{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    border-bottom:2px solid var(--panel-line);padding-bottom:18px;margin-bottom:28px;
+    gap:24px;flex-wrap:wrap;
+  }
+  .title-block .eyebrow{
+    font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px;
+    letter-spacing:2px;margin-bottom:8px;
+  }
+  h1{font-size:27px;font-weight:800;margin:0 0 6px;line-height:1.3;}
+  .subtitle{color:var(--ink-dim);font-size:14px;max-width:660px;}
+  .domain-code{
+    font-family:'JetBrains Mono',monospace;text-align:left;direction:ltr;
+    color:var(--ink-dim);font-size:11px;line-height:1.9;
+    border:1px solid var(--panel-line);border-radius:4px;padding:10px 14px;background:var(--panel);
+  }
+  .domain-code b{color:var(--gold);}
+
+  .necessity-banner{
+    display:flex;align-items:center;gap:18px;
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:10px;
+    padding:18px 22px;margin-bottom:26px;
+  }
+  .necessity-banner .nicon{font-size:26px;}
+  .necessity-banner .ntext{font-size:14.5px;font-weight:700;color:var(--ink);}
+  .necessity-banner .ntext small{
+    display:block;font-weight:400;color:var(--ink-dim);font-size:12px;margin-top:4px;line-height:1.7;
+  }
+
+  .metaphor-box{
+    background:rgba(211,169,78,0.05);border:1px dashed var(--gold-dim);border-radius:10px;
+    padding:16px 20px;margin-bottom:30px;font-size:13px;color:var(--ink-dim);line-height:1.9;
+  }
+  .metaphor-box b{color:var(--gold);}
+
+  .chapters-strip{position:relative;display:grid;grid-template-columns: 210px 1fr;margin-bottom:0;}
+  .chapters-track{position:relative;height:46px;}
+  .chapter-tag{
+    position:absolute;top:0;height:46px;display:flex;flex-direction:column;justify-content:center;
+    padding:0 10px;border-radius:6px 6px 0 0;font-family:'JetBrains Mono',monospace;overflow:hidden;
+  }
+  .chapter-tag .cnum{font-size:9.5px;letter-spacing:1px;opacity:.85;}
+  .chapter-tag .cname{font-size:11px;font-weight:700;color:var(--ink);margin-top:2px;font-family:'Cairo',sans-serif;}
+
+  .axis{position:relative;display:grid;grid-template-columns: 210px 1fr;margin-bottom:2px;}
+  .axis .years{position:relative;height:30px;border-bottom:1px solid var(--panel-line);}
+  .axis .years span{
+    position:absolute;top:0;transform:translateX(50%);
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);font-weight:700;
+  }
+
+  .triggers{position:relative;grid-column: 2 / -1;}
+
+  .board{position:relative;display:grid;grid-template-columns: 210px 1fr;}
+
+  .lane-labels{display:flex;flex-direction:column;}
+  .lane-label{
+    height:150px;display:flex;align-items:center;justify-content:flex-end;
+    padding-inline-end:14px;border-bottom:1px solid var(--panel-line);
+  }
+  .lane-label .tag{font-weight:700;font-size:13px;text-align:right;line-height:1.5;}
+  .lane-label .tag small{
+    display:block;font-family:'JetBrains Mono',monospace;font-weight:400;
+    font-size:9px;color:var(--ink-dim);letter-spacing:0.5px;margin-top:3px;
+  }
+  .lane-label.identity{border-inline-end:4px solid var(--lane-identity);}
+  .lane-label.files{border-inline-end:4px solid var(--lane-files);}
+  .lane-label.gateway{border-inline-end:4px solid var(--lane-gateway);}
+  .lane-label.comms{border-inline-end:4px solid var(--lane-comms);}
+
+  .lanes{position:relative;}
+  .lane{
+    position:relative;height:150px;border-bottom:1px solid var(--panel-line);
+    display:flex;align-items:center;padding:0 18px;
+  }
+  .lane.identity{background:var(--lane-identity-bg);}
+  .lane.files{background:var(--lane-files-bg);}
+  .lane.gateway{background:var(--lane-gateway-bg);}
+  .lane.comms{background:var(--lane-comms-bg);}
+
+  .lane-track{position:relative;width:100%;height:2px;background:var(--panel-line);}
+
+  .node{
+    position:absolute;top:50%;transform:translate(50%,-50%);width:180px;
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:6px;
+    padding:8px 10px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,0.35);cursor:default;
+  }
+  .node .period{
+    font-family:'JetBrains Mono',monospace;font-size:8.8px;color:var(--gold);
+    margin-bottom:3px;letter-spacing:0.5px;
+  }
+  .node .name{font-weight:700;font-size:11px;line-height:1.4;}
+  .node.empty{opacity:.5;font-style:italic;}
+  .node.identity{border-top:3px solid var(--lane-identity);}
+  .node.files{border-top:3px solid var(--lane-files);}
+  .node.gateway{border-top:3px solid var(--lane-gateway);}
+  .node.comms{border-top:3px solid var(--lane-comms);}
+
+  .dot{
+    position:absolute;top:50%;width:9px;height:9px;border-radius:50%;
+    transform:translate(50%,-50%);background:var(--gold);box-shadow:0 0 0 3px var(--bg);
+  }
+
+  .chapter-band{position:absolute;top:0;bottom:0;opacity:.55;pointer-events:none;}
+
+  .trigger-line{position:absolute;top:0;bottom:0;width:0;border-right:1px dashed var(--gold-dim);}
+  .trigger-flag{position:absolute;top:-66px;transform:translateX(50%);width:160px;text-align:center;}
+  .trigger-flag .yr{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;}
+  .trigger-flag .lbl{font-size:10.5px;color:var(--ink-dim);line-height:1.3;margin-top:2px;}
+
+  .board-outer{
+    position:relative;border:1px solid var(--panel-line);border-radius:8px;
+    overflow:visible;margin-top:78px;background:var(--panel);
+  }
+
+  .legend{
+    display:flex;gap:20px;flex-wrap:wrap;margin-top:26px;padding-top:18px;
+    border-top:1px solid var(--panel-line);font-size:12px;color:var(--ink-dim);
+  }
+  .legend .item{display:flex;align-items:center;gap:7px;}
+  .legend .swatch{width:12px;height:12px;border-radius:3px;}
+
+  .note{
+    margin-top:22px;background:var(--panel);border:1px solid var(--panel-line);
+    border-radius:8px;padding:16px 20px;font-size:13px;color:var(--ink-dim);line-height:1.9;
+  }
+  .note b{color:var(--ink);}
+  .note code{
+    font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.06);
+    padding:1px 6px;border-radius:4px;color:var(--gold);direction:ltr;display:inline-block;
+  }
+
+  .story-header{margin-top:56px;padding-bottom:14px;border-bottom:2px solid var(--panel-line);}
+  .story-header .eyebrow{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px;letter-spacing:2px;margin-bottom:6px;}
+  .story-header h2{font-size:22px;font-weight:800;margin:0;}
+
+  .story-grid{display:flex;flex-direction:column;gap:18px;margin-top:22px;}
+
+  .story-card{position:relative;background:var(--panel);border:1px solid var(--panel-line);border-radius:10px;overflow:hidden;}
+  .story-card::before{content:"";position:absolute;top:0;bottom:0;right:0;width:5px;}
+  .story-card.sc0::before{background:var(--c0);}
+  .story-card.sc1::before{background:var(--c1);}
+  .story-card.sc2::before{background:var(--c2);}
+  .story-card.sc3::before{background:var(--c3);}
+  .story-card.sc4::before{background:var(--c4);}
+  .story-card.sc5::before{background:var(--c5);}
+
+  .story-card-head{
+    padding:18px 22px 14px;border-bottom:1px solid var(--panel-line);
+    display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;
+  }
+  .sc-title-block{max-width:700px;}
+  .sc-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;margin-bottom:6px;}
+  .sc0 .sc-num{color:var(--c0);} .sc1 .sc-num{color:var(--c1);} .sc2 .sc-num{color:var(--c2);}
+  .sc3 .sc-num{color:var(--c3);} .sc4 .sc-num{color:var(--c4);} .sc5 .sc-num{color:var(--c5);}
+  .sc-title{font-size:18px;font-weight:800;margin-bottom:6px;}
+  .sc-hook{font-size:13px;color:var(--ink-dim);font-style:italic;line-height:1.8;}
+  .sc-years{
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);font-weight:700;
+    background:rgba(211,169,78,0.08);border:1px solid var(--gold-dim);border-radius:20px;
+    padding:6px 16px;white-space:nowrap;
+  }
+
+  .sc-body{padding:18px 22px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media (max-width:1100px){.sc-body{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:640px){.sc-body{grid-template-columns:1fr;}}
+
+  .sc-domain{background:rgba(255,255,255,0.03);border-radius:8px;padding:12px 14px;border-inline-start:3px solid transparent;}
+  .sc-domain.identity{border-inline-start-color:var(--lane-identity);}
+  .sc-domain.files{border-inline-start-color:var(--lane-files);}
+  .sc-domain.gateway{border-inline-start-color:var(--lane-gateway);}
+  .sc-domain.comms{border-inline-start-color:var(--lane-comms);}
+  .sc-dlabel{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.5px;margin-bottom:5px;}
+  .sc-domain.identity .sc-dlabel{color:var(--lane-identity);}
+  .sc-domain.files .sc-dlabel{color:var(--lane-files);}
+  .sc-domain.gateway .sc-dlabel{color:var(--lane-gateway);}
+  .sc-domain.comms .sc-dlabel{color:var(--lane-comms);}
+  .sc-dtech{font-weight:700;font-size:13px;margin-bottom:5px;line-height:1.4;}
+  .sc-dnote{font-size:12px;color:var(--ink-dim);line-height:1.7;}
+
+  .sc-cross{
+    grid-column:1/-1;
+    background:rgba(211,169,78,0.05);
+    border:1px dashed var(--gold-dim);
+    border-radius:8px;
+    padding:11px 14px;
+    font-size:12px;
+    color:var(--ink-dim);
+    line-height:1.7;
+  }
+  .sc-cross b{color:var(--gold);}
+
+  .sc-foot{padding:13px 22px 18px;font-size:12.5px;color:var(--ink-dim);display:flex;gap:8px;}
+  .sc-foot b{color:var(--ink);}
+
+  .role-strip{
+    display:flex;align-items:center;gap:6px;margin-top:24px;flex-wrap:wrap;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;
+  }
+  .role-strip .role{
+    background:var(--panel);border:1px solid var(--panel-line);color:var(--ink);
+    padding:7px 14px;border-radius:20px;white-space:nowrap;
+  }
+  .role-strip .arrow{color:var(--gold);font-size:15px;}
+
+  .full-timeline{margin-top:56px;}
+  .tl-list{position:relative;margin-top:22px;}
+  .tl-list::before{content:"";position:absolute;top:6px;bottom:6px;right:6px;width:1px;background:var(--panel-line);}
+  .tl-item{
+    position:relative;display:flex;gap:16px;align-items:baseline;flex-wrap:wrap;
+    padding:12px 18px 12px 14px;padding-inline-end:30px;border-radius:8px;
+    border-inline-start:3px solid transparent;
+  }
+  .tl-item:nth-child(odd){background:rgba(255,255,255,0.015);}
+  .tl-item .tl-dot{
+    position:absolute;right:2px;top:19px;width:9px;height:9px;border-radius:50%;
+    background:var(--gold);box-shadow:0 0 0 3px var(--bg);z-index:2;
+  }
+  .tl-item .tl-year{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--gold);
+    font-weight:700;min-width:120px;flex-shrink:0;
+  }
+  .tl-item .tl-text{font-size:13px;color:var(--ink-dim);line-height:1.8;flex:1;min-width:200px;}
+  .tl-item .tl-text b{color:var(--ink);font-weight:700;}
+
+  .tl-item.tl-c0{border-inline-start-color:var(--c0);}
+  .tl-item.tl-c0 .tl-dot{background:var(--c0);}
+  .tl-item.tl-c0 .tl-year{color:var(--c0);}
+  .tl-item.tl-c1{border-inline-start-color:var(--c1);}
+  .tl-item.tl-c1 .tl-dot{background:var(--c1);}
+  .tl-item.tl-c1 .tl-year{color:var(--c1);}
+  .tl-item.tl-c2{border-inline-start-color:var(--c2);}
+  .tl-item.tl-c2 .tl-dot{background:var(--c2);}
+  .tl-item.tl-c2 .tl-year{color:var(--c2);}
+  .tl-item.tl-c3{border-inline-start-color:var(--c3);}
+  .tl-item.tl-c3 .tl-dot{background:var(--c3);}
+  .tl-item.tl-c3 .tl-year{color:var(--c3);}
+  .tl-item.tl-c4{border-inline-start-color:var(--c4);}
+  .tl-item.tl-c4 .tl-dot{background:var(--c4);}
+  .tl-item.tl-c4 .tl-year{color:var(--c4);}
+  .tl-item.tl-c5{border-inline-start-color:var(--c5);}
+  .tl-item.tl-c5 .tl-dot{background:var(--c5);}
+  .tl-item.tl-c5 .tl-year{color:var(--c5);}
+
+  .tl-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;font-size:11.5px;color:var(--ink-dim);}
+  .tl-legend .li{display:flex;align-items:center;gap:6px;}
+  .tl-legend .sw{width:10px;height:10px;border-radius:3px;}
+
+  .bridge-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:22px;}
+  @media (max-width:1000px){.bridge-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:600px){.bridge-grid{grid-template-columns:1fr;}}
+  .bridge-card{
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:10px;
+    padding:18px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;
+  }
+  .bridge-card .bicon{font-size:22px;}
+  .bridge-card .btitle{font-weight:800;font-size:14px;line-height:1.5;}
+  .bridge-card .bdesc{font-size:12px;color:var(--ink-dim);line-height:1.8;flex:1;}
+  .bridge-card .bbtn{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+    color:var(--gold);text-decoration:none;border:1px solid var(--gold-dim);
+    border-radius:16px;padding:6px 12px;width:fit-content;
+    transition:background .15s ease,color .15s ease;
+  }
+  .bridge-card .bbtn:hover{background:var(--gold);color:var(--bg);}
+  .bridge-base{
+    margin-top:18px;text-align:center;font-family:'JetBrains Mono',monospace;
+    font-size:12px;color:var(--gold);letter-spacing:1px;
+    border-top:2px solid var(--gold-dim);padding-top:14px;
+  }
+
+  @media (max-width: 1300px){
+    .board-outer{overflow-x:auto;}
+    .board, .axis, .chapters-strip{min-width:1500px;}
+  }
+</style>
+</head>
+<body>
+<script>
+  if (sessionStorage.getItem("bcs_auth") !== "1") {
+    window.location.href = "login.html";
+  }
+</script>
+<div class="wrap">
+  <a class="home-btn" href="index.html"><span class="arrow">→</span> العودة للصفحة الرئيسية</a>
+
+  <header>
+    <div class="title-block">
+      <div class="eyebrow">DATA // BLUEPRINT NARRATIVE MAP</div>
+      <h1>البيانات: من الكلمة المنطوقة إلى المورد الرقمي</h1>
+      <div class="subtitle">رحلة استكشافية تدقيقية في المادة الخام التي تتحول بالمعالجة إلى معلومة، وبالممارسة إلى معرفة — وكيف تتغذى عليها علوم الحاسوب جميعها</div>
+    </div>
+    <div class="domain-code">
+      <div>SUBJECT: <b>DATA</b></div>
+      <div>SPAN: <b>قبل 3200 ق.م → 2026</b></div>
+      <div>TRACKS: <b>04</b> · CHAPTERS: <b>06</b> · TRIGGERS: <b>05</b></div>
+    </div>
+  </header>
+
+  <div class="necessity-banner">
+    <div class="nicon">🫁</div>
+    <div class="ntext">
+      الضرورة الوجودية: كل الأنظمة تختنق بدون بيانات
+      <small>من علوم الحاسوب إلى لغات البرمجة، من الخوادم إلى شبكات الاتصال — لا نظام واحد في هذا المشروع يعمل بمعزل عن تدفق بيانات مستمر يغذّيه.</small>
+    </div>
+  </div>
+
+  <div class="metaphor-box">
+    💡 <b>استعارة سردية لا حقيقة اقتصادية مثبتة:</b> يُقال أحياناً إن البيانات "الماء والأكسجين" الذي تتنفسه علوم الحاسوب — استعارة قوية لوصف الضرورة الوجودية (انقطاعها يعني اختناق النظام)، لا لوصف طبيعتها الاقتصادية الفعلية. بخلاف الماء والهواء، البيانات لا تُستهلك بالاستخدام بل تتكاثر به، ولا تُوزَّع مجاناً في الواقع بل يُحتكر جزء كبير منها تجارياً (Google, Meta) — الاستعارة تصف الحاجة إليها، لا تصف سوقها.
+  </div>
+
+  <div class="board-outer">
+
+    <div class="chapters-strip">
+      <div></div>
+      <div class="chapters-track">
+        <div class="chapter-tag" style="right:0%; width:15%; background:color-mix(in srgb, var(--c0) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c0);">CH.00 · قبل 3200ق.م</div>
+          <div class="cname">العصر الشفهي</div>
+        </div>
+        <div class="chapter-tag" style="right:15%; width:15%; background:color-mix(in srgb, var(--c1) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c1);">CH.01 · 3200ق.م–1440</div>
+          <div class="cname">ظهور الكتابة</div>
+        </div>
+        <div class="chapter-tag" style="right:30%; width:15%; background:color-mix(in srgb, var(--c2) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c2);">CH.02 · 1940s–60s</div>
+          <div class="cname">الرقمنة المبكرة</div>
+        </div>
+        <div class="chapter-tag" style="right:45%; width:18%; background:color-mix(in srgb, var(--c3) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c3);">CH.03 · 1962–2008</div>
+          <div class="cname">البيانات ضرورة وجودية</div>
+        </div>
+        <div class="chapter-tag" style="right:63%; width:17%; background:color-mix(in srgb, var(--c4) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c4);">CH.04 · 2000s–2010s</div>
+          <div class="cname">تصنيف ومعالجة البيانات</div>
+        </div>
+        <div class="chapter-tag" style="right:80%; width:20%; background:color-mix(in srgb, var(--c5) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c5);">CH.05 · 2010s–2026</div>
+          <div class="cname">البيانات الضخمة واعتماد AI</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="axis" style="margin-top:6px;">
+      <div></div>
+      <div class="triggers" style="grid-column: 2/-1; height:0;">
+        <div class="trigger-flag" style="right:15%;"><div class="yr">3200 ق.م</div><div class="lbl">𒀀 الكتابة المسمارية</div></div>
+        <div class="trigger-flag" style="right:30%;"><div class="yr">1440</div><div class="lbl">🖨️ مطبعة غوتنبرغ</div></div>
+        <div class="trigger-flag" style="right:45%;"><div class="yr">1951</div><div class="lbl">💾 أول تخزين رقمي تجاري</div></div>
+        <div class="trigger-flag" style="right:63%;"><div class="yr">2001</div><div class="lbl">📊 مصطلح Big Data / 3Vs</div></div>
+        <div class="trigger-flag" style="right:80%;"><div class="yr">2008</div><div class="lbl">👤 مصطلح "عالم بيانات"</div></div>
+      </div>
+    </div>
+
+    <div class="axis">
+      <div></div>
+      <div class="years">
+        <span style="right:0%;">قبل 3200 ق.م</span>
+        <span style="right:30%;">1440</span>
+        <span style="right:45%;">1951</span>
+        <span style="right:63%;">2001</span>
+        <span style="right:98%;">2026</span>
+      </div>
+    </div>
+
+    <div class="board">
+      <div class="lane-labels">
+        <div class="lane-label identity"><div class="tag">الوعي الإنساني بالمعلومة<small>AWARENESS · SPOKEN → DIGITAL</small></div></div>
+        <div class="lane-label files"><div class="tag">علم البيانات وأدواته<small>DATA SCIENCE · TUKEY → PYTHON/R</small></div></div>
+        <div class="lane-label gateway"><div class="tag">تصنيف وأشكال البيانات<small>TYPES · STRUCTURED → UNSTRUCTURED</small></div></div>
+        <div class="lane-label comms"><div class="tag">البيانات الضخمة واعتماد الأنظمة/AI<small>BIG DATA · 3Vs → AI DEPENDENCY</small></div></div>
+      </div>
+
+      <div class="lanes">
+
+        <div class="chapter-band" style="right:0%; width:15%; background:var(--c0); opacity:.06;"></div>
+        <div class="chapter-band" style="right:15%; width:15%; background:var(--c1); opacity:.07;"></div>
+        <div class="chapter-band" style="right:30%; width:15%; background:var(--c2); opacity:.07;"></div>
+        <div class="chapter-band" style="right:45%; width:18%; background:var(--c3); opacity:.07;"></div>
+        <div class="chapter-band" style="right:63%; width:17%; background:var(--c4); opacity:.08;"></div>
+        <div class="chapter-band" style="right:80%; width:20%; background:var(--c5); opacity:.08;"></div>
+
+        <div class="trigger-line" style="right:15%;"></div>
+        <div class="trigger-line" style="right:30%;"></div>
+        <div class="trigger-line" style="right:45%;"></div>
+        <div class="trigger-line" style="right:63%;"></div>
+        <div class="trigger-line" style="right:80%;"></div>
+
+        <div class="lane identity">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node identity" style="right:2%;" title="المعلومة تُقال وتُسمع وتُحفظ في الذاكرة البشرية فقط — قابلة للفقد والتحريف مع كل انتقال شفهي بين جيل وآخر.">
+              <div class="period">قبل 3200 ق.م</div>
+              <div class="name">تُقال وتُسمع<br>تُحفظ بالذاكرة فقط</div>
+            </div>
+            <div class="dot" style="right:17%;"></div>
+            <div class="node identity" style="right:17%;" title="الكتابة المسمارية في بلاد الرافدين (3200 ق.م) تجعل المعلومة تُكتب وتُحفظ وتنتشر لأول مرة خارج حدود الذاكرة البشرية؛ مطبعة غوتنبرغ (1440) تضاعف الانتشار.">
+              <div class="period">3200 ق.م – 1440</div>
+              <div class="name">تُكتب وتُحفظ وتنتشر<br>من الطين إلى المطبعة</div>
+            </div>
+            <div class="dot" style="right:32%;"></div>
+            <div class="node identity" style="right:32%;" title="المعلومة تُكتب رقمياً لأول مرة — تتحول إلى بتات (0/1) بدل حروف على ورق.">
+              <div class="period">1940s–1960s</div>
+              <div class="name">تُكتب رقمياً<br>تتحول إلى بتات</div>
+            </div>
+            <div class="dot" style="right:47%;"></div>
+            <div class="node identity" style="right:47%;" title="البيانات تصبح كالماء والأكسجين — ضرورة وجودية لا رفاهية؛ أي نظام حاسوبي يتوقف عن العمل بدونها.">
+              <div class="period">1962–2008</div>
+              <div class="name">ضرورة وجودية<br>كالماء والأكسجين</div>
+            </div>
+            <div class="dot" style="right:65%;"></div>
+            <div class="node identity empty" style="right:65%;" title="استهلاك البيانات يصبح يومياً وصامتاً تماماً — لا نلاحظها كما لا نلاحظ الهواء الذي نتنفسه.">
+              <div class="period">2000s–2010s</div>
+              <div class="name">استهلاك صامت<br>لا نلاحظها كالهواء</div>
+            </div>
+            <div class="dot" style="right:82%;"></div>
+            <div class="node identity" style="right:82%;" title="الإنسان محاط ببيانات دائمة التدفق من كل جهاز يحمله وكل تفاعل رقمي يقوم به — بيئة بيانات كاملة لا يمكن الانفكاك عنها.">
+              <div class="period">2010s–2026</div>
+              <div class="name">محاط ببيانات دائمة<br>من كل جهاز وتفاعل</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lane files">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node files empty" style="right:2%;" title="لا علم بيانات بعد — لا حتى مفهوم 'البيانات' منفصلاً عن المعرفة الشفهية نفسها.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:17%;"></div>
+            <div class="node files empty" style="right:17%;" title="لا علم بيانات بعد؛ الكتابة أداة توثيق لا تحليل.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:32%;"></div>
+            <div class="node files empty" style="right:32%;" title="الحوسبة الرقمية للتو تولد؛ لا تخصص أكاديمي لتحليل البيانات بعد.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:47%;"></div>
+            <div class="node files" style="right:47%;" title="جون تُوكي يصوغ مصطلح 'تحليل البيانات' (Data Analysis) عام 1962؛ يتبعه لاحقاً صياغة مصطلح 'عالم بيانات' (Data Scientist) رسمياً عام 2008 على يد دي جيه باتيل وجيف هامرباخر.">
+              <div class="period">1962–2008</div>
+              <div class="name">"تحليل البيانات" (1962)<br>ثم "عالم بيانات" (2008)</div>
+            </div>
+            <div class="dot" style="right:65%;"></div>
+            <div class="node files" style="right:65%;" title="أدوات معالجة أكثر نضجاً: عمليات ETL (استخراج وتحويل وتحميل)، قواعد بيانات تحليلية متخصصة، وبايثون/R تتصدران كلغتي التحليل المفضّلتين.">
+              <div class="period">2000s–2010s</div>
+              <div class="name">أدوات ETL ناضجة<br>Python / R تتصدران</div>
+            </div>
+            <div class="dot" style="right:82%;"></div>
+            <div class="node files" style="right:82%;" title="علم البيانات يصبح تخصصاً أكاديمياً راسخاً في الجامعات؛ وظيفة 'عالم بيانات' من بين الوظائف الأكثر طلباً عالمياً.">
+              <div class="period">2010s–2026</div>
+              <div class="name">تخصص أكاديمي راسخ<br>من أكثر الوظائف طلباً</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lane gateway">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node gateway empty" style="right:2%;" title="لا تصنيف بعد؛ المعلومة كلٌّ واحد غير مقسَّم.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:17%;"></div>
+            <div class="node gateway empty" style="right:17%;" title="النصوص المكتوبة شكل وحيد؛ لا تصنيف تقني بعد.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:32%;"></div>
+            <div class="node gateway empty" style="right:32%;" title="ملفات تسلسلية بسيطة (Flat Files) فقط — لا مفهوم 'هيكلة' واضح بعد.">
+              <div class="period">1940s–1960s</div>
+              <div class="name">ملفات تسلسلية بسيطة</div>
+            </div>
+            <div class="dot" style="right:47%;"></div>
+            <div class="node gateway empty" style="right:47%;" title="قواعد بيانات علائقية مبكرة تظهر، لكن دون تصنيف واضح بين مهيكلة وغير مهيكلة بعد.">
+              <div class="period">1962–2008</div>
+              <div class="name">قواعد علائقية مبكرة<br>لا تصنيف واضح بعد</div>
+            </div>
+            <div class="dot" style="right:65%;"></div>
+            <div class="node gateway" style="right:65%;" title="يترسّخ التصنيف الثلاثي: مهيكلة (جداول SQL)، شبه مهيكلة (JSON/XML)، وغير مهيكلة (نصوص حرة، صور، صوت) — وتظهر قواعد NoSQL استجابة لهذا التنوع.">
+              <div class="period">2000s–2010s</div>
+              <div class="name">مهيكلة / شبه مهيكلة<br>غير مهيكلة — SQL مقابل NoSQL</div>
+            </div>
+            <div class="dot" style="right:82%;"></div>
+            <div class="node gateway" style="right:82%;" title="البيانات غير المهيكلة (نصوص، صور، فيديو، صوت) تتصدر الحجم الإجمالي للبيانات المُنتَجة عالمياً، وتصبح التحدي الأكبر للمعالجة والتخزين.">
+              <div class="period">2010s–2026</div>
+              <div class="name">غير المهيكلة تتصدر الحجم<br>نصوص وصور وفيديو وصوت</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lane comms">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node comms empty" style="right:2%;" title="لا وجود بعد.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:17%;"></div>
+            <div class="node comms empty" style="right:17%;" title="لا وجود بعد.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:32%;"></div>
+            <div class="node comms empty" style="right:32%;" title="لا وجود بعد؛ أحجام البيانات محدودة جداً بمقاييس اليوم.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:47%;"></div>
+            <div class="node comms empty" style="right:47%;" title="لا مفهوم 'بيانات ضخمة' بعد؛ الأنظمة لا تزال تُدار ببيانات محدودة الحجم نسبياً.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:65%;"></div>
+            <div class="node comms" style="right:65%;" title="دوغ لايني يصوغ مصطلح البيانات الضخمة عبر إطار 3Vs: الحجم (Volume)، السرعة (Velocity)، والتنوع (Variety) — عام 2001، قبل أن يشيع المصطلح تجارياً بعد عقد تقريباً.">
+              <div class="period">2001–2010s</div>
+              <div class="name">مصطلح Big Data<br>3Vs: حجم، سرعة، تنوع</div>
+            </div>
+            <div class="dot" style="right:82%;"></div>
+            <div class="node comms" style="right:82%;" title="الذكاء الاصطناعي وتعلم الآلة يعتمدان اعتماداً كلياً على البيانات الضخمة — بلا كميات هائلة من البيانات، لا تعلّم حقيقياً؛ جودة النموذج مرتبطة مباشرة بجودة وحجم البيانات المُدرَّب عليها.">
+              <div class="period">2010s–2026</div>
+              <div class="name">AI يعتمد كلياً على البيانات<br>بلا بيانات ضخمة لا تعلّم آلة</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="item"><span class="swatch" style="background:var(--lane-identity)"></span> الوعي الإنساني بالمعلومة</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-files)"></span> علم البيانات وأدواته</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-gateway)"></span> تصنيف وأشكال البيانات</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-comms)"></span> البيانات الضخمة واعتماد الأنظمة/AI</div>
+    <div class="item">┄┄ خط ذهبي متقطع = حدث تحوّل مشترك أثّر على أكثر من مسار في نفس اللحظة</div>
+    <div class="item">💡 مرّر المؤشر فوق أي بطاقة لقراءة السياق الكامل</div>
+  </div>
+
+  <div class="note">
+    <b>لإعادة بنائه في Microsoft Visio:</b> نفس نمط <b>Swimlane Timeline</b> غير الخطي — استخدم <code>File → New → Schedule → Timeline</code>
+    مع تجاهل التناسب الزمني الدقيق (فالمسافة من 3200 ق.م إلى 1440 لا تُقاس بنفس منطق 2010-2026). لاحظ أن مسار "تصنيف وأشكال البيانات"
+    فارغ لمعظم الجدول عمداً — التصنيف مفهوم حديث نسبياً (2000s فصاعداً) رغم قِدَم البيانات نفسها.
+    <br><br>
+    <b>ملاحظة منهجية:</b> هذه الصفحة تختلف عن الصفحات الأخرى في المشروع — فهي تصف <b>مورداً</b> تتغذى عليه بقية الصفحات، لا مساراً تقنياً مستقلاً بذاته.
+    راجع قسم "الجسر" في نهاية الصفحة لرؤية هذا الترابط بشكل صريح.
+  </div>
+
+  <div class="story-header">
+    <div class="eyebrow">FULL NARRATIVE // كل محطة بتفاصيلها الكاملة</div>
+    <h2>الرحلة الكاملة: من كلمة تُقال إلى وقود يُغذّي الذكاء الاصطناعي</h2>
+  </div>
+
+  <div class="role-strip">
+    <div class="role">👂 مستمع يحفظ المعرفة بالذاكرة</div>
+    <span class="arrow">←</span>
+    <div class="role">✍️ كاتب يوثّق على الطين والورق</div>
+    <span class="arrow">←</span>
+    <div class="role">💾 مبرمج يخزّن أول بتات رقمية</div>
+    <span class="arrow">←</span>
+    <div class="role">📊 عالم بيانات يحوّل الخام إلى معرفة</div>
+    <span class="arrow">←</span>
+    <div class="role">🤖 نظام ذكاء اصطناعي يتعلّم من كل بت</div>
+  </div>
+
+  <div class="story-grid">
+
+    <div class="story-card sc0">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 00 // ORAL ERA</div>
+          <div class="sc-title">العصر الشفهي: المعرفة تعيش وتموت مع حاملها</div>
+          <div class="sc-hook">لا نسخة احتياطية، لا أرشيف — كل ما يعرفه الإنسان محصور في ذاكرته وحدها، وينتقل فقط إن رواه لأحد قبل أن يفوت الأوان.</div>
+        </div>
+        <div class="sc-years">قبل 3200 ق.م</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">AWARENESS</div>
+          <div class="sc-dtech">تُقال وتُسمع، تُحفظ بالذاكرة فقط</div>
+          <div class="sc-dnote">المعلومة تنتقل شفهياً بين الأجيال — قابلة للفقد الكامل بموت الراوي، وللتحريف مع كل إعادة رواية.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">DATA SCIENCE</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">لا مفهوم "بيانات" منفصل عن المعرفة نفسها؛ كل شيء ذاكرة حية أو لا شيء.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">TYPES</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">لا تصنيف؛ المعلومة كلٌّ واحد غير قابل للتجزئة أو التخزين المنفصل.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">BIG DATA / AI</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">لا تصوّر بعد لأي شيء يشبه "الحجم" أو "التحليل الآلي".</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> شيخ القبيلة يروي قصة حرب قديمة لأحفاده — لو مات الليلة دون أن يرويها، تختفي هذه المعرفة من الوجود للأبد.</div>
+    </div>
+
+    <div class="story-card sc1">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 01 // WRITING EMERGES</div>
+          <div class="sc-title">ظهور الكتابة: المعرفة تتحرر من حدود الذاكرة</div>
+          <div class="sc-hook">لأول مرة، لا يحتاج الإنسان أن يتذكر كل شيء — يكفي أن يعرف أين كُتب.</div>
+        </div>
+        <div class="sc-years">3200 ق.م — 1440</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">AWARENESS</div>
+          <div class="sc-dtech">الكتابة المسمارية (3200 ق.م) ثم مطبعة غوتنبرغ (1440)</div>
+          <div class="sc-dnote">المعلومة تُكتب وتُحفظ وتنتشر لأول مرة خارج حدود الذاكرة البشرية — من ألواح الطين في بلاد الرافدين إلى الانتشار الهائل الذي أتاحته المطبعة بعد آلاف السنين.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">DATA SCIENCE</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">الكتابة أداة توثيق وحفظ، لا تحليل أو استخلاص أنماط.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">TYPES</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">النص المكتوب شكل وحيد لا يُصنَّف تقنياً.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">BIG DATA / AI</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">أحجام المعلومات المكتوبة، مهما بلغت، بعيدة كل البعد عن أي مفهوم "ضخامة" بالمقاييس الحديثة.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> مكتبة الإسكندرية تحترق — أول درس تاريخي قاسٍ في أن الكتابة وحدها لا تكفي؛ الحفظ يحتاج نسخاً متعددة، لا نسخة واحدة مركزية.</div>
+    </div>
+
+    <div class="story-card sc2">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 02 // EARLY DIGITIZATION</div>
+          <div class="sc-title">الرقمنة المبكرة: المعلومة تصبح صفراً وواحداً</div>
+          <div class="sc-hook">لأول مرة في تاريخ البشرية، لا تُكتب المعلومة بحرف أو رمز مرئي — بل بنبضة كهربائية إما موجودة أو غائبة.</div>
+        </div>
+        <div class="sc-years">1940s — 1960s</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">AWARENESS</div>
+          <div class="sc-dtech">تُكتب رقمياً — بتات لا حروف</div>
+          <div class="sc-dnote">المعلومة تتحول لأول مرة إلى تمثيل ثنائي (0/1) داخل الحواسيب الإلكترونية الأولى.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">DATA SCIENCE</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">الحوسبة الرقمية للتو تولد؛ لا تخصص أكاديمي لتحليل البيانات بعد.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">TYPES</div>
+          <div class="sc-dtech">ملفات تسلسلية بسيطة</div>
+          <div class="sc-dnote">تُقرأ من البداية للنهاية فقط؛ لا مفهوم "هيكلة" أو "علاقات" بين البيانات بعد.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">BIG DATA / AI</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">أحجام البيانات محدودة جداً بمقاييس اليوم — كيلوبايتات، لا تيرابايتات.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> شريط مغناطيسي يدور ببطء داخل حاسوب UNIVAC ضخم — كمية بيانات لا تتجاوز صورة واحدة بجودة اليوم، لكنها كانت وقتها إنجازاً هائلاً.</div>
+    </div>
+
+    <div class="story-card sc3">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 03 // EXISTENTIAL NECESSITY</div>
+          <div class="sc-title">البيانات ضرورة وجودية: ميلاد علم قائم عليها وحدها</div>
+          <div class="sc-hook">للمرة الأولى، تصبح البيانات نفسها موضوع دراسة مستقلاً — لا وسيلة لتحقيق غاية أخرى، بل غاية وعلم بذاتها.</div>
+        </div>
+        <div class="sc-years">1962 — 2008</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">AWARENESS</div>
+          <div class="sc-dtech">ضرورة وجودية — كالماء والأكسجين</div>
+          <div class="sc-dnote">أي نظام حاسوبي يتوقف فعلياً عن العمل بدون تدفق بيانات مستمر إليه — الاستعارة هنا وصفية لا اقتصادية (انظر صندوق التوضيح أعلى الصفحة).</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">DATA SCIENCE</div>
+          <div class="sc-dtech">"تحليل البيانات" (1962) ثم "عالم بيانات" (2008)</div>
+          <div class="sc-dnote">جون تُوكي يصوغ مصطلح Data Analysis عام 1962، واضعاً حجر الأساس لعلم قائم بذاته؛ بعد 46 عاماً، يصوغ دي جيه باتيل وجيف هامرباخر مصطلح "عالم بيانات" (Data Scientist) رسمياً عام 2008.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">TYPES</div>
+          <div class="sc-dtech">قواعد علائقية مبكرة</div>
+          <div class="sc-dnote">تظهر قواعد بيانات علائقية أولى، لكن دون تصنيف واضح بعد بين مهيكلة وغير مهيكلة.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">BIG DATA / AI</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">لا مفهوم "بيانات ضخمة" بعد؛ الأنظمة تُدار ببيانات محدودة الحجم نسبياً.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> باحث يكتب على السبورة مصطلحاً جديداً — "عالم بيانات" — لا يدرك بعد أن هذه الوظيفة ستصبح خلال عقد واحد من أكثر الوظائف طلباً على وجه الأرض.</div>
+    </div>
+
+    <div class="story-card sc4">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 04 // TYPES & PROCESSING</div>
+          <div class="sc-title">تصنيف ومعالجة البيانات: الفوضى تحتاج نظاماً</div>
+          <div class="sc-hook">مع تضخم كميات البيانات، لم يعد كافياً أن "تُخزَّن" — أصبح لا بد من فهم شكلها أولاً لمعرفة كيف تُعالَج.</div>
+        </div>
+        <div class="sc-years">2000s — 2010s</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">AWARENESS</div>
+          <div class="sc-dtech">استهلاك صامت</div>
+          <div class="sc-dnote">التفاعل مع البيانات يصبح يومياً وتلقائياً تماماً — لا يلاحظه المستخدم العادي، تماماً كما لا يلاحظ الهواء الذي يتنفسه.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">DATA SCIENCE</div>
+          <div class="sc-dtech">أدوات ETL ناضجة، Python/R تتصدران</div>
+          <div class="sc-dnote">عمليات الاستخراج والتحويل والتحميل (ETL) تنضج كتخصص هندسي قائم بذاته؛ بايثون وR يصبحان لغتي التحليل المهيمنتين.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">TYPES</div>
+          <div class="sc-dtech">مهيكلة / شبه مهيكلة / غير مهيكلة</div>
+          <div class="sc-dnote">يترسّخ التصنيف الثلاثي المعياري: مهيكلة (جداول SQL منظمة)، شبه مهيكلة (JSON وXML)، وغير مهيكلة (نصوص حرة، صور، صوت) — وتظهر قواعد NoSQL استجابة مباشرة لهذا التنوع.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">BIG DATA / AI</div>
+          <div class="sc-dtech">مصطلح Big Data / 3Vs (2001)</div>
+          <div class="sc-dnote">دوغ لايني يصوغ إطار الأبعاد الثلاثة: الحجم (Volume)، السرعة (Velocity)، والتنوع (Variety) — إطار سيصبح المرجع القياسي لتعريف "البيانات الضخمة" لعقدين قادمين.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> مهندس بيانات يرسم مخططاً يقسّم البيانات الواردة إلى ثلاث قنوات مختلفة حسب شكلها — الفوضى التي بدت هائلة بلا نظام بدأت تجد أخيراً منطقاً واضحاً.</div>
+    </div>
+
+    <div class="story-card sc5">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 05 // BIG DATA & AI DEPENDENCY</div>
+          <div class="sc-title">البيانات الضخمة واعتماد الذكاء الاصطناعي: الوقود الذي لا بديل عنه</div>
+          <div class="sc-hook">لم يعد الذكاء الاصطناعي مجرد مستهلك للبيانات — أصبح كائناً لا يستطيع التفكير أو التعلّم أو حتى الوجود الوظيفي بدونها.</div>
+        </div>
+        <div class="sc-years">2010s — 2026</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">AWARENESS</div>
+          <div class="sc-dtech">محاط ببيانات دائمة التدفق</div>
+          <div class="sc-dnote">كل جهاز يحمله الإنسان، وكل تفاعل رقمي يقوم به، يُنتج بيانات باستمرار — بيئة بيانات كاملة لا يمكن الانفكاك عنها عملياً.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">DATA SCIENCE</div>
+          <div class="sc-dtech">تخصص أكاديمي راسخ</div>
+          <div class="sc-dnote">علم البيانات يصبح تخصصاً جامعياً كاملاً بمناهجه الخاصة؛ وظيفة "عالم بيانات" من بين الوظائف الأكثر طلباً وأجراً عالمياً.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">TYPES</div>
+          <div class="sc-dtech">غير المهيكلة تتصدر الحجم</div>
+          <div class="sc-dnote">النصوص والصور والفيديو والصوت تشكّل الغالبية العظمى من البيانات المُنتَجة عالمياً — تحدٍّ معالجة وتخزين يفوق بكثير ما تعالجه جداول SQL التقليدية.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">BIG DATA / AI</div>
+          <div class="sc-dtech">AI يعتمد كلياً على البيانات</div>
+          <div class="sc-dnote">تعلّم الآلة والذكاء الاصطناعي التوليدي يعتمدان اعتماداً مباشراً وكاملاً على كميات هائلة من البيانات للتدريب — جودة النموذج مرتبطة عضوياً بجودة وحجم ما تعلّم منه، لا بذكاء خوارزمي مجرد.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> من كلمة واحدة رُويت شفهياً قبل آلاف السنين، إلى نموذج ذكاء اصطناعي يتدرب على مليارات الكلمات في ثوانٍ — الرحلة نفسها تختصر قصة الحضارة الإنسانية بأكملها في محاولة واحدة مستمرة: أن تُحفظ المعرفة وتُشارَك ولا تُفقد.</div>
+    </div>
+
+  </div>
+
+  <div class="story-header full-timeline">
+    <div class="eyebrow">APPENDIX // مرجع سريع بكل التواريخ</div>
+    <h2>الخط الزمني الكامل: كل الأحداث بالترتيب</h2>
+  </div>
+
+  <div class="tl-list">
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">قبل 3200 ق.م</div><div class="tl-text">المعلومة <b>تُقال وتُسمع</b> — تُحفظ في الذاكرة البشرية فقط</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">3200 ق.م</div><div class="tl-text"><b>الكتابة المسمارية</b> في بلاد الرافدين — أول تحرر للمعرفة من حدود الذاكرة</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1440</div><div class="tl-text"><b>مطبعة غوتنبرغ</b> — انتشار المعرفة المكتوبة على نطاق واسع لأول مرة</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1940s–1960s</div><div class="tl-text">المعلومة <b>تُكتب رقمياً</b> — تتحول إلى بتات (0/1) داخل الحواسيب الأولى</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">1962</div><div class="tl-text">جون تُوكي يصوغ مصطلح <b>"تحليل البيانات"</b> (Data Analysis)</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">2008</div><div class="tl-text">دي جيه باتيل وجيف هامرباخر يصوغان مصطلح <b>"عالم بيانات"</b> (Data Scientist) رسمياً</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2001</div><div class="tl-text">دوغ لايني يصوغ إطار <b>3Vs</b> (حجم، سرعة، تنوع) لتعريف البيانات الضخمة</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2000s–2010s</div><div class="tl-text">يترسّخ تصنيف <b>مهيكلة / شبه مهيكلة / غير مهيكلة</b>؛ ظهور قواعد NoSQL</div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot"></div><div class="tl-year">2010s–2026</div><div class="tl-text">الذكاء الاصطناعي <b>يعتمد كلياً على البيانات الضخمة</b> للتدريب والتعلّم</div></div>
+  </div>
+
+  <div class="tl-legend">
+    <div class="li"><span class="sw" style="background:var(--c0);"></span>العصر الشفهي</div>
+    <div class="li"><span class="sw" style="background:var(--c1);"></span>ظهور الكتابة</div>
+    <div class="li"><span class="sw" style="background:var(--c2);"></span>الرقمنة المبكرة</div>
+    <div class="li"><span class="sw" style="background:var(--c3);"></span>البيانات ضرورة وجودية</div>
+    <div class="li"><span class="sw" style="background:var(--c4);"></span>تصنيف ومعالجة البيانات</div>
+    <div class="li"><span class="sw" style="background:var(--c5);"></span>البيانات الضخمة واعتماد AI</div>
+  </div>
+
+  <div class="story-header">
+    <div class="eyebrow">🌉 THE BRIDGE // القاسم المشترك لكل صفحات المشروع</div>
+    <h2>الجسر: كيف تتغذى كل الصفحات على البيانات</h2>
+  </div>
+
+  <div class="bridge-grid">
+    <div class="bridge-card" style="border-color:#9b8cf240;">
+      <div class="bicon">🧮</div>
+      <div class="btitle">علوم الحاسوب</div>
+      <div class="bdesc">من نظرية آدا لوفليس النظرية إلى نماذج تتعلّم من مليارات نقاط البيانات — البيانات هي ما حوّل الحوسبة من حساب إلى تعلّم.</div>
+      <a class="bbtn" href="computer-science-evolution-blueprint.html">افتح الصفحة ←</a>
+    </div>
+    <div class="bridge-card" style="border-color:#e0637a40;">
+      <div class="bicon">🖥️</div>
+      <div class="btitle">8-bit.net</div>
+      <div class="bdesc">من ملفات FoxPro المحلية البسيطة إلى سياسات DLP التي تحمي بيانات الشركة من التسرّب عبر أدوات الذكاء الاصطناعي.</div>
+      <a class="bbtn" href="server-infra-blueprint-story.html">افتح الصفحة ←</a>
+    </div>
+    <div class="bridge-card" style="border-color:#3fb6c940;">
+      <div class="bicon">⌨️</div>
+      <div class="btitle">لغات البرمجة</div>
+      <div class="bdesc">من قواعد SQL المهيكلة الصارمة إلى تحدي البيانات غير المهيكلة الذي فرض ظهور NoSQL وأطر معالجة جديدة كلياً.</div>
+      <a class="bbtn" href="programming-languages-evolution-blueprint.html">افتح الصفحة ←</a>
+    </div>
+    <div class="bridge-card" style="border-color:#e0a45840;">
+      <div class="bicon">📡</div>
+      <div class="btitle">Communications</div>
+      <div class="bdesc">من نبضة تلغراف واحدة تحمل حرفاً واحداً، إلى تدفقات بيانات صوتية ونصية ومكانية غامرة داخل بيئات الواقع الافتراضي.</div>
+      <a class="bbtn" href="communications-evolution-blueprint.html">افتح الصفحة ←</a>
+    </div>
+  </div>
+
+  <div class="bridge-base">▲ البيانات — الطبقة التأسيسية التي يقوم عليها المشروع بأكمله ▲</div>
+
+</div>
+</body>
+</html>

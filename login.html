@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>تسجيل الدخول — Beyond#Computer_Science</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a1826;
+    --bg-grid: #12293e;
+    --panel: #0f2438;
+    --panel-line: #1c3b57;
+    --ink: #e7eef5;
+    --ink-dim: #8fa6bb;
+    --gold: #d3a94e;
+    --gold-dim: #8a7038;
+    --danger: #e0637a;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;background:var(--bg);color:var(--ink);font-family:'Cairo',sans-serif;}
+  body{
+    background-image:
+      linear-gradient(var(--bg-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    display:flex;align-items:center;justify-content:center;
+    padding:24px;
+  }
+  .card{
+    width:100%;max-width:440px;
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    border-radius:12px;
+    padding:34px 30px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.4);
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:11px;
+    letter-spacing:2px;margin-bottom:10px;text-align:center;
+  }
+  h1{font-size:19px;font-weight:800;margin:0 0 6px;text-align:center;}
+  .sub{color:var(--ink-dim);font-size:12.5px;text-align:right;margin-bottom:26px;line-height:1.9;}
+
+  label{
+    display:block;font-family:'JetBrains Mono',monospace;font-size:11px;
+    color:var(--ink-dim);margin-bottom:6px;letter-spacing:0.5px;
+  }
+  input{
+    width:100%;background:rgba(255,255,255,0.03);
+    border:1px solid var(--panel-line);border-radius:8px;
+    color:var(--ink);font-family:'Cairo',sans-serif;font-size:14px;
+    padding:11px 14px;margin-bottom:16px;
+    transition:border-color .15s ease;
+  }
+  input:focus{outline:none;border-color:var(--gold-dim);}
+
+  button{
+    width:100%;padding:12px 18px;border-radius:8px;
+    font-family:'Cairo',sans-serif;font-weight:700;font-size:14px;
+    border:1px solid var(--gold-dim);color:var(--gold);
+    background:rgba(211,169,78,0.08);cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+  }
+  button:hover{background:var(--gold);color:var(--bg);}
+  button:disabled{opacity:.6;cursor:default;}
+
+  .msg{
+    margin-top:16px;font-size:12.5px;line-height:1.8;
+    padding:10px 14px;border-radius:8px;display:none;
+  }
+  .msg.error{display:block;background:rgba(224,99,122,0.08);border:1px solid var(--danger);color:var(--danger);}
+
+  .legal-note{
+    margin-top:18px;font-size:10.5px;color:var(--ink-dim);line-height:1.8;
+    text-align:center;padding:10px 12px;border-top:1px solid var(--panel-line);
+  }
+
+  .note{
+    margin-top:22px;font-size:10.5px;color:var(--ink-dim);
+    text-align:center;line-height:1.8;
+    font-family:'JetBrains Mono',monospace;
+    direction:ltr;
+  }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="eyebrow">BEYOND#COMPUTER_SCIENCE // ACCESS</div>
+    <h1>مرحباً بك</h1>
+    <div class="sub">
+      <b style="color:var(--ink);">Beyond#Computer_Science</b> — مشروع سردي-بصري يوثّق رحلة الحوسبة والاتصالات عبر خمس زوايا متكاملة:
+      تاريخ علم الحاسوب من الآلة إلى الذكاء الاصطناعي، لغات البرمجة وبيئات التطوير، تطبيق عملي على إدارة بنية تحتية حقيقية،
+      تطور وسائل الاتصال من التلغراف إلى التواصل بتقنيات الهولوغرام والواقع الافتراضي، والبيانات كموردٍ تأسيسي يغذّي كل ما سبق.
+      <br><br>
+      هذا الموقع محمي — أدخل بيانات الدخول للمتابعة.
+    </div>
+
+    <form id="loginForm">
+      <label for="user">اسم المستخدم</label>
+      <input type="text" id="user" autocomplete="username" required>
+
+      <label for="pass">كلمة المرور</label>
+      <input type="password" id="pass" autocomplete="current-password" required>
+
+      <button type="submit" id="submitBtn">دخول</button>
+    </form>
+
+    <div class="msg error" id="errorMsg"></div>
+
+    <div class="legal-note">
+      🔒 هذا الموقع ومحتواه محميان بموجب أنظمة حماية البيانات الشخصية وحماية الملكية الفكرية المعمول بها.
+      جميع الحقوق محفوظة لصاحب المشروع.
+    </div>
+
+  </div>
+
+<script>
+  const form = document.getElementById('loginForm');
+  const errorMsg = document.getElementById('errorMsg');
+  const submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    errorMsg.style.display = 'none';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'جارٍ التحقق...';
+
+    const userInput = document.getElementById('user').value.trim();
+    const passInput = document.getElementById('pass').value.trim();
+
+    try {
+      const res = await fetch('access.txt', { cache: 'no-store' });
+      if (!res.ok) throw new Error('fetch-failed');
+      const text = await res.text();
+
+      let validUser = '', validPass = '';
+      text.split('\n').forEach(line => {
+        const l = line.trim();
+        if (l.startsWith('username=')) validUser = l.slice('username='.length).trim();
+        if (l.startsWith('password=')) validPass = l.slice('password='.length).trim();
+      });
+
+      if (userInput === validUser && passInput === validPass) {
+        sessionStorage.setItem('bcs_auth', '1');
+        window.location.href = 'index.html';
+        return;
+      } else {
+        errorMsg.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة.';
+        errorMsg.style.display = 'block';
+      }
+    } catch (err) {
+      errorMsg.textContent = 'تعذّر التحقق من بيانات الدخول. حاول مرة أخرى.';
+      errorMsg.style.display = 'block';
+    }
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'دخول';
+  });
+</script>
+
+</body>
+</html>

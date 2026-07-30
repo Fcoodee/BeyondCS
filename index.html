@@ -124,11 +124,12 @@
 
   .cards{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:repeat(5,1fr);
     gap:20px;
   }
-  @media (max-width:1300px){.cards{grid-template-columns:repeat(2,1fr);}}
-  @media (max-width:640px){.cards{grid-template-columns:1fr;}}
+  @media (max-width:1500px){.cards{grid-template-columns:repeat(3,1fr);}}
+  @media (max-width:900px){.cards{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:600px){.cards{grid-template-columns:1fr;}}
 
   .card{
     background:var(--panel);
@@ -147,6 +148,7 @@
   .card.c2::before{background:linear-gradient(90deg, var(--gold-dim), var(--gold));}
   .card.c3::before{background:linear-gradient(90deg, var(--p3), var(--quantum));}
   .card.c4::before{background:linear-gradient(90deg, #6d7fd6, #e0637a);}
+  .card.c5::before{background:linear-gradient(90deg, #a879e0, #e0a458);}
 
   .card-head{padding:26px 24px 14px;}
   .card-num{
@@ -208,12 +210,18 @@
 </style>
 </head>
 <body>
+<script>
+  if (sessionStorage.getItem("bcs_auth") !== "1") {
+    window.location.href = "login.html";
+  }
+</script>
 <div class="wrap">
 
   <div class="topbar">
     <div>PROJECT: <b>Beyond#Computer_Science</b></div>
     <div>PACKAGE: <b>01_To_AI-v8</b></div>
     <div>INDEX // BLUEPRINT NARRATIVE NETWORK</div>
+    <div><a href="#" onclick="sessionStorage.removeItem('bcs_auth'); window.location.href='login.html'; return false;" style="color:var(--ink-dim); text-decoration:none; border-bottom:1px dashed var(--panel-line);">تسجيل الخروج ⏻</a></div>
   </div>
 
   <div class="hero">
@@ -222,9 +230,9 @@
     <div class="hero-formula"><span>0</span> / <span>1</span> — البت الثنائي &nbsp;→&nbsp; <span class="q">Q</span> — الكيوبت الكمومي</div>
     <div class="hero-tagline">علوم الحاسوب: من الآلة إلى الذكاء الاصطناعي، وما بعد</div>
     <div class="hero-desc">
-      مشروع سردي-بصري يوثّق رحلة الحوسبة عبر ثلاث زوايا متكاملة: تاريخ علم الحاسوب نفسه، لغات البرمجة وبيئات التطوير،
-      وتطبيق عملي واقعي على إدارة بنية تحتية حقيقية. كل صفحة تحكي محطاتها بأسلوب قصصي — من أقدم آلة حسابية معروفة
-      إلى أفق الحوسبة الكمية الذي لم يُكتب فصله الأخير بعد.
+      مشروع سردي-بصري يوثّق رحلة الحوسبة عبر خمس زوايا متكاملة: تاريخ علم الحاسوب نفسه، لغات البرمجة وبيئات التطوير،
+      تطبيق عملي واقعي على إدارة بنية تحتية حقيقية، تطور وسائل الاتصال، والبيانات كموردٍ تأسيسي يغذّي كل ما سبق.
+      كل صفحة تحكي محطاتها بأسلوب قصصي — من أقدم آلة حسابية معروفة إلى أفق الحوسبة الكمية الذي لم يُكتب فصله الأخير بعد.
     </div>
 
     <div class="mini-strip">
@@ -236,7 +244,7 @@
     </div>
   </div>
 
-  <div class="section-label">FOUR CHAPTERS OF THE PROJECT // أربع صفحات، أربع زوايا</div>
+  <div class="section-label">FIVE CHAPTERS OF THE PROJECT // خمس صفحات، خمس زوايا</div>
 
   <div class="cards">
 
@@ -298,7 +306,7 @@
       <div class="card-head">
         <div class="card-num">PAGE 04 // THE COMMUNICATIONS</div>
         <div class="card-icon">📡</div>
-        <div class="card-title">Communications: من التلغراف إلى التواصل الغامر</div>
+        <div class="card-title">Communications: من التلغراف إلى التواصل بتقنيات الهولوغرام والواقع الافتراضي</div>
         <div class="card-span">1837 → 2026+</div>
       </div>
       <div class="card-body">
@@ -309,6 +317,24 @@
       </div>
       <div class="card-foot">
         <a class="btn" href="communications-evolution-blueprint.html">افتح الصفحة <span class="arrow">←</span></a>
+      </div>
+    </div>
+
+    <div class="card c5">
+      <div class="card-head">
+        <div class="card-num">PAGE 05 // THE FOUNDATION</div>
+        <div class="card-icon">🫁</div>
+        <div class="card-title">البيانات: من الكلمة المنطوقة إلى المورد الرقمي</div>
+        <div class="card-span">قبل 3200 ق.م → 2026</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">رحلة استكشافية في المادة الخام التي تتغذى عليها كل صفحات المشروع: من المعرفة الشفهية، عبر الكتابة والرقمنة، إلى ظهور علم البيانات، وصولاً لاعتماد الذكاء الاصطناعي الكلي عليها — مع قسم "الجسر" الذي يربطها بالصفحات الأربع الأخرى.</div>
+        <div class="card-tags">
+          <span>6 محطات</span><span>4 مسارات</span><span>ضرورة وجودية</span><span>جسر ربط</span>
+        </div>
+      </div>
+      <div class="card-foot">
+        <a class="btn" href="data-evolution-blueprint.html">افتح الصفحة <span class="arrow">←</span></a>
       </div>
     </div>
 

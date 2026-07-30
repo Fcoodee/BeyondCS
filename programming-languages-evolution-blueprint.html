@@ -296,6 +296,11 @@
 </style>
 </head>
 <body>
+<script>
+  if (sessionStorage.getItem("bcs_auth") !== "1") {
+    window.location.href = "login.html";
+  }
+</script>
 <div class="wrap">
   <a class="home-btn" href="index.html"><span class="arrow">→</span> العودة للصفحة الرئيسية</a>
 
