@@ -35,6 +35,8 @@
   }
 
   *{box-sizing:border-box;}
+  body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
+  input, textarea{-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text;}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Cairo',sans-serif;}
 
   body{
@@ -1018,5 +1020,9 @@
   </div>
 
 </div>
+<script>
+  document.addEventListener('copy', function(e){ e.preventDefault(); });
+  document.addEventListener('cut', function(e){ e.preventDefault(); });
+</script>
 </body>
 </html>

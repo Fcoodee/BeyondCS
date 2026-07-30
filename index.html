@@ -23,6 +23,8 @@
   }
 
   *{box-sizing:border-box;}
+  body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
+  input, textarea{-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text;}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Cairo',sans-serif;}
 
   body{
@@ -268,32 +270,84 @@
     margin-top:16px;font-size:10px;color:var(--ink-dim);line-height:1.7;
     text-align:center;padding-top:12px;border-top:1px solid var(--panel-line);
   }
+
+  /* ===== Language toggle system ===== */
+  .lang-en{display:none;}
+  body.lang-en .lang-en{display:revert;}
+  body.lang-en .lang-ar{display:none;}
+  body.lang-en .card-tags.lang-en{display:flex;}
+  body.lang-en{direction:ltr;}
+  body.lang-en .hero-formula,
+  body.lang-en .card-span,
+  body.lang-en .footnote code{direction:ltr;}
+
+  .lang-toggle{
+    position:fixed;top:18px;left:18px;z-index:900;
+    display:flex;align-items:center;gap:6px;
+    background:var(--panel);border:1px solid var(--panel-line);
+    border-radius:20px;padding:6px 8px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+    box-shadow:0 6px 18px rgba(0,0,0,0.35);
+  }
+  .lang-toggle button{
+    border:none;background:transparent;color:var(--ink-dim);
+    padding:5px 10px;border-radius:14px;cursor:pointer;
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+    transition:background .15s ease, color .15s ease;
+  }
+  .lang-toggle button.active{background:var(--gold);color:var(--bg);}
 </style>
 </head>
 <body>
+
+<div class="lang-toggle">
+  <button id="btnAr" class="active">عربي</button>
+  <button id="btnEn">EN</button>
+</div>
+
 <div class="wrap">
 
   <div class="topbar">
-    <div>PROJECT: <b>Beyond#Computer_Science</b></div>
-    <div>PACKAGE: <b>01_To_AI-v8</b></div>
-    <div>INDEX // BLUEPRINT NARRATIVE NETWORK</div>
-    <div><a href="#" id="logoutLink" style="color:var(--ink-dim); text-decoration:none; border-bottom:1px dashed var(--panel-line);">تسجيل الخروج ⏻</a></div>
+    <div><span class="lang-ar">PROJECT:</span><span class="lang-en">PROJECT:</span> <b>Beyond#Computer_Science</b></div>
+    <div><span class="lang-ar">PACKAGE:</span><span class="lang-en">PACKAGE:</span> <b>01_To_AI-v8</b></div>
+    <div class="lang-ar">INDEX // BLUEPRINT NARRATIVE NETWORK</div>
+    <div class="lang-en">INDEX // BLUEPRINT NARRATIVE NETWORK</div>
+    <div>
+      <a href="#" id="logoutLink" class="lang-ar" style="color:var(--ink-dim); text-decoration:none; border-bottom:1px dashed var(--panel-line);">تسجيل الخروج ⏻</a>
+      <a href="#" id="logoutLinkEn" class="lang-en" style="color:var(--ink-dim); text-decoration:none; border-bottom:1px dashed var(--panel-line);">Sign out ⏻</a>
+    </div>
   </div>
 
   <div class="hero">
     <div class="hero-eyebrow">A NARRATIVE MAP OF COMPUTING</div>
     <h1 class="hero-title">Beyond#Computer_Science</h1>
-    <div class="hero-formula"><span>0</span> / <span>1</span> — البت الثنائي &nbsp;→&nbsp; <span class="q">Q</span> — الكيوبت الكمومي</div>
-    <div class="hero-tagline">علوم الحاسوب: من الآلة إلى الذكاء الاصطناعي، وما بعد</div>
+    <div class="hero-formula">
+      <span class="lang-ar"><span>0</span> / <span>1</span> — البت الثنائي &nbsp;→&nbsp; <span class="q">Q</span> — الكيوبت الكمومي</span>
+      <span class="lang-en"><span>0</span> / <span>1</span> — the binary bit &nbsp;→&nbsp; <span class="q">Q</span> — the quantum qubit</span>
+    </div>
+    <div class="hero-tagline">
+      <span class="lang-ar">علوم الحاسوب: من الآلة إلى الذكاء الاصطناعي، وما بعد</span>
+      <span class="lang-en">Computer science: from the machine to artificial intelligence, and beyond</span>
+    </div>
     <div class="hero-desc">
+      <span class="lang-ar">
       مشروع سردي-بصري يوثّق رحلة الحوسبة عبر ست زوايا متكاملة: تاريخ علم الحاسوب نفسه، لغات البرمجة وبيئات التطوير،
       تطبيق عملي واقعي على إدارة بنية تحتية حقيقية، تطور وسائل الاتصال، البيانات كموردٍ تأسيسي يغذّي كل ما سبق،
       والذكاء الاصطناعي بمساريه الرمزي والعصبي. كل صفحة تحكي محطاتها بأسلوب قصصي — من أقدم آلة حسابية معروفة
       إلى أفق الحوسبة الكمية الذي لم يُكتب فصله الأخير بعد.
+      </span>
+      <span class="lang-en">
+      A narrative, visual project documenting the journey of computing across six complementary angles: the history
+      of computer science itself, programming languages and development environments, a real-world case study in
+      managing actual infrastructure, the evolution of communication tools, data as the foundational resource that
+      feeds everything above, and artificial intelligence across its symbolic and neural tracks. Each page tells its
+      stations as a story — from the oldest known calculating machine to the horizon of quantum computing, whose
+      final chapter has yet to be written.
+      </span>
     </div>
 
     <div class="mini-strip">
-      <div class="pt"><div class="line"></div><div class="dot"></div>150 ق.م</div>
+      <div class="pt"><div class="line"></div><div class="dot"></div><span class="lang-ar">150 ق.م</span><span class="lang-en">150 BC</span></div>
       <div class="pt"><div class="line"></div><div class="dot"></div>1947</div>
       <div class="pt"><div class="line"></div><div class="dot"></div>1991</div>
       <div class="pt"><div class="line"></div><div class="dot"></div>2022</div>
@@ -301,7 +355,8 @@
     </div>
   </div>
 
-  <div class="section-label">SIX CHAPTERS OF THE PROJECT // ست صفحات، ست زوايا</div>
+  <div class="section-label lang-ar">SIX CHAPTERS OF THE PROJECT // ست صفحات، ست زوايا</div>
+  <div class="section-label lang-en">SIX CHAPTERS OF THE PROJECT // Six pages, six angles</div>
 
   <div class="cards">
 
@@ -309,17 +364,22 @@
       <div class="card-head">
         <div class="card-num">PAGE 01 // THE SCIENCE</div>
         <div class="card-icon">🧮</div>
-        <div class="card-title">علوم الحاسوب: من الآلة الحاسبة إلى الذكاء الاصطناعي</div>
+        <div class="card-title lang-ar">علوم الحاسوب: من الآلة الحاسبة إلى الذكاء الاصطناعي</div>
+        <div class="card-title lang-en">Computer Science: From the Calculating Machine to Artificial Intelligence</div>
         <div class="card-span">150 BC → 2026+</div>
       </div>
       <div class="card-body">
-        <div class="card-desc">الرحلة الكاملة لعلم الحاسوب كتخصص مستقل: من أنتيكيثيرا اليونانية والمعداد الصيني، مروراً بميلاد الحوسبة الرقمية وعصر الشبكات، وصولاً لثورة البيانات والذكاء الاصطناعي — وأفق الحوسبة الكمية الناشئ.</div>
-        <div class="card-tags">
+        <div class="card-desc lang-ar">الرحلة الكاملة لعلم الحاسوب كتخصص مستقل: من أنتيكيثيرا اليونانية والمعداد الصيني، مروراً بميلاد الحوسبة الرقمية وعصر الشبكات، وصولاً لثورة البيانات والذكاء الاصطناعي — وأفق الحوسبة الكمية الناشئ.</div>
+        <div class="card-desc lang-en">The full journey of computer science as an independent discipline: from the Greek Antikythera mechanism and the Chinese abacus, through the birth of digital computing and the age of networks, to the data and AI revolution — and the emerging horizon of quantum computing.</div>
+        <div class="card-tags lang-ar">
           <span>6 محطات</span><span>4 مسارات</span><span>تأثير على العلوم</span><span>ملحق كمي</span><span>🏛️ مصدر متحفي موثّق</span>
+        </div>
+        <div class="card-tags lang-en">
+          <span>6 stations</span><span>4 tracks</span><span>impact on other sciences</span><span>quantum appendix</span><span>🏛️ verified museum source</span>
         </div>
       </div>
       <div class="card-foot">
-        <a class="btn" href="computer-science-evolution-blueprint.html">افتح الصفحة <span class="arrow">←</span></a>
+        <a class="btn" href="computer-science-evolution-blueprint.html"><span class="lang-ar">افتح الصفحة</span><span class="lang-en">Open page</span> <span class="arrow">←</span></a>
       </div>
     </div>
 
@@ -327,17 +387,22 @@
       <div class="card-head">
         <div class="card-num">PAGE 02 // THE PRACTICE</div>
         <div class="card-icon">🖥️</div>
-        <div class="card-title">من الورقة إلى الذكاء الاصطناعي: دراسة حالة 8-bit.net</div>
-        <div class="card-span">ما قبل 2003 → 2026</div>
+        <div class="card-title lang-ar">من الورقة إلى الذكاء الاصطناعي: دراسة حالة 8-bit.net</div>
+        <div class="card-title lang-en">From Paper to AI: The 8-bit.net Case Study</div>
+        <div class="card-span"><span class="lang-ar">ما قبل 2003 → 2026</span><span class="lang-en">Before 2003 → 2026</span></div>
       </div>
       <div class="card-body">
-        <div class="card-desc">تطبيق عملي واقعي: كيف تحوّلت إدارة شركة من الأرشيف الورقي والفاكس، إلى AD محلي وISA Server وCisco CUCM، عبر معركة BlackBerry ضد iPhone وتوقف دعم TMG، وصولاً لـZero Trust وحماية البيانات من أدوات الذكاء الاصطناعي.</div>
-        <div class="card-tags">
+        <div class="card-desc lang-ar">تطبيق عملي واقعي: كيف تحوّلت إدارة شركة من الأرشيف الورقي والفاكس، إلى AD محلي وISA Server وCisco CUCM، عبر معركة BlackBerry ضد iPhone وتوقف دعم TMG، وصولاً لـZero Trust وحماية البيانات من أدوات الذكاء الاصطناعي.</div>
+        <div class="card-desc lang-en">A real-world case study: how one company's IT management evolved from paper archives and fax, to on-prem AD, ISA Server and Cisco CUCM, through the BlackBerry-vs-iPhone battle and the end of TMG support, to Zero Trust and protecting data from AI tools.</div>
+        <div class="card-tags lang-ar">
           <span>6 محطات</span><span>4 مسارات</span><span>سياق ثقافي</span><span>تصحيح شائعات</span>
+        </div>
+        <div class="card-tags lang-en">
+          <span>6 stations</span><span>4 tracks</span><span>cultural context</span><span>myth-busting</span>
         </div>
       </div>
       <div class="card-foot">
-        <a class="btn" href="server-infra-blueprint-story.html">افتح الصفحة <span class="arrow">←</span></a>
+        <a class="btn" href="server-infra-blueprint-story.html"><span class="lang-ar">افتح الصفحة</span><span class="lang-en">Open page</span> <span class="arrow">←</span></a>
       </div>
     </div>
 
@@ -345,17 +410,22 @@
       <div class="card-head">
         <div class="card-num">PAGE 03 // THE LANGUAGES</div>
         <div class="card-icon">⌨️</div>
-        <div class="card-title">لغات البرمجة: من الأسمبلي إلى البيانات الضخمة</div>
+        <div class="card-title lang-ar">لغات البرمجة: من الأسمبلي إلى البيانات الضخمة</div>
+        <div class="card-title lang-en">Programming Languages: From Assembly to Big Data</div>
         <div class="card-span">1947 → 2026</div>
       </div>
       <div class="card-body">
-        <div class="card-desc">من البرمجة المباشرة على الذاكرة، مروراً بـ Fortran وCobol وPascal وFoxPro، إلى ثورة البرمجة المرئية و.NET، وربطها بقواعد البيانات وHTML وPHP، وصولاً لتحدي البيانات الضخمة والتنقيب فيها.</div>
-        <div class="card-tags">
+        <div class="card-desc lang-ar">من البرمجة المباشرة على الذاكرة، مروراً بـ Fortran وCobol وPascal وFoxPro، إلى ثورة البرمجة المرئية و.NET، وربطها بقواعد البيانات وHTML وPHP، وصولاً لتحدي البيانات الضخمة والتنقيب فيها.</div>
+        <div class="card-desc lang-en">From programming directly against memory, through Fortran, Cobol, Pascal and FoxPro, to the visual-programming and .NET revolution, its links to databases, HTML and PHP, and on to the challenge of big data and data mining.</div>
+        <div class="card-tags lang-ar">
           <span>6 محطات</span><span>4 مسارات</span><span>نقاط تزامن تاريخية</span>
+        </div>
+        <div class="card-tags lang-en">
+          <span>6 stations</span><span>4 tracks</span><span>historical coincidences</span>
         </div>
       </div>
       <div class="card-foot">
-        <a class="btn" href="programming-languages-evolution-blueprint.html">افتح الصفحة <span class="arrow">←</span></a>
+        <a class="btn" href="programming-languages-evolution-blueprint.html"><span class="lang-ar">افتح الصفحة</span><span class="lang-en">Open page</span> <span class="arrow">←</span></a>
       </div>
     </div>
 
@@ -363,17 +433,22 @@
       <div class="card-head">
         <div class="card-num">PAGE 04 // THE COMMUNICATIONS</div>
         <div class="card-icon">📡</div>
-        <div class="card-title">Communications: من التلغراف إلى التواصل بتقنيات الهولوغرام والواقع الافتراضي</div>
+        <div class="card-title lang-ar">Communications: من التلغراف إلى التواصل بتقنيات الهولوغرام والواقع الافتراضي</div>
+        <div class="card-title lang-en">Communications: From the Telegraph to Holographic and Virtual-Reality Communication</div>
         <div class="card-span">1837 → 2026+</div>
       </div>
       <div class="card-body">
-        <div class="card-desc">من نبضة تلغراف مورس الأولى، مروراً بميلاد الهاتف والتناقض التاريخي مع الفاكس، إلى ميلاد البريد الإلكتروني وحرب Hotmail وICQ، وصولاً لهيمنة Gmail، ثم الواقع الافتراضي كوسيلة تواصل ناضجة — مع إشارة ختامية لأفق الاتصال الهولوغرافي التجريبي.</div>
-        <div class="card-tags">
+        <div class="card-desc lang-ar">من نبضة تلغراف مورس الأولى، مروراً بميلاد الهاتف والتناقض التاريخي مع الفاكس، إلى ميلاد البريد الإلكتروني وحرب Hotmail وICQ، وصولاً لهيمنة Gmail، ثم الواقع الافتراضي كوسيلة تواصل ناضجة — مع إشارة ختامية لأفق الاتصال الهولوغرافي التجريبي.</div>
+        <div class="card-desc lang-en">From Morse's first telegraph pulse, through the birth of the telephone and its historical paradox with the fax machine, to the birth of email and the Hotmail/ICQ war, on to Gmail's dominance, then virtual reality as a mature communication medium — with a closing nod to the experimental horizon of holographic communication.</div>
+        <div class="card-tags lang-ar">
           <span>7 محطات</span><span>5 مسارات</span><span>تناقض تاريخي</span><span>أفق هولوغرامي</span>
+        </div>
+        <div class="card-tags lang-en">
+          <span>7 stations</span><span>5 tracks</span><span>historical paradox</span><span>holographic horizon</span>
         </div>
       </div>
       <div class="card-foot">
-        <a class="btn" href="communications-evolution-blueprint.html">افتح الصفحة <span class="arrow">←</span></a>
+        <a class="btn" href="communications-evolution-blueprint.html"><span class="lang-ar">افتح الصفحة</span><span class="lang-en">Open page</span> <span class="arrow">←</span></a>
       </div>
     </div>
 
@@ -381,17 +456,22 @@
       <div class="card-head">
         <div class="card-num">PAGE 05 // THE FOUNDATION</div>
         <div class="card-icon">🫁</div>
-        <div class="card-title">البيانات: من الكلمة المنطوقة إلى المورد الرقمي</div>
-        <div class="card-span">قبل 3200 ق.م → 2026</div>
+        <div class="card-title lang-ar">البيانات: من الكلمة المنطوقة إلى المورد الرقمي</div>
+        <div class="card-title lang-en">Data: From the Spoken Word to the Digital Resource</div>
+        <div class="card-span"><span class="lang-ar">قبل 3200 ق.م → 2026</span><span class="lang-en">Before 3200 BC → 2026</span></div>
       </div>
       <div class="card-body">
-        <div class="card-desc">رحلة استكشافية في المادة الخام التي تتغذى عليها كل صفحات المشروع: من المعرفة الشفهية، عبر الكتابة والرقمنة، إلى ظهور علم البيانات، وصولاً لاعتماد الذكاء الاصطناعي الكلي عليها — مع قسم "الجسر" الذي يربطها بالصفحات الأربع الأخرى.</div>
-        <div class="card-tags">
+        <div class="card-desc lang-ar">رحلة استكشافية في المادة الخام التي تتغذى عليها كل صفحات المشروع: من المعرفة الشفهية، عبر الكتابة والرقمنة، إلى ظهور علم البيانات، وصولاً لاعتماد الذكاء الاصطناعي الكلي عليها — مع قسم "الجسر" الذي يربطها بالصفحات الأربع الأخرى.</div>
+        <div class="card-desc lang-en">An exploratory journey into the raw material every other page in this project runs on: from oral knowledge, through writing and digitization, to the emergence of data science, and on to AI's total dependence on it — with a "Bridge" section linking it explicitly to the four other pages.</div>
+        <div class="card-tags lang-ar">
           <span>6 محطات</span><span>4 مسارات</span><span>ضرورة وجودية</span><span>جسر ربط</span>
+        </div>
+        <div class="card-tags lang-en">
+          <span>6 stations</span><span>4 tracks</span><span>existential necessity</span><span>bridge section</span>
         </div>
       </div>
       <div class="card-foot">
-        <a class="btn" href="data-evolution-blueprint.html">افتح الصفحة <span class="arrow">←</span></a>
+        <a class="btn" href="data-evolution-blueprint.html"><span class="lang-ar">افتح الصفحة</span><span class="lang-en">Open page</span> <span class="arrow">←</span></a>
       </div>
     </div>
 
@@ -399,25 +479,34 @@
       <div class="card-head">
         <div class="card-num">PAGE 06 // THE ARTIFICIAL MIND</div>
         <div class="card-icon">🧠</div>
-        <div class="card-title">الذكاء الاصطناعي: من محاكاة المنطق إلى محاكاة التعلّم</div>
+        <div class="card-title lang-ar">الذكاء الاصطناعي: من محاكاة المنطق إلى محاكاة التعلّم</div>
+        <div class="card-title lang-en">Artificial Intelligence: From Simulating Logic to Simulating Learning</div>
         <div class="card-span">1854 → 2026</div>
       </div>
       <div class="card-body">
-        <div class="card-desc">مساران تنافسا لعقود: المنطق الرمزي (LISP، Prolog) مقابل الشبكات العصبية (البيرسبترون، الانتشار الخلفي، Transformer) — بشرح آلية العمل الداخلية، وتحليل أعمق للمساءلة الأخلاقية عبر حالات واقعية موثقة (COMPAS، أمازون) وأطر تنظيمية (EU AI Act).</div>
-        <div class="card-tags">
+        <div class="card-desc lang-ar">مساران تنافسا لعقود: المنطق الرمزي (LISP، Prolog) مقابل الشبكات العصبية (البيرسبترون، الانتشار الخلفي، Transformer) — بشرح آلية العمل الداخلية، وتحليل أعمق للمساءلة الأخلاقية عبر حالات واقعية موثقة (COMPAS، أمازون) وأطر تنظيمية (EU AI Act).</div>
+        <div class="card-desc lang-en">Two tracks that competed for decades: symbolic logic (LISP, Prolog) versus neural networks (the perceptron, backpropagation, Transformer) — with an explanation of how the mechanics actually work, and a deeper look at ethical accountability through documented real cases (COMPAS, Amazon) and regulatory frameworks (the EU AI Act).</div>
+        <div class="card-tags lang-ar">
           <span>6 محطات</span><span>4 مسارات</span><span>آلية العمل التقنية</span><span>مساءلة أخلاقية</span>
+        </div>
+        <div class="card-tags lang-en">
+          <span>6 stations</span><span>4 tracks</span><span>technical mechanics</span><span>ethical accountability</span>
         </div>
       </div>
       <div class="card-foot">
-        <a class="btn" href="ai-evolution-blueprint.html">افتح الصفحة <span class="arrow">←</span></a>
+        <a class="btn" href="ai-evolution-blueprint.html"><span class="lang-ar">افتح الصفحة</span><span class="lang-en">Open page</span> <span class="arrow">←</span></a>
       </div>
     </div>
 
   </div>
 
-  <div class="footnote">
+  <div class="footnote lang-ar">
     مشروع <code>Beyond#Computer_Science</code> — هوية بصرية موحّدة (Swimlane Timeline + Storyboard Narrative) عبر جميع الصفحات.<br>
     الاسم يرمز لرحلة الحوسبة من البت الثنائي (0/1) إلى أفق الكيوبت الكمومي (Q) الذي لم يُكتب فصله الأخير بعد.
+  </div>
+  <div class="footnote lang-en">
+    The <code>Beyond#Computer_Science</code> project — a unified visual identity (Swimlane Timeline + Storyboard Narrative) across every page.<br>
+    The name symbolizes computing's journey from the binary bit (0/1) to the horizon of the quantum qubit (Q), whose final chapter has yet to be written.
   </div>
 
 </div>
@@ -426,31 +515,52 @@
 <div class="modal-overlay" id="authModal">
   <div class="modal-card">
     <div class="modal-eyebrow">BEYOND#COMPUTER_SCIENCE // ACCESS</div>
-    <div class="modal-title">تسجيل الدخول</div>
-    <div class="modal-sub">هذه الصفحة محمية — أدخل بيانات الدخول للمتابعة.</div>
+    <div class="modal-title lang-ar">تسجيل الدخول</div>
+    <div class="modal-title lang-en">Sign In</div>
+    <div class="modal-sub lang-ar">هذه الصفحة محمية — أدخل بيانات الدخول للمتابعة.</div>
+    <div class="modal-sub lang-en">This page is protected — enter your credentials to continue.</div>
 
     <form id="modalLoginForm">
-      <label for="modalUser">اسم المستخدم</label>
+      <label for="modalUser" class="lang-ar">اسم المستخدم</label>
+      <label for="modalUser" class="lang-en">Username</label>
       <input type="text" id="modalUser" autocomplete="username" required>
 
-      <label for="modalPass">كلمة المرور</label>
+      <label for="modalPass" class="lang-ar">كلمة المرور</label>
+      <label for="modalPass" class="lang-en">Password</label>
       <input type="password" id="modalPass" autocomplete="current-password" required>
 
       <div class="modal-actions">
-        <button type="submit" class="modal-submit" id="modalSubmitBtn">دخول</button>
-        <button type="button" class="modal-cancel" id="modalCancelBtn">إلغاء</button>
+        <button type="submit" class="modal-submit" id="modalSubmitBtn"><span class="lang-ar">دخول</span><span class="lang-en">Sign in</span></button>
+        <button type="button" class="modal-cancel" id="modalCancelBtn"><span class="lang-ar">إلغاء</span><span class="lang-en">Cancel</span></button>
       </div>
     </form>
 
     <div class="modal-error" id="modalError"></div>
 
-    <div class="modal-legal">
+    <div class="modal-legal lang-ar">
       🔒 هذا الموقع ومحتواه محميان بموجب أنظمة حماية البيانات الشخصية وحماية الملكية الفكرية المعمول بها.
+    </div>
+    <div class="modal-legal lang-en">
+      🔒 This site and its content are protected under applicable personal data protection and intellectual property laws.
     </div>
   </div>
 </div>
 
 <script>
+  // ===== Language toggle =====
+  function applyLang(lang){
+    document.body.classList.toggle('lang-en', lang === 'en');
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'en' ? 'ltr' : 'rtl';
+    document.getElementById('btnAr').classList.toggle('active', lang === 'ar');
+    document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+    localStorage.setItem('bcs_lang', lang);
+  }
+  document.getElementById('btnAr').addEventListener('click', () => applyLang('ar'));
+  document.getElementById('btnEn').addEventListener('click', () => applyLang('en'));
+  applyLang(localStorage.getItem('bcs_lang') || 'ar');
+
+  // ===== Auth modal =====
   const authModal = document.getElementById('authModal');
   const modalForm = document.getElementById('modalLoginForm');
   const modalUser = document.getElementById('modalUser');
@@ -460,6 +570,10 @@
   const modalCancelBtn = document.getElementById('modalCancelBtn');
 
   let pendingHref = null;
+
+  function currentLang(){
+    return document.body.classList.contains('lang-en') ? 'en' : 'ar';
+  }
 
   function openAuthModal(href){
     pendingHref = href;
@@ -493,7 +607,7 @@
     e.preventDefault();
     modalError.style.display = 'none';
     modalSubmitBtn.disabled = true;
-    modalSubmitBtn.textContent = 'جارٍ التحقق...';
+    modalSubmitBtn.textContent = currentLang() === 'en' ? 'Checking...' : 'جارٍ التحقق...';
 
     const userInput = modalUser.value.trim();
     const passInput = modalPass.value.trim();
@@ -516,22 +630,32 @@
         closeAuthModal();
         if (target) window.location.href = target;
       } else {
-        modalError.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة.';
+        modalError.textContent = currentLang() === 'en'
+          ? 'Incorrect username or password.'
+          : 'اسم المستخدم أو كلمة المرور غير صحيحة.';
         modalError.style.display = 'block';
       }
     } catch (err) {
-      modalError.textContent = 'تعذّر التحقق من بيانات الدخول. حاول مرة أخرى.';
+      modalError.textContent = currentLang() === 'en'
+        ? 'Could not verify your credentials. Please try again.'
+        : 'تعذّر التحقق من بيانات الدخول. حاول مرة أخرى.';
       modalError.style.display = 'block';
     }
 
     modalSubmitBtn.disabled = false;
-    modalSubmitBtn.textContent = 'دخول';
+    modalSubmitBtn.textContent = currentLang() === 'en' ? 'Sign in' : 'دخول';
   });
 
-  document.getElementById('logoutLink').addEventListener('click', function(e){
+  function handleLogout(e){
     e.preventDefault();
     sessionStorage.removeItem('bcs_auth');
-  });
+  }
+  document.getElementById('logoutLink').addEventListener('click', handleLogout);
+  document.getElementById('logoutLinkEn').addEventListener('click', handleLogout);
+</script>
+<script>
+  document.addEventListener('copy', function(e){ e.preventDefault(); });
+  document.addEventListener('cut', function(e){ e.preventDefault(); });
 </script>
 </body>
 </html>
