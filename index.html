@@ -124,10 +124,10 @@
 
   .cards{
     display:grid;
-    grid-template-columns:repeat(5,1fr);
+    grid-template-columns:repeat(6,1fr);
     gap:20px;
   }
-  @media (max-width:1500px){.cards{grid-template-columns:repeat(3,1fr);}}
+  @media (max-width:1650px){.cards{grid-template-columns:repeat(3,1fr);}}
   @media (max-width:900px){.cards{grid-template-columns:repeat(2,1fr);}}
   @media (max-width:600px){.cards{grid-template-columns:1fr;}}
 
@@ -149,6 +149,7 @@
   .card.c3::before{background:linear-gradient(90deg, var(--p3), var(--quantum));}
   .card.c4::before{background:linear-gradient(90deg, #6d7fd6, #e0637a);}
   .card.c5::before{background:linear-gradient(90deg, #a879e0, #e0a458);}
+  .card.c6::before{background:linear-gradient(90deg, #ff9a76, #6d7fd6);}
 
   .card-head{padding:26px 24px 14px;}
   .card-num{
@@ -207,21 +208,76 @@
     background:rgba(255,255,255,0.06);
     padding:1px 7px;border-radius:4px;color:var(--gold);direction:ltr;display:inline-block;
   }
+
+  /* ===== Auth Modal ===== */
+  .modal-overlay{
+    display:none;
+    position:fixed;inset:0;z-index:1000;
+    background:rgba(5,12,20,0.75);
+    backdrop-filter:blur(3px);
+    align-items:center;justify-content:center;
+    padding:20px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-card{
+    width:100%;max-width:400px;
+    background:var(--panel);border:1px solid var(--panel-line);
+    border-radius:14px;padding:30px 28px;
+    box-shadow:0 24px 60px rgba(0,0,0,0.5);
+    animation:modalIn .18s ease;
+  }
+  @keyframes modalIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .modal-eyebrow{
+    font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:11px;
+    letter-spacing:2px;margin-bottom:10px;text-align:center;
+  }
+  .modal-title{font-size:18px;font-weight:800;margin:0 0 8px;text-align:center;}
+  .modal-sub{color:var(--ink-dim);font-size:12.5px;text-align:center;margin-bottom:22px;line-height:1.8;}
+  .modal-card label{
+    display:block;font-family:'JetBrains Mono',monospace;font-size:11px;
+    color:var(--ink-dim);margin-bottom:6px;letter-spacing:0.5px;
+  }
+  .modal-card input{
+    width:100%;background:rgba(255,255,255,0.03);
+    border:1px solid var(--panel-line);border-radius:8px;
+    color:var(--ink);font-family:'Cairo',sans-serif;font-size:14px;
+    padding:11px 14px;margin-bottom:14px;
+    transition:border-color .15s ease;
+  }
+  .modal-card input:focus{outline:none;border-color:var(--gold-dim);}
+  .modal-actions{display:flex;gap:10px;margin-top:4px;}
+  .modal-actions button{
+    flex:1;padding:11px 16px;border-radius:8px;
+    font-family:'Cairo',sans-serif;font-weight:700;font-size:13.5px;
+    cursor:pointer;transition:background .15s ease, color .15s ease;
+  }
+  .modal-submit{
+    border:1px solid var(--gold-dim);color:var(--gold);background:rgba(211,169,78,0.08);
+  }
+  .modal-submit:hover{background:var(--gold);color:var(--bg);}
+  .modal-cancel{
+    border:1px solid var(--panel-line);color:var(--ink-dim);background:transparent;
+  }
+  .modal-cancel:hover{color:var(--ink);border-color:var(--ink-dim);}
+  .modal-error{
+    margin-top:14px;font-size:12px;line-height:1.7;
+    padding:9px 12px;border-radius:8px;display:none;
+    background:rgba(224,99,122,0.08);border:1px solid #e0637a;color:#e0637a;
+  }
+  .modal-legal{
+    margin-top:16px;font-size:10px;color:var(--ink-dim);line-height:1.7;
+    text-align:center;padding-top:12px;border-top:1px solid var(--panel-line);
+  }
 </style>
 </head>
 <body>
-<script>
-  if (sessionStorage.getItem("bcs_auth") !== "1") {
-    window.location.href = "login.html";
-  }
-</script>
 <div class="wrap">
 
   <div class="topbar">
     <div>PROJECT: <b>Beyond#Computer_Science</b></div>
     <div>PACKAGE: <b>01_To_AI-v8</b></div>
     <div>INDEX // BLUEPRINT NARRATIVE NETWORK</div>
-    <div><a href="#" onclick="sessionStorage.removeItem('bcs_auth'); window.location.href='login.html'; return false;" style="color:var(--ink-dim); text-decoration:none; border-bottom:1px dashed var(--panel-line);">تسجيل الخروج ⏻</a></div>
+    <div><a href="#" id="logoutLink" style="color:var(--ink-dim); text-decoration:none; border-bottom:1px dashed var(--panel-line);">تسجيل الخروج ⏻</a></div>
   </div>
 
   <div class="hero">
@@ -230,9 +286,10 @@
     <div class="hero-formula"><span>0</span> / <span>1</span> — البت الثنائي &nbsp;→&nbsp; <span class="q">Q</span> — الكيوبت الكمومي</div>
     <div class="hero-tagline">علوم الحاسوب: من الآلة إلى الذكاء الاصطناعي، وما بعد</div>
     <div class="hero-desc">
-      مشروع سردي-بصري يوثّق رحلة الحوسبة عبر خمس زوايا متكاملة: تاريخ علم الحاسوب نفسه، لغات البرمجة وبيئات التطوير،
-      تطبيق عملي واقعي على إدارة بنية تحتية حقيقية، تطور وسائل الاتصال، والبيانات كموردٍ تأسيسي يغذّي كل ما سبق.
-      كل صفحة تحكي محطاتها بأسلوب قصصي — من أقدم آلة حسابية معروفة إلى أفق الحوسبة الكمية الذي لم يُكتب فصله الأخير بعد.
+      مشروع سردي-بصري يوثّق رحلة الحوسبة عبر ست زوايا متكاملة: تاريخ علم الحاسوب نفسه، لغات البرمجة وبيئات التطوير،
+      تطبيق عملي واقعي على إدارة بنية تحتية حقيقية، تطور وسائل الاتصال، البيانات كموردٍ تأسيسي يغذّي كل ما سبق،
+      والذكاء الاصطناعي بمساريه الرمزي والعصبي. كل صفحة تحكي محطاتها بأسلوب قصصي — من أقدم آلة حسابية معروفة
+      إلى أفق الحوسبة الكمية الذي لم يُكتب فصله الأخير بعد.
     </div>
 
     <div class="mini-strip">
@@ -244,7 +301,7 @@
     </div>
   </div>
 
-  <div class="section-label">FIVE CHAPTERS OF THE PROJECT // خمس صفحات، خمس زوايا</div>
+  <div class="section-label">SIX CHAPTERS OF THE PROJECT // ست صفحات، ست زوايا</div>
 
   <div class="cards">
 
@@ -338,6 +395,24 @@
       </div>
     </div>
 
+    <div class="card c6">
+      <div class="card-head">
+        <div class="card-num">PAGE 06 // THE ARTIFICIAL MIND</div>
+        <div class="card-icon">🧠</div>
+        <div class="card-title">الذكاء الاصطناعي: من محاكاة المنطق إلى محاكاة التعلّم</div>
+        <div class="card-span">1854 → 2026</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">مساران تنافسا لعقود: المنطق الرمزي (LISP، Prolog) مقابل الشبكات العصبية (البيرسبترون، الانتشار الخلفي، Transformer) — بشرح آلية العمل الداخلية، وتحليل أعمق للمساءلة الأخلاقية عبر حالات واقعية موثقة (COMPAS، أمازون) وأطر تنظيمية (EU AI Act).</div>
+        <div class="card-tags">
+          <span>6 محطات</span><span>4 مسارات</span><span>آلية العمل التقنية</span><span>مساءلة أخلاقية</span>
+        </div>
+      </div>
+      <div class="card-foot">
+        <a class="btn" href="ai-evolution-blueprint.html">افتح الصفحة <span class="arrow">←</span></a>
+      </div>
+    </div>
+
   </div>
 
   <div class="footnote">
@@ -346,5 +421,117 @@
   </div>
 
 </div>
+
+<!-- ============ AUTH MODAL ============ -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal-card">
+    <div class="modal-eyebrow">BEYOND#COMPUTER_SCIENCE // ACCESS</div>
+    <div class="modal-title">تسجيل الدخول</div>
+    <div class="modal-sub">هذه الصفحة محمية — أدخل بيانات الدخول للمتابعة.</div>
+
+    <form id="modalLoginForm">
+      <label for="modalUser">اسم المستخدم</label>
+      <input type="text" id="modalUser" autocomplete="username" required>
+
+      <label for="modalPass">كلمة المرور</label>
+      <input type="password" id="modalPass" autocomplete="current-password" required>
+
+      <div class="modal-actions">
+        <button type="submit" class="modal-submit" id="modalSubmitBtn">دخول</button>
+        <button type="button" class="modal-cancel" id="modalCancelBtn">إلغاء</button>
+      </div>
+    </form>
+
+    <div class="modal-error" id="modalError"></div>
+
+    <div class="modal-legal">
+      🔒 هذا الموقع ومحتواه محميان بموجب أنظمة حماية البيانات الشخصية وحماية الملكية الفكرية المعمول بها.
+    </div>
+  </div>
+</div>
+
+<script>
+  const authModal = document.getElementById('authModal');
+  const modalForm = document.getElementById('modalLoginForm');
+  const modalUser = document.getElementById('modalUser');
+  const modalPass = document.getElementById('modalPass');
+  const modalError = document.getElementById('modalError');
+  const modalSubmitBtn = document.getElementById('modalSubmitBtn');
+  const modalCancelBtn = document.getElementById('modalCancelBtn');
+
+  let pendingHref = null;
+
+  function openAuthModal(href){
+    pendingHref = href;
+    modalError.style.display = 'none';
+    modalUser.value = '';
+    modalPass.value = '';
+    authModal.classList.add('open');
+    setTimeout(() => modalUser.focus(), 50);
+  }
+
+  function closeAuthModal(){
+    authModal.classList.remove('open');
+    pendingHref = null;
+  }
+
+  // Intercept every "open page" link across the cards
+  document.querySelectorAll('.card-foot .btn').forEach(function(link){
+    link.addEventListener('click', function(e){
+      if (sessionStorage.getItem('bcs_auth') === '1') return; // already authenticated, let it navigate normally
+      e.preventDefault();
+      openAuthModal(link.getAttribute('href'));
+    });
+  });
+
+  modalCancelBtn.addEventListener('click', closeAuthModal);
+  authModal.addEventListener('click', function(e){
+    if (e.target === authModal) closeAuthModal();
+  });
+
+  modalForm.addEventListener('submit', async function(e){
+    e.preventDefault();
+    modalError.style.display = 'none';
+    modalSubmitBtn.disabled = true;
+    modalSubmitBtn.textContent = 'جارٍ التحقق...';
+
+    const userInput = modalUser.value.trim();
+    const passInput = modalPass.value.trim();
+
+    try {
+      const res = await fetch('access.txt', { cache: 'no-store' });
+      if (!res.ok) throw new Error('fetch-failed');
+      const text = await res.text();
+
+      let validUser = '', validPass = '';
+      text.split('\n').forEach(function(line){
+        const l = line.trim();
+        if (l.startsWith('username=')) validUser = l.slice('username='.length).trim();
+        if (l.startsWith('password=')) validPass = l.slice('password='.length).trim();
+      });
+
+      if (userInput === validUser && passInput === validPass) {
+        sessionStorage.setItem('bcs_auth', '1');
+        const target = pendingHref;
+        closeAuthModal();
+        if (target) window.location.href = target;
+      } else {
+        modalError.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة.';
+        modalError.style.display = 'block';
+      }
+    } catch (err) {
+      modalError.textContent = 'تعذّر التحقق من بيانات الدخول. حاول مرة أخرى.';
+      modalError.style.display = 'block';
+    }
+
+    modalSubmitBtn.disabled = false;
+    modalSubmitBtn.textContent = 'دخول';
+  });
+
+  document.getElementById('logoutLink').addEventListener('click', function(e){
+    e.preventDefault();
+    sessionStorage.removeItem('bcs_auth');
+  });
+</script>
 </body>
 </html>
