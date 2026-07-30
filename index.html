@@ -124,10 +124,11 @@
 
   .cards{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(4,1fr);
     gap:20px;
   }
-  @media (max-width:980px){.cards{grid-template-columns:1fr;}}
+  @media (max-width:1300px){.cards{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:640px){.cards{grid-template-columns:1fr;}}
 
   .card{
     background:var(--panel);
@@ -145,6 +146,7 @@
   .card.c1::before{background:linear-gradient(90deg, var(--p1), var(--p2));}
   .card.c2::before{background:linear-gradient(90deg, var(--gold-dim), var(--gold));}
   .card.c3::before{background:linear-gradient(90deg, var(--p3), var(--quantum));}
+  .card.c4::before{background:linear-gradient(90deg, #6d7fd6, #e0637a);}
 
   .card-head{padding:26px 24px 14px;}
   .card-num{
@@ -234,7 +236,7 @@
     </div>
   </div>
 
-  <div class="section-label">THREE CHAPTERS OF THE PROJECT // ثلاث صفحات، ثلاث زوايا</div>
+  <div class="section-label">FOUR CHAPTERS OF THE PROJECT // أربع صفحات، أربع زوايا</div>
 
   <div class="cards">
 
@@ -260,13 +262,13 @@
       <div class="card-head">
         <div class="card-num">PAGE 02 // THE PRACTICE</div>
         <div class="card-icon">🖥️</div>
-        <div class="card-title">رحلة fcoodee.net: إدارة خوادم حقيقية عبر الزمن</div>
-        <div class="card-span">2003 → 2026</div>
+        <div class="card-title">من الورقة إلى الذكاء الاصطناعي: دراسة حالة 8-bit.net</div>
+        <div class="card-span">ما قبل 2003 → 2026</div>
       </div>
       <div class="card-body">
-        <div class="card-desc">تطبيق عملي واقعي: كيف تحوّلت إدارة خادم شركة فعلي من AD محلي وISA Server وCisco CUCM، عبر معركة BlackBerry ضد iPhone وتوقف دعم TMG، إلى Zero Trust وحماية البيانات من أدوات الذكاء الاصطناعي.</div>
+        <div class="card-desc">تطبيق عملي واقعي: كيف تحوّلت إدارة شركة من الأرشيف الورقي والفاكس، إلى AD محلي وISA Server وCisco CUCM، عبر معركة BlackBerry ضد iPhone وتوقف دعم TMG، وصولاً لـZero Trust وحماية البيانات من أدوات الذكاء الاصطناعي.</div>
         <div class="card-tags">
-          <span>5 محطات</span><span>4 مسارات</span><span>سياق ثقافي</span><span>تصحيح شائعات</span>
+          <span>6 محطات</span><span>4 مسارات</span><span>سياق ثقافي</span><span>تصحيح شائعات</span>
         </div>
       </div>
       <div class="card-foot">
@@ -289,6 +291,24 @@
       </div>
       <div class="card-foot">
         <a class="btn" href="programming-languages-evolution-blueprint.html">افتح الصفحة <span class="arrow">←</span></a>
+      </div>
+    </div>
+
+    <div class="card c4">
+      <div class="card-head">
+        <div class="card-num">PAGE 04 // THE COMMUNICATIONS</div>
+        <div class="card-icon">📡</div>
+        <div class="card-title">Communications: من التلغراف إلى التواصل الغامر</div>
+        <div class="card-span">1837 → 2026+</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">من نبضة تلغراف مورس الأولى، مروراً بميلاد الهاتف والتناقض التاريخي مع الفاكس، إلى ميلاد البريد الإلكتروني وحرب Hotmail وICQ، وصولاً لهيمنة Gmail، ثم الواقع الافتراضي كوسيلة تواصل ناضجة — مع إشارة ختامية لأفق الاتصال الهولوغرافي التجريبي.</div>
+        <div class="card-tags">
+          <span>7 محطات</span><span>5 مسارات</span><span>تناقض تاريخي</span><span>أفق هولوغرامي</span>
+        </div>
+      </div>
+      <div class="card-foot">
+        <a class="btn" href="communications-evolution-blueprint.html">افتح الصفحة <span class="arrow">←</span></a>
       </div>
     </div>
 

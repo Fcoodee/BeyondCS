@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>Communications — من التلغراف إلى التواصل الغامر</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a1826;
+    --bg-grid: #12293e;
+    --panel: #0f2438;
+    --panel-line: #1c3b57;
+    --ink: #e7eef5;
+    --ink-dim: #8fa6bb;
+    --gold: #d3a94e;
+    --gold-dim: #8a7038;
+
+    --lane-identity: #9b8cf2;
+    --lane-identity-bg: rgba(155,140,242,0.10);
+    --lane-files: #4fd0c8;
+    --lane-files-bg: rgba(79,208,200,0.10);
+    --lane-gateway: #f2a65a;
+    --lane-gateway-bg: rgba(242,166,90,0.10);
+    --lane-comms: #ef8c7a;
+    --lane-comms-bg: rgba(239,140,122,0.10);
+    --lane-spatial: #5fd9a8;
+    --lane-spatial-bg: rgba(95,217,168,0.10);
+
+    --c0: #7a8a99;
+    --c1: #6d7fd6;
+    --c2: #3fb6c9;
+    --c3: #a879e0;
+    --c4: #e0a458;
+    --c5: #e0637a;
+    --c6: #5fd9a8;
+    --holo: #7fd9ff;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Cairo',sans-serif;}
+
+  body{
+    background-image:
+      linear-gradient(var(--bg-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    padding: 36px 28px 60px;
+  }
+
+  .wrap{max-width:1650px;margin:0 auto;}
+
+  header{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    border-bottom:2px solid var(--panel-line);padding-bottom:18px;margin-bottom:28px;
+    gap:24px;flex-wrap:wrap;
+  }
+  .title-block .eyebrow{
+    font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px;
+    letter-spacing:2px;margin-bottom:8px;
+  }
+  h1{font-size:27px;font-weight:800;margin:0 0 6px;line-height:1.3;}
+  .subtitle{color:var(--ink-dim);font-size:14px;max-width:660px;}
+  .domain-code{
+    font-family:'JetBrains Mono',monospace;text-align:left;direction:ltr;
+    color:var(--ink-dim);font-size:11px;line-height:1.9;
+    border:1px solid var(--panel-line);border-radius:4px;padding:10px 14px;background:var(--panel);
+  }
+  .domain-code b{color:var(--gold);}
+
+  .home-btn{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;
+    color:var(--ink-dim);text-decoration:none;
+    border:1px solid var(--panel-line);border-radius:20px;
+    padding:6px 14px;margin-bottom:14px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .home-btn:hover{color:var(--gold);border-color:var(--gold-dim);}
+  .home-btn .arrow{font-size:13px;}
+
+  .chapters-strip{position:relative;display:grid;grid-template-columns: 200px 1fr;margin-bottom:0;}
+  .chapters-track{position:relative;height:46px;}
+  .chapter-tag{
+    position:absolute;top:0;height:46px;display:flex;flex-direction:column;justify-content:center;
+    padding:0 10px;border-radius:6px 6px 0 0;font-family:'JetBrains Mono',monospace;overflow:hidden;
+  }
+  .chapter-tag .cnum{font-size:9.5px;letter-spacing:1px;opacity:.85;}
+  .chapter-tag .cname{font-size:11px;font-weight:700;color:var(--ink);margin-top:2px;font-family:'Cairo',sans-serif;}
+
+  .axis{position:relative;display:grid;grid-template-columns: 200px 1fr;margin-bottom:2px;}
+  .axis .years{position:relative;height:30px;border-bottom:1px solid var(--panel-line);}
+  .axis .years span{
+    position:absolute;top:0;transform:translateX(50%);
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);font-weight:700;
+  }
+
+  .triggers{position:relative;grid-column: 2 / -1;}
+
+  .board{position:relative;display:grid;grid-template-columns: 200px 1fr;}
+
+  .lane-labels{display:flex;flex-direction:column;}
+  .lane-label{
+    height:150px;display:flex;align-items:center;justify-content:flex-end;
+    padding-inline-end:14px;border-bottom:1px solid var(--panel-line);
+  }
+  .lane-label .tag{font-weight:700;font-size:13px;text-align:right;line-height:1.5;}
+  .lane-label .tag small{
+    display:block;font-family:'JetBrains Mono',monospace;font-weight:400;
+    font-size:9px;color:var(--ink-dim);letter-spacing:0.5px;margin-top:3px;
+  }
+  .lane-label.identity{border-inline-end:4px solid var(--lane-identity);}
+  .lane-label.files{border-inline-end:4px solid var(--lane-files);}
+  .lane-label.gateway{border-inline-end:4px solid var(--lane-gateway);}
+  .lane-label.comms{border-inline-end:4px solid var(--lane-comms);}
+  .lane-label.spatial{border-inline-end:4px solid var(--lane-spatial);}
+
+  .lanes{position:relative;}
+  .lane{
+    position:relative;height:150px;border-bottom:1px solid var(--panel-line);
+    display:flex;align-items:center;padding:0 18px;
+  }
+  .lane.identity{background:var(--lane-identity-bg);}
+  .lane.files{background:var(--lane-files-bg);}
+  .lane.gateway{background:var(--lane-gateway-bg);}
+  .lane.comms{background:var(--lane-comms-bg);}
+  .lane.spatial{background:var(--lane-spatial-bg);}
+
+  .lane-track{position:relative;width:100%;height:2px;background:var(--panel-line);}
+
+  .node{
+    position:absolute;top:50%;transform:translate(50%,-50%);width:176px;
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:6px;
+    padding:8px 10px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,0.35);cursor:default;
+  }
+  .node .period{
+    font-family:'JetBrains Mono',monospace;font-size:8.8px;color:var(--gold);
+    margin-bottom:3px;letter-spacing:0.5px;
+  }
+  .node .name{font-weight:700;font-size:11px;line-height:1.4;}
+  .node.empty{opacity:.5;font-style:italic;}
+  .node.identity{border-top:3px solid var(--lane-identity);}
+  .node.files{border-top:3px solid var(--lane-files);}
+  .node.gateway{border-top:3px solid var(--lane-gateway);}
+  .node.comms{border-top:3px solid var(--lane-comms);}
+  .node.spatial{border-top:3px solid var(--lane-spatial);}
+  .node.holo-node{border-style:dashed;border-color:var(--holo);opacity:.92;}
+  .node.holo-node .period{color:var(--holo);}
+  .dot.holo-dot{background:var(--holo);}
+
+  .qmark{
+    position:absolute;top:50%;transform:translate(50%,-50%);
+    width:11px;height:11px;display:flex;align-items:center;justify-content:center;
+    font-size:11px;cursor:default;z-index:3;
+  }
+  .qmark-label{
+    position:absolute;top:-20px;transform:translateX(50%);
+    font-family:'JetBrains Mono',monospace;font-size:9px;white-space:nowrap;
+  }
+
+  .dot{
+    position:absolute;top:50%;width:9px;height:9px;border-radius:50%;
+    transform:translate(50%,-50%);background:var(--gold);box-shadow:0 0 0 3px var(--bg);
+  }
+
+  .chapter-band{position:absolute;top:0;bottom:0;opacity:.55;pointer-events:none;}
+
+  .trigger-line{position:absolute;top:0;bottom:0;width:0;border-right:1px dashed var(--gold-dim);}
+  .trigger-flag{position:absolute;top:-66px;transform:translateX(50%);width:160px;text-align:center;}
+  .trigger-flag.mini{top:-96px;width:120px;}
+  .trigger-flag.mini .yr{font-size:9.5px;}
+  .trigger-flag.mini .lbl{font-size:9px;}
+  .trigger-flag .yr{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;}
+  .trigger-flag .lbl{font-size:10.5px;color:var(--ink-dim);line-height:1.3;margin-top:2px;}
+
+  .board-outer{
+    position:relative;border:1px solid var(--panel-line);border-radius:8px;
+    overflow:visible;margin-top:78px;background:var(--panel);
+  }
+
+  .legend{
+    display:flex;gap:20px;flex-wrap:wrap;margin-top:26px;padding-top:18px;
+    border-top:1px solid var(--panel-line);font-size:12px;color:var(--ink-dim);
+  }
+  .legend .item{display:flex;align-items:center;gap:7px;}
+  .legend .swatch{width:12px;height:12px;border-radius:3px;}
+
+  .note{
+    margin-top:22px;background:var(--panel);border:1px solid var(--panel-line);
+    border-radius:8px;padding:16px 20px;font-size:13px;color:var(--ink-dim);line-height:1.9;
+  }
+  .note b{color:var(--ink);}
+  .note code{
+    font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.06);
+    padding:1px 6px;border-radius:4px;color:var(--gold);direction:ltr;display:inline-block;
+  }
+
+  .story-header{margin-top:56px;padding-bottom:14px;border-bottom:2px solid var(--panel-line);}
+  .story-header .eyebrow{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px;letter-spacing:2px;margin-bottom:6px;}
+  .story-header h2{font-size:22px;font-weight:800;margin:0;}
+
+  .story-grid{display:flex;flex-direction:column;gap:18px;margin-top:22px;}
+
+  .story-card{position:relative;background:var(--panel);border:1px solid var(--panel-line);border-radius:10px;overflow:hidden;}
+  .story-card::before{content:"";position:absolute;top:0;bottom:0;right:0;width:5px;}
+  .story-card.sc0::before{background:var(--c0);}
+  .story-card.sc1::before{background:var(--c1);}
+  .story-card.sc2::before{background:var(--c2);}
+  .story-card.sc3::before{background:var(--c3);}
+  .story-card.sc4::before{background:var(--c4);}
+  .story-card.sc5::before{background:var(--c5);}
+  .story-card.sc6::before{background:var(--c6);}
+
+  .story-card-head{
+    padding:18px 22px 14px;border-bottom:1px solid var(--panel-line);
+    display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;
+  }
+  .sc-title-block{max-width:700px;}
+  .sc-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;margin-bottom:6px;}
+  .sc0 .sc-num{color:var(--c0);} .sc1 .sc-num{color:var(--c1);} .sc2 .sc-num{color:var(--c2);}
+  .sc3 .sc-num{color:var(--c3);} .sc4 .sc-num{color:var(--c4);} .sc5 .sc-num{color:var(--c5);}
+  .sc6 .sc-num{color:var(--c6);}
+  .sc-title{font-size:18px;font-weight:800;margin-bottom:6px;}
+  .sc-hook{font-size:13px;color:var(--ink-dim);font-style:italic;line-height:1.8;}
+  .sc-years{
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);font-weight:700;
+    background:rgba(211,169,78,0.08);border:1px solid var(--gold-dim);border-radius:20px;
+    padding:6px 16px;white-space:nowrap;
+  }
+
+  .sc-body{padding:18px 22px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media (max-width:1100px){.sc-body{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:640px){.sc-body{grid-template-columns:1fr;}}
+
+  .sc-domain{background:rgba(255,255,255,0.03);border-radius:8px;padding:12px 14px;border-inline-start:3px solid transparent;}
+  .sc-domain.identity{border-inline-start-color:var(--lane-identity);}
+  .sc-domain.files{border-inline-start-color:var(--lane-files);}
+  .sc-domain.gateway{border-inline-start-color:var(--lane-gateway);}
+  .sc-domain.comms{border-inline-start-color:var(--lane-comms);}
+  .sc-dlabel{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.5px;margin-bottom:5px;}
+  .sc-domain.identity .sc-dlabel{color:var(--lane-identity);}
+  .sc-domain.files .sc-dlabel{color:var(--lane-files);}
+  .sc-domain.gateway .sc-dlabel{color:var(--lane-gateway);}
+  .sc-domain.comms .sc-dlabel{color:var(--lane-comms);}
+  .sc-dtech{font-weight:700;font-size:13px;margin-bottom:5px;line-height:1.4;}
+  .sc-dnote{font-size:12px;color:var(--ink-dim);line-height:1.7;}
+
+  .sc-cross{
+    grid-column:1/-1;
+    background:rgba(211,169,78,0.05);
+    border:1px dashed var(--gold-dim);
+    border-radius:8px;
+    padding:11px 14px;
+    font-size:12px;
+    color:var(--ink-dim);
+    line-height:1.7;
+  }
+  .sc-cross b{color:var(--gold);}
+
+  .sc-foot{padding:13px 22px 18px;font-size:12.5px;color:var(--ink-dim);display:flex;gap:8px;}
+  .sc-foot b{color:var(--ink);}
+
+  .role-strip{
+    display:flex;align-items:center;gap:6px;margin-top:24px;flex-wrap:wrap;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;
+  }
+  .role-strip .role{
+    background:var(--panel);border:1px solid var(--panel-line);color:var(--ink);
+    padding:7px 14px;border-radius:20px;white-space:nowrap;
+  }
+  .role-strip .arrow{color:var(--gold);font-size:15px;}
+
+  /* ===== Full chronological timeline appendix ===== */
+  .full-timeline{margin-top:56px;}
+  .tl-list{position:relative;margin-top:22px;}
+  .tl-list::before{content:"";position:absolute;top:6px;bottom:6px;right:6px;width:1px;background:var(--panel-line);}
+  .tl-item{
+    position:relative;display:flex;gap:16px;align-items:baseline;flex-wrap:wrap;
+    padding:12px 18px 12px 14px;padding-inline-end:30px;border-radius:8px;
+    border-inline-start:3px solid transparent;
+  }
+  .tl-item:nth-child(odd){background:rgba(255,255,255,0.015);}
+  .tl-item .tl-dot{
+    position:absolute;right:2px;top:19px;width:9px;height:9px;border-radius:50%;
+    background:var(--gold);box-shadow:0 0 0 3px var(--bg);z-index:2;
+  }
+  .tl-item .tl-year{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--gold);
+    font-weight:700;min-width:108px;flex-shrink:0;
+  }
+  .tl-item .tl-text{font-size:13px;color:var(--ink-dim);line-height:1.8;flex:1;min-width:200px;}
+  .tl-item .tl-text b{color:var(--ink);font-weight:700;}
+
+  .tl-item.tl-c0{border-inline-start-color:var(--c0);}
+  .tl-item.tl-c0 .tl-dot{background:var(--c0);}
+  .tl-item.tl-c0 .tl-year{color:var(--c0);}
+  .tl-item.tl-c1{border-inline-start-color:var(--c1);}
+  .tl-item.tl-c1 .tl-dot{background:var(--c1);}
+  .tl-item.tl-c1 .tl-year{color:var(--c1);}
+  .tl-item.tl-c2{border-inline-start-color:var(--c2);}
+  .tl-item.tl-c2 .tl-dot{background:var(--c2);}
+  .tl-item.tl-c2 .tl-year{color:var(--c2);}
+  .tl-item.tl-c3{border-inline-start-color:var(--c3);}
+  .tl-item.tl-c3 .tl-dot{background:var(--c3);}
+  .tl-item.tl-c3 .tl-year{color:var(--c3);}
+  .tl-item.tl-c4{border-inline-start-color:var(--c4);}
+  .tl-item.tl-c4 .tl-dot{background:var(--c4);}
+  .tl-item.tl-c4 .tl-year{color:var(--c4);}
+  .tl-item.tl-c5{border-inline-start-color:var(--c5);}
+  .tl-item.tl-c5 .tl-dot{background:var(--c5);}
+  .tl-item.tl-c5 .tl-year{color:var(--c5);}
+  .tl-item.tl-c6{border-inline-start-color:var(--c6);}
+  .tl-item.tl-c6 .tl-dot{background:var(--c6);}
+  .tl-item.tl-c6 .tl-year{color:var(--c6);}
+  .tl-item.tl-holo{border-inline-start-color:var(--holo);}
+  .tl-item.tl-holo .tl-dot{background:var(--holo);}
+  .tl-item.tl-holo .tl-year{color:var(--holo);}
+
+  .tl-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;font-size:11.5px;color:var(--ink-dim);}
+  .tl-legend .li{display:flex;align-items:center;gap:6px;}
+  .tl-legend .sw{width:10px;height:10px;border-radius:3px;}
+
+  @media (max-width: 1300px){
+    .board-outer{overflow-x:auto;}
+    .board, .axis, .chapters-strip{min-width:1500px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="home-btn" href="index.html"><span class="arrow">→</span> العودة للصفحة الرئيسية</a>
+
+  <header>
+    <div class="title-block">
+      <div class="eyebrow">COMMUNICATIONS // BLUEPRINT NARRATIVE MAP</div>
+      <h1>Communications: من التلغراف إلى التواصل الغامر</h1>
+      <div class="subtitle">خمسة مسارات متوازية — الصوت، الفاكس، البريد الإلكتروني، المراسلة الفورية، والتواصل الغامر/المكاني — من أول نبضة مورس (1837) إلى الواقع الافتراضي، مع إشارة ختامية لأفق الاتصال الهولوغرافي التجريبي</div>
+    </div>
+    <div class="domain-code">
+      <div>SUBJECT: <b>COMMUNICATIONS</b></div>
+      <div>SPAN: <b>1837 → 2026+</b></div>
+      <div>TRACKS: <b>05</b> · CHAPTERS: <b>07</b> · TRIGGERS: <b>07</b></div>
+    </div>
+  </header>
+
+  <div class="board-outer">
+
+    <!-- Chapter banner strip -->
+    <div class="chapters-strip">
+      <div></div>
+      <div class="chapters-track">
+        <div class="chapter-tag" style="right:0%; width:12%; background:color-mix(in srgb, var(--c0) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c0);">CH.00 · 1837–43</div>
+          <div class="cname">عصر التلغراف</div>
+        </div>
+        <div class="chapter-tag" style="right:12%; width:13%; background:color-mix(in srgb, var(--c1) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c1);">CH.01 · 1876–1960s</div>
+          <div class="cname">ميلاد الهاتف</div>
+        </div>
+        <div class="chapter-tag" style="right:25%; width:14%; background:color-mix(in srgb, var(--c2) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c2);">CH.02 · 1970s–80s</div>
+          <div class="cname">الفاكس أداة أعمال</div>
+        </div>
+        <div class="chapter-tag" style="right:39%; width:13%; background:color-mix(in srgb, var(--c3) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c3);">CH.03 · 1971–1995</div>
+          <div class="cname">ميلاد البريد الإلكتروني</div>
+        </div>
+        <div class="chapter-tag" style="right:52%; width:15%; background:color-mix(in srgb, var(--c4) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c4);">CH.04 · 1996–2003</div>
+          <div class="cname">حرب البريد والمراسلة الفورية</div>
+        </div>
+        <div class="chapter-tag" style="right:67%; width:17%; background:color-mix(in srgb, var(--c5) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c5);">CH.05 · 2004–2013</div>
+          <div class="cname">هيمنة جوجل والاتصال الرقمي</div>
+        </div>
+        <div class="chapter-tag" style="right:84%; width:16%; background:color-mix(in srgb, var(--c6) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c6);">CH.06 · 2014–2026+</div>
+          <div class="cname">التواصل الغامر: الواقع الافتراضي</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trigger flags row -->
+    <div class="axis" style="margin-top:6px;">
+      <div></div>
+      <div class="triggers" style="grid-column: 2/-1; height:0;">
+        <div class="trigger-flag" style="right:12%;"><div class="yr">1837</div><div class="lbl">⚡ تلغراف مورس</div></div>
+        <div class="trigger-flag" style="right:25%;"><div class="yr">1876</div><div class="lbl">☎️ اختراع الهاتف</div></div>
+        <div class="trigger-flag" style="right:39%;"><div class="yr">1971</div><div class="lbl">📧 أول بريد إلكتروني</div></div>
+        <div class="trigger-flag mini" style="right:48%;"><div class="yr">1988</div><div class="lbl">🔌 TAT-8 الألياف الضوئية</div></div>
+        <div class="trigger-flag" style="right:52%;"><div class="yr">1996</div><div class="lbl">🌐 Hotmail وICQ معاً</div></div>
+        <div class="trigger-flag" style="right:67%;"><div class="yr">2004</div><div class="lbl">📮 إطلاق Gmail</div></div>
+        <div class="trigger-flag" style="right:84%;"><div class="yr">2014</div><div class="lbl">🥽 Oculus Rift ينطلق تجارياً</div></div>
+      </div>
+    </div>
+
+    <!-- Year axis -->
+    <div class="axis">
+      <div></div>
+      <div class="years">
+        <span style="right:0%;">1837</span>
+        <span style="right:25%;">1876</span>
+        <span style="right:39%;">1971</span>
+        <span style="right:52%;">1996</span>
+        <span style="right:84%;">2014</span>
+        <span style="right:98%;">2026+</span>
+      </div>
+    </div>
+
+    <!-- Board -->
+    <div class="board">
+      <div class="lane-labels">
+        <div class="lane-label identity"><div class="tag">الاتصال الصوتي الفوري<small>VOICE · TELEGRAPH → VoIP</small></div></div>
+        <div class="lane-label files"><div class="tag">الفاكس والوثائق عن بُعد<small>FAX · 1843 → DIGITAL DOCS</small></div></div>
+        <div class="lane-label gateway"><div class="tag">البريد الإلكتروني<small>EMAIL · ARPANET → GMAIL</small></div></div>
+        <div class="lane-label comms"><div class="tag">المراسلة الفورية<small>MESSAGING · ICQ → CONVERGENCE</small></div></div>
+        <div class="lane-label spatial"><div class="tag">التواصل الغامر والمكاني<small>SPATIAL · VR → HOLOGRAM?</small></div></div>
+      </div>
+
+      <div class="lanes">
+
+        <!-- Chapter background bands -->
+        <div class="chapter-band" style="right:0%; width:12%; background:var(--c0); opacity:.06;"></div>
+        <div class="chapter-band" style="right:12%; width:13%; background:var(--c1); opacity:.07;"></div>
+        <div class="chapter-band" style="right:25%; width:14%; background:var(--c2); opacity:.07;"></div>
+        <div class="chapter-band" style="right:39%; width:13%; background:var(--c3); opacity:.07;"></div>
+        <div class="chapter-band" style="right:52%; width:15%; background:var(--c4); opacity:.08;"></div>
+        <div class="chapter-band" style="right:67%; width:17%; background:var(--c5); opacity:.08;"></div>
+        <div class="chapter-band" style="right:84%; width:16%; background:var(--c6); opacity:.08;"></div>
+
+        <!-- Trigger vertical lines -->
+        <div class="trigger-line" style="right:12%;"></div>
+        <div class="trigger-line" style="right:25%;"></div>
+        <div class="trigger-line" style="right:39%;"></div>
+        <div class="trigger-line" style="right:52%;"></div>
+        <div class="trigger-line" style="right:67%;"></div>
+        <div class="trigger-line" style="right:84%;"></div>
+
+        <!-- VOICE lane -->
+        <div class="lane identity">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node identity" style="right:2%;" title="صمويل مورس يخترع التلغراف الكهربائي (1837) وشيفرة مورس — أول اتصال فوري عن بُعد في التاريخ. أول رسالة فعلية أُرسلت عام 1844.">
+              <div class="period">1837</div>
+              <div class="name">تلغراف مورس<br>أول اتصال فوري عن بُعد</div>
+            </div>
+            <div class="dot" style="right:14%;"></div>
+            <div class="node identity" style="right:14%;" title="ألكسندر غراهام بيل يخترع الهاتف (1876)، وتنتشر الشبكة الهاتفية الأرضية تدريجياً حول العالم.">
+              <div class="period">1876</div>
+              <div class="name">اختراع الهاتف<br>انتشار الشبكة الأرضية</div>
+            </div>
+            <div class="dot" style="right:27%;"></div>
+            <div class="node identity" style="right:27%;" title="أول شبكة هاتف خلوي تجارية تناظرية (AMPS) تنطلق في الولايات المتحدة عام 1983.">
+              <div class="period">1983</div>
+              <div class="name">الهاتف الخلوي التجاري<br>شبكات AMPS التناظرية</div>
+            </div>
+            <div class="dot" style="right:41%;"></div>
+            <div class="node identity" style="right:41%;" title="إطلاق معيار GSM (1991) — الجيل الثاني الرقمي للهاتف الخلوي، يفتح الباب أمام الرسائل النصية القصيرة SMS.">
+              <div class="period">1991</div>
+              <div class="name">GSM يُطلق<br>الجيل الثاني الرقمي</div>
+            </div>
+            <div class="dot" style="right:54%;"></div>
+            <div class="node identity" style="right:54%;" title="Skype يُطلق (أغسطس 2003) كأول تطبيق VoIP شائع يهدد فكرة الهاتف التقليدي نفسها — جودة المكالمات هذه ما كانت لتكون ممكنة دون شبكات الألياف الضوئية الفائقة السرعة التي انتشرت منذ أواخر الثمانينيات.">
+              <div class="period">2003</div>
+              <div class="name">Skype وVoIP<br>الصوت عبر الإنترنت</div>
+            </div>
+            <div class="dot" style="right:69%;"></div>
+            <div class="node identity" style="right:69%;" title="نضوج VoIP كبديل شائع للهاتف التقليدي، مع انتشار المكالمات المجانية عبر الإنترنت.">
+              <div class="period">2004–2013</div>
+              <div class="name">نضوج VoIP<br>مكالمات إنترنت مجانية</div>
+            </div>
+            <div class="dot" style="right:86%;"></div>
+            <div class="node identity" style="right:86%;" title="الصوت المكاني ثلاثي الأبعاد داخل بيئات الواقع الافتراضي (Meta Horizon)، والصوت يندمج بالكامل مع تطبيقات المراسلة والاجتماعات الغامرة.">
+              <div class="period">2014–2026+</div>
+              <div class="name">صوت مكاني في VR<br>يندمج بالمراسلة الغامرة</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAX lane -->
+        <div class="lane files">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node files" style="right:2%;" title="ألكسندر باين يسجّل براءة اختراع مفهوم الفاكس (1843) — قبل الهاتف بـ33 عاماً! لكن الفكرة تبقى نظرية بلا بنية تحتية تعمل عبرها.">
+              <div class="period">1843</div>
+              <div class="name">فكرة الفاكس النظرية<br>تسبق الهاتف بـ33 عاماً</div>
+            </div>
+            <div class="dot" style="right:14%;"></div>
+            <div class="node files empty" style="right:14%;" title="الفكرة تنتظر انتشار الشبكة الهاتفية لتستثمرها؛ لا انتشار تجاري حقيقي بعد.">
+              <div class="period">1876–1960s</div>
+              <div class="name">ينتظر بنية هاتفية<br>لا انتشار تجاري بعد</div>
+            </div>
+            <div class="dot" style="right:27%;"></div>
+            <div class="node files" style="right:27%;" title="الفاكس التجاري ينطلق فعلياً مستثمراً خطوط الهاتف القائمة أصلاً — التناقض التاريخي: الفكرة أقدم من الهاتف، لكن التطبيق الفعلي يعتمد عليه بالكامل.">
+              <div class="period">1970s</div>
+              <div class="name">الفاكس التجاري ينطلق<br>يستثمر خطوط الهاتف</div>
+            </div>
+            <div class="dot" style="right:41%;"></div>
+            <div class="node files" style="right:41%;" title="الفاكس يصبح وسيلة التوثيق الرسمية القياسية في كل مكتب — العقود والمراسلات الرسمية تُرسل وتُستقبل عبره.">
+              <div class="period">1980s–1990s</div>
+              <div class="name">ذروة الفاكس المكتبي<br>التوثيق الرسمي القياسي</div>
+            </div>
+            <div class="dot" style="right:54%;"></div>
+            <div class="node files" style="right:54%;" title="البريد الإلكتروني المرفق بملفات يبدأ ينافس الفاكس تدريجياً كوسيلة أسرع وأرخص لنقل الوثائق.">
+              <div class="period">1996–2003</div>
+              <div class="name">بداية الأفول<br>البريد الإلكتروني ينافسه</div>
+            </div>
+            <div class="dot" style="right:69%;"></div>
+            <div class="node files" style="right:69%;" title="الفاكس يتراجع لدور هامشي جداً؛ PDF والتوقيع الرقمي يحلان محله في معظم الاستخدامات الرسمية.">
+              <div class="period">2004–2013</div>
+              <div class="name">دور هامشي<br>PDF والتوقيع الرقمي يحلان محله</div>
+            </div>
+            <div class="dot" style="right:86%;"></div>
+            <div class="node files empty" style="right:86%;" title="الفاكس غائب تماماً عن عصر الواقع الافتراضي — انتهت رحلة 183 عاماً من الفكرة النظرية (1843) إلى الغياب الكامل.">
+              <div class="period">2014–2026+</div>
+              <div class="name">غياب كامل<br>لا وجود في عصر VR</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EMAIL lane -->
+        <div class="lane gateway">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node gateway empty" style="right:2%;" title="لا وجود بعد لأي شبكة حواسيب يمكن أن يُبنى عليها بريد إلكتروني.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:14%;"></div>
+            <div class="node gateway empty" style="right:14%;" title="لا وجود بعد؛ الشبكة الهاتفية تنتشر لكنها لنقل الصوت لا البيانات.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:27%;"></div>
+            <div class="node gateway empty" style="right:27%;" title="لا وجود بعد لبريد إلكتروني عام؛ الشبكات الأكاديمية البحثية المبكرة لا تزال محدودة النطاق جداً.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:41%;"></div>
+            <div class="node gateway" style="right:41%;" title="راي توملينسون يرسل أول بريد إلكتروني عبر شبكة ARPANET عام 1971، ويخترع استخدام رمز @ للفصل بين اسم المستخدم والجهاز.">
+              <div class="period">1971</div>
+              <div class="name">أول بريد إلكتروني<br>توملينسون ورمز @</div>
+            </div>
+            <div class="dot" style="right:54%;"></div>
+            <div class="node gateway" style="right:54%;" title="Hotmail يُطلق في يوليو 1996 كأول بريد ويب مجاني منتشر، ويليه Yahoo Mail في 1997 — حرب البريد المجاني تبدأ.">
+              <div class="period">1996–1997</div>
+              <div class="name">Hotmail وYahoo Mail<br>حرب البريد المجاني</div>
+            </div>
+            <div class="dot" style="right:69%;"></div>
+            <div class="node gateway" style="right:69%;" title="Gmail يُطلق في أبريل 2004 بمساحة تخزين 1 جيجابايت — أكثر بمئات المرات من منافسيه وقتها — ليعيد تشكيل قواعد اللعبة كاملة. سرعة تحميل هذا الحجم من البيانات اعتمدت مباشرة على شبكات الألياف الضوئية التي توسعت عالمياً منذ كابل TAT-8 (1988).">
+              <div class="period">2004</div>
+              <div class="name">إطلاق Gmail<br>1GB تُحدث زلزالاً</div>
+            </div>
+            <div class="dot" style="right:86%;"></div>
+            <div class="node gateway" style="right:86%;" title="البريد الإلكتروني يبقى قناة خلفية تقليدية شبه ثابتة خلال عصر VR — على عكس المسارات الأخرى، لم يتغيّر جوهرياً منذ Gmail.">
+              <div class="period">2014–2026+</div>
+              <div class="name">قناة خلفية ثابتة<br>لم تتغيّر جوهرياً منذ Gmail</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MESSAGING lane -->
+        <div class="lane comms">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node comms empty" style="right:2%;" title="لا وجود بعد.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:14%;"></div>
+            <div class="node comms empty" style="right:14%;" title="لا وجود بعد.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:27%;"></div>
+            <div class="node comms empty" style="right:27%;" title="لا وجود بعد.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:41%;"></div>
+            <div class="node comms empty" style="right:41%;" title="لا وجود بعد لمفهوم المراسلة الفورية المنفصلة عن البريد.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:54%;"></div>
+            <div class="node comms" style="right:54%;" title="ICQ يُطلق في نوفمبر 1996 كأول برنامج دردشة فورية شائع، يليه Yahoo Messenger (1998) ثم MSN Messenger (يوليو 1999).">
+              <div class="period">1996–1999</div>
+              <div class="name">ICQ → Yahoo → MSN Messenger<br>عصر الدردشة الفورية</div>
+            </div>
+            <div class="dot" style="right:69%;"></div>
+            <div class="node comms" style="right:69%;" title="واتساب (2009) يبدأ حقبة تقارب المراسلة والصوت في تطبيق واحد يحمله المستخدم في جيبه.">
+              <div class="period">2009</div>
+              <div class="name">واتساب يُطلق<br>بداية تقارب القنوات</div>
+            </div>
+            <div class="dot" style="right:86%;"></div>
+            <div class="node comms" style="right:86%;" title="المراسلة تتوسع لتشمل صور رمزية (Avatars) وتفاعلاً مكانياً داخل تطبيقات مثل VRChat — النص والصوت والحضور المكاني يندمجون معاً.">
+              <div class="period">2014–2026+</div>
+              <div class="name">مراسلة بصور رمزية مكانية<br>VRChat وتطبيقات مشابهة</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SPATIAL lane (NEW) -->
+        <div class="lane spatial">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node spatial empty" style="right:2%;" title="لا وجود بعد لأي مفهوم تواصل مكاني أو غامر.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:14%;"></div>
+            <div class="node spatial empty" style="right:14%;" title="لا وجود بعد.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:27%;"></div>
+            <div class="node spatial empty" style="right:27%;" title="لا وجود بعد.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:41%;"></div>
+            <div class="node spatial empty" style="right:41%;" title="لا وجود بعد.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:54%;"></div>
+            <div class="node spatial empty" style="right:54%;" title="لا وجود بعد؛ فكرة الواقع الافتراضي للتواصل لا تزال حكراً على أبحاث أكاديمية محدودة جداً (مثل تجارب Sensorama القديمة في الستينيات، بلا صلة تجارية).">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:69%;"></div>
+            <div class="node spatial" style="right:69%;" title="حملة تمويل جماعي على Kickstarter لجهاز Oculus Rift (2012) تُعيد إحياء فكرة الواقع الافتراضي للجمهور العام بعد عقود من الفشل التجاري.">
+              <div class="period">2012</div>
+              <div class="name">Oculus Rift Kickstarter<br>إحياء فكرة VR</div>
+            </div>
+            <div class="dot" style="right:86%;"></div>
+            <div class="node spatial" style="right:86%;" title="Oculus Rift التجارية (2016) ثم Meta Quest، Meta Horizon Workrooms كمساحة اجتماعات افتراضية، وApple Vision Pro (2024) — الواقع الافتراضي يصبح منتجاً استهلاكياً حقيقياً للتواصل والعمل.">
+              <div class="period">2016–2026+</div>
+              <div class="name">VR تجاري ناضج<br>Quest / Horizon / Vision Pro</div>
+            </div>
+            <div class="qmark" style="right:96%; color:var(--holo);" title="Microsoft Mesh Holoportation — عروض بحثية تجريبية لبث صورة ثلاثية الأبعاد حية للشخص، لا منتج استهلاكي منتشر بعد.">🔮<span class="qmark-label" style="color:var(--holo);">هولوغرام؟</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="item"><span class="swatch" style="background:var(--lane-identity)"></span> الاتصال الصوتي الفوري</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-files)"></span> الفاكس والوثائق عن بُعد</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-gateway)"></span> البريد الإلكتروني</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-comms)"></span> المراسلة الفورية</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-spatial)"></span> التواصل الغامر والمكاني</div>
+    <div class="item">┄┄ خط ذهبي متقطع = حدث تحوّل مشترك في نفس اللحظة (لاحظ تزامن Hotmail وICQ عام 1996)</div>
+    <div class="item">🔮 علامة سماوية = أفق هولوغرافي تجريبي لم ينضج بعد كمنتج استهلاكي</div>
+    <div class="item">💡 مرّر المؤشر فوق أي بطاقة لقراءة السياق الكامل</div>
+  </div>
+
+  <div class="note">
+    <b>لإعادة بنائه في Microsoft Visio:</b> نفس نمط <b>Swimlane Timeline</b> — أقرب قالب <code>File → New → Schedule → Timeline</code>
+    أو <code>Cross-Functional Flowchart</code>. لاحظ التناقض التاريخي البارز كمعلم بصري مهم: <b>الفاكس (1843) أقدم من الهاتف (1876)</b>
+    لكنه ينتظر 130 عاماً تقريباً ليصبح أداة عمل فعلية مستثمراً بنية الهاتف نفسها — يستحق شرحاً بصرياً خاصاً (سهم راجع من عقدة الفاكس التجاري 1970s إلى عقدة اختراع الهاتف 1876).
+    أضف أيضاً علامة صغيرة منفصلة بلون مختلف عند نهاية مسار "التواصل الغامر" لتمثيل الأفق الهولوغرافي التجريبي (Microsoft Mesh) بحدود متقطعة، دون اعتباره محطة مكتملة.
+    <br><br>
+    <b>ملاحظة تقسيم مع صفحة 8-bit.net:</b> الهاتف هنا يُغطّى كوسيلة اتصال صوتي عبر شبكة عامة (أرضي → خلوي → VoIP)؛
+    أما الهاتف كجهاز إداري ذكي (معركة BlackBerry ضد iPhone) فمُغطّى حصراً في صفحة 8-bit.net دون تكرار هنا.
+    <br><br>
+    <b>البنية التحتية الصامتة:</b> علامة 1988 (كابل TAT-8) تمثّل حدثاً تأسيسياً يخدم كل المسارات الخمسة معاً لا مساراً قائماً بذاته — الألياف الضوئية استبدلت الإشارة الكهربائية عبر النحاس بنبضات ضوئية تقترب من سرعة الضوء، برفع السعة من ميغابت إلى تيرابت في الثانية. كل تسارع لاحق في هذه الصفحة (من بطء البريد الأكاديمي الأول 1971 إلى فيديو VR الحي 2026) قائم فعلياً على هذه البنية الصامتة، رغم أنها لا تظهر كمسار مرئي مستقل في المخطط.
+  </div>
+
+  <!-- ============ RICH NARRATIVE SECTION ============ -->
+  <div class="story-header">
+    <div class="eyebrow">FULL NARRATIVE // كل محطة بتفاصيلها الكاملة</div>
+    <h2>الرحلة الكاملة: من نبضة كهربائية إلى حضور مكاني افتراضي</h2>
+  </div>
+
+  <div class="role-strip">
+    <div class="role">⚡ عامل تلغراف ينقر شيفرة مورس</div>
+    <span class="arrow">←</span>
+    <div class="role">☎️ عامل بدالة هاتفية يدوية</div>
+    <span class="arrow">←</span>
+    <div class="role">📠 سكرتيرة مكتب ترسل فاكساً رسمياً</div>
+    <span class="arrow">←</span>
+    <div class="role">📧 مستخدم بريد إلكتروني في حرب Hotmail/Yahoo</div>
+    <span class="arrow">←</span>
+    <div class="role">💬 مستخدم مراسلة فورية موحّدة صوت ونص وفيديو</div>
+    <span class="arrow">←</span>
+    <div class="role">🥽 مستخدم واقع افتراضي بصورة رمزية ثلاثية الأبعاد</div>
+  </div>
+
+  <div class="story-grid">
+
+    <!-- STORY CARD 0 -->
+    <div class="story-card sc0">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 00 // TELEGRAPH ERA</div>
+          <div class="sc-title">عصر التلغراف: أول نبضة كهربائية تقطع القارات</div>
+          <div class="sc-hook">قبل أن يوجد الهاتف بأربعين عاماً، تمكّن البشر لأول مرة من إرسال رسالة فورية عبر مئات الكيلومترات — عبر نقرات كهربائية فقط.</div>
+        </div>
+        <div class="sc-years">1837 — 1843</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">VOICE / INSTANT</div>
+          <div class="sc-dtech">تلغراف مورس (1837)</div>
+          <div class="sc-dnote">صمويل مورس يخترع التلغراف الكهربائي وشيفرته الشهيرة (نقاط وشرطات)؛ أول رسالة فعلية تُرسل عام 1844 بجملة "ماذا صنع الرب" (What Hath God Wrought).</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">FAX</div>
+          <div class="sc-dtech">فكرة الفاكس النظرية (1843)</div>
+          <div class="sc-dnote">ألكسندر باين يسجّل براءة اختراع مفهوم نقل الصور عبر الأسلاك — أقدم من الهاتف نفسه بـ33 عاماً، لكنها فكرة تسبق زمانها تماماً ولا تجد بنية تحتية تعمل عبرها بعد.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">EMAIL</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">لا شبكات حواسيب، ولا حتى فكرة الحاسوب نفسها متبلورة بعد.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">MESSAGING</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">التواصل الفوري عن بُعد بأكمله يبدأ للتو مع التلغراف نفسه.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> عامل تلغراف ينقر شيفرة مورس بيد ماهرة — وفي مكان آخر، مخترع يسجّل براءة اختراع لفكرة "فاكس" لن يجد طريقها للتطبيق الفعلي إلا بعد قرن تقريباً.</div>
+    </div>
+
+    <!-- STORY CARD 1 -->
+    <div class="story-card sc1">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 01 // TELEPHONE BIRTH</div>
+          <div class="sc-title">ميلاد الهاتف: الصوت البشري يعبر الأسلاك</div>
+          <div class="sc-hook">"مستر واطسون، تعال إلى هنا، أريدك" — أول جملة منطوقة عبر الهاتف في التاريخ، وبداية ثورة ستبني البنية التحتية لكل ما يليها.</div>
+        </div>
+        <div class="sc-years">1876 — 1960s</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">VOICE / INSTANT</div>
+          <div class="sc-dtech">اختراع الهاتف (1876)</div>
+          <div class="sc-dnote">ألكسندر غراهام بيل يسجّل براءة اختراع الهاتف، وتبدأ الشبكة الهاتفية الأرضية بالانتشار تدريجياً — أولاً بين المدن الكبرى، ثم عالمياً على مدى عقود.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">FAX</div>
+          <div class="sc-dtech">الفكرة تنتظر</div>
+          <div class="sc-dnote">مفهوم الفاكس الذي سُجّل قبل 33 عاماً لا يزال بلا تطبيق تجاري حقيقي؛ ينتظر أن تنضج شبكة الهاتف بما يكفي ليستثمرها.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">EMAIL</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">لا حواسيب متصلة ببعضها بعد.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">MESSAGING</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">الهاتف نفسه هو أحدث تقنية اتصال متاحة في هذه الحقبة بأكملها.</div>
+        </div>
+
+        <div class="sc-cross">
+          <b>💡 التناقض التاريخي:</b> الفاكس (1843) أقدم من الهاتف (1876) بـ33 عاماً — لكنه لن يصبح أداة فعلية إلا بعد أن يبني الهاتف البنية التحتية (خطوط النحاس) التي سيعمل الفاكس عبرها لاحقاً بأكثر من قرن.
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> شبكة من الأسلاك النحاسية تمتد بين المدن — لا أحد يعرف بعد أن هذه الأسلاك نفسها ستحمل يوماً فاكسات المكاتب، ثم إشارات الإنترنت المبكرة.</div>
+    </div>
+
+    <!-- STORY CARD 2 -->
+    <div class="story-card sc2">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 02 // FAX BECOMES BUSINESS TOOL</div>
+          <div class="sc-title">الفاكس يصبح أداة أعمال: فكرة قديمة تجد أخيراً طريقها</div>
+          <div class="sc-hook">بعد 130 عاماً تقريباً من تسجيل الفكرة، يجد الفاكس أخيراً الشبكة التي يحتاجها — ويصبح فجأة الأداة التي لا يستغني عنها أي مكتب.</div>
+        </div>
+        <div class="sc-years">1970s — 1980s</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">VOICE / INSTANT</div>
+          <div class="sc-dtech">الهاتف الخلوي التجاري (1983)</div>
+          <div class="sc-dnote">أول شبكة هاتف خلوي تجارية تناظرية (AMPS) تنطلق في الولايات المتحدة — بداية تحرر الاتصال الصوتي من السلك الأرضي.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">FAX</div>
+          <div class="sc-dtech">الفاكس التجاري ينطلق</div>
+          <div class="sc-dnote">مستثمراً خطوط الهاتف القائمة أصلاً منذ 1876، يصبح الفاكس أداة الأعمال القياسية لإرسال المستندات فوراً عبر القارات.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">EMAIL</div>
+          <div class="sc-dtech">لا وجود عام بعد</div>
+          <div class="sc-dnote">شبكات أكاديمية بحثية محدودة فقط (ARPANET المبكرة)، لا بريد إلكتروني منتشر تجارياً.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">MESSAGING</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">الفاكس نفسه هو أقرب شيء لـ"رسالة فورية موثّقة" في هذه الحقبة.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> صوت صرير الفاكس المميز يملأ كل مكتب في العالم — ورقة تخرج بطيئة، لكنها تحمل توقيعاً رسمياً موثوقاً لا يجادل فيه أحد.</div>
+    </div>
+
+    <!-- STORY CARD 3 -->
+    <div class="story-card sc3">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 03 // EMAIL IS BORN</div>
+          <div class="sc-title">ميلاد البريد الإلكتروني: رمز @ يغيّر كل شيء</div>
+          <div class="sc-hook">مهندس واحد يقرر استخدام رمز موجود بالفعل على لوحة المفاتيح ليفصل بين اسم المستخدم والجهاز — قرار بسيط سيصبح أشهر رمز في تاريخ الاتصال الرقمي.</div>
+        </div>
+        <div class="sc-years">1971 — 1995</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">VOICE / INSTANT</div>
+          <div class="sc-dtech">GSM يُطلق (1991)</div>
+          <div class="sc-dnote">الجيل الثاني الرقمي للهاتف الخلوي يفتح الباب أمام جودة صوت أفضل، وأمام تقنية جديدة كلياً: الرسائل النصية القصيرة (SMS).</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">FAX</div>
+          <div class="sc-dtech">ذروة الفاكس المكتبي</div>
+          <div class="sc-dnote">يصبح وسيلة التوثيق الرسمية القياسية عالمياً — العقود والمراسلات الحكومية تُرسل وتُستقبل عبره يومياً.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">EMAIL</div>
+          <div class="sc-dtech">راي توملينسون يرسل أول بريد (1971)</div>
+          <div class="sc-dnote">عبر شبكة ARPANET، يرسل توملينسون أول رسالة بين جهازين مختلفين، ويخترع استخدام رمز @ للفصل بين اسم المستخدم واسم الجهاز — تصميم بسيط سيصمد لأكثر من نصف قرن دون تغيير جوهري.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">MESSAGING</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">البريد الإلكتروني نفسه لا يزال حكراً على الأوساط الأكاديمية والبحثية، بعيداً عن الاستخدام الشخصي العام.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> رسالة نصية بسيطة تنتقل بين جهازين في نفس المبنى تقريباً — لا أحد يتخيل أن هذا الرمز الصغير @ سيصبح جزءاً من هوية كل إنسان متصل بالإنترنت لاحقاً.</div>
+    </div>
+
+    <!-- STORY CARD 4 -->
+    <div class="story-card sc4">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 04 // FREE EMAIL & INSTANT MESSAGING WARS</div>
+          <div class="sc-title">حرب البريد المجاني والمراسلة الفورية: الجميع يريد صندوق بريد</div>
+          <div class="sc-hook">فجأة، لم يعد البريد الإلكتروني حكراً على الجامعات والشركات — أي شخص يمكنه الحصول على عنوان بريد مجاني، والدردشة الفورية تولد كظاهرة اجتماعية جديدة كلياً.</div>
+        </div>
+        <div class="sc-years">1996 — 2003</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">VOICE / INSTANT</div>
+          <div class="sc-dtech">انتشار عالمي واسع لشبكات 2G</div>
+          <div class="sc-dnote">الهاتف الخلوي الرقمي يصبح سلعة استهلاكية عادية، لا رفاهية نخبوية كما كان في الثمانينيات.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">FAX</div>
+          <div class="sc-dtech">بداية الأفول التدريجي</div>
+          <div class="sc-dnote">البريد الإلكتروني المرفق بملفات يبدأ ينافس الفاكس كوسيلة أسرع وأرخص وأنظف لنقل الوثائق.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">EMAIL</div>
+          <div class="sc-dtech">Hotmail (1996) وYahoo Mail (1997)</div>
+          <div class="sc-dnote">Hotmail يُطلق كأول بريد ويب مجاني منتشر على نطاق واسع (تشتريه مايكروسوفت لاحقاً)، ويدخل Yahoo Mail المنافسة بقوة بعده بعام — حرب البريد المجاني تبدأ رسمياً.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">MESSAGING</div>
+          <div class="sc-dtech">ICQ → Yahoo Messenger → MSN Messenger</div>
+          <div class="sc-dnote">ICQ (نوفمبر 1996) يُطلق عصر الدردشة الفورية بالكامل، يليه Yahoo Messenger (1998) ثم MSN Messenger (يوليو 1999) — جيل كامل يكبر وهو يسمع صوت تنبيه رسالة جديدة.</div>
+        </div>
+
+        <div class="sc-cross">
+          <b>💡 نقطة تزامن مثيرة:</b> عام 1996 وحده شهد إطلاق Hotmail وICQ معاً — مسارين مختلفين (البريد المؤجل مقابل الدردشة الفورية) ولدا في نفس السنة تقريباً، وسيتنافسان لاحقاً على نفس المستخدمين لعقدين قادمين.
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> صوت تنبيه "Uh-Oh!" الشهير لـICQ يصدر من جهاز حاسوب في غرفة مراهق — عالم كامل من التواصل الفوري المجاني وُلد للتو، ولن يعود الاتصال كما كان أبداً.</div>
+    </div>
+
+    <!-- STORY CARD 5 -->
+    <div class="story-card sc5">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 05 // GOOGLE DOMINANCE & DIGITAL CONVERGENCE</div>
+          <div class="sc-title">هيمنة جوجل والاتصال الرقمي: كل شيء يتقارب في جهاز واحد</div>
+          <div class="sc-hook">جيجابايت كامل من التخزين المجاني كان كافياً لقلب موازين حرب استمرت لسنوات — والصوت والنص يبدآن بالتقارب نحو تطبيق واحد.</div>
+        </div>
+        <div class="sc-years">2004 — 2013</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">VOICE / INSTANT</div>
+          <div class="sc-dtech">Skype (2003) ونضوج VoIP</div>
+          <div class="sc-dnote">الصوت عبر الإنترنت يصبح بديلاً شائعاً وليس مجرد تجربة تقنية؛ المكالمات الدولية المجانية تُغيّر اقتصاديات الاتصال بالكامل.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">FAX</div>
+          <div class="sc-dtech">دور هامشي</div>
+          <div class="sc-dnote">PDF والتوقيع الرقمي يحلان محل الفاكس في معظم الاستخدامات الرسمية؛ بقي حاضراً فقط في قطاعات بيروقراطية محدودة.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">EMAIL</div>
+          <div class="sc-dtech">إطلاق Gmail (أبريل 2004)</div>
+          <div class="sc-dnote">مساحة تخزين 1 جيجابايت — أكثر بمئات المرات من منافسيه وقتها (بضع ميجابايتات عند Hotmail) — تُحدث زلزالاً يعيد رسم خريطة سوق البريد الإلكتروني بالكامل خلال سنوات قليلة.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">MESSAGING</div>
+          <div class="sc-dtech">واتساب يُطلق (2009)</div>
+          <div class="sc-dnote">يرث إرث ICQ وMSN Messenger، لكن ضمن تطبيق واحد على الهاتف يجمع النص والصوت — بداية عصر تقارب القنوات في جهاز واحد.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> صندوق بريد Gmail يمتلئ بسرعة أقل من المتوقع رغم مساحته الهائلة — وفي مكان آخر، شركة ناشئة صغيرة اسمها واتساب تخطط لشيء سيغيّر التواصل الشخصي للأبد.</div>
+    </div>
+
+    <!-- STORY CARD 6 -->
+    <div class="story-card sc6">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 06 // IMMERSIVE COMMUNICATION</div>
+          <div class="sc-title">التواصل الغامر: حين يصبح "الحضور الافتراضي" ممكناً</div>
+          <div class="sc-hook">لأول مرة في تاريخ الاتصال، لا يكتفي البشر بسماع أو قراءة أو رؤية بعضهم عبر شاشة مسطحة — بل "يتواجدون" معاً داخل فضاء افتراضي مشترك.</div>
+        </div>
+        <div class="sc-years">2012 — 2026+</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">VOICE / INSTANT</div>
+          <div class="sc-dtech">صوت مكاني ثلاثي الأبعاد</div>
+          <div class="sc-dnote">الصوت داخل بيئات VR لا يأتي من اتجاه واحد كالهاتف، بل يُحاكي المصدر المكاني الحقيقي — يسمعه المستخدم كأن المتحدث بجانبه فعلياً.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">FAX</div>
+          <div class="sc-dtech">غياب كامل</div>
+          <div class="sc-dnote">رحلة 183 عاماً (1843–2026) تنتهي بغياب تام؛ الفاكس لا معنى له في فضاء لا يحتوي "ورقاً" أصلاً.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">EMAIL</div>
+          <div class="sc-dtech">قناة خلفية ثابتة</div>
+          <div class="sc-dnote">يبقى البريد الإلكتروني أداة العمل الرسمية التقليدية دون تغيير جوهري — مفارقة لطيفة: أقدم أداة رقمية في هذه الصفحة هي الأكثر استقراراً.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">MESSAGING</div>
+          <div class="sc-dtech">صور رمزية وتفاعل مكاني</div>
+          <div class="sc-dnote">تطبيقات مثل VRChat تحوّل "المحادثة النصية" إلى وجود جسدي افتراضي كامل بإيماءات ولغة جسد.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> مستخدم يضع نظارة Vision Pro ويجلس على "طاولة اجتماعات" افتراضية مع زملاء من ثلاث قارات مختلفة — لا أحد منهم فعلياً في نفس الغرفة، لكن الشعور بالحضور حقيقي تماماً.</div>
+    </div>
+
+  </div>
+
+  <!-- ============ EXPLICIT HOLOGRAPHIC EPILOGUE ============ -->
+  <div class="story-header">
+    <div class="eyebrow">EPILOGUE // غير مكتمل بعد — أفق بحثي لا منتج استهلاكي</div>
+    <h2>ماذا بعد VR؟ أفق الاتصال الهولوغرافي</h2>
+  </div>
+
+  <div class="story-grid">
+    <div class="story-card" style="border-style:dashed; border-color:var(--holo);">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num" style="color:var(--holo);">المحطة 07 // HOLOGRAPHIC HORIZON (غير مكتملة)</div>
+          <div class="sc-title">حين يصبح جسدك الافتراضي مرئياً بالكامل، لا مجرد صورة رمزية</div>
+          <div class="sc-hook">الفرق بين VR والهولوغرام جوهري: في VR أنت ترتدي نظارة لترى عالماً افتراضياً؛ في الهولوغرام، الآخرون يرون *أنت* — جسدك الحقيقي ثلاثي الأبعاد — يظهر أمامهم في غرفتهم دون أي جهاز يرتدونه.</div>
+        </div>
+        <div class="sc-years" style="color:var(--holo); border-color:var(--holo); background:rgba(127,217,255,0.08);">تجريبي — لا تاريخ نهاية</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">STATUS</div>
+          <div class="sc-dtech">Microsoft Mesh Holoportation</div>
+          <div class="sc-dnote">عروض بحثية توضيحية تبث صورة ثلاثية الأبعاد حية لشخص إلى موقع آخر — تقنية موجودة وتعمل في المختبرات والعروض التجريبية، لكن لا يوجد منتج استهلاكي منتشر يستخدمها الناس يومياً.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">GAP</div>
+          <div class="sc-dtech">يحتاج أجهزة استشعار متعددة</div>
+          <div class="sc-dnote">التقاط الجسم ثلاثي الأبعاد يتطلب كاميرات عمق متعددة الزوايا حول المتحدث — بنية تحتية غير متاحة في المنازل العادية بعد.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">GAP</div>
+          <div class="sc-dtech">عرض بلا نظارة</div>
+          <div class="sc-dnote">التحدي الأكبر أن يرى المُستقبِل الصورة الهولوغرامية دون ارتداء أي جهاز — سواء عبر شاشات ضوئية خاصة أو تقنيات عرض لم تُحسم تجارياً بعد.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">HONEST NOTE</div>
+          <div class="sc-dtech">أفق بحثي، لا وعد بموعد</div>
+          <div class="sc-dnote">لا يوجد حالياً ما يشير لموعد تجاري واضح؛ قد يتحقق خلال سنوات، أو يبقى عرضاً توضيحياً بحثياً لعقد آخر — الأمانة تقتضي تركها بلا تاريخ نهاية.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد مفتوح (لا إغلاق):</b> عرض توضيحي في مؤتمر تقني يُبهر الحضور لثوانٍ معدودة — لكن لا أحد يعرف بعد متى (أو هل) سيصبح هذا المشهد جزءاً من غرفة معيشة عادية.</div>
+    </div>
+  </div>
+
+  <!-- ============ FULL CHRONOLOGICAL TIMELINE ============ -->
+  <div class="story-header full-timeline">
+    <div class="eyebrow">APPENDIX // مرجع سريع بكل التواريخ</div>
+    <h2>الخط الزمني الكامل: كل الأحداث بالترتيب</h2>
+  </div>
+
+  <div class="tl-list">
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">1837</div><div class="tl-text"><b>تلغراف مورس</b> — أول اتصال فوري عن بُعد في التاريخ</div></div>
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">1843</div><div class="tl-text"><b>فكرة الفاكس النظرية</b> (ألكسندر باين) — تسبق الهاتف بـ33 عاماً</div></div>
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">1844</div><div class="tl-text">أول رسالة تلغراف فعلية: <b>"ماذا صنع الرب"</b></div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1876</div><div class="tl-text"><b>اختراع الهاتف</b> (غراهام بيل) — بداية انتشار الشبكة الأرضية</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1970s</div><div class="tl-text"><b>الفاكس التجاري ينطلق</b> — يستثمر خطوط الهاتف القائمة بعد 130 عاماً تقريباً من الفكرة</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1983</div><div class="tl-text">أول شبكة <b>هاتف خلوي تجاري</b> تناظرية (AMPS)</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">1971</div><div class="tl-text"><b>أول بريد إلكتروني</b> (راي توملينسون) عبر ARPANET، واختراع رمز @</div></div>
+    <div class="tl-item" style="border-inline-start-color:var(--holo);"><div class="tl-dot" style="background:var(--holo);"></div><div class="tl-year" style="color:var(--holo);">1988</div><div class="tl-text">🔌 <b>كابل TAT-8</b> — أول ألياف ضوئية عابرة للأطلسي تجارياً؛ بنية تحتية صامتة تخدم كل المسارات الخمسة معاً</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">1991</div><div class="tl-text"><b>GSM</b> — الجيل الثاني الرقمي للهاتف الخلوي</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">1996</div><div class="tl-text"><b>Hotmail وICQ</b> معاً — بريد الويب المجاني والدردشة الفورية يولدان في نفس العام</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">1997</div><div class="tl-text"><b>Yahoo Mail</b> يدخل حرب البريد المجاني</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">1998</div><div class="tl-text"><b>Yahoo Messenger</b> ينضم لعصر الدردشة الفورية</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">1999</div><div class="tl-text"><b>MSN Messenger</b> — مايكروسوفت تدخل حرب المراسلة الفورية</div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot"></div><div class="tl-year">2003</div><div class="tl-text"><b>Skype</b> يُطلق — أول VoIP شائع يهدد الهاتف التقليدي</div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot"></div><div class="tl-year">2004</div><div class="tl-text"><b>Gmail</b> يُطلق بمساحة 1GB — زلزال يعيد رسم خريطة البريد الإلكتروني</div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot"></div><div class="tl-year">2009</div><div class="tl-text"><b>واتساب</b> يُطلق — بداية عصر تقارب القنوات في جهاز واحد</div></div>
+    <div class="tl-item tl-c6"><div class="tl-dot"></div><div class="tl-year">2012</div><div class="tl-text"><b>Oculus Rift Kickstarter</b> — إحياء فكرة الواقع الافتراضي بعد عقود من الفشل التجاري</div></div>
+    <div class="tl-item tl-c6"><div class="tl-dot"></div><div class="tl-year">2016–2026+</div><div class="tl-text"><b>VR تجاري ناضج</b> — Quest، Meta Horizon Workrooms، Apple Vision Pro (2024)</div></div>
+    <div class="tl-item tl-holo"><div class="tl-dot"></div><div class="tl-year">تجريبي — ؟</div><div class="tl-text"><b>Microsoft Mesh Holoportation</b> — أفق اتصال هولوغرامي بحثي، لا منتج استهلاكي منتشر بعد</div></div>
+  </div>
+
+  <div class="tl-legend">
+    <div class="li"><span class="sw" style="background:var(--c0);"></span>عصر التلغراف</div>
+    <div class="li"><span class="sw" style="background:var(--c1);"></span>ميلاد الهاتف</div>
+    <div class="li"><span class="sw" style="background:var(--c2);"></span>الفاكس أداة أعمال</div>
+    <div class="li"><span class="sw" style="background:var(--c3);"></span>ميلاد البريد الإلكتروني</div>
+    <div class="li"><span class="sw" style="background:var(--c4);"></span>حرب البريد والمراسلة الفورية</div>
+    <div class="li"><span class="sw" style="background:var(--c5);"></span>هيمنة جوجل والاتصال الرقمي</div>
+    <div class="li"><span class="sw" style="background:var(--c6);"></span>التواصل الغامر: VR</div>
+    <div class="li"><span class="sw" style="background:var(--holo);"></span>أفق هولوغرامي تجريبي</div>
+  </div>
+
+</div>
+</body>
+</html>
