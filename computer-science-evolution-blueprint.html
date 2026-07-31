@@ -404,24 +404,58 @@
   }
   .tl-legend .li{display:flex;align-items:center;gap:6px;}
   .tl-legend .sw{width:10px;height:10px;border-radius:3px;}
+  .lang-en{display:none;}
+  body.lang-en .lang-en{display:revert;}
+  body.lang-en .lang-ar{display:none;}
+  body.lang-en{direction:ltr;}
+
+  .lang-toggle{
+    position:fixed;top:18px;left:18px;z-index:900;
+    display:flex;align-items:center;gap:6px;
+    background:var(--panel);border:1px solid var(--panel-line);
+    border-radius:20px;padding:6px 8px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+    box-shadow:0 6px 18px rgba(0,0,0,0.35);
+  }
+  .lang-toggle button{
+    border:none;background:transparent;color:var(--ink-dim);
+    padding:5px 10px;border-radius:14px;cursor:pointer;
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+    transition:background .15s ease, color .15s ease;
+  }
+  .lang-toggle button.active{background:var(--gold);color:var(--bg);}
 </style>
 </head>
 <body>
+
+<div class="lang-toggle">
+  <button id="btnAr" class="active">عربي</button>
+  <button id="btnEn">EN</button>
+</div>
+
 <script>
   if (sessionStorage.getItem("bcs_auth") !== "1") {
     window.location.href = "index.html";
   }
 </script>
 <div class="wrap">
-  <a class="home-btn" href="index.html"><span class="arrow">→</span> العودة للصفحة الرئيسية</a>
+  <a class="home-btn lang-ar" href="index.html"><span class="arrow">→</span> العودة للصفحة الرئيسية</a>
+  <a class="home-btn lang-en" href="index.html"><span class="arrow">→</span> Back to home</a>
 
   <header>
     <div class="title-block">
       <div class="eyebrow">COMPUTER SCIENCE // BLUEPRINT NARRATIVE MAP</div>
-      <h1>علوم الحاسوب: من الآلة الحاسبة إلى الذكاء الاصطناعي</h1>
-      <div class="subtitle">علمٌ وُلد كأداة مساعدة لتبسيط الحساب، ثم فرض نفسه على كل العلوم الأخرى ليصبح المؤثر الأول في تطورها — رحلة من أنتيكيثيرا اليونانية القديمة إلى نماذج الذكاء الاصطناعي التوليدي</div>
+      <h1 class="lang-ar">علوم الحاسوب: من الآلة الحاسبة إلى الذكاء الاصطناعي</h1>
+      <h1 class="lang-en">Computer Science: From the Calculating Machine to Artificial Intelligence</h1>
+      <div class="subtitle lang-ar">علمٌ وُلد كأداة مساعدة لتبسيط الحساب، ثم فرض نفسه على كل العلوم الأخرى ليصبح المؤثر الأول في تطورها — رحلة من أنتيكيثيرا اليونانية القديمة إلى نماذج الذكاء الاصطناعي التوليدي</div>
+      <div class="subtitle lang-en">A science born as a helper tool for simplifying arithmetic, which went on to impose itself on every other science and become the leading force in their development — a journey from the ancient Greek Antikythera mechanism to generative AI models</div>
     </div>
-    <div class="domain-code">
+    <div class="domain-code lang-ar">
+      <div>SUBJECT: <b>COMPUTER SCIENCE</b></div>
+      <div>SPAN: <b>150 BC → 2026+</b></div>
+      <div>TRACKS: <b>04</b> · CHAPTERS: <b>05+1</b> · TRIGGERS: <b>05</b> + <b>03</b> quantum</div>
+    </div>
+    <div class="domain-code lang-en">
       <div>SUBJECT: <b>COMPUTER SCIENCE</b></div>
       <div>SPAN: <b>150 BC → 2026+</b></div>
       <div>TRACKS: <b>04</b> · CHAPTERS: <b>05+1</b> · TRIGGERS: <b>05</b> + <b>03</b> quantum</div>
@@ -435,28 +469,34 @@
       <div></div>
       <div class="chapters-track">
         <div class="chapter-tag" style="right:0%; width:18%; background:color-mix(in srgb, var(--c0) 22%, var(--panel));">
-          <div class="cnum" style="color:var(--c0);">CH.00 · قبل 1837</div>
-          <div class="cname">العصور الميكانيكية</div>
+          <div class="cnum" style="color:var(--c0);"><span class="lang-ar">CH.00 · قبل 1837</span><span class="lang-en">CH.00 · Before 1837</span></div>
+          <div class="cname lang-ar">العصور الميكانيكية</div>
+          <div class="cname lang-en">The Mechanical Ages</div>
         </div>
         <div class="chapter-tag" style="right:18%; width:12%; background:color-mix(in srgb, var(--c1) 22%, var(--panel));">
           <div class="cnum" style="color:var(--c1);">CH.01 · 1943–50s</div>
-          <div class="cname">ميلاد الحوسبة الرقمية</div>
+          <div class="cname lang-ar">ميلاد الحوسبة الرقمية</div>
+          <div class="cname lang-en">Birth of Digital Computing</div>
         </div>
         <div class="chapter-tag" style="right:30%; width:21%; background:color-mix(in srgb, var(--c2) 22%, var(--panel));">
           <div class="cnum" style="color:var(--c2);">CH.02 · 1950s–1991</div>
-          <div class="cname">عصر البرمجيات واللغات</div>
+          <div class="cname lang-ar">عصر البرمجيات واللغات</div>
+          <div class="cname lang-en">The Software & Languages Era</div>
         </div>
         <div class="chapter-tag" style="right:51%; width:16%; background:color-mix(in srgb, var(--c3) 22%, var(--panel));">
           <div class="cnum" style="color:var(--c3);">CH.03 · 1991–2000s</div>
-          <div class="cname">عصر الشبكات والويب</div>
+          <div class="cname lang-ar">عصر الشبكات والويب</div>
+          <div class="cname lang-en">The Networks & Web Era</div>
         </div>
         <div class="chapter-tag" style="right:67%; width:21%; background:color-mix(in srgb, var(--c4) 22%, var(--panel));">
           <div class="cnum" style="color:var(--c4);">CH.04 · 2000s–2026</div>
-          <div class="cname">ثورة البيانات والذكاء الاصطناعي</div>
+          <div class="cname lang-ar">ثورة البيانات والذكاء الاصطناعي</div>
+          <div class="cname lang-en">The Data & AI Revolution</div>
         </div>
         <div class="chapter-tag quantum-tag" style="right:88%; width:12%;">
-          <div class="cnum" style="color:var(--quantum);">CH.05 · أفق ناشئ</div>
-          <div class="cname">الحوسبة الكمية؟</div>
+          <div class="cnum" style="color:var(--quantum);"><span class="lang-ar">CH.05 · أفق ناشئ</span><span class="lang-en">CH.05 · Emerging Horizon</span></div>
+          <div class="cname lang-ar">الحوسبة الكمية؟</div>
+          <div class="cname lang-en">Quantum Computing?</div>
         </div>
       </div>
     </div>
@@ -465,11 +505,11 @@
     <div class="axis" style="margin-top:6px;">
       <div></div>
       <div class="triggers" style="grid-column: 2/-1; height:0;">
-        <div class="trigger-flag" style="right:18%;"><div class="yr">1947</div><div class="lbl">⚡ اختراع الترانزستور</div></div>
-        <div class="trigger-flag" style="right:40%;"><div class="yr">1969</div><div class="lbl">🌐 إطلاق ARPANET</div></div>
-        <div class="trigger-flag" style="right:51%;"><div class="yr">1991</div><div class="lbl">🕸️ ولادة الويب العالمي WWW</div></div>
-        <div class="trigger-flag" style="right:67%;"><div class="yr">2000s</div><div class="lbl">📊 انفجار البيانات الضخمة</div></div>
-        <div class="trigger-flag" style="right:81%;"><div class="yr">2012–2022</div><div class="lbl">🤖 نهضة تعلم الآلة وAI التوليدي</div></div>
+        <div class="trigger-flag" style="right:18%;"><div class="yr">1947</div><div class="lbl"><span class="lang-ar">⚡ اختراع الترانزستور</span><span class="lang-en">⚡ Transistor invented</span></div></div>
+        <div class="trigger-flag" style="right:40%;"><div class="yr">1969</div><div class="lbl"><span class="lang-ar">🌐 إطلاق ARPANET</span><span class="lang-en">🌐 ARPANET launched</span></div></div>
+        <div class="trigger-flag" style="right:51%;"><div class="yr">1991</div><div class="lbl"><span class="lang-ar">🕸️ ولادة الويب العالمي WWW</span><span class="lang-en">🕸️ The World Wide Web is born</span></div></div>
+        <div class="trigger-flag" style="right:67%;"><div class="yr">2000s</div><div class="lbl"><span class="lang-ar">📊 انفجار البيانات الضخمة</span><span class="lang-en">📊 The Big Data explosion</span></div></div>
+        <div class="trigger-flag" style="right:81%;"><div class="yr">2012–2022</div><div class="lbl"><span class="lang-ar">🤖 نهضة تعلم الآلة وAI التوليدي</span><span class="lang-en">🤖 Machine learning & generative AI boom</span></div></div>
       </div>
     </div>
 
@@ -477,7 +517,7 @@
     <div class="axis">
       <div></div>
       <div class="years">
-        <span style="right:0%;">150 ق.م</span>
+        <span style="right:0%;"><span class="lang-ar">150 ق.م</span><span class="lang-en">150 BC</span></span>
         <span style="right:18%;">1837</span>
         <span style="right:30%;">1947</span>
         <span style="right:51%;">1991</span>
@@ -489,10 +529,10 @@
     <!-- Board -->
     <div class="board">
       <div class="lane-labels">
-        <div class="lane-label identity"><div class="tag">الأجهزة والحوسبة<small>HARDWARE · ANTIKYTHERA → GPU/AI</small></div></div>
-        <div class="lane-label files"><div class="tag">البرمجيات ولغات البرمجة<small>SOFTWARE · LOVELACE → PYTHON/ML</small></div></div>
-        <div class="lane-label gateway"><div class="tag">الشبكات والإنترنت<small>NETWORKS · NONE → EDGE/IoT</small></div></div>
-        <div class="lane-label comms"><div class="tag">البيانات والذكاء الاصطناعي<small>DATA & AI · NONE → GENERATIVE AI</small></div></div>
+        <div class="lane-label identity"><div class="tag"><span class="lang-ar">الأجهزة والحوسبة</span><span class="lang-en">Hardware & Computing</span><small>HARDWARE · ANTIKYTHERA → GPU/AI</small></div></div>
+        <div class="lane-label files"><div class="tag"><span class="lang-ar">البرمجيات ولغات البرمجة</span><span class="lang-en">Software & Programming Languages</span><small>SOFTWARE · LOVELACE → PYTHON/ML</small></div></div>
+        <div class="lane-label gateway"><div class="tag"><span class="lang-ar">الشبكات والإنترنت</span><span class="lang-en">Networks & the Internet</span><small>NETWORKS · NONE → EDGE/IoT</small></div></div>
+        <div class="lane-label comms"><div class="tag"><span class="lang-ar">البيانات والذكاء الاصطناعي</span><span class="lang-en">Data & Artificial Intelligence</span><small>DATA & AI · NONE → GENERATIVE AI</small></div></div>
       </div>
 
       <div class="lanes">
@@ -516,45 +556,52 @@
         <div class="lane identity">
           <div class="lane-track">
             <div class="dot" style="right:2%;"></div>
-            <div class="node identity" style="right:2%;" title="من آلة أنتيكيثيرا اليونانية (150-200 ق.م) والمعداد الصيني، إلى آلة باسكالين (1642)، وصولاً لتصور باباج للمحرك التحليلي في ثلاثينيات القرن التاسع عشر.">
+            <div class="node identity" style="right:2%;" title="من آلة أنتيكيثيرا اليونانية (150-200 ق.م) والمعداد الصيني، إلى آلة باسكالين (1642)، وصولاً لتصور باباج للمحرك التحليلي في ثلاثينيات القرن التاسع عشر." data-en-title="From the ancient Greek Antikythera mechanism (150-200 BC) and the Chinese abacus, to Pascal's Pascaline (1642), to Babbage's vision of the Analytical Engine in the 1830s.">
               <div class="period">150 ق.م – 1830s</div>
-              <div class="name">أنتيكيثيرا وباسكالين<br>المحرك التحليلي لباباج</div>
+              <div class="name lang-ar">أنتيكيثيرا وباسكالين<br>المحرك التحليلي لباباج</div>
+              <div class="name lang-en">Antikythera & Pascaline<br>Babbage's Analytical Engine</div>
             </div>
             <div class="dot history-dot" style="right:13%;"></div>
-            <div class="node identity history-node" style="right:13%;" title="Colossus (1943): أول حاسوب إلكتروني قابل للبرمجة في العالم، بناه المهندس توماس فلاورز في بلتشلي بارك لكسر تشفير Lorenz الألماني خلال الحرب العالمية الثانية. WITCH (1951): أقدم حاسوب رقمي أصلي لا يزال يعمل حتى اليوم. المصدر: المتحف الوطني للحوسبة، بريطانيا (Google Arts & Culture).">
+            <div class="node identity history-node" style="right:13%;" title="Colossus (1943): أول حاسوب إلكتروني قابل للبرمجة في العالم، بناه المهندس توماس فلاورز في بلتشلي بارك لكسر تشفير Lorenz الألماني خلال الحرب العالمية الثانية. WITCH (1951): أقدم حاسوب رقمي أصلي لا يزال يعمل حتى اليوم. المصدر: المتحف الوطني للحوسبة، بريطانيا (Google Arts & Culture)." data-en-title="Colossus (1943): the world's first programmable electronic computer, built by engineer Tommy Flowers at Bletchley Park to break the German Lorenz cipher during WWII. WITCH (1951): the oldest original working digital computer still running today. Source: The National Museum of Computing, UK (Google Arts & Culture).">
               <div class="period">1943–1951</div>
-              <div class="name">Colossus وWITCH<br>أول حواسيب إلكترونية فعلية</div>
+              <div class="name lang-ar">Colossus وWITCH<br>أول حواسيب إلكترونية فعلية</div>
+              <div class="name lang-en">Colossus & WITCH<br>The first real electronic computers</div>
             </div>
             <div class="dot" style="right:24%;"></div>
-            <div class="node identity" style="right:24%;" title="اختراع الترانزستور 1947 وظهور الحواسيب الإلكترونية الرقمية الضخمة التي كانت تشغل غرفاً بأكملها.">
+            <div class="node identity" style="right:24%;" title="اختراع الترانزستور 1947 وظهور الحواسيب الإلكترونية الرقمية الضخمة التي كانت تشغل غرفاً بأكملها." data-en-title="The transistor is invented in 1947, and massive digital electronic computers emerge — machines that filled entire rooms.">
               <div class="period">1947–1950s</div>
-              <div class="name">اختراع الترانزستور<br>حواسيب رقمية ضخمة</div>
+              <div class="name lang-ar">اختراع الترانزستور<br>حواسيب رقمية ضخمة</div>
+              <div class="name lang-en">The transistor is invented<br>Room-sized digital computers</div>
             </div>
 
             <!-- Secondary quantum markers (hardware lane only) -->
-            <div class="qmark" style="right:34%; color:var(--quantum);" title="فاينمان يقترح نظرياً إمكانية محاكاة الأنظمة الكمية بحاسوب كمي (1981).">⚛️<span class="qmark-label">1981</span></div>
-            <div class="qmark" style="right:53%; color:var(--quantum);" title="خوارزمية شور (Shor's Algorithm) — أول دليل رياضي على تفوق كمي محتمل في كسر التشفير (1994).">⚛️<span class="qmark-label">1994</span></div>
-            <div class="qmark" style="right:80%; color:var(--quantum);" title="إعلان جوجل ما يُسمى 'التفوق الكمي' (Quantum Supremacy) — 2019.">⚛️<span class="qmark-label">2019</span></div>
+            <div class="qmark" style="right:34%; color:var(--quantum);" title="فاينمان يقترح نظرياً إمكانية محاكاة الأنظمة الكمية بحاسوب كمي (1981)." data-en-title="Feynman theoretically proposes that a quantum computer could simulate quantum systems (1981).">⚛️<span class="qmark-label">1981</span></div>
+            <div class="qmark" style="right:53%; color:var(--quantum);" title="خوارزمية شور (Shor's Algorithm) — أول دليل رياضي على تفوق كمي محتمل في كسر التشفير (1994)." data-en-title="Shor's Algorithm — the first mathematical proof of a potential quantum advantage in breaking encryption (1994).">⚛️<span class="qmark-label">1994</span></div>
+            <div class="qmark" style="right:80%; color:var(--quantum);" title="إعلان جوجل ما يُسمى 'التفوق الكمي' (Quantum Supremacy) — 2019." data-en-title="Google announces so-called 'Quantum Supremacy' — 2019.">⚛️<span class="qmark-label">2019</span></div>
 
             <div class="dot" style="right:40%;"></div>
-            <div class="node identity" style="right:40%;" title="أجهزة أكاديمية وبحثية تُشغَّل عبر لغات البرمجة الجديدة الناشئة.">
+            <div class="node identity" style="right:40%;" title="أجهزة أكاديمية وبحثية تُشغَّل عبر لغات البرمجة الجديدة الناشئة." data-en-title="Academic and research machines running on the newly emerging programming languages.">
               <div class="period">1950s–1991</div>
-              <div class="name">أجهزة أكاديمية وبحثية<br>تُشغَّل باللغات الجديدة</div>
+              <div class="name lang-ar">أجهزة أكاديمية وبحثية<br>تُشغَّل باللغات الجديدة</div>
+              <div class="name lang-en">Academic & research machines<br>Running the new languages</div>
             </div>
             <div class="dot" style="right:59%;"></div>
-            <div class="node identity" style="right:59%;" title="الحوسبة الموزعة عبر الشبكة العالمية تربط الأجهزة ببعضها على مستوى عالمي.">
+            <div class="node identity" style="right:59%;" title="الحوسبة الموزعة عبر الشبكة العالمية تربط الأجهزة ببعضها على مستوى عالمي." data-en-title="Distributed computing over the global web links machines together on a worldwide scale.">
               <div class="period">1991–2000s</div>
-              <div class="name">حوسبة موزّعة<br>عبر الشبكة العالمية</div>
+              <div class="name lang-ar">حوسبة موزّعة<br>عبر الشبكة العالمية</div>
+              <div class="name lang-en">Distributed computing<br>Across the global web</div>
             </div>
             <div class="dot" style="right:77%;"></div>
-            <div class="node identity" style="right:77%;" title="حوسبة سحابية ومعالجات GPU متخصصة تُشغّل نماذج الذكاء الاصطناعي الضخمة.">
+            <div class="node identity" style="right:77%;" title="حوسبة سحابية ومعالجات GPU متخصصة تُشغّل نماذج الذكاء الاصطناعي الضخمة." data-en-title="Cloud computing and specialized GPUs run massive AI models.">
               <div class="period">2000s–2026</div>
-              <div class="name">حوسبة سحابية وGPU<br>تُشغّل نماذج AI</div>
+              <div class="name lang-ar">حوسبة سحابية وGPU<br>تُشغّل نماذج AI</div>
+              <div class="name lang-en">Cloud computing & GPUs<br>Running AI models</div>
             </div>
             <div class="dot quantum-dot" style="right:94%;"></div>
-            <div class="node identity quantum-node" style="right:94%;" title="معالجات كيوبت تجريبية من IBM وGoogle وIonQ — عصر NISQ (أجهزة كمية صاخبة محدودة الحجم)، لا حوسبة كمية تجارية ناضجة بعد.">
+            <div class="node identity quantum-node" style="right:94%;" title="معالجات كيوبت تجريبية من IBM وGoogle وIonQ — عصر NISQ (أجهزة كمية صاخبة محدودة الحجم)، لا حوسبة كمية تجارية ناضجة بعد." data-en-title="Experimental qubit processors from IBM, Google, and IonQ — the NISQ era (Noisy Intermediate-Scale Quantum devices); no mature commercial quantum computing yet.">
               <div class="period">2019 – ؟</div>
-              <div class="name">معالجات كيوبت تجريبية<br>عصر NISQ</div>
+              <div class="name lang-ar">معالجات كيوبت تجريبية<br>عصر NISQ</div>
+              <div class="name lang-en">Experimental qubit chips<br>The NISQ era</div>
             </div>
           </div>
         </div>
@@ -563,34 +610,40 @@
         <div class="lane files">
           <div class="lane-track">
             <div class="dot" style="right:2%;"></div>
-            <div class="node files empty" style="right:2%;" title="آدا لوفليس، بالتعاون مع باباج، وضعت أسس البرمجة النظرية — أول خوارزمية مكتوبة في التاريخ.">
+            <div class="node files empty" style="right:2%;" title="آدا لوفليس، بالتعاون مع باباج، وضعت أسس البرمجة النظرية — أول خوارزمية مكتوبة في التاريخ." data-en-title="Ada Lovelace, working with Babbage, laid the theoretical foundations of programming — history's first written algorithm.">
               <div class="period">1830s</div>
-              <div class="name">خوارزمية آدا لوفليس<br>أول برنامج نظري بالتاريخ</div>
+              <div class="name lang-ar">خوارزمية آدا لوفليس<br>أول برنامج نظري بالتاريخ</div>
+              <div class="name lang-en">Ada Lovelace's algorithm<br>The first theoretical program</div>
             </div>
             <div class="dot" style="right:24%;"></div>
-            <div class="node files" style="right:24%;" title="بدأت الجامعات والمؤسسات البحثية تدرك أن التعامل مع الحواسيب يتطلب علماً مستقلاً بذاته يهتم بالخوارزميات وهياكل البيانات.">
+            <div class="node files" style="right:24%;" title="بدأت الجامعات والمؤسسات البحثية تدرك أن التعامل مع الحواسيب يتطلب علماً مستقلاً بذاته يهتم بالخوارزميات وهياكل البيانات." data-en-title="Universities and research institutions begin to realize that working with computers requires its own independent discipline concerned with algorithms and data structures.">
               <div class="period">1940s–1950s</div>
-              <div class="name">نشأة تخصص الخوارزميات<br>وهياكل البيانات أكاديمياً</div>
+              <div class="name lang-ar">نشأة تخصص الخوارزميات<br>وهياكل البيانات أكاديمياً</div>
+              <div class="name lang-en">Algorithms & data structures<br>emerge as an academic field</div>
             </div>
             <div class="dot" style="right:40%;"></div>
-            <div class="node files" style="right:40%;" title="فورتران (منتصف الخمسينيات)، كوبول (أواخر الخمسينيات)، سي (أوائل السبعينيات)، جافا (منتصف التسعينيات).">
+            <div class="node files" style="right:40%;" title="فورتران (منتصف الخمسينيات)، كوبول (أواخر الخمسينيات)، سي (أوائل السبعينيات)، جافا (منتصف التسعينيات)." data-en-title="Fortran (mid-1950s), Cobol (late 1950s), C (early 1970s), Java (mid-1990s).">
               <div class="period">1957–1995</div>
-              <div class="name">Fortran → Cobol → C → Java<br>عصر لغات البرمجة الكبرى</div>
+              <div class="name lang-ar">Fortran → Cobol → C → Java<br>عصر لغات البرمجة الكبرى</div>
+              <div class="name lang-en">Fortran → Cobol → C → Java<br>The great languages era</div>
             </div>
             <div class="dot" style="right:59%;"></div>
-            <div class="node files" style="right:59%;" title="برمجة الويب وتطوير التطبيقات الموزّعة مع انتشار الشبكة العنكبوتية العالمية.">
+            <div class="node files" style="right:59%;" title="برمجة الويب وتطوير التطبيقات الموزّعة مع انتشار الشبكة العنكبوتية العالمية." data-en-title="Web programming and distributed application development as the World Wide Web spreads.">
               <div class="period">1991–2000s</div>
-              <div class="name">برمجة الويب<br>تطبيقات موزّعة</div>
+              <div class="name lang-ar">برمجة الويب<br>تطبيقات موزّعة</div>
+              <div class="name lang-en">Web programming<br>Distributed applications</div>
             </div>
             <div class="dot" style="right:77%;"></div>
-            <div class="node files" style="right:77%;" title="أطر عمل تعلم الآلة الحديثة مثل Python وTensorFlow وPyTorch تقود عصر الذكاء الاصطناعي.">
+            <div class="node files" style="right:77%;" title="أطر عمل تعلم الآلة الحديثة مثل Python وTensorFlow وPyTorch تقود عصر الذكاء الاصطناعي." data-en-title="Modern machine-learning frameworks like Python, TensorFlow, and PyTorch drive the AI era.">
               <div class="period">2000s–2026</div>
-              <div class="name">أطر تعلم الآلة<br>Python / TensorFlow / PyTorch</div>
+              <div class="name lang-ar">أطر تعلم الآلة<br>Python / TensorFlow / PyTorch</div>
+              <div class="name lang-en">Machine-learning frameworks<br>Python / TensorFlow / PyTorch</div>
             </div>
             <div class="dot quantum-dot" style="right:94%;"></div>
-            <div class="node files quantum-node" style="right:94%;" title="لغات وأطر برمجة كمومية مثل Qiskit وCirq؛ التحدي الأكبر اليوم هو تصحيح الأخطاء الكمية (Quantum Error Correction).">
+            <div class="node files quantum-node" style="right:94%;" title="لغات وأطر برمجة كمومية مثل Qiskit وCirq؛ التحدي الأكبر اليوم هو تصحيح الأخطاء الكمية (Quantum Error Correction)." data-en-title="Quantum programming languages and frameworks like Qiskit and Cirq; today's biggest challenge is quantum error correction.">
               <div class="period">2019 – ؟</div>
-              <div class="name">Qiskit / Cirq<br>تحدي تصحيح الأخطاء الكمية</div>
+              <div class="name lang-ar">Qiskit / Cirq<br>تحدي تصحيح الأخطاء الكمية</div>
+              <div class="name lang-en">Qiskit / Cirq<br>The quantum error-correction challenge</div>
             </div>
           </div>
         </div>
@@ -599,34 +652,40 @@
         <div class="lane gateway">
           <div class="lane-track">
             <div class="dot" style="right:2%;"></div>
-            <div class="node gateway empty" style="right:2%;" title="لا مفهوم شبكات بعد؛ كل آلة حاسوبية معزولة تماماً عن غيرها.">
+            <div class="node gateway empty" style="right:2%;" title="لا مفهوم شبكات بعد؛ كل آلة حاسوبية معزولة تماماً عن غيرها." data-en-title="No concept of networks yet; every computing machine is completely isolated from every other.">
               <div class="period">—</div>
-              <div class="name">لا مفهوم شبكات بعد<br>آلات معزولة</div>
+              <div class="name lang-ar">لا مفهوم شبكات بعد<br>آلات معزولة</div>
+              <div class="name lang-en">No networks yet<br>Isolated machines</div>
             </div>
             <div class="dot" style="right:24%;"></div>
-            <div class="node gateway empty" style="right:24%;" title="الحواسيب الرقمية الأولى لا تزال مستقلة تماماً، كل جهاز في غرفته الخاصة.">
+            <div class="node gateway empty" style="right:24%;" title="الحواسيب الرقمية الأولى لا تزال مستقلة تماماً، كل جهاز في غرفته الخاصة." data-en-title="The first digital computers are still entirely standalone, each machine in its own room.">
               <div class="period">1940s–1950s</div>
-              <div class="name">لا شبكات بعد<br>كل حاسوب في غرفته</div>
+              <div class="name lang-ar">لا شبكات بعد<br>كل حاسوب في غرفته</div>
+              <div class="name lang-en">No networks yet<br>Every computer in its own room</div>
             </div>
             <div class="dot" style="right:40%;"></div>
-            <div class="node gateway" style="right:40%;" title="إطلاق شبكة الأربانت (ARPANET) في أواخر الستينيات — أول شبكة حواسيب متصلة في التاريخ.">
+            <div class="node gateway" style="right:40%;" title="إطلاق شبكة الأربانت (ARPANET) في أواخر الستينيات — أول شبكة حواسيب متصلة في التاريخ." data-en-title="ARPANET launches in the late 1960s — history's first network of connected computers.">
               <div class="period">1969</div>
-              <div class="name">إطلاق ARPANET<br>أول شبكة حواسيب متصلة</div>
+              <div class="name lang-ar">إطلاق ARPANET<br>أول شبكة حواسيب متصلة</div>
+              <div class="name lang-en">ARPANET launches<br>The first connected computer network</div>
             </div>
             <div class="dot" style="right:59%;"></div>
-            <div class="node gateway" style="right:59%;" title="تطور ARPANET إلى الشبكة العنكبوتية العالمية (WWW) في أوائل التسعينيات، وبروز أمن الشبكات كتخصص مستقل.">
+            <div class="node gateway" style="right:59%;" title="تطور ARPANET إلى الشبكة العنكبوتية العالمية (WWW) في أوائل التسعينيات، وبروز أمن الشبكات كتخصص مستقل." data-en-title="ARPANET evolves into the World Wide Web in the early 1990s, and network security emerges as an independent discipline.">
               <div class="period">1991–2000s</div>
-              <div class="name">الويب العالمي WWW<br>أمن الشبكات كتخصص</div>
+              <div class="name lang-ar">الويب العالمي WWW<br>أمن الشبكات كتخصص</div>
+              <div class="name lang-en">The World Wide Web<br>Network security as a field</div>
             </div>
             <div class="dot" style="right:77%;"></div>
-            <div class="node gateway" style="right:77%;" title="إنترنت الأشياء والحوسبة الطرفية تغذّي نماذج الذكاء الاصطناعي بتدفقات بيانات مستمرة من كل الاتجاهات.">
+            <div class="node gateway" style="right:77%;" title="إنترنت الأشياء والحوسبة الطرفية تغذّي نماذج الذكاء الاصطناعي بتدفقات بيانات مستمرة من كل الاتجاهات." data-en-title="The Internet of Things and edge computing feed AI models with a constant stream of data from every direction.">
               <div class="period">2000s–2026</div>
-              <div class="name">إنترنت الأشياء<br>شبكات تغذّي نماذج AI</div>
+              <div class="name lang-ar">إنترنت الأشياء<br>شبكات تغذّي نماذج AI</div>
+              <div class="name lang-en">The Internet of Things<br>Networks feeding AI models</div>
             </div>
             <div class="dot quantum-dot" style="right:94%;"></div>
-            <div class="node gateway quantum-node" style="right:94%;" title="أبحاث أولية في 'الإنترنت الكمي' لنقل مفاتيح تشفير كمومية (Quantum Key Distribution) — لا بنية تحتية تجارية بعد.">
-              <div class="period">بحثي مبكر</div>
-              <div class="name">أبحاث الإنترنت الكمي<br>توزيع مفاتيح QKD</div>
+            <div class="node gateway quantum-node" style="right:94%;" title="أبحاث أولية في 'الإنترنت الكمي' لنقل مفاتيح تشفير كمومية (Quantum Key Distribution) — لا بنية تحتية تجارية بعد." data-en-title="Early research into a 'quantum internet' for quantum key distribution — no commercial infrastructure yet.">
+              <div class="period"><span class="lang-ar">بحثي مبكر</span><span class="lang-en">Early research</span></div>
+              <div class="name lang-ar">أبحاث الإنترنت الكمي<br>توزيع مفاتيح QKD</div>
+              <div class="name lang-en">Quantum internet research<br>QKD key distribution</div>
             </div>
           </div>
         </div>
@@ -635,34 +694,40 @@
         <div class="lane comms">
           <div class="lane-track">
             <div class="dot" style="right:2%;"></div>
-            <div class="node comms empty" style="right:2%;" title="لا بيانات رقمية بعد — الآلات الميكانيكية تعالج أرقاماً فردية فقط.">
+            <div class="node comms empty" style="right:2%;" title="لا بيانات رقمية بعد — الآلات الميكانيكية تعالج أرقاماً فردية فقط." data-en-title="No digital data yet — mechanical machines process only individual numbers.">
               <div class="period">—</div>
-              <div class="name">لا بيانات رقمية بعد</div>
+              <div class="name lang-ar">لا بيانات رقمية بعد</div>
+              <div class="name lang-en">No digital data yet</div>
             </div>
             <div class="dot" style="right:24%;"></div>
-            <div class="node comms empty" style="right:24%;" title="الحوسبة الرقمية للتو تولد؛ لا وجود بعد لمفهوم البيانات الضخمة أو الذكاء الاصطناعي.">
+            <div class="node comms empty" style="right:24%;" title="الحوسبة الرقمية للتو تولد؛ لا وجود بعد لمفهوم البيانات الضخمة أو الذكاء الاصطناعي." data-en-title="Digital computing has just been born; the concepts of big data or artificial intelligence don't exist yet.">
               <div class="period">1940s–1950s</div>
-              <div class="name">لا وجود بعد<br>للبيانات أو AI</div>
+              <div class="name lang-ar">لا وجود بعد<br>للبيانات أو AI</div>
+              <div class="name lang-en">No data or AI<br>concept yet</div>
             </div>
             <div class="dot" style="right:40%;"></div>
-            <div class="node comms empty" style="right:40%;" title="قواعد بيانات مبكرة بسيطة ترافق نشوء اللغات، دون أي ملامح لذكاء اصطناعي حقيقي.">
+            <div class="node comms empty" style="right:40%;" title="قواعد بيانات مبكرة بسيطة ترافق نشوء اللغات، دون أي ملامح لذكاء اصطناعي حقيقي." data-en-title="Simple early databases accompany the rise of languages, with no real hint of artificial intelligence yet.">
               <div class="period">1950s–1991</div>
-              <div class="name">قواعد بيانات مبكرة<br>لا ذكاء اصطناعي بعد</div>
+              <div class="name lang-ar">قواعد بيانات مبكرة<br>لا ذكاء اصطناعي بعد</div>
+              <div class="name lang-en">Early databases<br>No AI yet</div>
             </div>
             <div class="dot" style="right:59%;"></div>
-            <div class="node comms" style="right:59%;" title="قواعد بيانات موزعة عبر الشبكة العالمية، وبدايات مبكرة للتنقيب في البيانات (Data Mining).">
+            <div class="node comms" style="right:59%;" title="قواعد بيانات موزعة عبر الشبكة العالمية، وبدايات مبكرة للتنقيب في البيانات (Data Mining)." data-en-title="Databases distributed across the global web, and the early beginnings of data mining.">
               <div class="period">1990s–2000s</div>
-              <div class="name">قواعد بيانات موزّعة<br>بدايات التنقيب بالبيانات</div>
+              <div class="name lang-ar">قواعد بيانات موزّعة<br>بدايات التنقيب بالبيانات</div>
+              <div class="name lang-en">Distributed databases<br>Early data mining</div>
             </div>
             <div class="dot" style="right:77%;"></div>
-            <div class="node comms" style="right:77%;" title="من البيانات الضخمة إلى علم البيانات، وصولاً لتعلم الآلة الذي يتيح للحاسوب أن يتعلم ويقرر ويحل المشكلات كالبشر تقريباً.">
+            <div class="node comms" style="right:77%;" title="من البيانات الضخمة إلى علم البيانات، وصولاً لتعلم الآلة الذي يتيح للحاسوب أن يتعلم ويقرر ويحل المشكلات كالبشر تقريباً." data-en-title="From big data to data science, on to machine learning that lets the computer learn, decide, and solve problems almost like a human.">
               <div class="period">2000s–2026</div>
-              <div class="name">Big Data → Data Science<br>ML/AI يتعلم ويقرر</div>
+              <div class="name lang-ar">Big Data → Data Science<br>ML/AI يتعلم ويقرر</div>
+              <div class="name lang-en">Big Data → Data Science<br>ML/AI learns & decides</div>
             </div>
             <div class="dot quantum-dot" style="right:94%;"></div>
-            <div class="node comms quantum-node" style="right:94%;" title="تقاطع بحثي مبكر بين الحوسبة الكمية وتعلم الآلة (Quantum Machine Learning) — لا تطبيقات تجارية ناضجة بعد.">
-              <div class="period">بحثي مبكر</div>
-              <div class="name">Quantum Machine Learning<br>لا تطبيقات ناضجة بعد</div>
+            <div class="node comms quantum-node" style="right:94%;" title="تقاطع بحثي مبكر بين الحوسبة الكمية وتعلم الآلة (Quantum Machine Learning) — لا تطبيقات تجارية ناضجة بعد." data-en-title="An early research intersection between quantum computing and machine learning (Quantum Machine Learning) — no mature commercial applications yet.">
+              <div class="period"><span class="lang-ar">بحثي مبكر</span><span class="lang-en">Early research</span></div>
+              <div class="name lang-ar">Quantum Machine Learning<br>لا تطبيقات ناضجة بعد</div>
+              <div class="name lang-en">Quantum Machine Learning<br>No mature applications yet</div>
             </div>
           </div>
         </div>
@@ -671,7 +736,7 @@
     </div>
   </div>
 
-  <div class="legend">
+  <div class="legend lang-ar">
     <div class="item"><span class="swatch" style="background:var(--lane-identity)"></span> الأجهزة والحوسبة</div>
     <div class="item"><span class="swatch" style="background:var(--lane-files)"></span> البرمجيات واللغات</div>
     <div class="item"><span class="swatch" style="background:var(--lane-gateway)"></span> الشبكات والإنترنت</div>
@@ -682,16 +747,35 @@
     <div class="item"><span class="swatch" style="background:var(--quantum); opacity:.5; border:1px dashed var(--quantum);"></span> حدود متقطعة = أفق ناشئ لم ينضج بعد كتقنية سائدة</div>
     <div class="item">💡 مرّر المؤشر فوق أي بطاقة لقراءة السياق الكامل</div>
   </div>
+  <div class="legend lang-en">
+    <div class="item"><span class="swatch" style="background:var(--lane-identity)"></span> Hardware & Computing</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-files)"></span> Software & Languages</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-gateway)"></span> Networks & the Internet</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-comms)"></span> Data & Artificial Intelligence</div>
+    <div class="item">┄┄ Dashed gold line = a shared turning point that affected the whole field at once</div>
+    <div class="item">⚛️ Purple marker = a secondary station in quantum-computing history (Hardware track only)</div>
+    <div class="item"><span class="swatch" style="background:var(--history);"></span> Sky-blue node = an event documented from an external museum source (see the Sources section below)</div>
+    <div class="item"><span class="swatch" style="background:var(--quantum); opacity:.5; border:1px dashed var(--quantum);"></span> Dashed border = an emerging horizon that hasn't yet matured into a mainstream technology</div>
+    <div class="item">💡 Hover over any card to read the full context</div>
+  </div>
 
-  <div class="note">
+  <div class="note lang-ar">
     <b>لإعادة بنائه في Microsoft Visio:</b> نفس نمط <b>Swimlane Timeline</b> غير الخطي (Non-Linear) — استخدم
     <code>File → New → Schedule → Timeline</code> مع تجاهل التناسب الزمني الدقيق (فالمسافة من 150 ق.م إلى 1837 لا تُقاس بنفس منطق 2000-2026)،
     واعتمد على <b>عرض نسبي بالمحطات</b> بدل عرض نسبي بالسنوات. أضف 6 عناصر <b>Milestone</b> عند 1943، 1947، 1969، 1991، أوائل الألفية، و2012-2022،
     بالإضافة إلى 3 علامات ثانوية بلون مختلف على مسار الأجهزة فقط (1981، 1994، 2019) لتاريخ الحوسبة الكمية، ومحطة سادسة بحدود متقطعة (Dashed Border)
     في نهاية الجدول لتمييزها كأفق بحثي ناشئ لا تاريخاً مكتملاً.
   </div>
+  <div class="note lang-en">
+    <b>To rebuild this in Microsoft Visio:</b> the same non-linear <b>Swimlane Timeline</b> pattern — use
+    <code>File → New → Schedule → Timeline</code>, ignoring precise time proportionality (the gap from 150 BC to 1837 isn't measured
+    on the same scale as 2000-2026). Rely on <b>relative spacing by station</b> instead of by year. Add 6 <b>Milestone</b> elements
+    at 1943, 1947, 1969, 1991, the early 2000s, and 2012-2022, plus 3 secondary markers in a different color on the Hardware track only
+    (1981, 1994, 2019) for quantum-computing history, and a sixth station with a dashed border at the end of the table to mark it
+    as an emerging research horizon, not settled history.
+  </div>
 
-  <div class="source-box">
+  <div class="source-box lang-ar">
     <div class="sicon">🏛️</div>
     <div>
       <b>مصدر موثّق — سدّ فجوة تاريخية:</b> عقدة "Colossus وWITCH" (1943–1951) في مسار الأجهزة مبنية على معرض
@@ -700,14 +784,25 @@
       بُني لكسر تشفير Lorenz الألماني خلال الحرب العالمية الثانية — وWITCH، أقدم حاسوب رقمي أصلي لا يزال يعمل حتى اليوم. يتضمن المعرض جولات بانورامية تفاعلية داخل قاعات المتحف الفعلية.
     </div>
   </div>
+  <div class="source-box lang-en">
+    <div class="sicon">🏛️</div>
+    <div>
+      <b>Verified source — closing a historical gap:</b> the "Colossus & WITCH" node (1943–1951) on the Hardware track is based on the
+      <a href="https://artsandculture.google.com/story/history-of-computing-the-national-museum-of-computing/KAVhfuJJZGQ-rw" target="_blank" rel="noopener">History of Computing</a>
+      exhibit from The National Museum of Computing at Bletchley Park, UK (via Google Arts & Culture). The exhibit documents the story of
+      Colossus — the world's first programmable electronic computer, built to break the German Lorenz cipher during WWII — and WITCH, the
+      oldest original working digital computer still running today. The exhibit includes interactive panoramic tours through the museum's actual halls.
+    </div>
+  </div>
 
   <!-- ============ RICH NARRATIVE SECTION ============ -->
   <div class="story-header">
-    <div class="eyebrow">FULL NARRATIVE // كل محطة بتفاصيلها الكاملة</div>
-    <h2>الرحلة الكاملة: من أداة حسابية إلى المؤثر الأول في كل العلوم</h2>
+    <div class="eyebrow">FULL NARRATIVE // <span class="lang-ar">كل محطة بتفاصيلها الكاملة</span><span class="lang-en">Every station, in full detail</span></div>
+    <h2 class="lang-ar">الرحلة الكاملة: من أداة حسابية إلى المؤثر الأول في كل العلوم</h2>
+    <h2 class="lang-en">The Full Journey: From a Calculating Tool to the Leading Influence on Every Science</h2>
   </div>
 
-  <div class="role-strip">
+  <div class="role-strip lang-ar">
     <div class="role">🧮 أداة حسابية بسيطة تبسّط العمليات المعقدة</div>
     <span class="arrow">←</span>
     <div class="role">💻 آلة برمجية قابلة للتفكير المنطقي</div>
@@ -718,6 +813,17 @@
     <span class="arrow">←</span>
     <div class="role">🤖 نظام يتعلم ويقرر ويؤثر في كل علم آخر</div>
   </div>
+  <div class="role-strip lang-en">
+    <div class="role">🧮 A simple calculating tool for basic arithmetic</div>
+    <span class="arrow">←</span>
+    <div class="role">💻 A programmable machine capable of logic</div>
+    <span class="arrow">←</span>
+    <div class="role">🌐 A node in an interconnected global network</div>
+    <span class="arrow">←</span>
+    <div class="role">📊 A system analyzing data no human could process</div>
+    <span class="arrow">←</span>
+    <div class="role">🤖 A system that learns, decides, and shapes every other science</div>
+  </div>
 
   <div class="story-grid">
 
@@ -726,34 +832,45 @@
       <div class="story-card-head">
         <div class="sc-title-block">
           <div class="sc-num">المحطة 00 // MECHANICAL ERA</div>
-          <div class="sc-title">العصور الميكانيكية: بذرة فكرة الحوسبة</div>
-          <div class="sc-hook">لم يكن دور الآلة الحاسوبية الأولى يتجاوز تبسيط العمليات الحسابية المعقدة — ولم يكن أحد يتخيل أن هذه البكرة الصغيرة ستمهد لعلم كامل.</div>
+          <div class="sc-title lang-ar">العصور الميكانيكية: بذرة فكرة الحوسبة</div>
+          <div class="sc-title lang-en">The Mechanical Ages: The Seed of an Idea Called Computing</div>
+          <div class="sc-hook lang-ar">لم يكن دور الآلة الحاسوبية الأولى يتجاوز تبسيط العمليات الحسابية المعقدة — ولم يكن أحد يتخيل أن هذه البكرة الصغيرة ستمهد لعلم كامل.</div>
+          <div class="sc-hook lang-en">The first calculating machines did nothing more than simplify complex arithmetic — no one imagined that this small gear would one day pave the way for an entire science.</div>
         </div>
-        <div class="sc-years">150 ق.م — 1830s</div>
+        <div class="sc-years"><span class="lang-ar">150 ق.م — 1830s</span><span class="lang-en">150 BC — 1830s</span></div>
       </div>
       <div class="sc-body">
         <div class="sc-domain identity">
           <div class="sc-dlabel">HARDWARE</div>
-          <div class="sc-dtech">أنتيكيثيرا اليونانية (150–200 ق.م)</div>
-          <div class="sc-dnote">تلتها المعداد الصيني (الأباكس)، ثم آلة باسكالين التي اخترعها بليز باسكال عام 1642 — الهدف الأوحد كان معالجة الأرقام بسرعة ودقة.</div>
+          <div class="sc-dtech lang-ar">أنتيكيثيرا اليونانية (150–200 ق.م)</div>
+          <div class="sc-dtech lang-en">The Greek Antikythera mechanism (150–200 BC)</div>
+          <div class="sc-dnote lang-ar">تلتها المعداد الصيني (الأباكس)، ثم آلة باسكالين التي اخترعها بليز باسكال عام 1642 — الهدف الأوحد كان معالجة الأرقام بسرعة ودقة.</div>
+          <div class="sc-dnote lang-en">Followed by the Chinese abacus, then the Pascaline invented by Blaise Pascal in 1642 — the sole aim was processing numbers quickly and accurately.</div>
         </div>
         <div class="sc-domain files">
           <div class="sc-dlabel">SOFTWARE</div>
-          <div class="sc-dtech">تصوّر تشارلز باباج لـ"المحرك التحليلي"</div>
-          <div class="sc-dnote">في ثلاثينيات القرن التاسع عشر، ورغم أن آلاته لم تكتمل في حياته، إلا أن أفكاره حول البرمجة — بمساعدة آدا لوفليس — وضعت الأسس النظرية للحوسبة.</div>
+          <div class="sc-dtech lang-ar">تصوّر تشارلز باباج لـ"المحرك التحليلي"</div>
+          <div class="sc-dtech lang-en">Charles Babbage's vision of the "Analytical Engine"</div>
+          <div class="sc-dnote lang-ar">في ثلاثينيات القرن التاسع عشر، ورغم أن آلاته لم تكتمل في حياته، إلا أن أفكاره حول البرمجة — بمساعدة آدا لوفليس — وضعت الأسس النظرية للحوسبة.</div>
+          <div class="sc-dnote lang-en">In the 1830s — though his machines were never completed in his lifetime — his ideas about programming, with Ada Lovelace's help, laid computing's theoretical foundations.</div>
         </div>
         <div class="sc-domain gateway">
           <div class="sc-dlabel">NETWORKS</div>
-          <div class="sc-dtech">لا مفهوم شبكات بعد</div>
-          <div class="sc-dnote">كل آلة حاسوبية معزولة تماماً؛ فكرة ربط الآلات ببعضها لم تولد بعد.</div>
+          <div class="sc-dtech lang-ar">لا مفهوم شبكات بعد</div>
+          <div class="sc-dtech lang-en">No concept of networks yet</div>
+          <div class="sc-dnote lang-ar">كل آلة حاسوبية معزولة تماماً؛ فكرة ربط الآلات ببعضها لم تولد بعد.</div>
+          <div class="sc-dnote lang-en">Every calculating machine stands completely alone; the idea of linking machines together hasn't been born yet.</div>
         </div>
         <div class="sc-domain comms">
           <div class="sc-dlabel">DATA & AI</div>
-          <div class="sc-dtech">لا وجود بعد</div>
-          <div class="sc-dnote">الآلات تعالج أرقاماً فردية فقط — لا بيانات، ولا ذكاء اصطناعي، ولا حتى تصوّر لهما.</div>
+          <div class="sc-dtech lang-ar">لا وجود بعد</div>
+          <div class="sc-dtech lang-en">Doesn't exist yet</div>
+          <div class="sc-dnote lang-ar">الآلات تعالج أرقاماً فردية فقط — لا بيانات، ولا ذكاء اصطناعي، ولا حتى تصوّر لهما.</div>
+          <div class="sc-dnote lang-en">These machines process only individual numbers — no data, no artificial intelligence, not even a concept of either.</div>
         </div>
       </div>
-      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> تروس متشابكة وبكرة صغيرة في آلة باباج غير المكتملة — لا أحد يتخيل أن هذه الأفكار النظرية ستتحول بعد قرن من الزمن إلى علم مستقل بذاته.</div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> تروس متشابكة وبكرة صغيرة في آلة باباج غير المكتملة — لا أحد يتخيل أن هذه الأفكار النظرية ستتحول بعد قرن من الزمن إلى علم مستقل بذاته.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> interlocking gears and a small spool inside Babbage's unfinished machine — no one imagines these theoretical ideas will become, a century later, an independent science of their own.</div>
     </div>
 
     <!-- STORY CARD 1 -->
@@ -761,40 +878,56 @@
       <div class="story-card-head">
         <div class="sc-title-block">
           <div class="sc-num">المحطة 01 // DIGITAL BIRTH</div>
-          <div class="sc-title">ميلاد الحوسبة الرقمية وولادة علم مستقل</div>
-          <div class="sc-hook">آلات ضخمة تشغل غرفاً بأكملها تُظهر قدرات حسابية غير مسبوقة — وهنا تبدأ الجامعات تدرك أن التعامل معها يتطلب أكثر من مجرد الهندسة.</div>
+          <div class="sc-title lang-ar">ميلاد الحوسبة الرقمية وولادة علم مستقل</div>
+          <div class="sc-title lang-en">The Birth of Digital Computing and an Independent Science</div>
+          <div class="sc-hook lang-ar">آلات ضخمة تشغل غرفاً بأكملها تُظهر قدرات حسابية غير مسبوقة — وهنا تبدأ الجامعات تدرك أن التعامل معها يتطلب أكثر من مجرد الهندسة.</div>
+          <div class="sc-hook lang-en">Massive machines filling entire rooms display unprecedented computing power — and here, universities begin to realize that working with them takes more than just engineering.</div>
         </div>
         <div class="sc-years">1943 — 1950s</div>
       </div>
       <div class="sc-body">
         <div class="sc-domain identity">
           <div class="sc-dlabel">HARDWARE</div>
-          <div class="sc-dtech">Colossus (1943) وWITCH (1951) ثم الترانزستور (1947)</div>
-          <div class="sc-dnote">قبل الترانزستور بأربع سنوات، بنى المهندس توماس فلاورز في بلتشلي بارك حاسوب Colossus — أول حاسوب إلكتروني قابل للبرمجة في العالم — لكسر تشفير Lorenz الألماني سراً خلال الحرب. بعدها بسنوات ظهر WITCH، أقدم حاسوب رقمي أصلي لا يزال يعمل حتى اليوم. ثم جاء الترانزستور (1947) ليفتح الباب أمام حواسيب رقمية ضخمة تشغل غرفاً بأكملها.</div>
+          <div class="sc-dtech lang-ar">Colossus (1943) وWITCH (1951) ثم الترانزستور (1947)</div>
+          <div class="sc-dtech lang-en">Colossus (1943) & WITCH (1951), then the transistor (1947)</div>
+          <div class="sc-dnote lang-ar">قبل الترانزستور بأربع سنوات، بنى المهندس توماس فلاورز في بلتشلي بارك حاسوب Colossus — أول حاسوب إلكتروني قابل للبرمجة في العالم — لكسر تشفير Lorenz الألماني سراً خلال الحرب. بعدها بسنوات ظهر WITCH، أقدم حاسوب رقمي أصلي لا يزال يعمل حتى اليوم. ثم جاء الترانزستور (1947) ليفتح الباب أمام حواسيب رقمية ضخمة تشغل غرفاً بأكملها.</div>
+          <div class="sc-dnote lang-en">Four years before the transistor, engineer Tommy Flowers built Colossus at Bletchley Park — the world's first programmable electronic computer — to secretly break the German Lorenz cipher during the war. Years later came WITCH, the oldest original working digital computer still running today. Then the transistor (1947) opened the door to massive digital computers filling entire rooms.</div>
         </div>
         <div class="sc-domain files">
           <div class="sc-dlabel">SOFTWARE</div>
-          <div class="sc-dtech">نشأة تخصص علوم الحاسوب</div>
-          <div class="sc-dnote">بدأت الجامعات والمؤسسات البحثية تدرك أن التعامل مع هذه الآلات يتطلب أكثر من الهندسة؛ فنشأ تخصص جديد يهتم بالخوارزميات وهياكل البيانات ونظرية الحوسبة نفسها.</div>
+          <div class="sc-dtech lang-ar">نشأة تخصص علوم الحاسوب</div>
+          <div class="sc-dtech lang-en">Computer science emerges as a discipline</div>
+          <div class="sc-dnote lang-ar">بدأت الجامعات والمؤسسات البحثية تدرك أن التعامل مع هذه الآلات يتطلب أكثر من الهندسة؛ فنشأ تخصص جديد يهتم بالخوارزميات وهياكل البيانات ونظرية الحوسبة نفسها.</div>
+          <div class="sc-dnote lang-en">Universities and research institutions begin to realize that working with these machines takes more than engineering; a new field emerges concerned with algorithms, data structures, and computing theory itself.</div>
         </div>
         <div class="sc-domain gateway">
           <div class="sc-dlabel">NETWORKS</div>
-          <div class="sc-dtech">لا شبكات بعد</div>
-          <div class="sc-dnote">كل حاسوب لا يزال مستقلاً تماماً في غرفته الخاصة.</div>
+          <div class="sc-dtech lang-ar">لا شبكات بعد</div>
+          <div class="sc-dtech lang-en">No networks yet</div>
+          <div class="sc-dnote lang-ar">كل حاسوب لا يزال مستقلاً تماماً في غرفته الخاصة.</div>
+          <div class="sc-dnote lang-en">Every computer still stands entirely alone in its own room.</div>
         </div>
         <div class="sc-domain comms">
           <div class="sc-dlabel">DATA & AI</div>
-          <div class="sc-dtech">لا وجود بعد</div>
-          <div class="sc-dnote">الحوسبة الرقمية للتو تولد؛ الطريق لا يزال طويلاً أمام أي تصوّر لبيانات ضخمة أو ذكاء اصطناعي.</div>
+          <div class="sc-dtech lang-ar">لا وجود بعد</div>
+          <div class="sc-dtech lang-en">Doesn't exist yet</div>
+          <div class="sc-dnote lang-ar">الحوسبة الرقمية للتو تولد؛ الطريق لا يزال طويلاً أمام أي تصوّر لبيانات ضخمة أو ذكاء اصطناعي.</div>
+          <div class="sc-dnote lang-en">Digital computing has just been born; there's still a long road ahead before any notion of big data or artificial intelligence.</div>
         </div>
 
-        <div class="sc-cross">
+        <div class="sc-cross lang-ar">
           <b>🏛️ مصدر موثّق:</b> قصة Colossus وWITCH موثّقة بتفصيل في معرض
           <a href="https://artsandculture.google.com/story/history-of-computing-the-national-museum-of-computing/KAVhfuJJZGQ-rw" target="_blank" rel="noopener" style="color:var(--history);">History of Computing</a>
           من المتحف الوطني للحوسبة، بلتشلي بارك (Google Arts & Culture) — يتضمن جولة بانورامية تفاعلية داخل قاعات المتحف الفعلية.
         </div>
+        <div class="sc-cross lang-en">
+          <b>🏛️ Verified source:</b> the Colossus and WITCH story is documented in detail in the
+          <a href="https://artsandculture.google.com/story/history-of-computing-the-national-museum-of-computing/KAVhfuJJZGQ-rw" target="_blank" rel="noopener" style="color:var(--history);">History of Computing</a>
+          exhibit from The National Museum of Computing, Bletchley Park (Google Arts & Culture) — including an interactive panoramic tour through the museum's actual halls.
+        </div>
       </div>
-      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> هنا، وفي هذه اللحظة بالذات، بدأت تتشكل ملامح علوم الحاسوب كعلم مستقل — لم يعد الأمر مجرد آلة، بل تخصص أكاديمي وليد.</div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> هنا، وفي هذه اللحظة بالذات، بدأت تتشكل ملامح علوم الحاسوب كعلم مستقل — لم يعد الأمر مجرد آلة، بل تخصص أكاديمي وليد.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> right here, in this exact moment, the shape of computer science as an independent discipline begins to form — no longer just a machine, but a newborn academic field.</div>
     </div>
 
     <!-- STORY CARD 2 -->
@@ -802,34 +935,44 @@
       <div class="story-card-head">
         <div class="sc-title-block">
           <div class="sc-num">المحطة 02 // SOFTWARE & LANGUAGES ERA</div>
-          <div class="sc-title">عصر البرمجيات ولغات البرمجة: توسع وتعمق</div>
-          <div class="sc-hook">لم تعد الحواسيب مجرد آلات حاسبة، بل أصبحت أدوات لمعالجة النصوص، إدارة قواعد البيانات، وتصميم الرسومات.</div>
+          <div class="sc-title lang-ar">عصر البرمجيات ولغات البرمجة: توسع وتعمق</div>
+          <div class="sc-title lang-en">The Software & Languages Era: Expansion and Depth</div>
+          <div class="sc-hook lang-ar">لم تعد الحواسيب مجرد آلات حاسبة، بل أصبحت أدوات لمعالجة النصوص، إدارة قواعد البيانات، وتصميم الرسومات.</div>
+          <div class="sc-hook lang-en">Computers are no longer mere calculating machines — they've become tools for word processing, database management, and graphic design.</div>
         </div>
         <div class="sc-years">1950s — 1991</div>
       </div>
       <div class="sc-body">
         <div class="sc-domain identity">
           <div class="sc-dlabel">HARDWARE</div>
-          <div class="sc-dtech">أجهزة أكاديمية وبحثية متنامية</div>
-          <div class="sc-dnote">تتطور تدريجياً لتُشغَّل عبر لغات البرمجة الجديدة الناشئة تباعاً.</div>
+          <div class="sc-dtech lang-ar">أجهزة أكاديمية وبحثية متنامية</div>
+          <div class="sc-dtech lang-en">A growing base of academic & research machines</div>
+          <div class="sc-dnote lang-ar">تتطور تدريجياً لتُشغَّل عبر لغات البرمجة الجديدة الناشئة تباعاً.</div>
+          <div class="sc-dnote lang-en">Gradually evolving to run the newly emerging programming languages, one after another.</div>
         </div>
         <div class="sc-domain files">
           <div class="sc-dlabel">SOFTWARE</div>
           <div class="sc-dtech">Fortran → Cobol → C → Java</div>
-          <div class="sc-dnote">فورتران (منتصف الخمسينيات)، كوبول (أواخر الخمسينيات)، ثم سي (أوائل السبعينيات) وجافا (منتصف التسعينيات) — مكّنت المطورين من بناء تطبيقات متنوعة.</div>
+          <div class="sc-dnote lang-ar">فورتران (منتصف الخمسينيات)، كوبول (أواخر الخمسينيات)، ثم سي (أوائل السبعينيات) وجافا (منتصف التسعينيات) — مكّنت المطورين من بناء تطبيقات متنوعة.</div>
+          <div class="sc-dnote lang-en">Fortran (mid-1950s), Cobol (late 1950s), then C (early 1970s) and Java (mid-1990s) — enabling developers to build a wide range of applications.</div>
         </div>
         <div class="sc-domain gateway">
           <div class="sc-dlabel">NETWORKS</div>
-          <div class="sc-dtech">إطلاق شبكة الأربانت ARPANET (1969)</div>
-          <div class="sc-dnote">نقطة تحول هائلة ربطت الحواسيب ببعضها لأول مرة، وأدت لظهور مفاهيم جديدة كالحوسبة الموزعة وأمن الشبكات.</div>
+          <div class="sc-dtech lang-ar">إطلاق شبكة الأربانت ARPANET (1969)</div>
+          <div class="sc-dtech lang-en">ARPANET launches (1969)</div>
+          <div class="sc-dnote lang-ar">نقطة تحول هائلة ربطت الحواسيب ببعضها لأول مرة، وأدت لظهور مفاهيم جديدة كالحوسبة الموزعة وأمن الشبكات.</div>
+          <div class="sc-dnote lang-en">A massive turning point that linked computers together for the first time, giving rise to new concepts like distributed computing and network security.</div>
         </div>
         <div class="sc-domain comms">
           <div class="sc-dlabel">DATA & AI</div>
-          <div class="sc-dtech">قواعد بيانات مبكرة</div>
-          <div class="sc-dnote">لا ذكاء اصطناعي حقيقي بعد؛ التركيز على تخزين البيانات لا تحليلها أو التعلّم منها.</div>
+          <div class="sc-dtech lang-ar">قواعد بيانات مبكرة</div>
+          <div class="sc-dtech lang-en">Early databases</div>
+          <div class="sc-dnote lang-ar">لا ذكاء اصطناعي حقيقي بعد؛ التركيز على تخزين البيانات لا تحليلها أو التعلّم منها.</div>
+          <div class="sc-dnote lang-en">No real artificial intelligence yet; the focus is on storing data, not analyzing it or learning from it.</div>
         </div>
       </div>
-      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> لأول مرة، حاسوبان يتبادلان رسالة عبر الأسلاك — بداية خيط رفيع سيتحول بعد عقدين إلى شبكة تربط العالم بأكمله.</div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> لأول مرة، حاسوبان يتبادلان رسالة عبر الأسلاك — بداية خيط رفيع سيتحول بعد عقدين إلى شبكة تربط العالم بأكمله.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> for the first time, two computers exchange a message over the wires — the start of a thin thread that, two decades later, will become a network spanning the entire world.</div>
     </div>
 
     <!-- STORY CARD 3 -->
@@ -837,34 +980,45 @@
       <div class="story-card-head">
         <div class="sc-title-block">
           <div class="sc-num">المحطة 03 // NETWORKED WORLD</div>
-          <div class="sc-title">عصر الشبكات والويب: العالم يتشابك</div>
-          <div class="sc-hook">لم يعد التركيز فقط على جعل الحاسوب يعمل أسرع، بل على جعله يتفاعل بفعالية مع حواسيب أخرى ومع البشر أنفسهم.</div>
+          <div class="sc-title lang-ar">عصر الشبكات والويب: العالم يتشابك</div>
+          <div class="sc-title lang-en">The Networks & Web Era: The World Becomes Entangled</div>
+          <div class="sc-hook lang-ar">لم يعد التركيز فقط على جعل الحاسوب يعمل أسرع، بل على جعله يتفاعل بفعالية مع حواسيب أخرى ومع البشر أنفسهم.</div>
+          <div class="sc-hook lang-en">The focus is no longer just on making the computer run faster, but on making it interact effectively with other computers — and with people themselves.</div>
         </div>
         <div class="sc-years">1991 — 2000s</div>
       </div>
       <div class="sc-body">
         <div class="sc-domain identity">
           <div class="sc-dlabel">HARDWARE</div>
-          <div class="sc-dtech">حوسبة موزّعة عبر الشبكة العالمية</div>
-          <div class="sc-dnote">الأجهزة لم تعد جزراً منعزلة؛ أصبحت عقداً في شبكة أوسع تتبادل المهام والبيانات.</div>
+          <div class="sc-dtech lang-ar">حوسبة موزّعة عبر الشبكة العالمية</div>
+          <div class="sc-dtech lang-en">Computing distributed across the global web</div>
+          <div class="sc-dnote lang-ar">الأجهزة لم تعد جزراً منعزلة؛ أصبحت عقداً في شبكة أوسع تتبادل المهام والبيانات.</div>
+          <div class="sc-dnote lang-en">Machines are no longer isolated islands; they've become nodes in a wider network exchanging tasks and data.</div>
         </div>
         <div class="sc-domain files">
           <div class="sc-dlabel">SOFTWARE</div>
-          <div class="sc-dtech">برمجة الويب والتطبيقات الموزّعة</div>
-          <div class="sc-dnote">ظهرت الحاجة لبرمجيات تتفاعل عبر الشبكة، لا تعمل بمعزل داخل جهاز واحد فقط.</div>
+          <div class="sc-dtech lang-ar">برمجة الويب والتطبيقات الموزّعة</div>
+          <div class="sc-dtech lang-en">Web programming & distributed apps</div>
+          <div class="sc-dnote lang-ar">ظهرت الحاجة لبرمجيات تتفاعل عبر الشبكة، لا تعمل بمعزل داخل جهاز واحد فقط.</div>
+          <div class="sc-dnote lang-en">The need arises for software that interacts across the network, rather than working in isolation on a single machine.</div>
         </div>
         <div class="sc-domain gateway">
           <div class="sc-dlabel">NETWORKS</div>
-          <div class="sc-dtech">تطور ARPANET إلى الويب العالمي WWW (1991)</div>
-          <div class="sc-dnote">أدى إلى ظهور مفاهيم جديدة تماماً في علوم الحاسوب: الحوسبة الموزعة، أمن الشبكات، وتطوير الويب.</div>
+          <div class="sc-dtech lang-ar">تطور ARPANET إلى الويب العالمي WWW (1991)</div>
+          <div class="sc-dtech lang-en">ARPANET evolves into the World Wide Web (1991)</div>
+          <div class="sc-dnote lang-ar">أدى إلى ظهور مفاهيم جديدة تماماً في علوم الحاسوب: الحوسبة الموزعة، أمن الشبكات، وتطوير الويب.</div>
+          <div class="sc-dnote lang-en">Gives rise to entirely new concepts in computer science: distributed computing, network security, and web development.</div>
         </div>
         <div class="sc-domain comms">
           <div class="sc-dlabel">DATA & AI</div>
-          <div class="sc-dtech">قواعد بيانات موزّعة</div>
-          <div class="sc-dnote">بدايات مبكرة للتنقيب في البيانات (Data Mining)، لكن دون أي بنية تحتية لذكاء اصطناعي حقيقي بعد.</div>
+          <div class="sc-dtech lang-ar">قواعد بيانات موزّعة</div>
+          <div class="sc-dtech lang-en">Distributed databases</div>
+          <div class="sc-dnote lang-ar">بدايات مبكرة للتنقيب في البيانات (Data Mining)، لكن دون أي بنية تحتية لذكاء اصطناعي حقيقي بعد.</div>
+          <div class="sc-dnote lang-en">Early beginnings of data mining, but with no real AI infrastructure yet.</div>
         </div>
       </div>
-      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> أول صفحة ويب تُفتح على شاشة بعيدة عن مكان إنشائها — العالم يكتشف للتو أن المسافة لم تعد عائقاً أمام تدفق المعلومة.</div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> أول صفحة ويب تُفتح على شاشة بعيدة عن مكان إنشائها — العالم يكتشف للتو أن المسافة لم تعد عائقاً أمام تدفق المعلومة.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> the first web page opens on a screen far from where it was created — the world has just discovered that distance is no longer a barrier to the flow of information.</div>
     </div>
 
     <!-- STORY CARD 4 -->
@@ -872,45 +1026,56 @@
       <div class="story-card-head">
         <div class="sc-title-block">
           <div class="sc-num">المحطة 04 // DATA & AI REVOLUTION</div>
-          <div class="sc-title">ثورة البيانات والذكاء الاصطناعي: آفاق لا حدود لها</div>
-          <div class="sc-hook">لم يعد الهدف مجرد جعل الحاسوب يقوم بمهام مبرمجة مسبقاً، بل جعله يتعلم من البيانات، يتخذ القرارات، ويحل المشكلات بطرق تشبه التفكير البشري.</div>
+          <div class="sc-title lang-ar">ثورة البيانات والذكاء الاصطناعي: آفاق لا حدود لها</div>
+          <div class="sc-title lang-en">The Data & AI Revolution: Boundless Horizons</div>
+          <div class="sc-hook lang-ar">لم يعد الهدف مجرد جعل الحاسوب يقوم بمهام مبرمجة مسبقاً، بل جعله يتعلم من البيانات، يتخذ القرارات، ويحل المشكلات بطرق تشبه التفكير البشري.</div>
+          <div class="sc-hook lang-en">The goal is no longer just getting the computer to run pre-programmed tasks, but to have it learn from data, make decisions, and solve problems in ways that resemble human thought.</div>
         </div>
         <div class="sc-years">2000s — 2026</div>
       </div>
       <div class="sc-body">
         <div class="sc-domain identity">
           <div class="sc-dlabel">HARDWARE</div>
-          <div class="sc-dtech">حوسبة سحابية ومعالجات GPU متخصصة</div>
-          <div class="sc-dnote">بنية تحتية ضخمة مصممة خصيصاً لتشغيل نماذج الذكاء الاصطناعي الحديثة.</div>
+          <div class="sc-dtech lang-ar">حوسبة سحابية ومعالجات GPU متخصصة</div>
+          <div class="sc-dtech lang-en">Cloud computing & specialized GPUs</div>
+          <div class="sc-dnote lang-ar">بنية تحتية ضخمة مصممة خصيصاً لتشغيل نماذج الذكاء الاصطناعي الحديثة.</div>
+          <div class="sc-dnote lang-en">Massive infrastructure purpose-built to run modern AI models.</div>
         </div>
         <div class="sc-domain files">
           <div class="sc-dlabel">SOFTWARE</div>
-          <div class="sc-dtech">أطر عمل تعلم الآلة الحديثة</div>
-          <div class="sc-dnote">Python وTensorFlow وPyTorch تقود عصراً كاملاً من التطبيقات الذكية.</div>
+          <div class="sc-dtech lang-ar">أطر عمل تعلم الآلة الحديثة</div>
+          <div class="sc-dtech lang-en">Modern machine-learning frameworks</div>
+          <div class="sc-dnote lang-ar">Python وTensorFlow وPyTorch تقود عصراً كاملاً من التطبيقات الذكية.</div>
+          <div class="sc-dnote lang-en">Python, TensorFlow, and PyTorch drive an entire era of intelligent applications.</div>
         </div>
         <div class="sc-domain gateway">
           <div class="sc-dlabel">NETWORKS</div>
-          <div class="sc-dtech">إنترنت الأشياء والحوسبة الطرفية</div>
-          <div class="sc-dnote">شبكات تغذّي نماذج الذكاء الاصطناعي بتدفقات بيانات مستمرة من كل زاوية في حياتنا.</div>
+          <div class="sc-dtech lang-ar">إنترنت الأشياء والحوسبة الطرفية</div>
+          <div class="sc-dtech lang-en">The Internet of Things & edge computing</div>
+          <div class="sc-dnote lang-ar">شبكات تغذّي نماذج الذكاء الاصطناعي بتدفقات بيانات مستمرة من كل زاوية في حياتنا.</div>
+          <div class="sc-dnote lang-en">Networks feeding AI models a constant stream of data from every corner of our lives.</div>
         </div>
         <div class="sc-domain comms">
           <div class="sc-dlabel">DATA & AI</div>
           <div class="sc-dtech">Big Data → Data Science → ML/AI</div>
-          <div class="sc-dnote">من أنظمة التعرف على الصور والكلام، إلى السيارات ذاتية القيادة، والروبوتات، والمساعدين الافتراضيين — الحاسوب أصبح يتعلم ويقرر لا فقط يُنفّذ.</div>
+          <div class="sc-dnote lang-ar">من أنظمة التعرف على الصور والكلام، إلى السيارات ذاتية القيادة، والروبوتات، والمساعدين الافتراضيين — الحاسوب أصبح يتعلم ويقرر لا فقط يُنفّذ.</div>
+          <div class="sc-dnote lang-en">From image and speech recognition, to self-driving cars, robots, and virtual assistants — the computer now learns and decides, not just executes.</div>
         </div>
       </div>
-      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> من بكرة صغيرة في آلة يونانية قديمة إلى نظام يكتب ويرسم ويقرر — علوم الحاسوب لم تعد تخدم العلوم الأخرى فحسب، بل أصبحت اللغة المشتركة التي تجمعها كلها.</div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> من بكرة صغيرة في آلة يونانية قديمة إلى نظام يكتب ويرسم ويقرر — علوم الحاسوب لم تعد تخدم العلوم الأخرى فحسب، بل أصبحت اللغة المشتركة التي تجمعها كلها.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> from a small gear in an ancient Greek machine to a system that writes, draws, and decides — computer science no longer just serves other sciences; it has become the common language that unites them all.</div>
     </div>
 
   </div>
 
   <!-- ============ IMPACT ON OTHER SCIENCES ============ -->
   <div class="story-header">
-    <div class="eyebrow">CROSS-DISCIPLINARY IMPACT // من خادم مطيع إلى قوة دافعة</div>
-    <h2>التأثير على العلوم الأخرى: المؤثر الأول لا المتلقي</h2>
+    <div class="eyebrow">CROSS-DISCIPLINARY IMPACT // <span class="lang-ar">من خادم مطيع إلى قوة دافعة</span><span class="lang-en">From obedient servant to driving force</span></div>
+    <h2 class="lang-ar">التأثير على العلوم الأخرى: المؤثر الأول لا المتلقي</h2>
+    <h2 class="lang-en">Impact on Other Sciences: The Leading Influence, Not the Recipient</h2>
   </div>
 
-  <div class="impact-grid">
+  <div class="impact-grid lang-ar">
     <div class="impact-card">
       <div class="icon">🩺</div>
       <div class="iname">الطب</div>
@@ -938,55 +1103,94 @@
     </div>
   </div>
 
+  <div class="impact-grid lang-en">
+    <div class="impact-card">
+      <div class="icon">🩺</div>
+      <div class="iname">Medicine</div>
+      <div class="idesc">MRI and CT diagnostics, drug development and molecular simulation, robotic surgery, and massive health databases.</div>
+    </div>
+    <div class="impact-card">
+      <div class="icon">🔭</div>
+      <div class="iname">Physics</div>
+      <div class="idesc">Simulating complex cosmic phenomena, analyzing particle-accelerator data, and designing new materials with unique properties.</div>
+    </div>
+    <div class="impact-card">
+      <div class="icon">🧪</div>
+      <div class="iname">Chemistry</div>
+      <div class="idesc">Designing new molecules, simulating chemical reactions, and analyzing complex spectra to discover more efficient materials and manufacturing processes.</div>
+    </div>
+    <div class="impact-card">
+      <div class="icon">🌌</div>
+      <div class="iname">Astronomy</div>
+      <div class="idesc">Algorithms and AI for analyzing telescope data, discovering new planets, and understanding galactic evolution.</div>
+    </div>
+    <div class="impact-card">
+      <div class="icon">🏭</div>
+      <div class="iname">Industry</div>
+      <div class="idesc">Product design, smart supply chains, robotics and automation, and massive analytics for factory management.</div>
+    </div>
+  </div>
+
   <!-- ============ EXPLICIT QUANTUM EPILOGUE ============ -->
   <div class="story-header">
-    <div class="eyebrow">EPILOGUE // غير مكتمل بعد — أفق بحثي لا تاريخ راسخ</div>
-    <h2>ماذا بعد؟ أفق الحوسبة الكمية</h2>
+    <div class="eyebrow">EPILOGUE // <span class="lang-ar">غير مكتمل بعد — أفق بحثي لا تاريخ راسخ</span><span class="lang-en">Not yet complete — a research horizon, not settled history</span></div>
+    <h2 class="lang-ar">ماذا بعد؟ أفق الحوسبة الكمية</h2>
+    <h2 class="lang-en">What Comes Next? The Quantum Computing Horizon</h2>
   </div>
 
   <div class="story-grid">
     <div class="story-card" style="border-style:dashed; border-color:var(--quantum);">
       <div class="story-card-head">
         <div class="sc-title-block">
-          <div class="sc-num" style="color:var(--quantum);">المحطة 05 // QUANTUM HORIZON (غير مكتملة)</div>
-          <div class="sc-title">حين يتوقف "البت" عن أن يكون 0 أو 1 فقط</div>
-          <div class="sc-hook">هذه المحطة مختلفة عن سابقاتها: لا تروي تاريخاً حسم أمره، بل أفقاً لا يزال قيد التشكّل. كل ما فيها قابل للتغيّر خلال سنوات قليلة — وهذا بالضبط ما يجعلها مثيرة.</div>
+          <div class="sc-num" style="color:var(--quantum);"><span class="lang-ar">المحطة 05 // QUANTUM HORIZON (غير مكتملة)</span><span class="lang-en">STATION 05 // QUANTUM HORIZON (incomplete)</span></div>
+          <div class="sc-title lang-ar">حين يتوقف "البت" عن أن يكون 0 أو 1 فقط</div>
+          <div class="sc-title lang-en">When the "Bit" Stops Being Just 0 or 1</div>
+          <div class="sc-hook lang-ar">هذه المحطة مختلفة عن سابقاتها: لا تروي تاريخاً حسم أمره، بل أفقاً لا يزال قيد التشكّل. كل ما فيها قابل للتغيّر خلال سنوات قليلة — وهذا بالضبط ما يجعلها مثيرة.</div>
+          <div class="sc-hook lang-en">This station is different from those before it: it doesn't recount settled history, but a horizon still taking shape. Everything in it could change within a few years — which is exactly what makes it exciting.</div>
         </div>
-        <div class="sc-years" style="color:var(--quantum); border-color:var(--quantum); background:rgba(178,141,255,0.08);">2019 — وما بعد</div>
+        <div class="sc-years" style="color:var(--quantum); border-color:var(--quantum); background:rgba(178,141,255,0.08);"><span class="lang-ar">2019 — وما بعد</span><span class="lang-en">2019 — and beyond</span></div>
       </div>
       <div class="sc-body">
         <div class="sc-domain identity">
           <div class="sc-dlabel">HARDWARE</div>
-          <div class="sc-dtech">معالجات كيوبت تجريبية (IBM · Google · IonQ)</div>
-          <div class="sc-dnote">نعيش اليوم عصر NISQ (Noisy Intermediate-Scale Quantum) — أجهزة كمية صغيرة الحجم عرضة للأخطاء، بعيدة عن الاستقرار الذي تتمتع به المعالجات التقليدية.</div>
+          <div class="sc-dtech lang-ar">معالجات كيوبت تجريبية (IBM · Google · IonQ)</div>
+          <div class="sc-dtech lang-en">Experimental qubit chips (IBM · Google · IonQ)</div>
+          <div class="sc-dnote lang-ar">نعيش اليوم عصر NISQ (Noisy Intermediate-Scale Quantum) — أجهزة كمية صغيرة الحجم عرضة للأخطاء، بعيدة عن الاستقرار الذي تتمتع به المعالجات التقليدية.</div>
+          <div class="sc-dnote lang-en">We're living in the NISQ era (Noisy Intermediate-Scale Quantum) — small, error-prone quantum devices, far from the stability of conventional processors.</div>
         </div>
         <div class="sc-domain files">
           <div class="sc-dlabel">SOFTWARE</div>
           <div class="sc-dtech">Qiskit وCirq</div>
-          <div class="sc-dnote">أطر برمجة كمومية ناشئة، لكن التحدي الأكبر الذي يعيق النضج الفعلي هو تصحيح الأخطاء الكمية (Quantum Error Correction).</div>
+          <div class="sc-dnote lang-ar">أطر برمجة كمومية ناشئة، لكن التحدي الأكبر الذي يعيق النضج الفعلي هو تصحيح الأخطاء الكمية (Quantum Error Correction).</div>
+          <div class="sc-dnote lang-en">Emerging quantum programming frameworks, but the biggest challenge blocking real maturity is quantum error correction.</div>
         </div>
         <div class="sc-domain gateway">
           <div class="sc-dlabel">NETWORKS</div>
-          <div class="sc-dtech">أبحاث "الإنترنت الكمي"</div>
-          <div class="sc-dnote">محاولات أولية لتوزيع مفاتيح تشفير كمومية (QKD) — لا بنية تحتية تجارية منتشرة بعد.</div>
+          <div class="sc-dtech lang-ar">أبحاث "الإنترنت الكمي"</div>
+          <div class="sc-dtech lang-en">"Quantum internet" research</div>
+          <div class="sc-dnote lang-ar">محاولات أولية لتوزيع مفاتيح تشفير كمومية (QKD) — لا بنية تحتية تجارية منتشرة بعد.</div>
+          <div class="sc-dnote lang-en">Early attempts at quantum key distribution (QKD) — no widespread commercial infrastructure yet.</div>
         </div>
         <div class="sc-domain comms">
           <div class="sc-dlabel">DATA & AI</div>
           <div class="sc-dtech">Quantum Machine Learning</div>
-          <div class="sc-dnote">تقاطع بحثي مبكر بين الحوسبة الكمية وتعلم الآلة، لا يزال في المختبرات الأكاديمية أكثر من كونه واقعاً تجارياً.</div>
+          <div class="sc-dnote lang-ar">تقاطع بحثي مبكر بين الحوسبة الكمية وتعلم الآلة، لا يزال في المختبرات الأكاديمية أكثر من كونه واقعاً تجارياً.</div>
+          <div class="sc-dnote lang-en">An early research intersection between quantum computing and machine learning, still confined to academic labs more than commercial reality.</div>
         </div>
       </div>
-      <div class="sc-foot">🎬 <b>مشهد مفتوح (لا إغلاق):</b> على عكس كل محطة سابقة انتهت بحدث حاسم، هذه المحطة لا تزال تُكتب سطورها. قد تصبح الفصل السادس الكامل لهذه الرحلة خلال عقد — أو قد تبقى أفقاً بحثياً لعقود أطول. الأمانة العلمية تقتضي تركها هكذا: علامة استفهام، لا نقطة نهاية.</div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد مفتوح (لا إغلاق):</b> على عكس كل محطة سابقة انتهت بحدث حاسم، هذه المحطة لا تزال تُكتب سطورها. قد تصبح الفصل السادس الكامل لهذه الرحلة خلال عقد — أو قد تبقى أفقاً بحثياً لعقود أطول. الأمانة العلمية تقتضي تركها هكذا: علامة استفهام، لا نقطة نهاية.</div>
+      <div class="sc-foot lang-en">🎬 <b>Open scene (no closing):</b> unlike every prior station that ended in a decisive event, this one is still being written. It might become this journey's full sixth chapter within a decade — or remain a research horizon for decades longer. Scientific honesty requires leaving it exactly like this: a question mark, not a period.</div>
     </div>
   </div>
 
   <!-- ============ FULL CHRONOLOGICAL TIMELINE ============ -->
   <div class="story-header full-timeline">
-    <div class="eyebrow">APPENDIX // مرجع سريع بكل التواريخ</div>
-    <h2>الخط الزمني الكامل: كل الأحداث بالترتيب</h2>
+    <div class="eyebrow">APPENDIX // <span class="lang-ar">مرجع سريع بكل التواريخ</span><span class="lang-en">A quick reference for every date</span></div>
+    <h2 class="lang-ar">الخط الزمني الكامل: كل الأحداث بالترتيب</h2>
+    <h2 class="lang-en">The Full Timeline: Every Event, in Order</h2>
   </div>
 
-  <div class="tl-list">
+  <div class="tl-list lang-ar">
     <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">150–200 ق.م</div><div class="tl-text"><b>آلة أنتيكيثيرا</b> اليونانية — أقدم آلة حسابية معروفة</div></div>
     <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">قبل الميلاد–</div><div class="tl-text"><b>المعداد الصيني (الأباكس)</b> — أداة حساب يدوية منتشرة عبر العصور</div></div>
     <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">1642</div><div class="tl-text"><b>آلة باسكالين</b> — اخترعها بليز باسكال لمعالجة الأرقام آلياً</div></div>
@@ -1009,7 +1213,30 @@
     <div class="tl-item tl-quantum"><div class="tl-dot"></div><div class="tl-year">2019 – ؟</div><div class="tl-text"><b>عصر NISQ</b> — معالجات كيوبت تجريبية، أفق بحثي لم يكتمل بعد</div></div>
   </div>
 
-  <div class="tl-legend">
+  <div class="tl-list lang-en">
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">150–200 BC</div><div class="tl-text">The Greek <b>Antikythera mechanism</b> — the oldest known calculating device</div></div>
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">Antiquity–</div><div class="tl-text">The <b>Chinese abacus</b> — a manual calculating tool used across the ages</div></div>
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">1642</div><div class="tl-text">The <b>Pascaline</b> — invented by Blaise Pascal to process numbers mechanically</div></div>
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">1830s</div><div class="tl-text">Charles Babbage's <b>Analytical Engine</b>, and <b>Ada Lovelace's</b> theoretical algorithm — the first foundations of programming</div></div>
+    <div class="tl-item tl-history"><div class="tl-dot"></div><div class="tl-year">1943</div><div class="tl-text"><b>Colossus</b> — the first programmable electronic computer, built to break the Lorenz cipher during WWII 🏛️</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1947</div><div class="tl-text">The <b>transistor is invented</b> — the start of massive digital electronic computers</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1940s–1950s</div><div class="tl-text"><b>Computer science</b> emerges as an academic discipline at universities</div></div>
+    <div class="tl-item tl-history"><div class="tl-dot"></div><div class="tl-year">1951</div><div class="tl-text"><b>WITCH</b> — the oldest original working digital computer still running today 🏛️</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1957</div><div class="tl-text"><b>Fortran</b> — the first high-level language for scientific computing</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1959</div><div class="tl-text"><b>Cobol</b> — a programming language for business and accounting</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1969</div><div class="tl-text"><b>ARPANET launches</b> — history's first connected computer network</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">Early 1970s</div><div class="tl-text">The <b>C language</b> — the foundation of operating systems and low-level software</div></div>
+    <div class="tl-item tl-quantum"><div class="tl-dot"></div><div class="tl-year">1981</div><div class="tl-text">Richard Feynman theoretically proposes <b>simulating quantum systems</b> with a quantum computer ⚛️</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">1991</div><div class="tl-text">The <b>World Wide Web</b> — ARPANET evolves into the web as we know it</div></div>
+    <div class="tl-item tl-quantum"><div class="tl-dot"></div><div class="tl-year">1994</div><div class="tl-text"><b>Shor's Algorithm</b> — the first mathematical proof of a potential quantum advantage in breaking encryption ⚛️</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">Mid-1990s</div><div class="tl-text"><b>Java</b> emerges as a cross-platform language — "write once, run anywhere"</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">Early 2000s</div><div class="tl-text">The <b>Big Data</b> explosion, and data science emerges as a vital discipline</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2012–2022</div><div class="tl-text">The <b>machine learning</b> and generative-AI boom</div></div>
+    <div class="tl-item tl-quantum"><div class="tl-dot"></div><div class="tl-year">2019</div><div class="tl-text">Google announces <b>"Quantum Supremacy"</b> ⚛️</div></div>
+    <div class="tl-item tl-quantum"><div class="tl-dot"></div><div class="tl-year">2019 – ?</div><div class="tl-text">The <b>NISQ era</b> — experimental qubit chips, a research horizon not yet complete</div></div>
+  </div>
+
+  <div class="tl-legend lang-ar">
     <div class="li"><span class="sw" style="background:var(--c0);"></span>العصور الميكانيكية</div>
     <div class="li"><span class="sw" style="background:var(--c1);"></span>ميلاد الحوسبة الرقمية</div>
     <div class="li"><span class="sw" style="background:var(--c2);"></span>عصر البرمجيات واللغات</div>
@@ -1018,9 +1245,39 @@
     <div class="li"><span class="sw" style="background:var(--history);"></span>حدث تاريخي موثّق (مصدر متحفي)</div>
     <div class="li"><span class="sw" style="background:var(--quantum);"></span>أفق الحوسبة الكمية</div>
   </div>
+  <div class="tl-legend lang-en">
+    <div class="li"><span class="sw" style="background:var(--c0);"></span>The Mechanical Ages</div>
+    <div class="li"><span class="sw" style="background:var(--c1);"></span>Birth of Digital Computing</div>
+    <div class="li"><span class="sw" style="background:var(--c2);"></span>The Software & Languages Era</div>
+    <div class="li"><span class="sw" style="background:var(--c3);"></span>The Networks & Web Era</div>
+    <div class="li"><span class="sw" style="background:var(--c4);"></span>The Data & AI Revolution</div>
+    <div class="li"><span class="sw" style="background:var(--history);"></span>Verified historical event (museum source)</div>
+    <div class="li"><span class="sw" style="background:var(--quantum);"></span>The quantum computing horizon</div>
+  </div>
 
 </div>
 <script>
+  document.querySelectorAll('[data-en-title]').forEach(function(el){
+    el.dataset.arTitle = el.title;
+  });
+
+  function applyLang(lang){
+    document.body.classList.toggle("lang-en", lang === "en");
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === "en" ? "ltr" : "rtl";
+    document.getElementById("btnAr").classList.toggle("active", lang === "ar");
+    document.getElementById("btnEn").classList.toggle("active", lang === "en");
+    document.querySelectorAll('[data-en-title]').forEach(function(el){
+      el.title = lang === 'en' ? el.dataset.enTitle : el.dataset.arTitle;
+    });
+    try { localStorage.setItem("bcs_lang", lang); } catch (e) {}
+  }
+  document.getElementById("btnAr").addEventListener("click", () => applyLang("ar"));
+  document.getElementById("btnEn").addEventListener("click", () => applyLang("en"));
+  let savedLang = "ar";
+  try { savedLang = localStorage.getItem("bcs_lang") || "ar"; } catch (e) {}
+  applyLang(savedLang);
+
   document.addEventListener('copy', function(e){ e.preventDefault(); });
   document.addEventListener('cut', function(e){ e.preventDefault(); });
 </script>

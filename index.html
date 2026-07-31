@@ -294,6 +294,7 @@
     padding:5px 10px;border-radius:14px;cursor:pointer;
     font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
     transition:background .15s ease, color .15s ease;
+    pointer-events:auto;
   }
   .lang-toggle button.active{background:var(--gold);color:var(--bg);}
 </style>
@@ -554,11 +555,13 @@
     document.documentElement.dir = lang === 'en' ? 'ltr' : 'rtl';
     document.getElementById('btnAr').classList.toggle('active', lang === 'ar');
     document.getElementById('btnEn').classList.toggle('active', lang === 'en');
-    localStorage.setItem('bcs_lang', lang);
+    try { localStorage.setItem('bcs_lang', lang); } catch (e) {}
   }
   document.getElementById('btnAr').addEventListener('click', () => applyLang('ar'));
   document.getElementById('btnEn').addEventListener('click', () => applyLang('en'));
-  applyLang(localStorage.getItem('bcs_lang') || 'ar');
+  let savedLang = 'ar';
+  try { savedLang = localStorage.getItem('bcs_lang') || 'ar'; } catch (e) {}
+  applyLang(savedLang);
 
   // ===== Auth modal =====
   const authModal = document.getElementById('authModal');

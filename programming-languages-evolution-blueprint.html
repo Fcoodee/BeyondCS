@@ -295,22 +295,51 @@
     .board-outer{overflow-x:auto;}
     .board, .axis, .chapters-strip{min-width:1500px;}
   }
+  .lang-en{display:none;}
+  body.lang-en .lang-en{display:revert;}
+  body.lang-en .lang-ar{display:none;}
+  body.lang-en{direction:ltr;}
+
+  .lang-toggle{
+    position:fixed;top:18px;left:18px;z-index:900;
+    display:flex;align-items:center;gap:6px;
+    background:var(--panel);border:1px solid var(--panel-line);
+    border-radius:20px;padding:6px 8px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+    box-shadow:0 6px 18px rgba(0,0,0,0.35);
+  }
+  .lang-toggle button{
+    border:none;background:transparent;color:var(--ink-dim);
+    padding:5px 10px;border-radius:14px;cursor:pointer;
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+    transition:background .15s ease, color .15s ease;
+  }
+  .lang-toggle button.active{background:var(--gold);color:var(--bg);}
 </style>
 </head>
 <body>
+
+<div class="lang-toggle">
+  <button id="btnAr" class="active">عربي</button>
+  <button id="btnEn">EN</button>
+</div>
+
 <script>
   if (sessionStorage.getItem("bcs_auth") !== "1") {
     window.location.href = "index.html";
   }
 </script>
 <div class="wrap">
-  <a class="home-btn" href="index.html"><span class="arrow">→</span> العودة للصفحة الرئيسية</a>
+  <a class="home-btn lang-ar" href="index.html"><span class="arrow">→</span> العودة للصفحة الرئيسية</a>
+  <a class="home-btn lang-en" href="index.html"><span class="arrow">→</span> Back to home</a>
 
   <header>
     <div class="title-block">
       <div class="eyebrow">PROGRAMMING LANGUAGES // BLUEPRINT NARRATIVE MAP</div>
-      <h1>لغات البرمجة: من الأسمبلي إلى البيانات الضخمة</h1>
-      <div class="subtitle">رحلة أربعة مسارات متوازية — اللغات، بيئات التطوير المرئية، قواعد البيانات، والويب — من البرمجة المباشرة على الذاكرة إلى تحدي البيانات غير المهيكلة اليوم</div>
+      <h1 class="lang-ar">لغات البرمجة: من الأسمبلي إلى البيانات الضخمة</h1>
+      <h1 class="lang-en">Programming Languages: From Assembly to Big Data</h1>
+      <div class="subtitle lang-ar">رحلة أربعة مسارات متوازية — اللغات، بيئات التطوير المرئية، قواعد البيانات، والويب — من البرمجة المباشرة على الذاكرة إلى تحدي البيانات غير المهيكلة اليوم</div>
+      <div class="subtitle lang-en">A journey across four parallel tracks — languages, visual development environments, databases, and the web — from programming directly against memory to today's challenge of unstructured data</div>
     </div>
     <div class="domain-code">
       <div>SUBJECT: <b>PROGRAMMING LANGUAGES</b></div>
@@ -847,6 +876,20 @@
 
 </div>
 <script>
+  function applyLang(lang){
+    document.body.classList.toggle("lang-en", lang === "en");
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === "en" ? "ltr" : "rtl";
+    document.getElementById("btnAr").classList.toggle("active", lang === "ar");
+    document.getElementById("btnEn").classList.toggle("active", lang === "en");
+    try { localStorage.setItem("bcs_lang", lang); } catch (e) {}
+  }
+  document.getElementById("btnAr").addEventListener("click", () => applyLang("ar"));
+  document.getElementById("btnEn").addEventListener("click", () => applyLang("en"));
+  let savedLang = "ar";
+  try { savedLang = localStorage.getItem("bcs_lang") || "ar"; } catch (e) {}
+  applyLang(savedLang);
+
   document.addEventListener('copy', function(e){ e.preventDefault(); });
   document.addEventListener('cut', function(e){ e.preventDefault(); });
 </script>
