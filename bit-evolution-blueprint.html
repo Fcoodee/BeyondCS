@@ -349,6 +349,28 @@
   table.ascii-table tr:nth-child(even){background:rgba(255,255,255,0.015);}
   table.ascii-table td.char{color:var(--ink);font-weight:700;font-size:13px;}
 
+  .letters-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:22px;}
+  @media (max-width:1100px){.letters-grid{grid-template-columns:repeat(4,1fr);}}
+  @media (max-width:700px){.letters-grid{grid-template-columns:repeat(3,1fr);}}
+  @media (max-width:480px){.letters-grid{grid-template-columns:repeat(2,1fr);}}
+  .letter-cell{
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:8px;
+    padding:10px 8px;text-align:center;
+  }
+  .letter-cell .lchar{font-size:20px;font-weight:800;color:var(--ink);margin-bottom:4px;}
+  .letter-cell .lchar.ar{font-family:'Cairo',sans-serif;font-size:22px;}
+  .letter-cell .lbin{
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);
+    direction:ltr;letter-spacing:0.5px;
+  }
+  .letter-cell .ldec{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--ink-dim);margin-top:3px;direction:ltr;}
+
+  .encoding-note{
+    margin-top:22px;background:rgba(155,140,242,0.06);border:1px dashed var(--lane-identity);
+    border-radius:10px;padding:16px 20px;font-size:13px;color:var(--ink-dim);line-height:1.9;
+  }
+  .encoding-note b{color:var(--lane-identity);}
+
   /* ===== Language toggle system ===== */
   .lang-en{display:none;}
   body.is-en .lang-en{display:revert;}
@@ -1019,6 +1041,107 @@
         <tr><td>55</td><td>37</td><td class="char">7</td><td>79</td><td>4F</td><td class="char">O</td><td>103</td><td>67</td><td class="char">g</td><td>—</td><td>—</td><td class="char">—</td></tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- ============ LETTERS-ONLY BINARY TABLES ============ -->
+  <div class="story-header ref-section">
+    <div class="eyebrow">REFERENCE // ملحق إضافي — الحروف فقط بالترميز الثنائي</div>
+    <h2>الحروف بالثنائي: A-Z، a-z، والأبجدية العربية</h2>
+  </div>
+
+  <div class="letters-grid">
+    <div class="letter-cell"><div class="lchar">A</div><div class="lbin">01000001</div><div class="ldec">65</div></div>
+    <div class="letter-cell"><div class="lchar">B</div><div class="lbin">01000010</div><div class="ldec">66</div></div>
+    <div class="letter-cell"><div class="lchar">C</div><div class="lbin">01000011</div><div class="ldec">67</div></div>
+    <div class="letter-cell"><div class="lchar">D</div><div class="lbin">01000100</div><div class="ldec">68</div></div>
+    <div class="letter-cell"><div class="lchar">E</div><div class="lbin">01000101</div><div class="ldec">69</div></div>
+    <div class="letter-cell"><div class="lchar">F</div><div class="lbin">01000110</div><div class="ldec">70</div></div>
+    <div class="letter-cell"><div class="lchar">G</div><div class="lbin">01000111</div><div class="ldec">71</div></div>
+    <div class="letter-cell"><div class="lchar">H</div><div class="lbin">01001000</div><div class="ldec">72</div></div>
+    <div class="letter-cell"><div class="lchar">I</div><div class="lbin">01001001</div><div class="ldec">73</div></div>
+    <div class="letter-cell"><div class="lchar">J</div><div class="lbin">01001010</div><div class="ldec">74</div></div>
+    <div class="letter-cell"><div class="lchar">K</div><div class="lbin">01001011</div><div class="ldec">75</div></div>
+    <div class="letter-cell"><div class="lchar">L</div><div class="lbin">01001100</div><div class="ldec">76</div></div>
+    <div class="letter-cell"><div class="lchar">M</div><div class="lbin">01001101</div><div class="ldec">77</div></div>
+    <div class="letter-cell"><div class="lchar">N</div><div class="lbin">01001110</div><div class="ldec">78</div></div>
+    <div class="letter-cell"><div class="lchar">O</div><div class="lbin">01001111</div><div class="ldec">79</div></div>
+    <div class="letter-cell"><div class="lchar">P</div><div class="lbin">01010000</div><div class="ldec">80</div></div>
+    <div class="letter-cell"><div class="lchar">Q</div><div class="lbin">01010001</div><div class="ldec">81</div></div>
+    <div class="letter-cell"><div class="lchar">R</div><div class="lbin">01010010</div><div class="ldec">82</div></div>
+    <div class="letter-cell"><div class="lchar">S</div><div class="lbin">01010011</div><div class="ldec">83</div></div>
+    <div class="letter-cell"><div class="lchar">T</div><div class="lbin">01010100</div><div class="ldec">84</div></div>
+    <div class="letter-cell"><div class="lchar">U</div><div class="lbin">01010101</div><div class="ldec">85</div></div>
+    <div class="letter-cell"><div class="lchar">V</div><div class="lbin">01010110</div><div class="ldec">86</div></div>
+    <div class="letter-cell"><div class="lchar">W</div><div class="lbin">01010111</div><div class="ldec">87</div></div>
+    <div class="letter-cell"><div class="lchar">X</div><div class="lbin">01011000</div><div class="ldec">88</div></div>
+    <div class="letter-cell"><div class="lchar">Y</div><div class="lbin">01011001</div><div class="ldec">89</div></div>
+    <div class="letter-cell"><div class="lchar">Z</div><div class="lbin">01011010</div><div class="ldec">90</div></div>
+
+    <div class="letter-cell"><div class="lchar">a</div><div class="lbin">01100001</div><div class="ldec">97</div></div>
+    <div class="letter-cell"><div class="lchar">b</div><div class="lbin">01100010</div><div class="ldec">98</div></div>
+    <div class="letter-cell"><div class="lchar">c</div><div class="lbin">01100011</div><div class="ldec">99</div></div>
+    <div class="letter-cell"><div class="lchar">d</div><div class="lbin">01100100</div><div class="ldec">100</div></div>
+    <div class="letter-cell"><div class="lchar">e</div><div class="lbin">01100101</div><div class="ldec">101</div></div>
+    <div class="letter-cell"><div class="lchar">f</div><div class="lbin">01100110</div><div class="ldec">102</div></div>
+    <div class="letter-cell"><div class="lchar">g</div><div class="lbin">01100111</div><div class="ldec">103</div></div>
+    <div class="letter-cell"><div class="lchar">h</div><div class="lbin">01101000</div><div class="ldec">104</div></div>
+    <div class="letter-cell"><div class="lchar">i</div><div class="lbin">01101001</div><div class="ldec">105</div></div>
+    <div class="letter-cell"><div class="lchar">j</div><div class="lbin">01101010</div><div class="ldec">106</div></div>
+    <div class="letter-cell"><div class="lchar">k</div><div class="lbin">01101011</div><div class="ldec">107</div></div>
+    <div class="letter-cell"><div class="lchar">l</div><div class="lbin">01101100</div><div class="ldec">108</div></div>
+    <div class="letter-cell"><div class="lchar">m</div><div class="lbin">01101101</div><div class="ldec">109</div></div>
+    <div class="letter-cell"><div class="lchar">n</div><div class="lbin">01101110</div><div class="ldec">110</div></div>
+    <div class="letter-cell"><div class="lchar">o</div><div class="lbin">01101111</div><div class="ldec">111</div></div>
+    <div class="letter-cell"><div class="lchar">p</div><div class="lbin">01110000</div><div class="ldec">112</div></div>
+    <div class="letter-cell"><div class="lchar">q</div><div class="lbin">01110001</div><div class="ldec">113</div></div>
+    <div class="letter-cell"><div class="lchar">r</div><div class="lbin">01110010</div><div class="ldec">114</div></div>
+    <div class="letter-cell"><div class="lchar">s</div><div class="lbin">01110011</div><div class="ldec">115</div></div>
+    <div class="letter-cell"><div class="lchar">t</div><div class="lbin">01110100</div><div class="ldec">116</div></div>
+    <div class="letter-cell"><div class="lchar">u</div><div class="lbin">01110101</div><div class="ldec">117</div></div>
+    <div class="letter-cell"><div class="lchar">v</div><div class="lbin">01110110</div><div class="ldec">118</div></div>
+    <div class="letter-cell"><div class="lchar">w</div><div class="lbin">01110111</div><div class="ldec">119</div></div>
+    <div class="letter-cell"><div class="lchar">x</div><div class="lbin">01111000</div><div class="ldec">120</div></div>
+    <div class="letter-cell"><div class="lchar">y</div><div class="lbin">01111001</div><div class="ldec">121</div></div>
+    <div class="letter-cell"><div class="lchar">z</div><div class="lbin">01111010</div><div class="ldec">122</div></div>
+  </div>
+
+  <div class="encoding-note">
+    🔤 <b>ملاحظة منهجية حول الحروف العربية:</b> الأبجدية العربية <b>غير موجودة أصلاً في معيار ASCII</b> (مصمَّم فقط للأبجدية اللاتينية). لتمثيلها بالثنائي بنفس منطق "رمز واحد = بايت واحد (8 بت)" المطابق لجدول A-Z أعلاه، تم اعتماد ترميز <b>Windows-1256 (CP1256)</b> — معيار عربي كلاسيكي أحادي البايت. القيم موثّقة رسمياً من جدول Microsoft/Unicode.org الرسمي.
+    <br><br>
+    <b>تنبيه مهم:</b> هذا ليس المعيار الفعلي المستخدم على الويب اليوم — الويب الحديث يعتمد <b>Unicode (UTF-8)</b>، حيث يحتاج كل حرف عربي غالباً <b>بايتين لا بايتاً واحداً</b>. اخترنا Windows-1256 هنا فقط للحفاظ على تناسق العرض البصري مع جدول A-Z أعلاه (بايت واحد لكل حرف)، لا لأنه المعيار السائد فعلياً.
+    <br><br>
+    <b>فارق لغوي حقيقي:</b> على عكس اللاتينية، لا تملك الأبجدية العربية تمييز "حالة أحرف كبيرة/صغيرة" (لا يوجد ما يقابل A مقابل a) — لذا يظهر كل حرف عربي بشكل واحد فقط.
+  </div>
+
+  <div class="letters-grid">
+    <div class="letter-cell"><div class="lchar ar">ا</div><div class="lbin">11000111</div><div class="ldec">199</div></div>
+    <div class="letter-cell"><div class="lchar ar">ب</div><div class="lbin">11001000</div><div class="ldec">200</div></div>
+    <div class="letter-cell"><div class="lchar ar">ت</div><div class="lbin">11001010</div><div class="ldec">202</div></div>
+    <div class="letter-cell"><div class="lchar ar">ث</div><div class="lbin">11001011</div><div class="ldec">203</div></div>
+    <div class="letter-cell"><div class="lchar ar">ج</div><div class="lbin">11001100</div><div class="ldec">204</div></div>
+    <div class="letter-cell"><div class="lchar ar">ح</div><div class="lbin">11001101</div><div class="ldec">205</div></div>
+    <div class="letter-cell"><div class="lchar ar">خ</div><div class="lbin">11001110</div><div class="ldec">206</div></div>
+    <div class="letter-cell"><div class="lchar ar">د</div><div class="lbin">11001111</div><div class="ldec">207</div></div>
+    <div class="letter-cell"><div class="lchar ar">ذ</div><div class="lbin">11010000</div><div class="ldec">208</div></div>
+    <div class="letter-cell"><div class="lchar ar">ر</div><div class="lbin">11010001</div><div class="ldec">209</div></div>
+    <div class="letter-cell"><div class="lchar ar">ز</div><div class="lbin">11010010</div><div class="ldec">210</div></div>
+    <div class="letter-cell"><div class="lchar ar">س</div><div class="lbin">11010011</div><div class="ldec">211</div></div>
+    <div class="letter-cell"><div class="lchar ar">ش</div><div class="lbin">11010100</div><div class="ldec">212</div></div>
+    <div class="letter-cell"><div class="lchar ar">ص</div><div class="lbin">11010101</div><div class="ldec">213</div></div>
+    <div class="letter-cell"><div class="lchar ar">ض</div><div class="lbin">11010110</div><div class="ldec">214</div></div>
+    <div class="letter-cell"><div class="lchar ar">ط</div><div class="lbin">11011000</div><div class="ldec">216</div></div>
+    <div class="letter-cell"><div class="lchar ar">ظ</div><div class="lbin">11011001</div><div class="ldec">217</div></div>
+    <div class="letter-cell"><div class="lchar ar">ع</div><div class="lbin">11011010</div><div class="ldec">218</div></div>
+    <div class="letter-cell"><div class="lchar ar">غ</div><div class="lbin">11011011</div><div class="ldec">219</div></div>
+    <div class="letter-cell"><div class="lchar ar">ف</div><div class="lbin">11011101</div><div class="ldec">221</div></div>
+    <div class="letter-cell"><div class="lchar ar">ق</div><div class="lbin">11011110</div><div class="ldec">222</div></div>
+    <div class="letter-cell"><div class="lchar ar">ك</div><div class="lbin">11011111</div><div class="ldec">223</div></div>
+    <div class="letter-cell"><div class="lchar ar">ل</div><div class="lbin">11100001</div><div class="ldec">225</div></div>
+    <div class="letter-cell"><div class="lchar ar">م</div><div class="lbin">11100011</div><div class="ldec">227</div></div>
+    <div class="letter-cell"><div class="lchar ar">ن</div><div class="lbin">11100100</div><div class="ldec">228</div></div>
+    <div class="letter-cell"><div class="lchar ar">ه</div><div class="lbin">11100101</div><div class="ldec">229</div></div>
+    <div class="letter-cell"><div class="lchar ar">و</div><div class="lbin">11100110</div><div class="ldec">230</div></div>
+    <div class="letter-cell"><div class="lchar ar">ي</div><div class="lbin">11101101</div><div class="ldec">237</div></div>
   </div>
 
 </div>
