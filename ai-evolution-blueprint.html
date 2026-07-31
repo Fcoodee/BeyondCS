@@ -335,9 +335,9 @@
     .board, .axis, .chapters-strip{min-width:1550px;}
   }
   .lang-en{display:none;}
-  body.lang-en .lang-en{display:revert;}
-  body.lang-en .lang-ar{display:none;}
-  body.lang-en{direction:ltr;}
+  body.is-en .lang-en{display:revert;}
+  body.is-en .lang-ar{display:none;}
+  body.is-en{direction:ltr;}
 
   .lang-toggle{
     position:fixed;top:18px;left:18px;z-index:900;
@@ -956,7 +956,7 @@
 </div>
 <script>
   function applyLang(lang){
-    document.body.classList.toggle("lang-en", lang === "en");
+    document.body.classList.toggle("is-en", lang === "en");
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === "en" ? "ltr" : "rtl";
     document.getElementById("btnAr").classList.toggle("active", lang === "ar");

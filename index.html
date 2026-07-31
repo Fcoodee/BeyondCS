@@ -273,13 +273,13 @@
 
   /* ===== Language toggle system ===== */
   .lang-en{display:none;}
-  body.lang-en .lang-en{display:revert;}
-  body.lang-en .lang-ar{display:none;}
-  body.lang-en .card-tags.lang-en{display:flex;}
-  body.lang-en{direction:ltr;}
-  body.lang-en .hero-formula,
-  body.lang-en .card-span,
-  body.lang-en .footnote code{direction:ltr;}
+  body.is-en .lang-en{display:revert;}
+  body.is-en .lang-ar{display:none;}
+  body.is-en .card-tags.lang-en{display:flex;}
+  body.is-en{direction:ltr;}
+  body.is-en .hero-formula,
+  body.is-en .card-span,
+  body.is-en .footnote code{direction:ltr;}
 
   .lang-toggle{
     position:fixed;top:18px;left:18px;z-index:900;
@@ -550,7 +550,7 @@
 <script>
   // ===== Language toggle =====
   function applyLang(lang){
-    document.body.classList.toggle('lang-en', lang === 'en');
+    document.body.classList.toggle('is-en', lang === 'en');
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'en' ? 'ltr' : 'rtl';
     document.getElementById('btnAr').classList.toggle('active', lang === 'ar');
