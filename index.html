@@ -126,10 +126,10 @@
 
   .cards{
     display:grid;
-    grid-template-columns:repeat(6,1fr);
+    grid-template-columns:repeat(7,1fr);
     gap:20px;
   }
-  @media (max-width:1650px){.cards{grid-template-columns:repeat(3,1fr);}}
+  @media (max-width:1750px){.cards{grid-template-columns:repeat(4,1fr);}}
   @media (max-width:900px){.cards{grid-template-columns:repeat(2,1fr);}}
   @media (max-width:600px){.cards{grid-template-columns:1fr;}}
 
@@ -152,6 +152,7 @@
   .card.c4::before{background:linear-gradient(90deg, #6d7fd6, #e0637a);}
   .card.c5::before{background:linear-gradient(90deg, #a879e0, #e0a458);}
   .card.c6::before{background:linear-gradient(90deg, #ff9a76, #6d7fd6);}
+  .card.c7::before{background:linear-gradient(90deg, #ffd166, #d4af37);}
 
   .card-head{padding:26px 24px 14px;}
   .card-num{
@@ -332,18 +333,18 @@
     </div>
     <div class="hero-desc">
       <span class="lang-ar">
-      مشروع سردي-بصري يوثّق رحلة الحوسبة عبر ست زوايا متكاملة: تاريخ علم الحاسوب نفسه، لغات البرمجة وبيئات التطوير،
+      مشروع سردي-بصري يوثّق رحلة الحوسبة عبر سبع زوايا متكاملة: تاريخ علم الحاسوب نفسه، لغات البرمجة وبيئات التطوير،
       تطبيق عملي واقعي على إدارة بنية تحتية حقيقية، تطور وسائل الاتصال، البيانات كموردٍ تأسيسي يغذّي كل ما سبق،
-      والذكاء الاصطناعي بمساريه الرمزي والعصبي. كل صفحة تحكي محطاتها بأسلوب قصصي — من أقدم آلة حسابية معروفة
-      إلى أفق الحوسبة الكمية الذي لم يُكتب فصله الأخير بعد.
+      الذكاء الاصطناعي بمساريه الرمزي والعصبي، والبت نفسه كأصغر وحدة فيزيائية تحمل كل هذا. كل صفحة تحكي محطاتها
+      بأسلوب قصصي — من أقدم آلة حسابية معروفة إلى أفق الحوسبة الكمية الذي لم يُكتب فصله الأخير بعد.
       </span>
       <span class="lang-en">
-      A narrative, visual project documenting the journey of computing across six complementary angles: the history
+      A narrative, visual project documenting the journey of computing across seven complementary angles: the history
       of computer science itself, programming languages and development environments, a real-world case study in
       managing actual infrastructure, the evolution of communication tools, data as the foundational resource that
-      feeds everything above, and artificial intelligence across its symbolic and neural tracks. Each page tells its
-      stations as a story — from the oldest known calculating machine to the horizon of quantum computing, whose
-      final chapter has yet to be written.
+      feeds everything above, artificial intelligence across its symbolic and neural tracks, and the bit itself as
+      the smallest physical unit carrying it all. Each page tells its stations as a story — from the oldest known
+      calculating machine to the horizon of quantum computing, whose final chapter has yet to be written.
       </span>
     </div>
 
@@ -356,8 +357,8 @@
     </div>
   </div>
 
-  <div class="section-label lang-ar">SIX CHAPTERS OF THE PROJECT // ست صفحات، ست زوايا</div>
-  <div class="section-label lang-en">SIX CHAPTERS OF THE PROJECT // Six pages, six angles</div>
+  <div class="section-label lang-ar">SEVEN CHAPTERS OF THE PROJECT // سبع صفحات، سبع زوايا</div>
+  <div class="section-label lang-en">SEVEN CHAPTERS OF THE PROJECT // Seven pages, seven angles</div>
 
   <div class="cards">
 
@@ -496,6 +497,29 @@
       </div>
       <div class="card-foot">
         <a class="btn" href="ai-evolution-blueprint.html"><span class="lang-ar">افتح الصفحة</span><span class="lang-en">Open page</span> <span class="arrow">←</span></a>
+      </div>
+    </div>
+
+    <div class="card c7">
+      <div class="card-head">
+        <div class="card-num">PAGE 07 // THE PHYSICAL UNIT</div>
+        <div class="card-icon">⚡</div>
+        <div class="card-title lang-ar">البت: من الإشارات الكهربائية إلى الضوئية السريعة</div>
+        <div class="card-title lang-en">The Bit: From Electrical Signals to Fast Optical Light</div>
+        <div class="card-span">1837 → 2026</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc lang-ar">من نبضة تلغراف خام (1837)، عبر صمام الديود والترانزستور، إلى لحظة تسمية "البت" رسمياً على يد شانون وتُوكي (1948) — ثم رحلة العتاد الفيزيائي: تصغير الترانزستور، أنواع التخزين والذاكرة، كابلات النحاس والذهب، والألياف الضوئية. مع ملحق مرجعي لأنظمة العد وجدول ASCII الكامل.</div>
+        <div class="card-desc lang-en">From a raw telegraph pulse (1837), through the diode and transistor, to the moment "the bit" was officially named by Shannon and Tukey (1948) — then the physical hardware journey: shrinking transistors, storage and memory types, copper and gold cabling, and fiber optics. Includes a reference appendix for number systems and the full ASCII table.</div>
+        <div class="card-tags lang-ar">
+          <span>6 محطات</span><span>4 مسارات</span><span>لحظة تسمية "البت"</span><span>ملحق ASCII</span>
+        </div>
+        <div class="card-tags lang-en">
+          <span>6 stations</span><span>4 tracks</span><span>naming "the bit"</span><span>ASCII appendix</span>
+        </div>
+      </div>
+      <div class="card-foot">
+        <a class="btn" href="bit-evolution-blueprint.html"><span class="lang-ar">افتح الصفحة</span><span class="lang-en">Open page</span> <span class="arrow">←</span></a>
       </div>
     </div>
 

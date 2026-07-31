@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>البت — من الإشارات الكهربائية إلى الضوئية السريعة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a1826;
+    --bg-grid: #12293e;
+    --panel: #0f2438;
+    --panel-line: #1c3b57;
+    --ink: #e7eef5;
+    --ink-dim: #8fa6bb;
+    --gold: #d3a94e;
+    --gold-dim: #8a7038;
+
+    --lane-identity: #9b8cf2;
+    --lane-identity-bg: rgba(155,140,242,0.10);
+    --lane-files: #4fd0c8;
+    --lane-files-bg: rgba(79,208,200,0.10);
+    --lane-gateway: #f2a65a;
+    --lane-gateway-bg: rgba(242,166,90,0.10);
+    --lane-comms: #ef8c7a;
+    --lane-comms-bg: rgba(239,140,122,0.10);
+
+    --c0: #7a8a99;
+    --c1: #6d7fd6;
+    --c2: #3fb6c9;
+    --c3: #a879e0;
+    --c4: #e0a458;
+    --c5: #e0637a;
+    --namebit: #ffd166;
+    --goldwire: #d4af37;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Cairo',sans-serif;}
+  body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
+  input, textarea{-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text;}
+
+  body{
+    background-image:
+      linear-gradient(var(--bg-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    padding: 36px 28px 60px;
+  }
+
+  .wrap{max-width:1650px;margin:0 auto;}
+
+  .home-btn{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;
+    color:var(--ink-dim);text-decoration:none;
+    border:1px solid var(--panel-line);border-radius:20px;
+    padding:6px 14px;margin-bottom:14px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .home-btn:hover{color:var(--gold);border-color:var(--gold-dim);}
+  .home-btn .arrow{font-size:13px;}
+
+  header{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    border-bottom:2px solid var(--panel-line);padding-bottom:18px;margin-bottom:28px;
+    gap:24px;flex-wrap:wrap;
+  }
+  .title-block .eyebrow{
+    font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px;
+    letter-spacing:2px;margin-bottom:8px;
+  }
+  h1{font-size:27px;font-weight:800;margin:0 0 6px;line-height:1.3;}
+  .subtitle{color:var(--ink-dim);font-size:14px;max-width:680px;}
+  .domain-code{
+    font-family:'JetBrains Mono',monospace;text-align:left;direction:ltr;
+    color:var(--ink-dim);font-size:11px;line-height:1.9;
+    border:1px solid var(--panel-line);border-radius:4px;padding:10px 14px;background:var(--panel);
+  }
+  .domain-code b{color:var(--gold);}
+
+  .origin-banner{
+    display:flex;align-items:center;gap:18px;
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:10px;
+    padding:18px 22px;margin-bottom:26px;
+  }
+  .origin-banner .oicon{font-size:26px;}
+  .origin-banner .otext{font-size:14.5px;font-weight:700;color:var(--ink);}
+  .origin-banner .otext small{
+    display:block;font-weight:400;color:var(--ink-dim);font-size:12px;margin-top:4px;line-height:1.7;
+  }
+
+  .metaphor-box{
+    background:rgba(212,175,55,0.06);border:1px dashed var(--goldwire);border-radius:10px;
+    padding:16px 20px;margin-bottom:30px;font-size:13px;color:var(--ink-dim);line-height:1.9;
+  }
+  .metaphor-box b{color:var(--goldwire);}
+
+  .chapters-strip{position:relative;display:grid;grid-template-columns: 210px 1fr;margin-bottom:0;}
+  .chapters-track{position:relative;height:46px;}
+  .chapter-tag{
+    position:absolute;top:0;height:46px;display:flex;flex-direction:column;justify-content:center;
+    padding:0 10px;border-radius:6px 6px 0 0;font-family:'JetBrains Mono',monospace;overflow:hidden;
+  }
+  .chapter-tag .cnum{font-size:9.5px;letter-spacing:1px;opacity:.85;}
+  .chapter-tag .cname{font-size:11px;font-weight:700;color:var(--ink);margin-top:2px;font-family:'Cairo',sans-serif;}
+
+  .axis{position:relative;display:grid;grid-template-columns: 210px 1fr;margin-bottom:2px;}
+  .axis .years{position:relative;height:30px;border-bottom:1px solid var(--panel-line);}
+  .axis .years span{
+    position:absolute;top:0;transform:translateX(50%);
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);font-weight:700;
+  }
+
+  .triggers{position:relative;grid-column: 2 / -1;}
+
+  .board{position:relative;display:grid;grid-template-columns: 210px 1fr;}
+
+  .lane-labels{display:flex;flex-direction:column;}
+  .lane-label{
+    height:150px;display:flex;align-items:center;justify-content:flex-end;
+    padding-inline-end:14px;border-bottom:1px solid var(--panel-line);
+  }
+  .lane-label .tag{font-weight:700;font-size:13px;text-align:right;line-height:1.5;}
+  .lane-label .tag small{
+    display:block;font-family:'JetBrains Mono',monospace;font-weight:400;
+    font-size:9px;color:var(--ink-dim);letter-spacing:0.5px;margin-top:3px;
+  }
+  .lane-label.identity{border-inline-end:4px solid var(--lane-identity);}
+  .lane-label.files{border-inline-end:4px solid var(--lane-files);}
+  .lane-label.gateway{border-inline-end:4px solid var(--lane-gateway);}
+  .lane-label.comms{border-inline-end:4px solid var(--lane-comms);}
+
+  .lanes{position:relative;}
+  .lane{
+    position:relative;height:150px;border-bottom:1px solid var(--panel-line);
+    display:flex;align-items:center;padding:0 18px;
+  }
+  .lane.identity{background:var(--lane-identity-bg);}
+  .lane.files{background:var(--lane-files-bg);}
+  .lane.gateway{background:var(--lane-gateway-bg);}
+  .lane.comms{background:var(--lane-comms-bg);}
+
+  .lane-track{position:relative;width:100%;height:2px;background:var(--panel-line);}
+
+  .node{
+    position:absolute;top:50%;transform:translate(50%,-50%);width:178px;
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:6px;
+    padding:8px 10px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,0.35);cursor:default;
+  }
+  .node .period{
+    font-family:'JetBrains Mono',monospace;font-size:8.8px;color:var(--gold);
+    margin-bottom:3px;letter-spacing:0.5px;
+  }
+  .node .name{font-weight:700;font-size:11px;line-height:1.4;}
+  .node.empty{opacity:.5;font-style:italic;}
+  .node.identity{border-top:3px solid var(--lane-identity);}
+  .node.files{border-top:3px solid var(--lane-files);}
+  .node.gateway{border-top:3px solid var(--lane-gateway);}
+  .node.comms{border-top:3px solid var(--lane-comms);}
+  .node.namebit-node{border-color:var(--namebit); box-shadow:0 0 0 1px var(--namebit), 0 4px 14px rgba(255,209,102,0.25);}
+  .node.namebit-node .period{color:var(--namebit);}
+
+  .dot{
+    position:absolute;top:50%;width:9px;height:9px;border-radius:50%;
+    transform:translate(50%,-50%);background:var(--gold);box-shadow:0 0 0 3px var(--bg);
+  }
+  .dot.namebit-dot{background:var(--namebit);}
+
+  .chapter-band{position:absolute;top:0;bottom:0;opacity:.55;pointer-events:none;}
+
+  .trigger-line{position:absolute;top:0;bottom:0;width:0;border-right:1px dashed var(--gold-dim);}
+  .trigger-flag{position:absolute;top:-66px;transform:translateX(50%);width:160px;text-align:center;}
+  .trigger-flag .yr{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;}
+  .trigger-flag .lbl{font-size:10.5px;color:var(--ink-dim);line-height:1.3;margin-top:2px;}
+  .trigger-flag.mini{top:-96px;width:130px;}
+  .trigger-flag.mini .yr{color:var(--namebit);font-size:9.5px;}
+  .trigger-flag.mini .lbl{font-size:9px;}
+
+  .board-outer{
+    position:relative;border:1px solid var(--panel-line);border-radius:8px;
+    overflow:visible;margin-top:100px;background:var(--panel);
+  }
+
+  .legend{
+    display:flex;gap:20px;flex-wrap:wrap;margin-top:26px;padding-top:18px;
+    border-top:1px solid var(--panel-line);font-size:12px;color:var(--ink-dim);
+  }
+  .legend .item{display:flex;align-items:center;gap:7px;}
+  .legend .swatch{width:12px;height:12px;border-radius:3px;}
+
+  .note{
+    margin-top:22px;background:var(--panel);border:1px solid var(--panel-line);
+    border-radius:8px;padding:16px 20px;font-size:13px;color:var(--ink-dim);line-height:1.9;
+  }
+  .note b{color:var(--ink);}
+  .note code{
+    font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.06);
+    padding:1px 6px;border-radius:4px;color:var(--gold);direction:ltr;display:inline-block;
+  }
+
+  .story-header{margin-top:56px;padding-bottom:14px;border-bottom:2px solid var(--panel-line);}
+  .story-header .eyebrow{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px;letter-spacing:2px;margin-bottom:6px;}
+  .story-header h2{font-size:22px;font-weight:800;margin:0;}
+
+  .story-grid{display:flex;flex-direction:column;gap:18px;margin-top:22px;}
+
+  .story-card{position:relative;background:var(--panel);border:1px solid var(--panel-line);border-radius:10px;overflow:hidden;}
+  .story-card::before{content:"";position:absolute;top:0;bottom:0;right:0;width:5px;}
+  .story-card.sc0::before{background:var(--c0);}
+  .story-card.sc1::before{background:var(--c1);}
+  .story-card.sc2::before{background:var(--c2);}
+  .story-card.sc3::before{background:var(--c3);}
+  .story-card.sc4::before{background:var(--c4);}
+  .story-card.sc5::before{background:var(--c5);}
+
+  .story-card-head{
+    padding:18px 22px 14px;border-bottom:1px solid var(--panel-line);
+    display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;
+  }
+  .sc-title-block{max-width:700px;}
+  .sc-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;margin-bottom:6px;}
+  .sc0 .sc-num{color:var(--c0);} .sc1 .sc-num{color:var(--c1);} .sc2 .sc-num{color:var(--c2);}
+  .sc3 .sc-num{color:var(--c3);} .sc4 .sc-num{color:var(--c4);} .sc5 .sc-num{color:var(--c5);}
+  .sc-title{font-size:18px;font-weight:800;margin-bottom:6px;}
+  .sc-hook{font-size:13px;color:var(--ink-dim);font-style:italic;line-height:1.8;}
+  .sc-years{
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);font-weight:700;
+    background:rgba(211,169,78,0.08);border:1px solid var(--gold-dim);border-radius:20px;
+    padding:6px 16px;white-space:nowrap;
+  }
+
+  .sc-body{padding:18px 22px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media (max-width:1100px){.sc-body{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:640px){.sc-body{grid-template-columns:1fr;}}
+
+  .sc-domain{background:rgba(255,255,255,0.03);border-radius:8px;padding:12px 14px;border-inline-start:3px solid transparent;}
+  .sc-domain.identity{border-inline-start-color:var(--lane-identity);}
+  .sc-domain.files{border-inline-start-color:var(--lane-files);}
+  .sc-domain.gateway{border-inline-start-color:var(--lane-gateway);}
+  .sc-domain.comms{border-inline-start-color:var(--lane-comms);}
+  .sc-dlabel{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.5px;margin-bottom:5px;}
+  .sc-domain.identity .sc-dlabel{color:var(--lane-identity);}
+  .sc-domain.files .sc-dlabel{color:var(--lane-files);}
+  .sc-domain.gateway .sc-dlabel{color:var(--lane-gateway);}
+  .sc-domain.comms .sc-dlabel{color:var(--lane-comms);}
+  .sc-dtech{font-weight:700;font-size:13px;margin-bottom:5px;line-height:1.4;}
+  .sc-dnote{font-size:12px;color:var(--ink-dim);line-height:1.7;}
+
+  .sc-cross{
+    grid-column:1/-1;
+    background:rgba(255,209,102,0.06);
+    border:1px dashed var(--namebit);
+    border-radius:8px;
+    padding:12px 14px;
+    font-size:12px;
+    color:var(--ink-dim);
+    line-height:1.75;
+  }
+  .sc-cross b{color:var(--namebit);}
+
+  .sc-foot{padding:13px 22px 18px;font-size:12.5px;color:var(--ink-dim);display:flex;gap:8px;}
+  .sc-foot b{color:var(--ink);}
+
+  .role-strip{
+    display:flex;align-items:center;gap:6px;margin-top:24px;flex-wrap:wrap;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;
+  }
+  .role-strip .role{
+    background:var(--panel);border:1px solid var(--panel-line);color:var(--ink);
+    padding:7px 14px;border-radius:20px;white-space:nowrap;
+  }
+  .role-strip .arrow{color:var(--gold);font-size:15px;}
+
+  .full-timeline{margin-top:56px;}
+  .tl-list{position:relative;margin-top:22px;}
+  .tl-list::before{content:"";position:absolute;top:6px;bottom:6px;right:6px;width:1px;background:var(--panel-line);}
+  .tl-item{
+    position:relative;display:flex;gap:16px;align-items:baseline;flex-wrap:wrap;
+    padding:12px 18px 12px 14px;padding-inline-end:30px;border-radius:8px;
+    border-inline-start:3px solid transparent;
+  }
+  .tl-item:nth-child(odd){background:rgba(255,255,255,0.015);}
+  .tl-item .tl-dot{
+    position:absolute;right:2px;top:19px;width:9px;height:9px;border-radius:50%;
+    background:var(--gold);box-shadow:0 0 0 3px var(--bg);z-index:2;
+  }
+  .tl-item .tl-year{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--gold);
+    font-weight:700;min-width:120px;flex-shrink:0;
+  }
+  .tl-item .tl-text{font-size:13px;color:var(--ink-dim);line-height:1.8;flex:1;min-width:200px;}
+  .tl-item .tl-text b{color:var(--ink);font-weight:700;}
+
+  .tl-item.tl-c0{border-inline-start-color:var(--c0);}
+  .tl-item.tl-c0 .tl-dot{background:var(--c0);}
+  .tl-item.tl-c0 .tl-year{color:var(--c0);}
+  .tl-item.tl-c1{border-inline-start-color:var(--c1);}
+  .tl-item.tl-c1 .tl-dot{background:var(--c1);}
+  .tl-item.tl-c1 .tl-year{color:var(--c1);}
+  .tl-item.tl-c2{border-inline-start-color:var(--c2);}
+  .tl-item.tl-c2 .tl-dot{background:var(--c2);}
+  .tl-item.tl-c2 .tl-year{color:var(--c2);}
+  .tl-item.tl-c3{border-inline-start-color:var(--c3);}
+  .tl-item.tl-c3 .tl-dot{background:var(--c3);}
+  .tl-item.tl-c3 .tl-year{color:var(--c3);}
+  .tl-item.tl-c4{border-inline-start-color:var(--c4);}
+  .tl-item.tl-c4 .tl-dot{background:var(--c4);}
+  .tl-item.tl-c4 .tl-year{color:var(--c4);}
+  .tl-item.tl-c5{border-inline-start-color:var(--c5);}
+  .tl-item.tl-c5 .tl-dot{background:var(--c5);}
+  .tl-item.tl-c5 .tl-year{color:var(--c5);}
+  .tl-item.tl-namebit{border-inline-start-color:var(--namebit);}
+  .tl-item.tl-namebit .tl-dot{background:var(--namebit);}
+  .tl-item.tl-namebit .tl-year{color:var(--namebit);}
+
+  .tl-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;font-size:11.5px;color:var(--ink-dim);}
+  .tl-legend .li{display:flex;align-items:center;gap:6px;}
+  .tl-legend .sw{width:10px;height:10px;border-radius:3px;}
+
+  /* ===== Reference appendix: number systems + ASCII ===== */
+  .ref-section{margin-top:56px;}
+  .numsys-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px;}
+  @media (max-width:900px){.numsys-grid{grid-template-columns:repeat(2,1fr);}}
+  .numsys-card{
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:10px;padding:16px 18px;
+  }
+  .numsys-card .nstag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:6px;}
+  .numsys-card .nsname{font-weight:800;font-size:15px;margin-bottom:8px;}
+  .numsys-card .nsbase{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-dim);margin-bottom:10px;}
+  .numsys-card .nsex{
+    font-family:'JetBrains Mono',monospace;font-size:13px;background:rgba(255,255,255,0.03);
+    border-radius:6px;padding:8px 10px;color:var(--ink);direction:ltr;text-align:center;
+  }
+
+  .why8-box{
+    margin-top:22px;background:rgba(211,169,78,0.05);border:1px dashed var(--gold-dim);border-radius:10px;
+    padding:18px 22px;font-size:13.5px;color:var(--ink-dim);line-height:1.9;
+  }
+  .why8-box b{color:var(--gold);}
+
+  .ascii-table-wrap{margin-top:22px;overflow-x:auto;border:1px solid var(--panel-line);border-radius:10px;}
+  table.ascii-table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:11.5px;}
+  table.ascii-table th{
+    background:var(--panel);color:var(--gold);padding:8px 10px;text-align:center;
+    border-bottom:1px solid var(--panel-line);position:sticky;top:0;
+  }
+  table.ascii-table td{padding:6px 10px;text-align:center;color:var(--ink-dim);border-bottom:1px solid rgba(255,255,255,0.03);}
+  table.ascii-table tr:nth-child(even){background:rgba(255,255,255,0.015);}
+  table.ascii-table td.char{color:var(--ink);font-weight:700;font-size:13px;}
+
+  /* ===== Language toggle system ===== */
+  .lang-en{display:none;}
+  body.is-en .lang-en{display:revert;}
+  body.is-en .lang-ar{display:none;}
+  body.is-en{direction:ltr;}
+
+  .lang-toggle{
+    position:fixed;top:18px;left:18px;z-index:900;
+    display:flex;align-items:center;gap:6px;
+    background:var(--panel);border:1px solid var(--panel-line);
+    border-radius:20px;padding:6px 8px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+    box-shadow:0 6px 18px rgba(0,0,0,0.35);
+  }
+  .lang-toggle button{
+    border:none;background:transparent;color:var(--ink-dim);
+    padding:5px 10px;border-radius:14px;cursor:pointer;
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+    transition:background .15s ease, color .15s ease;
+  }
+  .lang-toggle button.active{background:var(--gold);color:var(--bg);}
+
+  @media (max-width: 1300px){
+    .board-outer{overflow-x:auto;}
+    .board, .axis, .chapters-strip{min-width:1550px;}
+  }
+</style>
+</head>
+<body>
+<script>
+  if (sessionStorage.getItem("bcs_auth") !== "1") {
+    window.location.href = "index.html";
+  }
+</script>
+
+<div class="lang-toggle">
+  <button id="btnAr" class="active">عربي</button>
+  <button id="btnEn">EN</button>
+</div>
+
+<div class="wrap">
+  <a class="home-btn lang-ar" href="index.html"><span class="arrow">→</span> العودة للصفحة الرئيسية</a>
+  <a class="home-btn lang-en" href="index.html"><span class="arrow">→</span> Back to home</a>
+
+  <header>
+    <div class="title-block">
+      <div class="eyebrow">THE BIT // BLUEPRINT NARRATIVE MAP</div>
+      <h1 class="lang-ar">البت: من الإشارات الكهربائية إلى الضوئية السريعة</h1>
+      <h1 class="lang-en">The Bit: From Electrical Signals to Fast Optical Light</h1>
+      <div class="subtitle lang-ar">أصغر وحدة معلومة في الكون الرقمي — من نبضة كهربائية خام على سلك تلغراف، إلى اسم رياضي دقيق، إلى مادة فيزيائية تُصنَّع بمقياس النانومتر</div>
+      <div class="subtitle lang-en">The smallest unit of information in the digital universe — from a raw electrical pulse on a telegraph wire, to a precise mathematical name, to a physical material manufactured at the nanometer scale</div>
+    </div>
+    <div class="domain-code">
+      <div>SUBJECT: <b>THE BIT</b></div>
+      <div>SPAN: <b>1837 → 2026</b></div>
+      <div>TRACKS: <b>04</b> · CHAPTERS: <b>06</b> · TRIGGERS: <b>05</b> + <b>01</b> naming</div>
+    </div>
+  </header>
+
+  <div class="origin-banner">
+    <div class="oicon">⚡</div>
+    <div class="otext">
+      قبل أن يكون البت مفهوماً رياضياً، كان نبضة كهربائية خام لا معنى مجرداً لها
+      <small>هذه الصفحة تروي كيف تحوّلت إشارة فيزيائية بسيطة (موجودة/غائبة) إلى الوحدة الأساسية لكل معلومة رقمية في العالم — وكيف تغيّرت المادة التي تحملها عبر 189 عاماً.</small>
+    </div>
+  </div>
+
+  <div class="metaphor-box">
+    🥇 <b>توضيح دقيق قبل البدء:</b> يشيع الحديث عن "الذهب في كابلات البيانات" بشكل مُعمَّم وغير دقيق. الذهب لا يُستخدم في مسارات النحاس نفسها (تلك نحاس خالص لتوصيلية أعلى وتكلفة أقل)، بل في <b>طلاء نقاط التلامس والموصلات (Connectors/Pins)</b> فقط، بسبب مقاومته الفائقة للتأكسد — طبقة رقيقة جداً تحافظ على جودة الاتصال الكهربائي لسنوات طويلة دون تآكل.
+  </div>
+
+  <div class="board-outer">
+
+    <!-- Chapter banner strip -->
+    <div class="chapters-strip">
+      <div></div>
+      <div class="chapters-track">
+        <div class="chapter-tag" style="right:0%; width:14%; background:color-mix(in srgb, var(--c0) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c0);">CH.00 · 1837–1904</div>
+          <div class="cname">الجذور الفيزيائية للنبضة</div>
+        </div>
+        <div class="chapter-tag" style="right:14%; width:12%; background:color-mix(in srgb, var(--c1) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c1);">CH.01 · 1904–1947</div>
+          <div class="cname">صمام الديود والبوابات الأولى</div>
+        </div>
+        <div class="chapter-tag" style="right:26%; width:12%; background:color-mix(in srgb, var(--c2) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c2);">CH.02 · 1947–1958</div>
+          <div class="cname">ثورة الترانزستور واسم "البت"</div>
+        </div>
+        <div class="chapter-tag" style="right:38%; width:12%; background:color-mix(in srgb, var(--c3) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c3);">CH.03 · 1958–1971</div>
+          <div class="cname">الدوائر المتكاملة والمعالج الأول</div>
+        </div>
+        <div class="chapter-tag" style="right:50%; width:25%; background:color-mix(in srgb, var(--c4) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c4);">CH.04 · 1971–2000s</div>
+          <div class="cname">تصغير المعالج ونضوج التخزين</div>
+        </div>
+        <div class="chapter-tag" style="right:75%; width:25%; background:color-mix(in srgb, var(--c5) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c5);">CH.05 · 2000s–2026</div>
+          <div class="cname">عصر النانومتر والألياف وNPU</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trigger flags row -->
+    <div class="axis" style="margin-top:6px;">
+      <div></div>
+      <div class="triggers" style="grid-column: 2/-1; height:0;">
+        <div class="trigger-flag" style="right:14%;"><div class="yr">1904</div><div class="lbl">💡 صمام الديود المفرغ</div></div>
+        <div class="trigger-flag mini" style="right:32%;"><div class="yr">1948</div><div class="lbl">🏷️ تسمية "البت" رسمياً</div></div>
+        <div class="trigger-flag" style="right:26%;"><div class="yr">1947</div><div class="lbl">⚙️ اختراع الترانزستور</div></div>
+        <div class="trigger-flag" style="right:38%;"><div class="yr">1958</div><div class="lbl">🔲 أول دائرة متكاملة</div></div>
+        <div class="trigger-flag" style="right:50%;"><div class="yr">1971</div><div class="lbl">🧠 Intel 4004 — أول معالج دقيق</div></div>
+      </div>
+    </div>
+
+    <!-- Year axis -->
+    <div class="axis">
+      <div></div>
+      <div class="years">
+        <span style="right:0%;">1837</span>
+        <span style="right:26%;">1947</span>
+        <span style="right:38%;">1958</span>
+        <span style="right:50%;">1971</span>
+        <span style="right:98%;">2026</span>
+      </div>
+    </div>
+
+    <!-- Board -->
+    <div class="board">
+      <div class="lane-labels">
+        <div class="lane-label identity"><div class="tag">تمثيل البت: المنطق الفيزيائي<small>REPRESENTATION · PULSE → IC</small></div></div>
+        <div class="lane-label files"><div class="tag">معالجة البت<small>PROCESSING · TRANSISTOR → NPU</small></div></div>
+        <div class="lane-label gateway"><div class="tag">تخزين البت<small>STORAGE · MAGNETIC → SSD/RAM</small></div></div>
+        <div class="lane-label comms"><div class="tag">نقل البت<small>TRANSMISSION · COPPER → FIBER</small></div></div>
+      </div>
+
+      <div class="lanes">
+
+        <!-- Chapter background bands -->
+        <div class="chapter-band" style="right:0%; width:14%; background:var(--c0); opacity:.06;"></div>
+        <div class="chapter-band" style="right:14%; width:12%; background:var(--c1); opacity:.07;"></div>
+        <div class="chapter-band" style="right:26%; width:12%; background:var(--c2); opacity:.07;"></div>
+        <div class="chapter-band" style="right:38%; width:12%; background:var(--c3); opacity:.07;"></div>
+        <div class="chapter-band" style="right:50%; width:25%; background:var(--c4); opacity:.08;"></div>
+        <div class="chapter-band" style="right:75%; width:25%; background:var(--c5); opacity:.08;"></div>
+
+        <!-- Trigger vertical lines -->
+        <div class="trigger-line" style="right:14%;"></div>
+        <div class="trigger-line" style="right:26%;"></div>
+        <div class="trigger-line" style="right:32%; border-color:var(--namebit);"></div>
+        <div class="trigger-line" style="right:38%;"></div>
+        <div class="trigger-line" style="right:50%;"></div>
+
+        <!-- REPRESENTATION lane -->
+        <div class="lane identity">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node identity" style="right:2%;" title="صمويل مورس يرسل نبضة تلغراف كهربائية (1837) — أول استخدام عملي لإشارة كهربائية 'موجودة/غائبة' لنقل معنى؛ جورج بول ينشر جبره المنطقي (1854) الذي سيصبح لاحقاً اللغة الرياضية لكل دائرة رقمية.">
+              <div class="period">1837–1904</div>
+              <div class="name">نبضة تلغراف مورس<br>ثم جبر بول المنطقي (1854)</div>
+            </div>
+            <div class="dot" style="right:16%;"></div>
+            <div class="node identity" style="right:16%;" title="جون أمبروز فليمنغ يخترع صمام الديود المفرغ (1904) — أول مكوّن إلكتروني يسمح بمرور التيار باتجاه واحد فقط، مما يجعله أول 'مفتاح' إلكتروني حقيقي لتمثيل حالتين منطقيتين.">
+              <div class="period">1904–1947</div>
+              <div class="name">صمام الديود المفرغ<br>أول بوابة منطقية فعلية</div>
+            </div>
+            <div class="dot namebit-dot" style="right:32%;"></div>
+            <div class="node identity namebit-node" style="right:32%;" title="كلود شانون ينشر ورقته البحثية الشهيرة 'نظرية رياضية للاتصال' (1948)، معتمداً على اقتراح جون تُوكي استخدام كلمة 'bit' كاختصار لـ Binary Digit — لحظة ميلاد الاسم الذي نستخدمه اليوم.">
+              <div class="period">1948</div>
+              <div class="name">🏷️ تسمية "Bit" رسمياً<br>شانون وتُوكي</div>
+            </div>
+            <div class="dot" style="right:28%;"></div>
+            <div class="node identity" style="right:28%;" title="الترانزستور يُخترع في مختبرات بيل (1947) — يستبدل الصمام الهش المستهلك للطاقة بقطعة سيليكون صلبة أصغر وأوثق وأبرد.">
+              <div class="period">1947</div>
+              <div class="name">الترانزستور يُخترع<br>يستبدل الصمام الهش</div>
+            </div>
+            <div class="dot" style="right:40%;"></div>
+            <div class="node identity" style="right:40%;" title="جاك كيلبي وروبرت نويس يبنيان أول دائرة متكاملة (1958) — آلاف الترانزستورات والبوابات المنطقية على رقاقة سيليكون واحدة بدل مكونات منفصلة.">
+              <div class="period">1958</div>
+              <div class="name">الدائرة المتكاملة<br>آلاف الترانزستورات برقاقة واحدة</div>
+            </div>
+            <div class="dot" style="right:60%;"></div>
+            <div class="node identity" style="right:60%;" title="بوابات AND/OR/NOT تُصغَّر باستمرار؛ ملايين الترانزستورات تُحشر بمقياس الميكرون على الرقاقة الواحدة.">
+              <div class="period">1971–2000s</div>
+              <div class="name">بوابات مصغّرة بمقياس الميكرون<br>ملايين الترانزستورات</div>
+            </div>
+            <div class="dot" style="right:85%;"></div>
+            <div class="node identity" style="right:85%;" title="مليارات الترانزستورات بمقياس النانومتر على الرقاقة الواحدة؛ حدود فيزياء الكم (نفق الإلكترونات) تقترب من عرقلة التصغير الإضافي.">
+              <div class="period">2000s–2026</div>
+              <div class="name">مليارات الترانزستورات نانومترياً<br>حدود فيزياء الكم تقترب</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROCESSING lane -->
+        <div class="lane files">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node files empty" style="right:2%;" title="لا معالجة آلية للبتات بعد؛ النبضة الكهربائية تُرسَل وتُستقبَل فقط، دون أي منطق حسابي.">
+              <div class="period">—</div>
+              <div class="name">لا معالجة آلية بعد</div>
+            </div>
+            <div class="dot" style="right:16%;"></div>
+            <div class="node files empty" style="right:16%;" title="حواسيب تناظرية وصمامية بدائية فقط (مثل ENIAC لاحقاً)، ضخمة وبطيئة وتستهلك طاقة هائلة.">
+              <div class="period">1904–1947</div>
+              <div class="name">حواسيب صمامية بدائية</div>
+            </div>
+            <div class="dot" style="right:28%;"></div>
+            <div class="node files" style="right:28%;" title="أول حواسيب ترانزستورية تجارية تظهر أسرع وأصغر وأبرد بكثير من عصر الصمامات المفرغة." data-en-title="">
+              <div class="period">1947–1958</div>
+              <div class="name">أول حواسيب ترانزستورية<br>أسرع وأصغر وأبرد</div>
+            </div>
+            <div class="dot" style="right:40%;"></div>
+            <div class="node files" style="right:40%;" title="Intel 4004 (1971) — أول معالج دقيق تجاري في التاريخ، يضع وحدة معالجة كاملة على رقاقة واحدة بدل لوحات دوائر متعددة.">
+              <div class="period">1971</div>
+              <div class="name">Intel 4004<br>أول معالج دقيق تجاري</div>
+            </div>
+            <div class="dot" style="right:60%;"></div>
+            <div class="node files" style="right:60%;" title="قانون مور (صاغه غوردون مور 1965) يتحقق تجريبياً لعقود: عدد الترانزستورات على الرقاقة يتضاعف تقريباً كل عامين.">
+              <div class="period">1971–2000s</div>
+              <div class="name">قانون مور يتحقق تجريبياً<br>تضاعف الترانزستورات كل عامين</div>
+            </div>
+            <div class="dot" style="right:85%;"></div>
+            <div class="node files" style="right:85%;" title="من المعالج المركزي العام CPU إلى معالج الرسوميات المتوازي GPU إلى معالج مخصص للذكاء الاصطناعي NPU — كل جيل أكثر تخصصاً من سابقه.">
+              <div class="period">2000s–2026</div>
+              <div class="name">CPU → GPU → NPU<br>معالجات مخصصة لـAI</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STORAGE lane -->
+        <div class="lane gateway">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node gateway empty" style="right:2%;" title="لا وسيط تخزين رقمي بعد؛ النبضة الكهربائية تُنقل فوراً ولا تُحفظ.">
+              <div class="period">—</div>
+              <div class="name">لا وجود بعد</div>
+            </div>
+            <div class="dot" style="right:16%;"></div>
+            <div class="node gateway empty" style="right:16%;" title="لا وسيط تخزين رقمي بعد؛ البطاقات المثقوبة (Punch Cards) هي أقرب تمثيل فيزيائي وحيد للبيانات المُدخَلة.">
+              <div class="period">1904–1947</div>
+              <div class="name">البطاقات المثقوبة فقط</div>
+            </div>
+            <div class="dot" style="right:28%;"></div>
+            <div class="node gateway" style="right:28%;" title="IBM RAMAC (1956) — أول قرص صلب تجاري في التاريخ، بحجم ثلاجتين تقريباً، لتخزين 5 ميجابايت فقط — أقل من صورة رقمية واحدة اليوم.">
+              <div class="period">1956</div>
+              <div class="name">IBM RAMAC<br>أول قرص صلب تجاري (5MB فقط)</div>
+            </div>
+            <div class="dot" style="right:44%;"></div>
+            <div class="node gateway" style="right:44%;" title="الأقراص المرنة (Floppy Disk) تنتشر منذ أوائل السبعينيات — أول وسيط تخزين محمول عملي يمكن نقله بين أجهزة مختلفة.">
+              <div class="period">1971–1980s</div>
+              <div class="name">الأقراص المرنة Floppy<br>تخزين محمول للمرة الأولى</div>
+            </div>
+            <div class="dot" style="right:63%;"></div>
+            <div class="node gateway" style="right:63%;" title="الأقراص الليزرية CD ثم DVD تعتمد القراءة الضوئية بدل المغناطيسية؛ ذاكرة الفلاش NAND تُخترع في طوشيبا (1980) لتفتح الباب لاحقاً أمام بطاقات SD والفلاش ديسك.">
+              <div class="period">1980s–2000s</div>
+              <div class="name">CD/DVD ضوئية<br>ثم فلاش NAND وSD</div>
+            </div>
+            <div class="dot" style="right:88%;"></div>
+            <div class="node gateway" style="right:88%;" title="محركات SSD الصلبة الحالة تحل تدريجياً محل الأقراص الميكانيكية الدوّارة؛ ذاكرة RAM تتطور من SDRAM إلى أجيال DDR المتلاحقة." data-en-title="">
+              <div class="period">2000s–2026</div>
+              <div class="name">SSD يحل محل HDD<br>RAM: SDRAM → أجيال DDR</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TRANSMISSION lane -->
+        <div class="lane comms">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node comms" style="right:2%;" title="الأسلاك النحاسية لشبكة التلغراف هي أول ناقل فيزيائي لإشارة كهربائية عبر مسافة — النحاس يُختار لتوصيليته الكهربائية الممتازة وتكلفته المعقولة.">
+              <div class="period">1837</div>
+              <div class="name">أسلاك التلغراف النحاسية<br>أول ناقل فيزيائي للنبضة</div>
+            </div>
+            <div class="dot" style="right:16%;"></div>
+            <div class="node comms empty" style="right:16%;" title="أسلاك نحاسية بسيطة فقط، بلا أي معيار موحّد لجودة النقل أو سرعته.">
+              <div class="period">1904–1947</div>
+              <div class="name">أسلاك نحاسية بسيطة</div>
+            </div>
+            <div class="dot" style="right:28%;"></div>
+            <div class="node comms empty" style="right:28%;" title="لا معيار موحّد لكابلات نقل البيانات الرقمية بعد؛ كل نظام حوسبة يستخدم توصيلاته الخاصة.">
+              <div class="period">1947–1958</div>
+              <div class="name">لا معيار موحّد بعد</div>
+            </div>
+            <div class="dot" style="right:44%;"></div>
+            <div class="node comms empty" style="right:44%;" title="شبكات محلية مبكرة جداً تظهر تجريبياً، دون أي معيار Cat موحّد للكابلات بعد.">
+              <div class="period">1958–1971</div>
+              <div class="name">شبكات محلية تجريبية مبكرة</div>
+            </div>
+            <div class="dot" style="right:63%;"></div>
+            <div class="node comms" style="right:63%;" title="معايير الكابلات النحاسية المزدوجة الملتوية (Cat1 حتى Cat6) تترسّخ لشبكات الهاتف والبيانات المحلية؛ أطراف الموصلات (لا الأسلاك) تُطلى بالذهب لمقاومة التأكسد وضمان اتصال موثوق طويل الأمد.">
+              <div class="period">1980s–2000s</div>
+              <div class="name">معايير Cat1–Cat6 النحاسية<br>موصلات مطلية بالذهب</div>
+            </div>
+            <div class="dot" style="right:88%;"></div>
+            <div class="node comms" style="right:88%;" title="Cat7 وCat8 يدفعان النحاس لأقصى سرعاته الممكنة؛ لكن الألياف الضوئية تتفوق حاسماً للمسافات الطويلة وسرعات النقل الأعلى بمراحل — نفس المنطق الذي غطّته صفحة Communications عند حدث كابل TAT-8 (1988).">
+              <div class="period">2000s–2026</div>
+              <div class="name">Cat7/Cat8 فائقة السرعة<br>الألياف الضوئية تتفوق للمسافات الطويلة</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="item"><span class="swatch" style="background:var(--lane-identity)"></span> تمثيل البت: المنطق الفيزيائي</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-files)"></span> معالجة البت</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-gateway)"></span> تخزين البت</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-comms)"></span> نقل البت</div>
+    <div class="item">┄┄ خط ذهبي متقطع = حدث تحوّل مشترك أثّر على أكثر من مسار في نفس اللحظة</div>
+    <div class="item"><span class="swatch" style="background:var(--namebit);"></span> علامة صفراء = لحظة تسمية "البت" رسمياً (1948) — محور الصفحة</div>
+    <div class="item">💡 مرّر المؤشر فوق أي بطاقة لقراءة السياق الكامل</div>
+  </div>
+
+  <div class="note">
+    <b>لإعادة بنائه في Microsoft Visio:</b> نفس نمط <b>Swimlane Timeline</b> غير الخطي — استخدم <code>File → New → Schedule → Timeline</code>.
+    أضف علامة صغيرة منفصلة بلون مميّز (أصفر ذهبي) عند 1948 مرتفعة فوق باقي الأعلام، لتمييز لحظة تسمية "البت" كحدث محوري مختلف عن بقية الأحداث التقنية.
+    <br><br>
+    <b>ملاحظة تقاطع متعمّد:</b> هذه الصفحة تتقاطع عمداً مع صفحات علوم الحاسوب، البيانات، وCommunications — لكن بزاوية مختلفة تماماً: هنا التركيز على
+    <b>الهندسة الفيزيائية والمادة الخام</b> (حجم الترانزستور بالنانومتر، تركيب الموصلات، أنواع الذاكرة) لا على التسلسل التاريخي العام للحوسبة.
+  </div>
+
+  <!-- ============ RICH NARRATIVE SECTION ============ -->
+  <div class="story-header">
+    <div class="eyebrow">FULL NARRATIVE // كل محطة بتفاصيلها الكاملة</div>
+    <h2>الرحلة الكاملة: من نبضة خام إلى مادة تُصنَّع بالنانومتر</h2>
+  </div>
+
+  <div class="role-strip">
+    <div class="role">📡 عامل تلغراف ينقر نبضة كهربائية خام</div>
+    <span class="arrow">←</span>
+    <div class="role">💡 مهندس يبني بوابة منطقية بصمام مفرغ</div>
+    <span class="arrow">←</span>
+    <div class="role">🏷️ رياضي يسمّي هذه النبضة "بت" رسمياً</div>
+    <span class="arrow">←</span>
+    <div class="role">🔬 مهندس يحشر ملايين الترانزستورات برقاقة واحدة</div>
+    <span class="arrow">←</span>
+    <div class="role">⚡ مهندس مواد يصمم معالجاً بمقياس النانومتر</div>
+  </div>
+
+  <div class="story-grid">
+
+    <!-- STORY CARD 0 -->
+    <div class="story-card sc0">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 00 // PHYSICAL ROOTS OF THE PULSE</div>
+          <div class="sc-title">الجذور الفيزيائية للنبضة: قبل أن تملك اسماً</div>
+          <div class="sc-hook">إشارة كهربائية بسيطة — موجودة أو غائبة — بلا أي اسم رياضي بعد. مجرد نبضة تقطع سلكاً نحاسياً بين محطتي تلغراف.</div>
+        </div>
+        <div class="sc-years">1837 — 1904</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">REPRESENTATION</div>
+          <div class="sc-dtech">نبضة تلغراف مورس (1837)</div>
+          <div class="sc-dnote">أول استخدام عملي واسع النطاق لإشارة كهربائية ثنائية الحالة (موجودة/غائبة) لنقل معنى مشفّر بين طرفين — لا تزال بلا أي إطار رياضي يصفها.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">PROCESSING</div>
+          <div class="sc-dtech">لا معالجة آلية بعد</div>
+          <div class="sc-dnote">النبضة تُرسَل وتُستقبَل فقط بواسطة عامل بشري يفك شيفرة مورس يدوياً — لا حساب آلي من أي نوع.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">STORAGE</div>
+          <div class="sc-dtech">لا وجود بعد</div>
+          <div class="sc-dnote">الإشارة تُستهلك فور وصولها؛ لا مفهوم "حفظ" رقمي بعد بأي شكل من الأشكال.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">TRANSMISSION</div>
+          <div class="sc-dtech">أسلاك التلغراف النحاسية</div>
+          <div class="sc-dnote">النحاس يُختار لتوصيليته الكهربائية الممتازة وتكلفته المعقولة نسبياً — نفس المنطق الذي سيحكم اختيار مادة النقل لأكثر من قرن ونصف لاحقاً.</div>
+        </div>
+
+        <div class="sc-cross">
+          <b>📐 لحظة موازية مهمة:</b> عام 1854، ينشر جورج بول "قوانين الفكر" — الجبر المنطقي الصوري (صح/خطأ) الذي سيصبح لاحقاً اللغة الرياضية الدقيقة لكل دائرة رقمية تُبنى لاحقاً. النبضة الفيزيائية والإطار الرياضي يولدان بشكل منفصل تماماً، وسيلتقيان بعد عقود.
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> عامل تلغراف ينقر نقرات متتالية على مفتاح معدني — لا يدرك أن هذا الفعل البسيط هو الجد الأول لكل بت رقمي سيُعالَج لاحقاً في تاريخ البشرية.</div>
+    </div>
+
+    <!-- STORY CARD 1 -->
+    <div class="story-card sc1">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 01 // THE DIODE & FIRST GATES</div>
+          <div class="sc-title">صمام الديود والبوابات الأولى: أول "مفتاح" إلكتروني حقيقي</div>
+          <div class="sc-hook">لأول مرة، مكوّن إلكتروني واحد يستطيع أن "يقرر" — يسمح بمرور التيار أو يمنعه، بلا تدخل بشري مباشر في كل مرة.</div>
+        </div>
+        <div class="sc-years">1904 — 1947</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">REPRESENTATION</div>
+          <div class="sc-dtech">صمام الديود المفرغ (1904)</div>
+          <div class="sc-dnote">جون أمبروز فليمنغ يخترع أول صمام يسمح بمرور التيار باتجاه واحد فقط — أول "مفتاح" إلكتروني حقيقي يمثّل حالتين منطقيتين ماديّاً، لا مجرد نبضة عابرة.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">PROCESSING</div>
+          <div class="sc-dtech">حواسيب صمامية بدائية</div>
+          <div class="sc-dnote">أجهزة ضخمة تشغل غرفاً بأكملها، تستهلك طاقة هائلة، وتتعطل الصمامات المفرغة فيها بشكل متكرر بسبب الحرارة والهشاشة الفيزيائية.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">STORAGE</div>
+          <div class="sc-dtech">البطاقات المثقوبة فقط</div>
+          <div class="sc-dnote">أقرب تمثيل فيزيائي متاح للبيانات المُدخَلة — ثقب أو عدم ثقب في موضع محدد، تمثيل ميكانيكي بحت لا إلكتروني.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">TRANSMISSION</div>
+          <div class="sc-dtech">أسلاك نحاسية بسيطة</div>
+          <div class="sc-dnote">لا معيار موحّد لجودة النقل أو سرعته بعد؛ كل نظام يستخدم توصيلاته الخاصة بلا تنسيق صناعي.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> صف طويل من الصمامات المفرغة المتوهجة يملأ غرفة كاملة — أحدها يحترق فجأة، فيتوقف الحساب بأكمله حتى يستبدله مهندس. الهشاشة نفسها ستدفع لاحقاً نحو بديل أصلب بكثير.</div>
+    </div>
+
+    <!-- STORY CARD 2 -->
+    <div class="story-card sc2">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 02 // TRANSISTOR REVOLUTION & THE NAME "BIT"</div>
+          <div class="sc-title">ثورة الترانزستور واسم "البت": الفيزياء تلتقي بالرياضيات أخيراً</div>
+          <div class="sc-hook">في نفس العقد تقريباً، يجد المكوّن الفيزيائي الأصلب بديلاً عن الصمام الهش — ويجد الإطار الرياضي أخيراً اسماً دقيقاً للنبضة نفسها.</div>
+        </div>
+        <div class="sc-years">1947 — 1958</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">REPRESENTATION</div>
+          <div class="sc-dtech">الترانزستور يُخترع (1947)</div>
+          <div class="sc-dnote">في مختبرات بيل، يُستبدَل الصمام المفرغ الهش والحار بقطعة سيليكون صلبة أصغر وأوثق وأبرد بكثير — نفس الوظيفة المنطقية، مادة فيزيائية مختلفة كلياً.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">PROCESSING</div>
+          <div class="sc-dtech">أول حواسيب ترانزستورية</div>
+          <div class="sc-dnote">تظهر أجهزة أسرع وأصغر وأبرد بكثير من عصر الصمامات — قفزة نوعية حقيقية في الموثوقية والاستهلاك الطاقي.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">STORAGE</div>
+          <div class="sc-dtech">IBM RAMAC (1956)</div>
+          <div class="sc-dnote">أول قرص صلب تجاري في التاريخ — بحجم ثلاجتين تقريباً، لتخزين 5 ميجابايت فقط؛ أقل بكثير من صورة رقمية واحدة بمعايير اليوم.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">TRANSMISSION</div>
+          <div class="sc-dtech">لا معيار موحّد بعد</div>
+          <div class="sc-dnote">كابلات نقل البيانات الرقمية لا تزال بلا معيار صناعي متفق عليه؛ كل نظام حوسبة يبني توصيلاته الخاصة.</div>
+        </div>
+
+        <div class="sc-cross">
+          <b>🏷️ اللحظة المحورية لهذه الصفحة — 1948:</b> ينشر كلود شانون ورقته البحثية التأسيسية "نظرية رياضية للاتصال"، معتمداً على اقتراح زميله جون تُوكي استخدام كلمة "bit" كاختصار أنيق لعبارة "Binary Digit" (الرقم الثنائي). للمرة الأولى، النبضة الفيزيائية التي بدأت كإشارة تلغراف خام عام 1837 تحصل على اسم رياضي دقيق ومتفق عليه عالمياً.
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> شانون يكتب على الورقة كلمة "bit" لأول مرة بصفتها مصطلحاً رسمياً — 111 عاماً بعد أول نبضة تلغراف، تحصل هذه النبضة أخيراً على اسمها الذي سيلازمها للأبد.</div>
+    </div>
+
+    <!-- STORY CARD 3 -->
+    <div class="story-card sc3">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 03 // INTEGRATED CIRCUITS & THE FIRST PROCESSOR</div>
+          <div class="sc-title">الدوائر المتكاملة والمعالج الأول: آلاف المفاتيح على رقاقة واحدة</div>
+          <div class="sc-hook">بدل توصيل ترانزستورات منفصلة بأسلاك يدوية، تُصبح آلاف البوابات المنطقية جزءاً من قطعة سيليكون واحدة مصقولة.</div>
+        </div>
+        <div class="sc-years">1958 — 1971</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">REPRESENTATION</div>
+          <div class="sc-dtech">الدائرة المتكاملة (1958)</div>
+          <div class="sc-dnote">جاك كيلبي وروبرت نويس (بشكل مستقل) يبنيان أول دائرة متكاملة — آلاف الترانزستورات والبوابات المنطقية مصنّعة معاً على رقاقة سيليكون واحدة، لا موصّلة يدوياً كمكونات منفصلة.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">PROCESSING</div>
+          <div class="sc-dtech">Intel 4004 (1971)</div>
+          <div class="sc-dnote">أول معالج دقيق تجاري في التاريخ — يضع وحدة معالجة مركزية كاملة على رقاقة واحدة، بدل لوحات دوائر متعددة منتشرة داخل الجهاز.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">STORAGE</div>
+          <div class="sc-dtech">الأقراص المرنة Floppy</div>
+          <div class="sc-dnote">تبدأ بالانتشار مطلع السبعينيات — أول وسيط تخزين محمول عملي يمكن نقله فعلياً بين أجهزة مختلفة، لا مجرد وسيط تخزين ثابت داخل جهاز واحد.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">TRANSMISSION</div>
+          <div class="sc-dtech">شبكات محلية تجريبية مبكرة</div>
+          <div class="sc-dnote">تظهر أولى محاولات الربط الشبكي المحلي تجريبياً، لكن دون أي معيار Cat موحّد للكابلات بعد.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> مهندس يحمل رقاقة سيليكون بحجم ظفر الإصبع — يعرف أنها تحتوي فعلياً على ما كان يحتاج غرفة كاملة من المعدات قبل عقد واحد فقط.</div>
+    </div>
+
+    <!-- STORY CARD 4 -->
+    <div class="story-card sc4">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 04 // SHRINKING PROCESSORS & STORAGE MATURES</div>
+          <div class="sc-title">تصغير المعالج ونضوج التخزين: عقود من التصغير المنهجي</div>
+          <div class="sc-hook">قانون مور يتحول من ملاحظة إلى شبه قاعدة صناعية ثابتة — بينما تتنافس تقنيات التخزين المغناطيسية والضوئية والفلاشية على عرش المستخدم اليومي.</div>
+        </div>
+        <div class="sc-years">1971 — 2000s</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">REPRESENTATION</div>
+          <div class="sc-dtech">بوابات مصغّرة بمقياس الميكرون</div>
+          <div class="sc-dnote">ملايين الترانزستورات تُحشر باستمرار على الرقاقة الواحدة، بمقاييس تُقاس بأجزاء من الميكرون — تصغير منهجي متواصل جيلاً بعد جيل.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">PROCESSING</div>
+          <div class="sc-dtech">قانون مور يتحقق تجريبياً</div>
+          <div class="sc-dnote">غوردون مور يصوغ ملاحظته الشهيرة عام 1965: عدد الترانزستورات على الرقاقة يتضاعف تقريباً كل عامين — تنبؤ يتحقق فعلياً لعقود طويلة لاحقة.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">STORAGE</div>
+          <div class="sc-dtech">CD/DVD ضوئية ثم فلاش NAND</div>
+          <div class="sc-dnote">الأقراص الليزرية تعتمد القراءة الضوئية بدل المغناطيسية؛ طوشيبا تخترع ذاكرة الفلاش NAND (1980) لتفتح الباب لاحقاً أمام بطاقات SD وأقراص الفلاش المحمولة.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">TRANSMISSION</div>
+          <div class="sc-dtech">معايير Cat1–Cat6 النحاسية</div>
+          <div class="sc-dnote">تترسّخ معايير الكابلات المزدوجة الملتوية لشبكات الهاتف والبيانات المحلية؛ أطراف الموصلات (لا الأسلاك نفسها) تُطلى بالذهب لمقاومة التأكسد وضمان اتصال موثوق طويل الأمد.</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> مستخدم يقارن قرصاً مرناً بسعة 1.44 ميغابايت بقرص فلاش جديد بسعة 32 ميغابايت — فرق يبدو خيالياً وقتها، ولن يكون آخر مرة يتكرر فيها هذا الشعور خلال العقود القادمة.</div>
+    </div>
+
+    <!-- STORY CARD 5 -->
+    <div class="story-card sc5">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 05 // THE NANOMETER ERA, FIBER & NPU</div>
+          <div class="sc-title">عصر النانومتر والألياف وNPU: حدود الفيزياء تقترب</div>
+          <div class="sc-hook">التصغير يقترب من حدوده الفيزيائية الحقيقية، والنحاس يصل لأقصى سرعاته الممكنة — بينما يتفرّع المعالج نفسه إلى أشكال متخصصة جديدة كلياً.</div>
+        </div>
+        <div class="sc-years">2000s — 2026</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">REPRESENTATION</div>
+          <div class="sc-dtech">مليارات الترانزستورات نانومترياً</div>
+          <div class="sc-dnote">الرقاقة الواحدة تحتوي اليوم مليارات الترانزستورات بمقاييس النانومتر؛ حدود فيزياء الكم (نفق الإلكترونات عبر حواجز رقيقة جداً) تقترب من عرقلة أي تصغير إضافي بنفس الوتيرة السابقة.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">PROCESSING</div>
+          <div class="sc-dtech">CPU → GPU → NPU</div>
+          <div class="sc-dnote">معالج الرسوميات (GPU) يتطور من أداة عرض بصري بحتة إلى محرك حوسبة متوازية هائل الأداء؛ معالجات NPU المتخصصة تُصمَّم خصيصاً لعمليات الذكاء الاصطناعي، منفصلة تماماً عن المعالج المركزي العام.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">STORAGE</div>
+          <div class="sc-dtech">SSD يحل محل HDD؛ RAM تتطور</div>
+          <div class="sc-dnote">محركات الحالة الصلبة (SSD) تحل تدريجياً محل الأقراص الميكانيكية الدوّارة؛ ذاكرة RAM تتطور من SDRAM عبر أجيال DDR المتلاحقة، كل جيل أسرع وأكثر كفاءة طاقياً من سابقه.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">TRANSMISSION</div>
+          <div class="sc-dtech">Cat7/Cat8 ثم تفوق الألياف</div>
+          <div class="sc-dnote">النحاس يُدفع لأقصى سرعاته الممكنة عبر معياري Cat7 وCat8؛ لكن الألياف الضوئية تتفوق حاسماً للمسافات الطويلة وسرعات النقل الأعلى بمراحل — كما وثّقته صفحة Communications عند حدث كابل TAT-8 (1988).</div>
+        </div>
+      </div>
+      <div class="sc-foot">🎬 <b>مشهد مفتوح:</b> من نبضة كهربائية خام على سلك تلغراف نحاسي عام 1837، إلى نبضة ضوئية تقطع محيطاً كاملاً عبر ألياف زجاجية رفيعة كشعرة — نفس الفكرة الأساسية (موجود/غائب)، مادة فيزيائية مختلفة كلياً، وسرعة تفوق كل تصوّر أولي لمن أطلق عليها اسم "بت" لأول مرة.</div>
+    </div>
+
+  </div>
+
+  <!-- ============ FULL CHRONOLOGICAL TIMELINE ============ -->
+  <div class="story-header full-timeline">
+    <div class="eyebrow">APPENDIX // مرجع سريع بكل التواريخ</div>
+    <h2>الخط الزمني الكامل: كل الأحداث بالترتيب</h2>
+  </div>
+
+  <div class="tl-list">
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">1837</div><div class="tl-text"><b>نبضة تلغراف مورس</b> — أول استخدام عملي لإشارة كهربائية ثنائية الحالة</div></div>
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">1854</div><div class="tl-text">جورج بول ينشر <b>"قوانين الفكر"</b> — الجبر المنطقي الصوري</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1904</div><div class="tl-text">جون فليمنغ يخترع <b>صمام الديود المفرغ</b> — أول مفتاح إلكتروني حقيقي</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1947</div><div class="tl-text"><b>الترانزستور يُخترع</b> في مختبرات بيل — يستبدل الصمام الهش</div></div>
+    <div class="tl-item tl-namebit"><div class="tl-dot"></div><div class="tl-year">1948</div><div class="tl-text">🏷️ كلود شانون وجون تُوكي يصوغان اسم <b>"Bit"</b> رسمياً — اختصار Binary Digit</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1956</div><div class="tl-text"><b>IBM RAMAC</b> — أول قرص صلب تجاري، بسعة 5 ميجابايت فقط</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">1958</div><div class="tl-text">كيلبي ونويس يبنيان <b>أول دائرة متكاملة</b> — آلاف الترانزستورات برقاقة واحدة</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">1965</div><div class="tl-text">غوردون مور يصوغ <b>قانون مور</b> — تضاعف الترانزستورات كل عامين تقريباً</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">1971</div><div class="tl-text"><b>Intel 4004</b> — أول معالج دقيق تجاري في التاريخ</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">1971–1980s</div><div class="tl-text">انتشار <b>الأقراص المرنة Floppy</b> — أول تخزين محمول عملي</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">1980</div><div class="tl-text">طوشيبا تخترع <b>ذاكرة الفلاش NAND</b> — أساس SD والفلاش ديسك لاحقاً</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">1980s–2000s</div><div class="tl-text">ترسّخ معايير <b>الكابلات النحاسية Cat1–Cat6</b>؛ موصلات مطلية بالذهب</div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot"></div><div class="tl-year">2000s–2026</div><div class="tl-text"><b>SSD</b> يحل محل الأقراص الميكانيكية؛ ذاكرة RAM تتطور عبر أجيال DDR</div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot"></div><div class="tl-year">2000s–2026</div><div class="tl-text">معياري <b>Cat7/Cat8</b> يدفعان النحاس لأقصاه؛ الألياف الضوئية تتفوق للمسافات الطويلة</div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot"></div><div class="tl-year">2010s–2026</div><div class="tl-text">تطوّر <b>GPU إلى NPU</b> — معالجات مخصصة كلياً لعمليات الذكاء الاصطناعي</div></div>
+  </div>
+
+  <div class="tl-legend">
+    <div class="li"><span class="sw" style="background:var(--c0);"></span>الجذور الفيزيائية للنبضة</div>
+    <div class="li"><span class="sw" style="background:var(--c1);"></span>صمام الديود والبوابات الأولى</div>
+    <div class="li"><span class="sw" style="background:var(--c2);"></span>ثورة الترانزستور واسم "البت"</div>
+    <div class="li"><span class="sw" style="background:var(--c3);"></span>الدوائر المتكاملة والمعالج الأول</div>
+    <div class="li"><span class="sw" style="background:var(--c4);"></span>تصغير المعالج ونضوج التخزين</div>
+    <div class="li"><span class="sw" style="background:var(--c5);"></span>عصر النانومتر والألياف وNPU</div>
+    <div class="li"><span class="sw" style="background:var(--namebit);"></span>لحظة تسمية "البت" (1948)</div>
+  </div>
+
+  <!-- ============ REFERENCE APPENDIX: NUMBER SYSTEMS + ASCII ============ -->
+  <div class="story-header ref-section">
+    <div class="eyebrow">REFERENCE // ملحق مرجعي بتصميم جدولي منفصل — لا سرد زمني</div>
+    <h2>أنظمة العد وجدول ASCII: كيف تصبح النبضات حروفاً</h2>
+  </div>
+
+  <div class="numsys-grid">
+    <div class="numsys-card">
+      <div class="nstag">BASE 2</div>
+      <div class="nsname">الثنائي (Binary)</div>
+      <div class="nsbase">أساس النظام: رقمان فقط 0 و1</div>
+      <div class="nsex">65 = 01000001</div>
+    </div>
+    <div class="numsys-card">
+      <div class="nstag">BASE 8</div>
+      <div class="nsname">الثماني (Octal)</div>
+      <div class="nsbase">أساس النظام: 8 أرقام (0–7)</div>
+      <div class="nsex">65 = 101</div>
+    </div>
+    <div class="numsys-card">
+      <div class="nstag">BASE 10</div>
+      <div class="nsname">العشري (Decimal)</div>
+      <div class="nsbase">أساس النظام: 10 أرقام (0–9) — نظامنا اليومي</div>
+      <div class="nsex">65 = 65</div>
+    </div>
+    <div class="numsys-card">
+      <div class="nstag">BASE 16</div>
+      <div class="nsname">السادس عشري (Hexadecimal)</div>
+      <div class="nsbase">أساس النظام: 16 رمزاً (0–9 ثم A–F)</div>
+      <div class="nsex">65 = 41</div>
+    </div>
+  </div>
+
+  <div class="why8-box">
+    <b>🤔 لماذا البايت = 8 بت بالتحديد، لا 7 ولا 9؟</b><br><br>
+    المصطلح "بايت" صاغه ويرنر بوخهولز في IBM عام 1956، لكن حجمه لم يكن ثابتاً في البداية — أنظمة مبكرة استخدمت أحجاماً مختلفة (6-بت مثلاً). الترسيخ النهائي على 8 بت جاء بشكل حاسم مع إطلاق IBM System/360 عام 1964، لعدة أسباب عملية متضافرة:
+    كونه <b>قوة للعدد 2</b> (2⁸ = 256) يجعل العنونة الثنائية للذاكرة أبسط حسابياً؛ 256 قيمة ممكنة كانت <b>كافية تماماً</b> لتمثيل جدول ASCII الكامل (128 رمزاً) مع هامش إضافي واسع؛ وأصبح 8 بت <b>وحدة توازن عملية</b> بين الكفاءة التخزينية وسهولة المعالجة الحاسوبية — لا صغيراً جداً ليكون غير عملي، ولا كبيراً جداً ليكون مسرفاً. مع هيمنة IBM System/360 تجارياً، تحوّل هذا الاختيار العملي إلى معيار صناعي عالمي راسخ حتى اليوم.
+  </div>
+
+  <div class="ascii-table-wrap">
+    <table class="ascii-table">
+      <thead>
+        <tr><th>Dec</th><th>Hex</th><th>Char</th><th>Dec</th><th>Hex</th><th>Char</th><th>Dec</th><th>Hex</th><th>Char</th><th>Dec</th><th>Hex</th><th>Char</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>32</td><td>20</td><td class="char">Space</td><td>56</td><td>38</td><td class="char">8</td><td>80</td><td>50</td><td class="char">P</td><td>104</td><td>68</td><td class="char">h</td></tr>
+        <tr><td>33</td><td>21</td><td class="char">!</td><td>57</td><td>39</td><td class="char">9</td><td>81</td><td>51</td><td class="char">Q</td><td>105</td><td>69</td><td class="char">i</td></tr>
+        <tr><td>34</td><td>22</td><td class="char">"</td><td>58</td><td>3A</td><td class="char">:</td><td>82</td><td>52</td><td class="char">R</td><td>106</td><td>6A</td><td class="char">j</td></tr>
+        <tr><td>35</td><td>23</td><td class="char">#</td><td>59</td><td>3B</td><td class="char">;</td><td>83</td><td>53</td><td class="char">S</td><td>107</td><td>6B</td><td class="char">k</td></tr>
+        <tr><td>36</td><td>24</td><td class="char">$</td><td>60</td><td>3C</td><td class="char">&lt;</td><td>84</td><td>54</td><td class="char">T</td><td>108</td><td>6C</td><td class="char">l</td></tr>
+        <tr><td>37</td><td>25</td><td class="char">%</td><td>61</td><td>3D</td><td class="char">=</td><td>85</td><td>55</td><td class="char">U</td><td>109</td><td>6D</td><td class="char">m</td></tr>
+        <tr><td>38</td><td>26</td><td class="char">&amp;</td><td>62</td><td>3E</td><td class="char">&gt;</td><td>86</td><td>56</td><td class="char">V</td><td>110</td><td>6E</td><td class="char">n</td></tr>
+        <tr><td>39</td><td>27</td><td class="char">'</td><td>63</td><td>3F</td><td class="char">?</td><td>87</td><td>57</td><td class="char">W</td><td>111</td><td>6F</td><td class="char">o</td></tr>
+        <tr><td>40</td><td>28</td><td class="char">(</td><td>64</td><td>40</td><td class="char">@</td><td>88</td><td>58</td><td class="char">X</td><td>112</td><td>70</td><td class="char">p</td></tr>
+        <tr><td>41</td><td>29</td><td class="char">)</td><td>65</td><td>41</td><td class="char">A</td><td>89</td><td>59</td><td class="char">Y</td><td>113</td><td>71</td><td class="char">q</td></tr>
+        <tr><td>42</td><td>2A</td><td class="char">*</td><td>66</td><td>42</td><td class="char">B</td><td>90</td><td>5A</td><td class="char">Z</td><td>114</td><td>72</td><td class="char">r</td></tr>
+        <tr><td>43</td><td>2B</td><td class="char">+</td><td>67</td><td>43</td><td class="char">C</td><td>91</td><td>5B</td><td class="char">[</td><td>115</td><td>73</td><td class="char">s</td></tr>
+        <tr><td>44</td><td>2C</td><td class="char">,</td><td>68</td><td>44</td><td class="char">D</td><td>92</td><td>5C</td><td class="char">\</td><td>116</td><td>74</td><td class="char">t</td></tr>
+        <tr><td>45</td><td>2D</td><td class="char">-</td><td>69</td><td>45</td><td class="char">E</td><td>93</td><td>5D</td><td class="char">]</td><td>117</td><td>75</td><td class="char">u</td></tr>
+        <tr><td>46</td><td>2E</td><td class="char">.</td><td>70</td><td>46</td><td class="char">F</td><td>94</td><td>5E</td><td class="char">^</td><td>118</td><td>76</td><td class="char">v</td></tr>
+        <tr><td>47</td><td>2F</td><td class="char">/</td><td>71</td><td>47</td><td class="char">G</td><td>95</td><td>5F</td><td class="char">_</td><td>119</td><td>77</td><td class="char">w</td></tr>
+        <tr><td>48</td><td>30</td><td class="char">0</td><td>72</td><td>48</td><td class="char">H</td><td>96</td><td>60</td><td class="char">`</td><td>120</td><td>78</td><td class="char">x</td></tr>
+        <tr><td>49</td><td>31</td><td class="char">1</td><td>73</td><td>49</td><td class="char">I</td><td>97</td><td>61</td><td class="char">a</td><td>121</td><td>79</td><td class="char">y</td></tr>
+        <tr><td>50</td><td>32</td><td class="char">2</td><td>74</td><td>4A</td><td class="char">J</td><td>98</td><td>62</td><td class="char">b</td><td>122</td><td>7A</td><td class="char">z</td></tr>
+        <tr><td>51</td><td>33</td><td class="char">3</td><td>75</td><td>4B</td><td class="char">K</td><td>99</td><td>63</td><td class="char">c</td><td>123</td><td>7B</td><td class="char">{</td></tr>
+        <tr><td>52</td><td>34</td><td class="char">4</td><td>76</td><td>4C</td><td class="char">L</td><td>100</td><td>64</td><td class="char">d</td><td>124</td><td>7C</td><td class="char">|</td></tr>
+        <tr><td>53</td><td>35</td><td class="char">5</td><td>77</td><td>4D</td><td class="char">M</td><td>101</td><td>65</td><td class="char">e</td><td>125</td><td>7D</td><td class="char">}</td></tr>
+        <tr><td>54</td><td>36</td><td class="char">6</td><td>78</td><td>4E</td><td class="char">N</td><td>102</td><td>66</td><td class="char">f</td><td>126</td><td>7E</td><td class="char">~</td></tr>
+        <tr><td>55</td><td>37</td><td class="char">7</td><td>79</td><td>4F</td><td class="char">O</td><td>103</td><td>67</td><td class="char">g</td><td>—</td><td>—</td><td class="char">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<script>
+  document.querySelectorAll('[data-en-title]').forEach(function(el){
+    el.dataset.arTitle = el.title;
+  });
+
+  function applyLang(lang){
+    document.body.classList.toggle("is-en", lang === "en");
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === "en" ? "ltr" : "rtl";
+    document.getElementById("btnAr").classList.toggle("active", lang === "ar");
+    document.getElementById("btnEn").classList.toggle("active", lang === "en");
+    document.querySelectorAll('[data-en-title]').forEach(function(el){
+      el.title = lang === 'en' ? el.dataset.enTitle : el.dataset.arTitle;
+    });
+    try { localStorage.setItem("bcs_lang", lang); } catch (e) {}
+  }
+  document.getElementById("btnAr").addEventListener("click", () => applyLang("ar"));
+  document.getElementById("btnEn").addEventListener("click", () => applyLang("en"));
+  let savedLang = "ar";
+  try { savedLang = localStorage.getItem("bcs_lang") || "ar"; } catch (e) {}
+  applyLang(savedLang);
+
+  document.addEventListener('copy', function(e){ e.preventDefault(); });
+  document.addEventListener('cut', function(e){ e.preventDefault(); });
+</script>
+</body>
+</html>
