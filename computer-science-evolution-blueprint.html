@@ -443,7 +443,50 @@
   .cl-cancel{border:1px solid var(--panel-line);color:var(--ink-dim);background:transparent;}
   .cl-error{margin-top:12px;font-size:11.5px;padding:8px 11px;border-radius:8px;display:none;background:rgba(224,99,122,0.08);border:1px solid #e0637a;color:#e0637a;}
 </style>
+<style>
+  /* ===== Neon hover glow — matches each element's own accent color ===== */
+  .story-card{transition:box-shadow .25s, transform .18s;}
+  .story-card:hover{transform:translateY(-2px);}
+  .story-card.sc0:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c0) 55%, transparent);}
+  .story-card.sc1:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c1) 55%, transparent);}
+  .story-card.sc2:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c2) 55%, transparent);}
+  .story-card.sc3:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c3) 55%, transparent);}
+  .story-card.sc4:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c4) 55%, transparent);}
+  .story-card.sc5:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c5) 55%, transparent);}
+
+  .node{transition:box-shadow .2s, transform .15s;}
+  .node:hover{transform:scale(1.07);z-index:5;}
+  .node.identity:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-identity) 60%, transparent);}
+  .node.files:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-files) 60%, transparent);}
+  .node.gateway:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-gateway) 60%, transparent);}
+  .node.comms:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-comms) 60%, transparent);}
+
+  .lane-label{transition:box-shadow .2s;}
+  .lane-label.identity:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-identity) 45%, transparent);}
+  .lane-label.files:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-files) 45%, transparent);}
+  .lane-label.gateway:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-gateway) 45%, transparent);}
+  .lane-label.comms:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-comms) 45%, transparent);}
+
+  .metaphor-box{transition:box-shadow .25s;}
+  .metaphor-box:hover{box-shadow:0 0 18px rgba(211,169,78,0.35);}
+  .why8-box{transition:box-shadow .25s;}
+  .why8-box:hover{box-shadow:0 0 18px rgba(211,169,78,0.35);}
+  .encoding-note{transition:box-shadow .25s;}
+  .encoding-note:hover{box-shadow:0 0 18px color-mix(in srgb, var(--lane-identity) 45%, transparent);}
+  .numsys-card{transition:box-shadow .25s, border-color .25s;}
+  .numsys-card:hover{border-color:var(--gold-dim);box-shadow:0 0 16px rgba(211,169,78,0.3);}
+  .letter-cell{transition:box-shadow .25s, border-color .25s;}
+  .letter-cell:hover{border-color:var(--gold-dim);box-shadow:0 0 14px rgba(211,169,78,0.3);}
+  .ethics-card{transition:box-shadow .25s;}
+  .ethics-card:hover{box-shadow:0 0 18px rgba(167,139,250,0.3);}
+  .bridge-card{transition:box-shadow .25s;}
+  .bridge-card:hover{box-shadow:0 0 18px rgba(167,139,250,0.3);}
+  .foresight-link:hover{box-shadow:0 0 20px rgba(139,92,246,0.35);}
+  .chapter-tag{transition:box-shadow .2s, filter .2s;}
+  .chapter-tag:hover{filter:brightness(1.25);box-shadow:0 0 14px rgba(255,255,255,0.15);}
+</style>
 </head>
+
 <body>
 
 <div class="lang-toggle">

@@ -130,7 +130,7 @@
     background:var(--panel);border:1px solid var(--panel-line);border-radius:12px;
     padding:16px 18px;text-decoration:none;color:inherit;transition:border-color .2s,background .2s;
   }
-  a.qref-item:hover{border-color:#a78bfa88;background:rgba(167,139,250,0.06);}
+  a.qref-item:hover, .qref-item:hover{border-color:#a78bfa88;background:rgba(167,139,250,0.06);box-shadow:0 0 18px rgba(167,139,250,0.30);}
   .qref-item.qref-static{cursor:default;}
   .qref-icon{font-size:24px;flex-shrink:0;}
   .qref-text{flex:1;min-width:0;}
@@ -385,6 +385,22 @@
   .cl-submit:hover{background:var(--gold);color:var(--bg);}
   .cl-cancel{border:1px solid var(--panel-line);color:var(--ink-dim);background:transparent;}
   .cl-error{margin-top:12px;font-size:11.5px;padding:8px 11px;border-radius:8px;display:none;background:rgba(224,99,122,0.08);border:1px solid #e0637a;color:#e0637a;}
+</style>
+<style>
+  /* ===== Neon hover glow — matches each element's own accent color ===== */
+  .card{transition:transform .18s ease, border-color .2s ease, box-shadow .2s ease;}
+  .card:hover{transform:translateY(-3px);}
+  .card.c1:hover{border-color:var(--p1); box-shadow:0 0 22px color-mix(in srgb, var(--p1) 50%, transparent);}
+  .card.c2:hover{border-color:var(--gold); box-shadow:0 0 22px color-mix(in srgb, var(--gold) 50%, transparent);}
+  .card.c3:hover{border-color:var(--quantum); box-shadow:0 0 22px color-mix(in srgb, var(--quantum) 50%, transparent);}
+  .card.c4:hover{border-color:#6d7fd6; box-shadow:0 0 22px rgba(109,127,214,0.5);}
+  .card.c5:hover{border-color:#a879e0; box-shadow:0 0 22px rgba(168,121,224,0.5);}
+  .card.c6:hover{border-color:#ff9a76; box-shadow:0 0 22px rgba(255,154,118,0.5);}
+  .card.c7:hover{border-color:#ffd166; box-shadow:0 0 22px rgba(255,209,102,0.5);}
+  .card.c8:hover{border-color:#a78bfa; box-shadow:0 0 22px rgba(167,139,250,0.5);}
+  .card.c9:hover{border-color:#2dd4bf; box-shadow:0 0 22px rgba(45,212,191,0.5);}
+  .dt-dot:hover{box-shadow:0 0 8px #2dd4bf;}
+  .dt-ref-link:hover{box-shadow:0 0 14px rgba(45,212,191,0.4);}
 </style>
 </head>
 <body>
