@@ -122,6 +122,8 @@
     display:grid;grid-template-columns:repeat(2,1fr);gap:16px;
     max-width:900px;margin:34px auto 0;
   }
+  .quick-refs.quick-refs-3{grid-template-columns:repeat(3,1fr);max-width:1200px;}
+  @media(max-width:900px){.quick-refs.quick-refs-3{grid-template-columns:1fr;}}
   @media(max-width:700px){.quick-refs{grid-template-columns:1fr;}}
   .qref-item{
     display:flex;align-items:center;gap:14px;
@@ -445,17 +447,27 @@
     </div>
   </div>
 
-  <div class="quick-refs">
+  <div class="quick-refs quick-refs-3">
     <a class="qref-item" href="future-horizon-blueprint.html">
       <div class="qref-icon">🔮</div>
       <div class="qref-text">
         <div class="qref-title lang-ar">الأفق المستقبلي</div>
         <div class="qref-title lang-en">The Future Horizon</div>
-        <div class="qref-desc lang-ar">استشراف تقني — ستة مسارات تنظر لما بعد 2026 استناداً لخارطات طريق مؤسسات بحثية فعلية</div>
-        <div class="qref-desc lang-en">Technical foresight — six tracks looking beyond 2026, grounded in real institutional roadmaps</div>
+        <div class="qref-desc lang-ar">ترقّب تقني — ستة مسارات تنظر لما بعد 2026 استناداً لخارطات طريق مؤسسات بحثية فعلية</div>
+        <div class="qref-desc lang-en">Technical outlook — six tracks looking beyond 2026, grounded in real institutional roadmaps</div>
       </div>
       <div class="qref-arrow">←</div>
     </a>
+    <div class="qref-item" id="qrefDtTrigger" style="cursor:pointer;">
+      <div class="qref-icon">🦋</div>
+      <div class="qref-text">
+        <div class="qref-title lang-ar">التحول الرقمي</div>
+        <div class="qref-title lang-en">Digital Transformation</div>
+        <div class="qref-desc lang-ar">بطاقة تفاعلية بكاروسيل وشريط تقدّم نحو 2038، عن العامل البشري كمحرك حقيقي للتحوّل</div>
+        <div class="qref-desc lang-en">An interactive card with a carousel and a progress bar toward 2038, on people as the real driver of transformation</div>
+      </div>
+      <div class="qref-arrow">←</div>
+    </div>
     <div class="qref-item qref-static">
       <div class="qref-icon">📚</div>
       <div class="qref-text">
@@ -635,20 +647,20 @@
 
     <div class="card c8">
       <div class="card-head">
-        <div class="card-num">PAGE 08 // FORESIGHT — NOT HISTORY</div>
+        <div class="card-num">PAGE 08 // OUTLOOK — NOT HISTORY</div>
         <div class="card-icon">🔮</div>
         <div class="card-title lang-ar">الأفق المستقبلي</div>
         <div class="card-title lang-en">The Future Horizon</div>
         <div class="card-span">2026 → ؟</div>
       </div>
       <div class="card-body">
-        <div class="card-desc lang-ar">محور استشرافي مستقل — لا سرد تاريخي موثّق كبقية الصفحات، بل ستة مسارات تنظر لما بعد 2026 استناداً لخارطات طريق مؤسسات بحثية فعلية: الحوسبة الكمية، ما بعد الذكاء الاصطناعي التوليدي الحالي، حوكمة البيانات، شبكات 6G والتشفير ما بعد الكمي، تطور لغات البرمجة بمساعدة AI، والحوسبة الطرفية.</div>
-        <div class="card-desc lang-en">An independent foresight hub — not documented history like the other pages, but six tracks looking beyond 2026 based on real institutional roadmaps: quantum computing, beyond today's generative AI, data governance, 6G &amp; post-quantum cryptography, AI-assisted programming languages, and edge computing.</div>
+        <div class="card-desc lang-ar">محور ترقّبي مستقل — لا سرد تاريخي موثّق كبقية الصفحات، بل ستة مسارات تنظر لما بعد 2026 استناداً لخارطات طريق مؤسسات بحثية فعلية: الحوسبة الكمية، ما بعد الذكاء الاصطناعي التوليدي الحالي، حوكمة البيانات، شبكات 6G والتشفير ما بعد الكمي، تطور لغات البرمجة بمساعدة AI، والحوسبة الطرفية.</div>
+        <div class="card-desc lang-en">An independent outlook hub — not documented history like the other pages, but six tracks looking beyond 2026 based on real institutional roadmaps: quantum computing, beyond today's generative AI, data governance, 6G &amp; post-quantum cryptography, AI-assisted programming languages, and edge computing.</div>
         <div class="card-tags lang-ar">
-          <span>6 محاور استشرافية</span><span>مصادر مؤسسية رسمية</span><span>يربط كل الصفحات</span>
+          <span>6 محاور ترقّبية</span><span>مصادر مؤسسية رسمية</span><span>يربط كل الصفحات</span>
         </div>
         <div class="card-tags lang-en">
-          <span>6 foresight tracks</span><span>official institutional sources</span><span>links every page</span>
+          <span>6 outlook tracks</span><span>official institutional sources</span><span>links every page</span>
         </div>
       </div>
       <div class="card-foot">
@@ -703,16 +715,14 @@
 
     <div class="dt-carousel">
       <div class="dt-slides" id="dtSlides">
-        <img src="assets/dt-01-dial.jpg" class="dt-slide active" alt="Digital Transformation dial">
-        <img src="assets/dt-04-head-circuit.png" class="dt-slide" alt="Digital Transformation head circuit">
-        <img src="assets/dt-02-butterfly-wide.jpg" class="dt-slide" alt="Digital Transformation butterfly">
-        <img src="assets/dt-03-butterfly-crop.jpg" class="dt-slide" alt="Digital Transformation butterfly closeup">
+        <img src="dt-01-dial.jpg" class="dt-slide active" alt="Digital Transformation dial">
+        <img src="dt-04-head-circuit.png" class="dt-slide" alt="Digital Transformation head circuit">
+        <img src="dt-02-butterfly-wide.jpg" class="dt-slide" alt="Digital Transformation butterfly">
       </div>
       <div class="dt-dots" id="dtDots">
         <span class="dt-dot active" data-i="0"></span>
         <span class="dt-dot" data-i="1"></span>
         <span class="dt-dot" data-i="2"></span>
-        <span class="dt-dot" data-i="3"></span>
       </div>
     </div>
 
@@ -899,6 +909,7 @@
   (function(){
     var dtModal = document.getElementById('dtModal');
     var dtTrigger = document.getElementById('dtCardTrigger');
+    var qrefDtTrigger = document.getElementById('qrefDtTrigger');
     var dtCloseBtn = document.getElementById('dtCloseBtn');
     var dtSlides = document.querySelectorAll('#dtSlides .dt-slide');
     var dtDots = document.querySelectorAll('#dtDots .dt-dot');
@@ -954,6 +965,7 @@
       if(yearTimer) clearInterval(yearTimer);
     }
     if(dtTrigger) dtTrigger.addEventListener('click', openDtModal);
+    if(qrefDtTrigger) qrefDtTrigger.addEventListener('click', openDtModal);
     if(dtCloseBtn) dtCloseBtn.addEventListener('click', closeDtModal);
     if(dtModal) dtModal.addEventListener('click', function(e){ if(e.target === dtModal) closeDtModal(); });
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeDtModal(); });
