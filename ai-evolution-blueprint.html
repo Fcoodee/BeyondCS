@@ -168,6 +168,11 @@
   .chapter-band{position:absolute;top:0;bottom:0;opacity:.55;pointer-events:none;}
 
   .trigger-line{position:absolute;top:0;bottom:0;width:0;border-right:1px dashed var(--gold-dim);}
+  .qmark{
+    position:absolute;top:8%;transform:translate(50%,0);
+    font-size:15px;text-align:center;cursor:default;z-index:2;
+  }
+  .qmark-label{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;margin-top:2px;color:inherit;}
   .trigger-flag{position:absolute;top:-66px;transform:translateX(50%);width:160px;text-align:center;}
   .trigger-flag .yr{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;}
   .trigger-flag .lbl{font-size:10.5px;color:var(--ink-dim);line-height:1.3;margin-top:2px;}
@@ -540,10 +545,11 @@
               <div class="period">2012</div>
               <div class="name">AlexNet يفوز بـImageNet<br>التعلّم العميق ينتصر حاسماً</div>
             </div>
+            <div class="qmark" style="right:74%; color:var(--gold);" title="AlphaGo (DeepMind) يهزم بطل العالم لي سيدول في لعبة Go (2016) — إنجاز بارز لتعلّم التعزيز (Reinforcement Learning)، فرع مختلف عن التعلّم الخاضع للإشراف الذي ركّزت عليه المحطات السابقة؛ يتعلّم النظام من التجربة والخطأ عبر مكافآت تراكمية لا من بيانات مُصنَّفة مسبقاً.">🎮<span class="qmark-label">AlphaGo 2016</span></div>
             <div class="dot" style="right:82%;"></div>
-            <div class="node files" style="right:82%;" title="ورقة 'Attention is All You Need' (2017) تقدّم معمارية Transformer القائمة على آلية الانتباه — أساس كل نماذج اللغة الكبيرة اللاحقة (GPT وغيرها).">
+            <div class="node files" style="right:82%;" title="ورقة 'Attention is All You Need' (2017) تقدّم معمارية Transformer القائمة على آلية الانتباه — أساس كل نماذج اللغة الكبيرة اللاحقة. إطلاق ChatGPT العام (نوفمبر 2022) هو اللحظة التي عرف بها الجمهور العريض هذه التقنية لأول مرة، محوّلاً الذكاء الاصطناعي التوليدي من مجال بحثي متخصص إلى أداة يومية لمئات الملايين خلال أشهر قليلة فقط.">
               <div class="period">2017–2026</div>
-              <div class="name">معمارية Transformer<br>أساس نماذج اللغة الحديثة</div>
+              <div class="name">Transformer → ChatGPT (2022)<br>AI التوليدي يصل للجمهور</div>
             </div>
           </div>
         </div>
@@ -923,6 +929,58 @@
     </div>
   </div>
 
+  <!-- ============ MODEL COMPARISON SNAPSHOT ============ -->
+  <div class="story-header">
+    <div class="eyebrow">SNAPSHOT // مقارنة أبرز نماذج الذكاء الاصطناعي التوليدي</div>
+    <h2>أربعة نماذج بارزة: تاريخ الإطلاق، الشركة، السياق التقني</h2>
+  </div>
+
+  <div class="terms-note" style="margin-top:22px; margin-bottom:0;">
+    ⏱️ <b>تنبيه منهجي مهم:</b> على عكس كل المحطات التاريخية الأخرى في هذه الصفحة، هذا القسم <b>لقطة زمنية عند لحظة كتابته (2026)</b> لا تاريخاً راسخاً. الشركات المذكورة تُصدر نماذج جديدة باستمرار، والترتيب الزمني للإطلاق الأول لا يعكس بالضرورة القدرات الحالية. المعايير هنا موضوعية بحتة (تاريخ الإطلاق العام، الشركة المالكة، السياق التقني) بلا أي حكم على "الأفضل".
+  </div>
+
+  <div class="ethics-grid" style="margin-top:22px;">
+    <div class="ethics-card">
+      <div class="etag">OPENAI // نموذج GPT</div>
+      <div class="etitle">ChatGPT (مبني على GPT-3.5)</div>
+      <div class="edesc">
+        أطلقته OpenAI للجمهور العام في 30 نوفمبر 2022. كان أول نموذج ذكاء اصطناعي توليدي يصل لمئات الملايين من المستخدمين خلال أشهر قليلة فقط،
+        محوّلاً هذه التقنية من مجال بحثي متخصص إلى أداة يومية — وهو الحدث الذي يشير إليه معظم الجمهور العريض حين يذكر "الذكاء الاصطناعي" اليوم.
+      </div>
+      <div class="esource">الشركة: OpenAI (تأسست 2015) · الإطلاق العام: نوفمبر 2022</div>
+    </div>
+
+    <div class="ethics-card">
+      <div class="etag">ANTHROPIC // نموذج Claude</div>
+      <div class="etitle">Claude</div>
+      <div class="edesc">
+        أطلقته شركة Anthropic (تأسست 2021 على يد باحثين سابقين من OpenAI) للجمهور لأول مرة في 14 مارس 2023.
+        يعتمد على منهجية "الذكاء الاصطناعي الدستوري" (Constitutional AI) — تدريب النموذج وفق مجموعة مبادئ مكتوبة وصريحة بدل الاعتماد الكلي على التغذية الراجعة البشرية المكلفة.
+      </div>
+      <div class="esource">الشركة: Anthropic (تأسست 2021) · الإطلاق العام: مارس 2023</div>
+    </div>
+
+    <div class="ethics-card">
+      <div class="etag">GOOGLE DEEPMIND // نموذج Gemini</div>
+      <div class="etitle">Gemini</div>
+      <div class="edesc">
+        أطلقته Google DeepMind في 6 ديسمبر 2023 كنموذج "متعدد الوسائط" (Multimodal) مصمَّم منذ البداية للتعامل مع النصوص والصور معاً بشكل موحّد،
+        لا كإضافة لاحقة فوق نموذج نصي بحت — وحل تدريجياً محل مساعد Google السابق (Bard).
+      </div>
+      <div class="esource">الشركة: Google DeepMind · الإطلاق العام: ديسمبر 2023</div>
+    </div>
+
+    <div class="ethics-card">
+      <div class="etag">xAI // نموذج Grok</div>
+      <div class="etitle">Grok</div>
+      <div class="edesc">
+        أطلقته شركة xAI (أسسها إيلون ماسك في مارس 2023) كنسخة تجريبية محدودة لمشتركي X Premium في 4 نوفمبر 2023.
+        يتميز بارتباطه المباشر بمنصة X ووصوله لبيانات منشورات المنصة في الوقت الفعلي كميزة تصميمية أساسية، خلافاً للنماذج الأخرى المستقلة عن منصة تواصل اجتماعي بعينها.
+      </div>
+      <div class="esource">الشركة: xAI (تأسست 2023) · الإطلاق العام: نوفمبر 2023</div>
+    </div>
+  </div>
+
   <div class="story-header full-timeline">
     <div class="eyebrow">APPENDIX // مرجع سريع بكل التواريخ</div>
     <h2>الخط الزمني الكامل: كل الأحداث بالترتيب</h2>
@@ -938,9 +996,11 @@
     <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1972</div><div class="tl-text"><b>Prolog</b> تُطلق للاستدلال المنطقي المباشر</div></div>
     <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">1986</div><div class="tl-text"><b>الانتشار الخلفي</b> (Backpropagation) يُنشر — حل رياضي يسبق أدواته بعقدين</div></div>
     <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2012</div><div class="tl-text"><b>AlexNet</b> يفوز بمسابقة ImageNet — انتصار حاسم للتعلّم العميق</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">2016</div><div class="tl-text">🎮 <b>AlphaGo</b> يهزم لي سيدول في Go — إنجاز بارز لتعلّم التعزيز (Reinforcement Learning)</div></div>
     <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2016</div><div class="tl-text">تحقيق ProPublica يكشف تحيّز <b>خوارزمية COMPAS</b> في العدالة الجنائية</div></div>
     <div class="tl-item tl-c5"><div class="tl-dot"></div><div class="tl-year">2017</div><div class="tl-text">ورقة <b>"Attention is All You Need"</b> — معمارية Transformer</div></div>
     <div class="tl-item tl-c5"><div class="tl-dot"></div><div class="tl-year">2018</div><div class="tl-text">أمازون توقف <b>أداة التوظيف الآلي</b> المتحيزة جنسياً</div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">نوفمبر 2022</div><div class="tl-text">🚀 إطلاق <b>ChatGPT</b> للجمهور العام — الذكاء الاصطناعي التوليدي يصل لمئات الملايين خلال أشهر</div></div>
     <div class="tl-item tl-c5"><div class="tl-dot"></div><div class="tl-year">2024–2026</div><div class="tl-text">دخول <b>EU AI Act</b> حيز التنفيذ التدريجي — أول تنظيم قانوني شامل</div></div>
   </div>
 

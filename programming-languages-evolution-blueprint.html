@@ -148,6 +148,11 @@
   .chapter-band{position:absolute;top:0;bottom:0;opacity:.55;pointer-events:none;}
 
   .trigger-line{position:absolute;top:0;bottom:0;width:0;border-right:1px dashed var(--gold-dim);}
+  .qmark{
+    position:absolute;top:8%;transform:translate(50%,0);
+    font-size:15px;text-align:center;cursor:default;z-index:2;
+  }
+  .qmark-label{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;margin-top:2px;color:inherit;}
   .trigger-flag{position:absolute;top:-66px;transform:translateX(50%);width:160px;text-align:center;}
   .trigger-flag .yr{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;}
   .trigger-flag .lbl{font-size:10.5px;color:var(--ink-dim);line-height:1.3;margin-top:2px;}
@@ -356,27 +361,33 @@
       <div class="chapters-track">
         <div class="chapter-tag" style="right:0%; width:15%; background:color-mix(in srgb, var(--c0) 22%, var(--panel));">
           <div class="cnum" style="color:var(--c0);">CH.00 · 1940s</div>
-          <div class="cname">العصر الآلي: الأسمبلي</div>
+          <div class="cname lang-ar">العصر الآلي: الأسمبلي</div>
+          <div class="cname lang-en">The Machine Age: Assembly</div>
         </div>
         <div class="chapter-tag" style="right:15%; width:15%; background:color-mix(in srgb, var(--c1) 22%, var(--panel));">
           <div class="cnum" style="color:var(--c1);">CH.01 · 1957–64</div>
-          <div class="cname">ميلاد اللغات العليا</div>
+          <div class="cname lang-ar">ميلاد اللغات العليا</div>
+          <div class="cname lang-en">The Birth of High-Level Languages</div>
         </div>
         <div class="chapter-tag" style="right:30%; width:20%; background:color-mix(in srgb, var(--c2) 22%, var(--panel));">
           <div class="cnum" style="color:var(--c2);">CH.02 · 1970–84</div>
-          <div class="cname">البنيوية وقواعد البيانات المكتبية</div>
+          <div class="cname lang-ar">البنيوية وقواعد البيانات المكتبية</div>
+          <div class="cname lang-en">Structured Programming & Desktop Databases</div>
         </div>
         <div class="chapter-tag" style="right:50%; width:18%; background:color-mix(in srgb, var(--c3) 22%, var(--panel));">
           <div class="cnum" style="color:var(--c3);">CH.03 · 1991–2002</div>
-          <div class="cname">البرمجة المرئية و.NET</div>
+          <div class="cname lang-ar">البرمجة المرئية و.NET</div>
+          <div class="cname lang-en">Visual Programming & .NET</div>
         </div>
         <div class="chapter-tag" style="right:68%; width:16%; background:color-mix(in srgb, var(--c4) 22%, var(--panel));">
           <div class="cnum" style="color:var(--c4);">CH.04 · 1995–2000s</div>
-          <div class="cname">قواعد البيانات والويب المبكر</div>
+          <div class="cname lang-ar">قواعد البيانات والويب المبكر</div>
+          <div class="cname lang-en">Databases & the Early Web</div>
         </div>
         <div class="chapter-tag" style="right:84%; width:16%; background:color-mix(in srgb, var(--c5) 22%, var(--panel));">
           <div class="cnum" style="color:var(--c5);">CH.05 · 2000s–2026</div>
-          <div class="cname">البيانات الضخمة والتنقيب</div>
+          <div class="cname lang-ar">البيانات الضخمة والتنقيب</div>
+          <div class="cname lang-en">Big Data & Data Mining</div>
         </div>
       </div>
     </div>
@@ -385,11 +396,11 @@
     <div class="axis" style="margin-top:6px;">
       <div></div>
       <div class="triggers" style="grid-column: 2/-1; height:0;">
-        <div class="trigger-flag" style="right:15%;"><div class="yr">1957</div><div class="lbl">📗 Fortran — أول لغة عليا</div></div>
-        <div class="trigger-flag" style="right:30%;"><div class="yr">1972</div><div class="lbl">⚙️ C — لغة أنظمة التشغيل</div></div>
-        <div class="trigger-flag" style="right:50%;"><div class="yr">1991</div><div class="lbl">🖱️ Visual Basic + HTML معاً</div></div>
-        <div class="trigger-flag" style="right:68%;"><div class="yr">1995</div><div class="lbl">🔗 Java + MySQL + PHP معاً</div></div>
-        <div class="trigger-flag" style="right:84%;"><div class="yr">2000s</div><div class="lbl">📊 انفجار البيانات الضخمة</div></div>
+        <div class="trigger-flag" style="right:15%;"><div class="yr">1957</div><div class="lbl"><span class="lang-ar">📗 Fortran — أول لغة عليا</span><span class="lang-en">📗 Fortran — the first high-level language</span></div></div>
+        <div class="trigger-flag" style="right:30%;"><div class="yr">1972</div><div class="lbl"><span class="lang-ar">⚙️ C — لغة أنظمة التشغيل</span><span class="lang-en">⚙️ C — the operating-systems language</span></div></div>
+        <div class="trigger-flag" style="right:50%;"><div class="yr">1991</div><div class="lbl"><span class="lang-ar">🖱️ Visual Basic + HTML معاً</span><span class="lang-en">🖱️ Visual Basic + HTML, same year</span></div></div>
+        <div class="trigger-flag" style="right:68%;"><div class="yr">1995</div><div class="lbl"><span class="lang-ar">🔗 Java + MySQL + PHP معاً</span><span class="lang-en">🔗 Java + MySQL + PHP, same year</span></div></div>
+        <div class="trigger-flag" style="right:84%;"><div class="yr">2000s</div><div class="lbl"><span class="lang-ar">📊 انفجار البيانات الضخمة</span><span class="lang-en">📊 The Big Data explosion</span></div></div>
       </div>
     </div>
 
@@ -409,10 +420,10 @@
     <!-- Board -->
     <div class="board">
       <div class="lane-labels">
-        <div class="lane-label identity"><div class="tag">لغات البرمجة الأساسية<small>CORE LANGUAGES · ASM → PYTHON</small></div></div>
-        <div class="lane-label files"><div class="tag">بيئات التطوير والبرمجة المرئية<small>IDE / VISUAL · FOXPRO → CLOUD IDE</small></div></div>
-        <div class="lane-label gateway"><div class="tag">قواعد البيانات والبيانات<small>DATABASES · DBF → UNSTRUCTURED</small></div></div>
-        <div class="lane-label comms"><div class="tag">الويب والبيانات الضخمة<small>WEB & BIG DATA · HTML → MINING</small></div></div>
+        <div class="lane-label identity"><div class="tag"><span class="lang-ar">لغات البرمجة الأساسية</span><span class="lang-en">Core Programming Languages</span><small>CORE LANGUAGES · ASM → PYTHON</small></div></div>
+        <div class="lane-label files"><div class="tag"><span class="lang-ar">بيئات التطوير والبرمجة المرئية</span><span class="lang-en">Development Environments & Visual Programming</span><small>IDE / VISUAL · FOXPRO → CLOUD IDE</small></div></div>
+        <div class="lane-label gateway"><div class="tag"><span class="lang-ar">قواعد البيانات والبيانات</span><span class="lang-en">Databases & Data</span><small>DATABASES · DBF → UNSTRUCTURED</small></div></div>
+        <div class="lane-label comms"><div class="tag"><span class="lang-ar">الويب والبيانات الضخمة</span><span class="lang-en">The Web & Big Data</span><small>WEB & BIG DATA · HTML → MINING</small></div></div>
       </div>
 
       <div class="lanes">
@@ -436,34 +447,42 @@
         <div class="lane identity">
           <div class="lane-track">
             <div class="dot" style="right:2%;"></div>
-            <div class="node identity" style="right:2%;" title="برمجة مباشرة على مستوى المسجلات والذاكرة — لا تجريد، ولا أخطاء تُغتفر.">
-              <div class="period">أواخر 1940s</div>
-              <div class="name">لغة الآلة والأسمبلي</div>
+            <div class="node identity" style="right:2%;" title="برمجة مباشرة على مستوى المسجلات والذاكرة — لا تجريد، ولا أخطاء تُغتفر." data-en-title="Programming directly at the level of registers and memory — no abstraction, and no forgiving errors.">
+              <div class="period"><span class="lang-ar">أواخر 1940s</span><span class="lang-en">Late 1940s</span></div>
+              <div class="name lang-ar">لغة الآلة والأسمبلي</div>
+              <div class="name lang-en">Machine Language & Assembly</div>
             </div>
             <div class="dot" style="right:18%;"></div>
-            <div class="node identity" style="right:18%;" title="فورتران (1957) أول لغة عليا حقيقية للحوسبة العلمية، ثم كوبول (1959) للأعمال، ثم بيسك (1964) لتبسيط تعلّم البرمجة.">
+            <div class="node identity" style="right:18%;" title="فورتران (1957) أول لغة عليا حقيقية للحوسبة العلمية، ثم كوبول (1959) للأعمال، ثم بيسك (1964) لتبسيط تعلّم البرمجة — بيسك تحديداً ستصبح لاحقاً أول منتج تجاري لشركة مايكروسوفت (Altair BASIC، 1975؛ انظر صفحة علوم الحاسوب)." data-en-title="Fortran (1957) is the first true high-level language for scientific computing, followed by Cobol (1959) for business, then BASIC (1964) to simplify learning to program — BASIC specifically would later become Microsoft's first commercial product (Altair BASIC, 1975; see the Computer Science page).">
               <div class="period">1957–1964</div>
               <div class="name">Fortran → Cobol<br>→ BASIC</div>
             </div>
             <div class="dot" style="right:34%;"></div>
-            <div class="node identity" style="right:34%;" title="باسكال (1970) صُممت لتعليم البرمجة المنضبطة، ثم سي (1972) أصبحت لغة أنظمة التشغيل والبرمجيات منخفضة المستوى.">
+            <div class="node identity" style="right:34%;" title="باسكال (1970) صُممت لتعليم البرمجة المنضبطة، ثم سي (1972) أصبحت لغة أنظمة التشغيل والبرمجيات منخفضة المستوى." data-en-title="Pascal (1970) was designed to teach disciplined programming; C (1972) then became the language of operating systems and low-level software.">
               <div class="period">1970–1972</div>
-              <div class="name">Pascal للتعليم<br>C لأنظمة التشغيل</div>
+              <div class="name lang-ar">Pascal للتعليم<br>C لأنظمة التشغيل</div>
+              <div class="name lang-en">Pascal for teaching<br>C for operating systems</div>
             </div>
+
+            <!-- C++ marker -->
+            <div class="qmark" style="right:46%; color:var(--gold);" title="بيارن ستروستروب يطوّر C++ في مختبرات بيل، بدءاً بـ'C with Classes' (1979) وصولاً لاسمها الحالي (1983) وأول إصدار تجاري (1985) — تُدخل البرمجة الكائنية (OOP) مباشرة إلى عائلة لغات C، لتصبح لاحقاً أساساً لأنظمة تشغيل ومحركات ألعاب وأنظمة عالية الأداء." data-en-title="Bjarne Stroustrup develops C++ at Bell Labs, starting as 'C with Classes' (1979), renamed C++ (1983), with its first commercial release (1985) — bringing object-oriented programming (OOP) directly into the C language family, later becoming the foundation for operating systems, game engines, and high-performance systems.">➕<span class="qmark-label">1979–85</span></div>
             <div class="dot" style="right:58%;"></div>
-            <div class="node identity" style="right:58%;" title="جافا (1995) تدخل كلغة متعددة المنصات (Write Once, Run Anywhere) موازية لموجة البرمجة المرئية في نفس الحقبة.">
+            <div class="node identity" style="right:58%;" title="جافا (1995) تدخل كلغة متعددة المنصات (Write Once, Run Anywhere) موازية لموجة البرمجة المرئية في نفس الحقبة." data-en-title="Java (1995) arrives as a cross-platform language (Write Once, Run Anywhere), paralleling the visual-programming wave of the same era.">
               <div class="period">1995</div>
-              <div class="name">Java كتقاطع<br>لغة متعددة المنصات</div>
+              <div class="name lang-ar">Java كتقاطع<br>لغة متعددة المنصات</div>
+              <div class="name lang-en">Java as an intersection<br>A cross-platform language</div>
             </div>
             <div class="dot" style="right:71%;"></div>
-            <div class="node identity" style="right:71%;" title="نضوج C وJava كلغتي مؤسسات، وتحوّلهما ليصبحا الأساس الخلفي (Backend) لأنظمة الويب الكبرى.">
+            <div class="node identity" style="right:71%;" title="نضوج C وJava كلغتي مؤسسات، وتحوّلهما ليصبحا الأساس الخلفي (Backend) لأنظمة الويب الكبرى." data-en-title="C and Java mature as enterprise languages, becoming the backend foundation of major web systems.">
               <div class="period">1995–2000s</div>
-              <div class="name">نضوج C/Java<br>أساس أنظمة الويب الخلفية</div>
+              <div class="name lang-ar">نضوج C/Java<br>أساس أنظمة الويب الخلفية</div>
+              <div class="name lang-en">C/Java mature<br>Foundation of backend web systems</div>
             </div>
             <div class="dot" style="right:90%;"></div>
-            <div class="node identity" style="right:90%;" title="بايثون تتصدر المشهد كلغة موحّدة لعلم البيانات والذكاء الاصطناعي، بفضل بساطتها وأطر عملها الغنية.">
+            <div class="node identity" style="right:90%;" title="بايثون تتصدر المشهد كلغة موحّدة لعلم البيانات والذكاء الاصطناعي، بفضل بساطتها وأطر عملها الغنية." data-en-title="Python takes the lead as a unified language for data science and AI, thanks to its simplicity and rich frameworks.">
               <div class="period">2000s–2026</div>
-              <div class="name">Python تتصدر<br>لغة موحّدة لـ Data/AI</div>
+              <div class="name lang-ar">Python تتصدر<br>لغة موحّدة لـ Data/AI</div>
+              <div class="name lang-en">Python takes the lead<br>A unified language for Data/AI</div>
             </div>
           </div>
         </div>
@@ -472,39 +491,45 @@
         <div class="lane files">
           <div class="lane-track">
             <div class="dot" style="right:2%;"></div>
-            <div class="node files empty" style="right:2%;" title="لا بيئات تطوير بعد؛ البرمجة تتم عبر البطاقات المثقّبة وأشرطة الورق.">
-              <div class="period">أواخر 1940s</div>
-              <div class="name">لا بيئات تطوير بعد<br>بطاقات مثقّبة</div>
+            <div class="node files empty" style="right:2%;" title="لا بيئات تطوير بعد؛ البرمجة تتم عبر البطاقات المثقّبة وأشرطة الورق." data-en-title="No development environments yet; programming happens via punch cards and paper tape.">
+              <div class="period"><span class="lang-ar">أواخر 1940s</span><span class="lang-en">Late 1940s</span></div>
+              <div class="name lang-ar">لا بيئات تطوير بعد<br>بطاقات مثقّبة</div>
+              <div class="name lang-en">No development environments yet<br>Punch cards</div>
             </div>
             <div class="dot" style="right:18%;"></div>
-            <div class="node files empty" style="right:18%;" title="مترجمات نصية بسيطة (Compilers) بلا أي واجهة مرئية — البرمجة سطر أوامر بحت.">
+            <div class="node files empty" style="right:18%;" title="مترجمات نصية بسيطة (Compilers) بلا أي واجهة مرئية — البرمجة سطر أوامر بحت." data-en-title="Simple text-based compilers with no visual interface at all — pure command-line programming.">
               <div class="period">1957–1964</div>
-              <div class="name">مترجمات نصية فقط<br>لا واجهات مرئية</div>
+              <div class="name lang-ar">مترجمات نصية فقط<br>لا واجهات مرئية</div>
+              <div class="name lang-en">Text compilers only<br>No visual interfaces</div>
             </div>
             <div class="dot" style="right:34%;"></div>
-            <div class="node files" style="right:34%;" title="FoxBASE ثم FoxPro (1984) — أول دمج حقيقي بين لغة برمجة وقاعدة بيانات مدمجة في تطبيق مكتبي واحد.">
+            <div class="node files" style="right:34%;" title="FoxBASE ثم FoxPro (1984) — أول دمج حقيقي بين لغة برمجة وقاعدة بيانات مدمجة في تطبيق مكتبي واحد." data-en-title="FoxBASE, then FoxPro (1984) — the first real fusion of a programming language and an embedded database into a single desktop application.">
               <div class="period">1984</div>
-              <div class="name">FoxBASE / FoxPro<br>برمجة + قاعدة بيانات معاً</div>
+              <div class="name lang-ar">FoxBASE / FoxPro<br>برمجة + قاعدة بيانات معاً</div>
+              <div class="name lang-en">FoxBASE / FoxPro<br>Programming + database, together</div>
             </div>
             <div class="dot" style="right:51%;"></div>
-            <div class="node files" style="right:51%;" title="Visual Basic (1991) يُدخل مفهوم البرمجة المرئية بالسحب والإفلات — ثورة في سهولة بناء واجهات سطح المكتب.">
+            <div class="node files" style="right:51%;" title="Visual Basic (1991) يُدخل مفهوم البرمجة المرئية بالسحب والإفلات — ثورة في سهولة بناء واجهات سطح المكتب." data-en-title="Visual Basic (1991) introduces the concept of drag-and-drop visual programming — a revolution in how easily desktop interfaces could be built.">
               <div class="period">1991</div>
-              <div class="name">Visual Basic<br>البرمجة المرئية Drag & Drop</div>
+              <div class="name lang-ar">Visual Basic<br>البرمجة المرئية Drag & Drop</div>
+              <div class="name lang-en">Visual Basic<br>Drag & Drop visual programming</div>
             </div>
             <div class="dot" style="right:65%;"></div>
-            <div class="node files" style="right:65%;" title=".NET Framework (2002) يوحّد لغات مايكروسوفت (C# وVB.NET) تحت بيئة تطوير واحدة متكاملة.">
+            <div class="node files" style="right:65%;" title=".NET Framework (2002) يوحّد لغات مايكروسوفت (C# وVB.NET) تحت بيئة تطوير واحدة متكاملة." data-en-title=".NET Framework (2002) unifies Microsoft's languages (C# and VB.NET) under one integrated development environment.">
               <div class="period">2002</div>
               <div class="name">.NET Framework<br>C# و VB.NET</div>
             </div>
             <div class="dot" style="right:76%;"></div>
-            <div class="node files" style="right:76%;" title="ذروة نضج تطبيقات سطح المكتب عبر Windows Forms وWPF، قبل أن يبدأ الاهتمام بالتحول تدريجياً نحو الويب.">
+            <div class="node files" style="right:76%;" title="ذروة نضج تطبيقات سطح المكتب عبر Windows Forms وWPF، قبل أن يبدأ الاهتمام بالتحول تدريجياً نحو الويب." data-en-title="Desktop applications reach peak maturity via Windows Forms and WPF, before attention gradually begins shifting toward the web.">
               <div class="period">2000s</div>
-              <div class="name">تطبيقات سطح المكتب<br>Windows Forms / WPF</div>
+              <div class="name lang-ar">تطبيقات سطح المكتب<br>Windows Forms / WPF</div>
+              <div class="name lang-en">Desktop applications<br>Windows Forms / WPF</div>
             </div>
             <div class="dot" style="right:90%;"></div>
-            <div class="node files" style="right:90%;" title="بيئات تطوير سحابية ودفاتر تفاعلية (Jupyter) وVS Code تحل محل بيئات سطح المكتب التقليدية.">
+            <div class="node files" style="right:90%;" title="بيئات تطوير سحابية ودفاتر تفاعلية (Jupyter) وVS Code تحل محل بيئات سطح المكتب التقليدية." data-en-title="Cloud development environments, interactive notebooks (Jupyter), and VS Code replace traditional desktop environments.">
               <div class="period">2010s–2026</div>
-              <div class="name">بيئات سحابية<br>Jupyter / VS Code</div>
+              <div class="name lang-ar">بيئات سحابية<br>Jupyter / VS Code</div>
+              <div class="name lang-en">Cloud environments<br>Jupyter / VS Code</div>
             </div>
           </div>
         </div>
@@ -513,34 +538,40 @@
         <div class="lane gateway">
           <div class="lane-track">
             <div class="dot" style="right:2%;"></div>
-            <div class="node gateway empty" style="right:2%;" title="لا مفهوم قواعد بيانات بعد؛ البيانات تُخزَّن كأشرطة أو بطاقات تسلسلية.">
-              <div class="period">أواخر 1940s</div>
-              <div class="name">لا قواعد بيانات بعد</div>
+            <div class="node gateway empty" style="right:2%;" title="لا مفهوم قواعد بيانات بعد؛ البيانات تُخزَّن كأشرطة أو بطاقات تسلسلية." data-en-title="No concept of databases yet; data is stored as sequential tapes or cards.">
+              <div class="period"><span class="lang-ar">أواخر 1940s</span><span class="lang-en">Late 1940s</span></div>
+              <div class="name lang-ar">لا قواعد بيانات بعد</div>
+              <div class="name lang-en">No databases yet</div>
             </div>
             <div class="dot" style="right:18%;"></div>
-            <div class="node gateway empty" style="right:18%;" title="ملفات مسطحة (Flat Files) بسيطة تُقرأ تسلسلياً — لا مفهوم SQL أو العلاقات بعد.">
+            <div class="node gateway empty" style="right:18%;" title="ملفات مسطحة (Flat Files) بسيطة تُقرأ تسلسلياً — لا مفهوم SQL أو العلاقات بعد." data-en-title="Simple flat files read sequentially — no concept of SQL or relations yet.">
               <div class="period">1957–1964</div>
-              <div class="name">ملفات مسطحة<br>لا مفهوم SQL بعد</div>
+              <div class="name lang-ar">ملفات مسطحة<br>لا مفهوم SQL بعد</div>
+              <div class="name lang-en">Flat files<br>No SQL concept yet</div>
             </div>
             <div class="dot" style="right:34%;"></div>
-            <div class="node gateway" style="right:34%;" title="قواعد بيانات FoxPro المحلية بصيغة DBF — أول تجربة واسعة الانتشار لقاعدة بيانات مكتبية بسيطة.">
+            <div class="node gateway" style="right:34%;" title="قواعد بيانات FoxPro المحلية بصيغة DBF — أول تجربة واسعة الانتشار لقاعدة بيانات مكتبية بسيطة." data-en-title="FoxPro's local DBF-format databases — the first widely adopted simple desktop database experience.">
               <div class="period">1984</div>
-              <div class="name">قواعد بيانات FoxPro<br>صيغة DBF محلية</div>
+              <div class="name lang-ar">قواعد بيانات FoxPro<br>صيغة DBF محلية</div>
+              <div class="name lang-en">FoxPro databases<br>Local DBF format</div>
             </div>
             <div class="dot" style="right:58%;"></div>
-            <div class="node gateway empty" style="right:58%;" title="بدايات توسع قواعد البيانات العلائقية المؤسسية (Oracle, SQL Server) موازية لموجة سطح المكتب المرئي.">
+            <div class="node gateway empty" style="right:58%;" title="بدايات توسع قواعد البيانات العلائقية المؤسسية (Oracle, SQL Server) موازية لموجة سطح المكتب المرئي." data-en-title="The early expansion of enterprise relational databases (Oracle, SQL Server), paralleling the visual-desktop wave.">
               <div class="period">1991–1995</div>
-              <div class="name">توسع قواعد البيانات<br>العلائقية المؤسسية</div>
+              <div class="name lang-ar">توسع قواعد البيانات<br>العلائقية المؤسسية</div>
+              <div class="name lang-en">Expansion of enterprise<br>relational databases</div>
             </div>
             <div class="dot" style="right:71%;"></div>
-            <div class="node gateway" style="right:71%;" title="SQL يصبح معياراً موحّداً، وMySQL (1995) يفتح الباب للمشاريع مفتوحة المصدر — يترسّخ هنا مفهوم 'البيانات المهيكلة'.">
+            <div class="node gateway" style="right:71%;" title="SQL يصبح معياراً موحّداً، وMySQL (1995) يفتح الباب للمشاريع مفتوحة المصدر — يترسّخ هنا مفهوم 'البيانات المهيكلة'." data-en-title="SQL becomes a unified standard, and MySQL (1995) opens the door to open-source projects — the concept of 'structured data' takes hold here.">
               <div class="period">1995</div>
-              <div class="name">SQL معياراً + MySQL<br>ميلاد "البيانات المهيكلة"</div>
+              <div class="name lang-ar">SQL معياراً + MySQL<br>ميلاد "البيانات المهيكلة"</div>
+              <div class="name lang-en">SQL as standard + MySQL<br>"Structured data" is born</div>
             </div>
             <div class="dot" style="right:90%;"></div>
-            <div class="node gateway" style="right:90%;" title="البيانات غير المهيكلة (نصوص، صور، فيديو، سجلات استشعار) تتجاوز طاقة SQL التقليدي، وتفرض أدوات جديدة كلياً.">
+            <div class="node gateway" style="right:90%;" title="البيانات غير المهيكلة (نصوص، صور، فيديو، سجلات استشعار) تتجاوز طاقة SQL التقليدي، وتفرض أدوات جديدة كلياً." data-en-title="Unstructured data (text, images, video, sensor logs) exceeds traditional SQL's capacity, forcing entirely new tools.">
               <div class="period">2000s–2026</div>
-              <div class="name">بيانات غير مهيكلة<br>تتجاوز طاقة SQL التقليدي</div>
+              <div class="name lang-ar">بيانات غير مهيكلة<br>تتجاوز طاقة SQL التقليدي</div>
+              <div class="name lang-en">Unstructured data<br>Exceeds traditional SQL's capacity</div>
             </div>
           </div>
         </div>
@@ -549,32 +580,38 @@
         <div class="lane comms">
           <div class="lane-track">
             <div class="dot" style="right:2%;"></div>
-            <div class="node comms empty" style="right:2%;" title="لا وجود لمفهوم الويب أو الشبكات بعد.">
+            <div class="node comms empty" style="right:2%;" title="لا وجود لمفهوم الويب أو الشبكات بعد." data-en-title="No concept of the web or networks exists yet.">
               <div class="period">—</div>
-              <div class="name">لا وجود للويب بعد</div>
+              <div class="name lang-ar">لا وجود للويب بعد</div>
+              <div class="name lang-en">No web yet</div>
             </div>
             <div class="dot" style="right:18%;"></div>
-            <div class="node comms empty" style="right:18%;" title="لا وجود بعد؛ الحواسيب لا تزال معزولة عن بعضها.">
+            <div class="node comms empty" style="right:18%;" title="لا وجود بعد؛ الحواسيب لا تزال معزولة عن بعضها." data-en-title="Doesn't exist yet; computers are still isolated from each other.">
               <div class="period">—</div>
-              <div class="name">لا وجود بعد</div>
+              <div class="name lang-ar">لا وجود بعد</div>
+              <div class="name lang-en">Doesn't exist yet</div>
             </div>
             <div class="dot" style="right:34%;"></div>
-            <div class="node comms empty" style="right:34%;" title="لا وجود بعد لمفهوم الويب كما نعرفه اليوم، رغم وجود شبكات أكاديمية بحثية محدودة.">
+            <div class="node comms empty" style="right:34%;" title="لا وجود بعد لمفهوم الويب كما نعرفه اليوم، رغم وجود شبكات أكاديمية بحثية محدودة." data-en-title="The web as we know it today doesn't exist yet, despite limited academic research networks.">
               <div class="period">1970–1984</div>
-              <div class="name">لا وجود بعد<br>شبكات أكاديمية محدودة</div>
+              <div class="name lang-ar">لا وجود بعد<br>شبكات أكاديمية محدودة</div>
+              <div class="name lang-en">Doesn't exist yet<br>Limited academic networks</div>
             </div>
             <div class="dot" style="right:58%;"></div>
-            <div class="node comms" style="right:58%;" title="HTML (1991) يظهر بالتزامن الغريب مع Visual Basic في نفس العام — بداية تصميم صفحات الويب الثابتة.">
+            <div class="node comms" style="right:58%;" title="HTML (1991) يظهر بالتزامن الغريب مع Visual Basic في نفس العام — بداية تصميم صفحات الويب الثابتة." data-en-title="HTML (1991) appears in an odd coincidence alongside Visual Basic in the same year — the beginning of static web page design.">
               <div class="period">1991</div>
-              <div class="name">HTML يظهر<br>صفحات ويب ثابتة</div>
+              <div class="name lang-ar">HTML يظهر<br>صفحات ويب ثابتة</div>
+              <div class="name lang-en">HTML appears<br>Static web pages</div>
             </div>
             <div class="dot" style="right:71%;"></div>
-            <div class="node comms" style="right:71%;" title="PHP (1995) يضيف منطقاً برمجياً خلف صفحات HTML — ميلاد الويب الديناميكي التفاعلي المرتبط بقواعد البيانات.">
+            <div class="node comms" style="right:71%;" title="PHP (1995) يضيف منطقاً برمجياً خلف صفحات HTML — ميلاد الويب الديناميكي التفاعلي المرتبط بقواعد البيانات. في نفس العام تقريباً، تُطلق Netscape جافاسكريبت (برندان آيش) لتشغيل منطق تفاعلي داخل المتصفح نفسه (Client-Side) — مكمّلة لا منافسة لـPHP الذي يعمل من جهة الخادم (Server-Side)." data-en-title="PHP (1995) adds programming logic behind HTML pages — the birth of the dynamic, interactive, database-connected web. In roughly the same year, Netscape releases JavaScript (Brendan Eich) to run interactive logic inside the browser itself (client-side) — complementing, not competing with, server-side PHP.">
               <div class="period">1995</div>
-              <div class="name">PHP<br>الويب الديناميكي التفاعلي</div>
+              <div class="name lang-ar">PHP<br>الويب الديناميكي التفاعلي</div>
+              <div class="name lang-en">PHP<br>The dynamic, interactive web</div>
             </div>
+            <div class="qmark" style="right:66%; color:var(--gold);" title="برندان آيش يطوّر جافاسكريبت في نتسكيب خلال 10 أيام فقط (1995) — تمنح صفحات HTML الثابتة القدرة على التفاعل داخل المتصفح مباشرة، دون انتظار استجابة من الخادم." data-en-title="Brendan Eich develops JavaScript at Netscape in just 10 days (1995) — giving static HTML pages the ability to interact directly in the browser, without waiting for a server response.">🟨<span class="qmark-label">JS 1995</span></div>
             <div class="dot" style="right:90%;"></div>
-            <div class="node comms" style="right:90%;" title="البيانات الضخمة (Big Data) والتنقيب فيها (Data Mining) يصبحان ضرورة لتحليل التدفقات الهائلة من الويب والتطبيقات.">
+            <div class="node comms" style="right:90%;" title="البيانات الضخمة (Big Data) والتنقيب فيها (Data Mining) يصبحان ضرورة لتحليل التدفقات الهائلة من الويب والتطبيقات." data-en-title="Big Data and data mining become a necessity for analyzing the massive streams flowing from the web and applications.">
               <div class="period">2000s–2026</div>
               <div class="name">Big Data<br>+ Data Mining</div>
             </div>
@@ -585,7 +622,7 @@
     </div>
   </div>
 
-  <div class="legend">
+  <div class="legend lang-ar">
     <div class="item"><span class="swatch" style="background:var(--lane-identity)"></span> لغات البرمجة الأساسية</div>
     <div class="item"><span class="swatch" style="background:var(--lane-files)"></span> بيئات التطوير والبرمجة المرئية</div>
     <div class="item"><span class="swatch" style="background:var(--lane-gateway)"></span> قواعد البيانات والبيانات</div>
@@ -593,8 +630,16 @@
     <div class="item">┄┄ خط ذهبي متقطع = حدث تحوّل مشترك أثّر على أكثر من مسار في نفس اللحظة (لاحظ تزامن 1991 و1995)</div>
     <div class="item">💡 مرّر المؤشر فوق أي بطاقة لقراءة السياق الكامل</div>
   </div>
+  <div class="legend lang-en">
+    <div class="item"><span class="swatch" style="background:var(--lane-identity)"></span> Core Programming Languages</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-files)"></span> Development Environments & Visual Programming</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-gateway)"></span> Databases & Data</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-comms)"></span> The Web & Big Data</div>
+    <div class="item">┄┄ Dashed gold line = a shared turning point affecting more than one track at once (note the 1991 and 1995 coincidences)</div>
+    <div class="item">💡 Hover over any card to read the full context</div>
+  </div>
 
-  <div class="note">
+  <div class="note lang-ar">
     <b>لإعادة بنائه في Microsoft Visio:</b> نفس نمط <b>Swimlane Timeline</b> — أقرب قالب <code>File → New → Schedule → Timeline</code>
     أو <code>Cross-Functional Flowchart</code>. لاحظ نقطتي التزامن المثيرتين للاهتمام كمعالم بصرية: <b>1991</b> (Visual Basic وHTML في نفس العام،
     مسارين مختلفين تماماً)، و<b>1995</b> (Java وMySQL وPHP في نفس العام) — تستحقان تصميم Milestone مشترك بارز في Visio.
@@ -602,14 +647,25 @@
     <b>ملاحظة تقاطع مع صفحة "علوم الحاسوب":</b> لغتا C وJava مذكورتان أيضاً في تلك الصفحة ضمن سياق أوسع (تطور الحوسبة عموماً)؛
     هنا تُعرضان من زاوية مختلفة تحديداً — أثرهما على تطور لغات البرمجة وبيئات التطوير نفسها.
   </div>
+  <div class="note lang-en">
+    <b>To rebuild this in Microsoft Visio:</b> the same <b>Swimlane Timeline</b> pattern — the closest built-in template is
+    <code>File → New → Schedule → Timeline</code> or <code>Cross-Functional Flowchart</code>. Note the two interesting coincidences
+    as visual landmarks: <b>1991</b> (Visual Basic and HTML, same year, two completely different tracks), and <b>1995</b> (Java, MySQL,
+    and PHP, same year) — both deserve a prominent shared Milestone design in Visio.
+    <br><br>
+    <b>Cross-reference note with the "Computer Science" page:</b> C and Java are also mentioned on that page within a broader context
+    (the evolution of computing in general); here they're shown from a specifically different angle — their impact on the evolution
+    of programming languages and development environments themselves.
+  </div>
 
   <!-- ============ RICH NARRATIVE SECTION ============ -->
   <div class="story-header">
-    <div class="eyebrow">FULL NARRATIVE // كل محطة بتفاصيلها الكاملة</div>
-    <h2>الرحلة الكاملة: من سطر أوامر معزول إلى نظام يحلل ملايين السجلات</h2>
+    <div class="eyebrow">FULL NARRATIVE // <span class="lang-ar">كل محطة بتفاصيلها الكاملة</span><span class="lang-en">Every station, in full detail</span></div>
+    <h2 class="lang-ar">الرحلة الكاملة: من سطر أوامر معزول إلى نظام يحلل ملايين السجلات</h2>
+    <h2 class="lang-en">The Full Journey: From an Isolated Command Line to a System Analyzing Millions of Records</h2>
   </div>
 
-  <div class="role-strip">
+  <div class="role-strip lang-ar">
     <div class="role">⌨️ مبرمج يكتب مباشرة بلغة الآلة</div>
     <span class="arrow">←</span>
     <div class="role">📐 مطوّر لغات عليا هيكلية</div>
@@ -620,6 +676,17 @@
     <span class="arrow">←</span>
     <div class="role">📊 محلل بيانات ضخمة ومنقّب فيها</div>
   </div>
+  <div class="role-strip lang-en">
+    <div class="role">⌨️ A programmer writing directly in machine language</div>
+    <span class="arrow">←</span>
+    <div class="role">📐 A structured high-level language developer</div>
+    <span class="arrow">←</span>
+    <div class="role">🖱️ A visual desktop interface designer</div>
+    <span class="arrow">←</span>
+    <div class="role">🌐 A database and dynamic web engineer</div>
+    <span class="arrow">←</span>
+    <div class="role">📊 A big-data analyst and miner</div>
+  </div>
 
   <div class="story-grid">
 
@@ -628,34 +695,45 @@
       <div class="story-card-head">
         <div class="sc-title-block">
           <div class="sc-num">المحطة 00 // MACHINE ERA</div>
-          <div class="sc-title">العصر الآلي: حين كانت البرمجة حواراً مباشراً مع المعالج</div>
-          <div class="sc-hook">لا متغيرات بأسماء مفهومة، لا حلقات تكرار مريحة — فقط عناوين ذاكرة ومسجلات، وكل خطأ يعني إعادة كتابة كل شيء من الصفر تقريباً.</div>
+          <div class="sc-title lang-ar">العصر الآلي: حين كانت البرمجة حواراً مباشراً مع المعالج</div>
+          <div class="sc-title lang-en">The Machine Era: When Programming Was a Direct Conversation with the Processor</div>
+          <div class="sc-hook lang-ar">لا متغيرات بأسماء مفهومة، لا حلقات تكرار مريحة — فقط عناوين ذاكرة ومسجلات، وكل خطأ يعني إعادة كتابة كل شيء من الصفر تقريباً.</div>
+          <div class="sc-hook lang-en">No variables with readable names, no convenient loops — just memory addresses and registers, and every error means rewriting almost everything from scratch.</div>
         </div>
-        <div class="sc-years">أواخر 1940s</div>
+        <div class="sc-years"><span class="lang-ar">أواخر 1940s</span><span class="lang-en">Late 1940s</span></div>
       </div>
       <div class="sc-body">
         <div class="sc-domain identity">
           <div class="sc-dlabel">CORE LANGUAGES</div>
-          <div class="sc-dtech">لغة الآلة والأسمبلي</div>
-          <div class="sc-dnote">أقرب لغة ممكنة للعتاد الفعلي؛ كل أمر يقابل تعليمة واحدة يفهمها المعالج مباشرة دون أي طبقة وسيطة.</div>
+          <div class="sc-dtech lang-ar">لغة الآلة والأسمبلي</div>
+          <div class="sc-dtech lang-en">Machine Language & Assembly</div>
+          <div class="sc-dnote lang-ar">أقرب لغة ممكنة للعتاد الفعلي؛ كل أمر يقابل تعليمة واحدة يفهمها المعالج مباشرة دون أي طبقة وسيطة.</div>
+          <div class="sc-dnote lang-en">The closest possible language to the actual hardware; every command maps to a single instruction the processor understands directly, with no intermediate layer.</div>
         </div>
         <div class="sc-domain files">
           <div class="sc-dlabel">IDE / VISUAL</div>
-          <div class="sc-dtech">بطاقات مثقّبة</div>
-          <div class="sc-dnote">لا محرر نصوص ولا بيئة تطوير؛ البرنامج فعلياً كومة من البطاقات الورقية المثقّبة تُغذّى للحاسوب يدوياً.</div>
+          <div class="sc-dtech lang-ar">بطاقات مثقّبة</div>
+          <div class="sc-dtech lang-en">Punch cards</div>
+          <div class="sc-dnote lang-ar">لا محرر نصوص ولا بيئة تطوير؛ البرنامج فعلياً كومة من البطاقات الورقية المثقّبة تُغذّى للحاسوب يدوياً.</div>
+          <div class="sc-dnote lang-en">No text editor, no development environment; the program is literally a stack of punched paper cards fed to the computer by hand.</div>
         </div>
         <div class="sc-domain gateway">
           <div class="sc-dlabel">DATABASES</div>
-          <div class="sc-dtech">لا قواعد بيانات بعد</div>
-          <div class="sc-dnote">البيانات تُخزَّن على أشرطة مغناطيسية تُقرأ تسلسلياً من البداية للنهاية.</div>
+          <div class="sc-dtech lang-ar">لا قواعد بيانات بعد</div>
+          <div class="sc-dtech lang-en">No databases yet</div>
+          <div class="sc-dnote lang-ar">البيانات تُخزَّن على أشرطة مغناطيسية تُقرأ تسلسلياً من البداية للنهاية.</div>
+          <div class="sc-dnote lang-en">Data is stored on magnetic tapes read sequentially from start to end.</div>
         </div>
         <div class="sc-domain comms">
           <div class="sc-dlabel">WEB & BIG DATA</div>
-          <div class="sc-dtech">لا وجود بعد</div>
-          <div class="sc-dnote">فكرة ربط الحواسيب ببعضها لم تولد بعد، فضلاً عن تحليل بيانات ضخمة.</div>
+          <div class="sc-dtech lang-ar">لا وجود بعد</div>
+          <div class="sc-dtech lang-en">Doesn't exist yet</div>
+          <div class="sc-dnote lang-ar">فكرة ربط الحواسيب ببعضها لم تولد بعد، فضلاً عن تحليل بيانات ضخمة.</div>
+          <div class="sc-dnote lang-en">The idea of linking computers together hasn't been born yet, let alone analyzing big data.</div>
         </div>
       </div>
-      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> مبرمج يراجع مئات البطاقات المثقّبة بحثاً عن خطأ واحد صغير — لا أحد يتخيل بعد أن جملة برمجية واحدة مقروءة ستكفي يوماً لفعل ما يحتاج اليوم مئة بطاقة.</div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> مبرمج يراجع مئات البطاقات المثقّبة بحثاً عن خطأ واحد صغير — لا أحد يتخيل بعد أن جملة برمجية واحدة مقروءة ستكفي يوماً لفعل ما يحتاج اليوم مئة بطاقة.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> a programmer reviews hundreds of punch cards hunting for one small error — no one imagines yet that a single readable line of code will one day suffice for what today needs a hundred cards.</div>
     </div>
 
     <!-- STORY CARD 1 -->
@@ -663,8 +741,10 @@
       <div class="story-card-head">
         <div class="sc-title-block">
           <div class="sc-num">المحطة 01 // HIGH-LEVEL BIRTH</div>
-          <div class="sc-title">ميلاد اللغات العليا: البرمجة تبدأ تشبه اللغة الإنسانية</div>
-          <div class="sc-hook">لأول مرة، يكتب المبرمج جملة تشبه الرياضيات أو الإنجليزية المبسّطة، والحاسوب هو من يتكفّل بترجمتها إلى لغة الآلة.</div>
+          <div class="sc-title lang-ar">ميلاد اللغات العليا: البرمجة تبدأ تشبه اللغة الإنسانية</div>
+          <div class="sc-title lang-en">The Birth of High-Level Languages: Programming Starts to Resemble Human Language</div>
+          <div class="sc-hook lang-ar">لأول مرة، يكتب المبرمج جملة تشبه الرياضيات أو الإنجليزية المبسّطة، والحاسوب هو من يتكفّل بترجمتها إلى لغة الآلة.</div>
+          <div class="sc-hook lang-en">For the first time, a programmer writes a statement resembling math or simplified English, and the computer itself handles translating it into machine language.</div>
         </div>
         <div class="sc-years">1957 — 1964</div>
       </div>
@@ -672,25 +752,32 @@
         <div class="sc-domain identity">
           <div class="sc-dlabel">CORE LANGUAGES</div>
           <div class="sc-dtech">Fortran (1957) → Cobol (1959) → BASIC (1964)</div>
-          <div class="sc-dnote">فورتران للحوسبة العلمية والهندسية، كوبول لعالم الأعمال والمحاسبة، ثم بيسك لتبسيط تعلّم البرمجة للمبتدئين.</div>
+          <div class="sc-dnote lang-ar">فورتران للحوسبة العلمية والهندسية، كوبول لعالم الأعمال والمحاسبة، ثم بيسك لتبسيط تعلّم البرمجة للمبتدئين.</div>
+          <div class="sc-dnote lang-en">Fortran for scientific and engineering computing, Cobol for business and accounting, then BASIC to simplify programming for beginners.</div>
         </div>
         <div class="sc-domain files">
           <div class="sc-dlabel">IDE / VISUAL</div>
-          <div class="sc-dtech">مترجمات نصية فقط</div>
-          <div class="sc-dnote">لا واجهات مرئية؛ البرمجة لا تزال سطر أوامر بحت، لكن الآن عبر لغة مقروءة لا رموزاً ثنائية.</div>
+          <div class="sc-dtech lang-ar">مترجمات نصية فقط</div>
+          <div class="sc-dtech lang-en">Text compilers only</div>
+          <div class="sc-dnote lang-ar">لا واجهات مرئية؛ البرمجة لا تزال سطر أوامر بحت، لكن الآن عبر لغة مقروءة لا رموزاً ثنائية.</div>
+          <div class="sc-dnote lang-en">No visual interfaces; programming is still pure command-line, but now through readable language, not binary symbols.</div>
         </div>
         <div class="sc-domain gateway">
           <div class="sc-dlabel">DATABASES</div>
-          <div class="sc-dtech">ملفات مسطحة (Flat Files)</div>
-          <div class="sc-dnote">لا مفهوم SQL أو العلاقات بين الجداول بعد؛ كل تطبيق يدير ملفاته الخاصة بمنطقه الخاص.</div>
+          <div class="sc-dtech">Flat Files</div>
+          <div class="sc-dnote lang-ar">لا مفهوم SQL أو العلاقات بين الجداول بعد؛ كل تطبيق يدير ملفاته الخاصة بمنطقه الخاص.</div>
+          <div class="sc-dnote lang-en">No concept of SQL or table relationships yet; every application manages its own files with its own logic.</div>
         </div>
         <div class="sc-domain comms">
           <div class="sc-dlabel">WEB & BIG DATA</div>
-          <div class="sc-dtech">لا وجود بعد</div>
-          <div class="sc-dnote">الحواسيب لا تزال معزولة تماماً كل عن الآخر.</div>
+          <div class="sc-dtech lang-ar">لا وجود بعد</div>
+          <div class="sc-dtech lang-en">Doesn't exist yet</div>
+          <div class="sc-dnote lang-ar">الحواسيب لا تزال معزولة تماماً كل عن الآخر.</div>
+          <div class="sc-dnote lang-en">Computers are still completely isolated from one another.</div>
         </div>
       </div>
-      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> طالب في الجامعة يكتب أول برنامج له بلغة BASIC خلال دقائق — شيء كان يستحيل تخيّله بلغة الآلة قبل سنوات قليلة فقط.</div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> طالب في الجامعة يكتب أول برنامج له بلغة BASIC خلال دقائق — شيء كان يستحيل تخيّله بلغة الآلة قبل سنوات قليلة فقط.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> a university student writes their first BASIC program in minutes — something unimaginable in machine language just a few years earlier.</div>
     </div>
 
     <!-- STORY CARD 2 -->
@@ -698,8 +785,10 @@
       <div class="story-card-head">
         <div class="sc-title-block">
           <div class="sc-num">المحطة 02 // STRUCTURED ERA</div>
-          <div class="sc-title">البرمجة البنيوية وقواعد البيانات المكتبية</div>
-          <div class="sc-hook">الانضباط البرمجي يصبح قيمة بذاتها، وفي الوقت نفسه يظهر أول تطبيق يدمج "لغة برمجة" و"قاعدة بيانات" في منتج واحد يستخدمه غير المبرمجين.</div>
+          <div class="sc-title lang-ar">البرمجة البنيوية وقواعد البيانات المكتبية</div>
+          <div class="sc-title lang-en">Structured Programming & Desktop Databases</div>
+          <div class="sc-hook lang-ar">الانضباط البرمجي يصبح قيمة بذاتها، وفي الوقت نفسه يظهر أول تطبيق يدمج "لغة برمجة" و"قاعدة بيانات" في منتج واحد يستخدمه غير المبرمجين.</div>
+          <div class="sc-hook lang-en">Programming discipline becomes a value in itself, and at the same time, the first application merging a "programming language" and a "database" into one product used by non-programmers appears.</div>
         </div>
         <div class="sc-years">1970 — 1984</div>
       </div>
@@ -707,25 +796,31 @@
         <div class="sc-domain identity">
           <div class="sc-dlabel">CORE LANGUAGES</div>
           <div class="sc-dtech">Pascal (1970) · C (1972)</div>
-          <div class="sc-dnote">باسكال صُممت خصيصاً لتعليم البرمجة المنضبطة (Structured Programming)، بينما سي فتحت الباب لكتابة أنظمة تشغيل كاملة — بما فيها يونكس لاحقاً.</div>
+          <div class="sc-dnote lang-ar">باسكال صُممت خصيصاً لتعليم البرمجة المنضبطة (Structured Programming)، بينما سي فتحت الباب لكتابة أنظمة تشغيل كاملة — بما فيها يونكس لاحقاً.</div>
+          <div class="sc-dnote lang-en">Pascal was designed specifically to teach structured programming, while C opened the door to writing complete operating systems — including Unix later on.</div>
         </div>
         <div class="sc-domain files">
           <div class="sc-dlabel">IDE / VISUAL</div>
-          <div class="sc-dtech">FoxBASE ثم FoxPro (1984)</div>
-          <div class="sc-dnote">أول موجة "برمجة + قاعدة بيانات" في تطبيق واحد على سطح المكتب — أصحاب المحال والمكاتب الصغيرة يديرون بياناتهم بأنفسهم دون مبرمج متخصص دائم.</div>
+          <div class="sc-dtech"><span class="lang-ar">FoxBASE ثم</span><span class="lang-en">FoxBASE, then</span> FoxPro (1984)</div>
+          <div class="sc-dnote lang-ar">أول موجة "برمجة + قاعدة بيانات" في تطبيق واحد على سطح المكتب — أصحاب المحال والمكاتب الصغيرة يديرون بياناتهم بأنفسهم دون مبرمج متخصص دائم.</div>
+          <div class="sc-dnote lang-en">The first wave of "programming + database" in a single desktop application — shop and small-office owners manage their own data without a permanent dedicated programmer.</div>
         </div>
         <div class="sc-domain gateway">
           <div class="sc-dlabel">DATABASES</div>
-          <div class="sc-dtech">قواعد بيانات FoxPro (DBF)</div>
-          <div class="sc-dnote">صيغة تخزين محلية بسيطة، لكنها أول تجربة واسعة الانتشار لمفهوم "قاعدة بيانات" لدى غير المتخصصين.</div>
+          <div class="sc-dtech">FoxPro Databases (DBF)</div>
+          <div class="sc-dnote lang-ar">صيغة تخزين محلية بسيطة، لكنها أول تجربة واسعة الانتشار لمفهوم "قاعدة بيانات" لدى غير المتخصصين.</div>
+          <div class="sc-dnote lang-en">A simple local storage format, but the first widely adopted experience of the "database" concept among non-specialists.</div>
         </div>
         <div class="sc-domain comms">
           <div class="sc-dlabel">WEB & BIG DATA</div>
-          <div class="sc-dtech">لا وجود بعد</div>
-          <div class="sc-dnote">شبكات أكاديمية بحثية محدودة فقط (كأربانت)، لا مفهوم ويب عام بعد.</div>
+          <div class="sc-dtech lang-ar">لا وجود بعد</div>
+          <div class="sc-dtech lang-en">Doesn't exist yet</div>
+          <div class="sc-dnote lang-ar">شبكات أكاديمية بحثية محدودة فقط (كأربانت)، لا مفهوم ويب عام بعد.</div>
+          <div class="sc-dnote lang-en">Only limited academic research networks (like ARPANET); no concept of a public web yet.</div>
         </div>
       </div>
-      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> صاحب متجر صغير يبني نظام مخزونه الخاص بلغة FoxPro دون أن يكون مبرمجاً محترفاً — بداية ديمقراطية البرمجة.</div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> صاحب متجر صغير يبني نظام مخزونه الخاص بلغة FoxPro دون أن يكون مبرمجاً محترفاً — بداية ديمقراطية البرمجة.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> a small shop owner builds his own inventory system in FoxPro without being a professional programmer — the beginning of the democratization of programming.</div>
     </div>
 
     <!-- STORY CARD 3 -->
@@ -733,38 +828,51 @@
       <div class="story-card-head">
         <div class="sc-title-block">
           <div class="sc-num">المحطة 03 // VISUAL & .NET ERA</div>
-          <div class="sc-title">عصر البرمجة المرئية و.NET: الفأرة تشارك لوحة المفاتيح</div>
-          <div class="sc-hook">بناء واجهة برنامج لم يعد يتطلب كتابة عشرات الأسطر لرسم زر واحد — يكفي سحبه وإفلاته، بينما يتكفّل الكود بنفسه خلف الكواليس.</div>
+          <div class="sc-title lang-ar">عصر البرمجة المرئية و.NET: الفأرة تشارك لوحة المفاتيح</div>
+          <div class="sc-title lang-en">The Visual & .NET Era: The Mouse Joins the Keyboard</div>
+          <div class="sc-hook lang-ar">بناء واجهة برنامج لم يعد يتطلب كتابة عشرات الأسطر لرسم زر واحد — يكفي سحبه وإفلاته، بينما يتكفّل الكود بنفسه خلف الكواليس.</div>
+          <div class="sc-hook lang-en">Building an app interface no longer requires writing dozens of lines to draw a single button — just drag and drop it, while the code writes itself behind the scenes.</div>
         </div>
         <div class="sc-years">1991 — 2002</div>
       </div>
       <div class="sc-body">
         <div class="sc-domain identity">
           <div class="sc-dlabel">CORE LANGUAGES</div>
-          <div class="sc-dtech">Java (1995) كتقاطع تاريخي</div>
-          <div class="sc-dnote">تظهر جافا بفلسفة مختلفة تماماً عن VB — "اكتب مرة، شغّل في أي مكان" — لتصبح لاحقاً لغة مؤسسات كبرى موازية لعالم مايكروسوفت المرئي.</div>
+          <div class="sc-dtech lang-ar">Java (1995) كتقاطع تاريخي</div>
+          <div class="sc-dtech lang-en">Java (1995) as a historical crossing point</div>
+          <div class="sc-dnote lang-ar">تظهر جافا بفلسفة مختلفة تماماً عن VB — "اكتب مرة، شغّل في أي مكان" — لتصبح لاحقاً لغة مؤسسات كبرى موازية لعالم مايكروسوفت المرئي.</div>
+          <div class="sc-dnote lang-en">Java appears with a philosophy completely different from VB — "write once, run anywhere" — later becoming a major enterprise language, running parallel to Microsoft's visual world.</div>
         </div>
         <div class="sc-domain files">
           <div class="sc-dlabel">IDE / VISUAL</div>
           <div class="sc-dtech">Visual Basic (1991) → .NET Framework (2002)</div>
-          <div class="sc-dnote">VB يُدخل البرمجة المرئية بالسحب والإفلات؛ بعدها بعقد يُطلق .NET Framework ليوحّد لغتي C# وVB.NET تحت بيئة تطوير واحدة متكاملة لتطبيقات سطح المكتب.</div>
+          <div class="sc-dnote lang-ar">VB يُدخل البرمجة المرئية بالسحب والإفلات؛ بعدها بعقد يُطلق .NET Framework ليوحّد لغتي C# وVB.NET تحت بيئة تطوير واحدة متكاملة لتطبيقات سطح المكتب.</div>
+          <div class="sc-dnote lang-en">VB introduces drag-and-drop visual programming; a decade later, .NET Framework launches, unifying C# and VB.NET under one integrated development environment for desktop applications.</div>
         </div>
         <div class="sc-domain gateway">
           <div class="sc-dlabel">DATABASES</div>
-          <div class="sc-dtech">توسع قواعد البيانات العلائقية المؤسسية</div>
-          <div class="sc-dnote">Oracle وSQL Server يكبران بالتوازي مع موجة سطح المكتب المرئي، خدمةً لتطبيقات الشركات الكبرى.</div>
+          <div class="sc-dtech lang-ar">توسع قواعد البيانات العلائقية المؤسسية</div>
+          <div class="sc-dtech lang-en">Enterprise relational databases expand</div>
+          <div class="sc-dnote lang-ar">Oracle وSQL Server يكبران بالتوازي مع موجة سطح المكتب المرئي، خدمةً لتطبيقات الشركات الكبرى.</div>
+          <div class="sc-dnote lang-en">Oracle and SQL Server grow in parallel with the visual-desktop wave, serving large corporate applications.</div>
         </div>
         <div class="sc-domain comms">
           <div class="sc-dlabel">WEB & BIG DATA</div>
-          <div class="sc-dtech">HTML يظهر (1991)</div>
-          <div class="sc-dnote">بتزامن لافت مع نفس عام Visual Basic — لكن هذا مسار مختلف تماماً سيتطور بمعزل عن سطح المكتب في الفصل القادم.</div>
+          <div class="sc-dtech lang-ar">HTML يظهر (1991)</div>
+          <div class="sc-dtech lang-en">HTML appears (1991)</div>
+          <div class="sc-dnote lang-ar">بتزامن لافت مع نفس عام Visual Basic — لكن هذا مسار مختلف تماماً سيتطور بمعزل عن سطح المكتب في الفصل القادم.</div>
+          <div class="sc-dnote lang-en">In a striking coincidence with the same year as Visual Basic — but this is a completely different track that will evolve apart from the desktop in the next chapter.</div>
         </div>
 
-        <div class="sc-cross">
+        <div class="sc-cross lang-ar">
           <b>💡 نقطة تزامن مثيرة:</b> عام 1991 شهد ولادة Visual Basic (سطح المكتب) وHTML (الويب) في نفس السنة تقريباً — طريقان متوازيان بدآ معاً، لكنهما سيتنافسان لاحقاً على مستقبل تطوير البرمجيات.
         </div>
+        <div class="sc-cross lang-en">
+          <b>💡 An intriguing coincidence:</b> 1991 saw the birth of both Visual Basic (desktop) and HTML (the web) in roughly the same year — two parallel paths that began together, but would later compete over the future of software development.
+        </div>
       </div>
-      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> مطوّر يبني نموذجاً أولياً كاملاً لتطبيق مبيعات خلال ساعة بدل أسبوع — البرمجة المرئية غيّرت سرعة التطوير جذرياً، لكنها لا تعلم بعد أن الويب سيسحب البساط تدريجياً خلال عقد.</div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> مطوّر يبني نموذجاً أولياً كاملاً لتطبيق مبيعات خلال ساعة بدل أسبوع — البرمجة المرئية غيّرت سرعة التطوير جذرياً، لكنها لا تعلم بعد أن الويب سيسحب البساط تدريجياً خلال عقد.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> a developer builds a complete sales-app prototype in an hour instead of a week — visual programming radically changed development speed, though it doesn't yet know the web will gradually pull the rug out from under it within a decade.</div>
     </div>
 
     <!-- STORY CARD 4 -->
@@ -772,38 +880,51 @@
       <div class="story-card-head">
         <div class="sc-title-block">
           <div class="sc-num">المحطة 04 // DATABASES & EARLY WEB</div>
-          <div class="sc-title">قواعد البيانات العلائقية والويب المبكر: البيانات تصبح "مهيكلة"</div>
-          <div class="sc-hook">للمرة الأولى، تُصبح البيانات نفسها موضوعاً له معاييره الخاصة — وتُصبح صفحات الويب أكثر من مجرد نصوص ثابتة.</div>
+          <div class="sc-title lang-ar">قواعد البيانات العلائقية والويب المبكر: البيانات تصبح "مهيكلة"</div>
+          <div class="sc-title lang-en">Relational Databases & the Early Web: Data Becomes "Structured"</div>
+          <div class="sc-hook lang-ar">للمرة الأولى، تُصبح البيانات نفسها موضوعاً له معاييره الخاصة — وتُصبح صفحات الويب أكثر من مجرد نصوص ثابتة.</div>
+          <div class="sc-hook lang-en">For the first time, data itself becomes a subject with its own standards — and web pages become more than just static text.</div>
         </div>
         <div class="sc-years">1995 — 2000s</div>
       </div>
       <div class="sc-body">
         <div class="sc-domain identity">
           <div class="sc-dlabel">CORE LANGUAGES</div>
-          <div class="sc-dtech">نضوج C وJava</div>
-          <div class="sc-dnote">تتحولان تدريجياً لتصبحا الأساس الخلفي (Backend) لأنظمة الويب والمؤسسات الكبرى.</div>
+          <div class="sc-dtech lang-ar">نضوج C وJava</div>
+          <div class="sc-dtech lang-en">C and Java mature</div>
+          <div class="sc-dnote lang-ar">تتحولان تدريجياً لتصبحا الأساس الخلفي (Backend) لأنظمة الويب والمؤسسات الكبرى.</div>
+          <div class="sc-dnote lang-en">They gradually become the backend foundation for web systems and large enterprises.</div>
         </div>
         <div class="sc-domain files">
           <div class="sc-dlabel">IDE / VISUAL</div>
-          <div class="sc-dtech">ذروة تطبيقات سطح المكتب</div>
-          <div class="sc-dnote">Windows Forms وWPF يمثلان قمة نضج تطبيقات سطح المكتب المرئية، قبل أن يبدأ الاهتمام بالانتقال تدريجياً نحو الويب.</div>
+          <div class="sc-dtech lang-ar">ذروة تطبيقات سطح المكتب</div>
+          <div class="sc-dtech lang-en">Desktop applications peak</div>
+          <div class="sc-dnote lang-ar">Windows Forms وWPF يمثلان قمة نضج تطبيقات سطح المكتب المرئية، قبل أن يبدأ الاهتمام بالانتقال تدريجياً نحو الويب.</div>
+          <div class="sc-dnote lang-en">Windows Forms and WPF represent the peak maturity of visual desktop applications, before attention gradually begins shifting toward the web.</div>
         </div>
         <div class="sc-domain gateway">
           <div class="sc-dlabel">DATABASES</div>
-          <div class="sc-dtech">SQL معياراً موحّداً + MySQL (1995)</div>
-          <div class="sc-dnote">MySQL مفتوحة المصدر تفتح الباب أمام مشاريع صغيرة ومتوسطة، ويترسّخ هنا مفهوم "البيانات المهيكلة" (Structured Data) كمعيار صناعي.</div>
+          <div class="sc-dtech lang-ar">SQL معياراً موحّداً + MySQL (1995)</div>
+          <div class="sc-dtech lang-en">SQL as a unified standard + MySQL (1995)</div>
+          <div class="sc-dnote lang-ar">MySQL مفتوحة المصدر تفتح الباب أمام مشاريع صغيرة ومتوسطة، ويترسّخ هنا مفهوم "البيانات المهيكلة" (Structured Data) كمعيار صناعي.</div>
+          <div class="sc-dnote lang-en">Open-source MySQL opens the door to small and medium projects, and the concept of "structured data" takes hold here as an industry standard.</div>
         </div>
         <div class="sc-domain comms">
           <div class="sc-dlabel">WEB & BIG DATA</div>
           <div class="sc-dtech">PHP (1995)</div>
-          <div class="sc-dnote">يضيف منطقاً برمجياً خلف صفحات HTML الثابتة — ميلاد الويب الديناميكي التفاعلي المرتبط مباشرة بقواعد البيانات مثل MySQL.</div>
+          <div class="sc-dnote lang-ar">يضيف منطقاً برمجياً خلف صفحات HTML الثابتة — ميلاد الويب الديناميكي التفاعلي المرتبط مباشرة بقواعد البيانات مثل MySQL.</div>
+          <div class="sc-dnote lang-en">Adds programming logic behind static HTML pages — the birth of the dynamic, interactive web directly connected to databases like MySQL.</div>
         </div>
 
-        <div class="sc-cross">
-          <b>💡 نقطة تزامن مثيرة أخرى:</b> عام 1995 وحده شهد ظهور Java وMySQL وPHP معاً — ثلاثة أعمدة ستشكّل لاحقاً معظم بنية الويب التحتية لعقدين قادمين.
+        <div class="sc-cross lang-ar">
+          <b>💡 نقطة تزامن مثيرة أخرى:</b> عام 1995 وحده شهد ظهور Java وMySQL وPHP وJavaScript معاً — أربعة أعمدة ستشكّل لاحقاً معظم بنية الويب التحتية لعقدين قادمين، اثنان منها من جهة الخادم (PHP، MySQL) واثنان أقرب للواجهة والمنصة (Java، JavaScript).
+        </div>
+        <div class="sc-cross lang-en">
+          <b>💡 Another intriguing coincidence:</b> 1995 alone saw the emergence of Java, MySQL, PHP, and JavaScript together — four pillars that would later form most of the web's infrastructure for the next two decades, two on the server side (PHP, MySQL) and two closer to the interface and platform layer (Java, JavaScript).
         </div>
       </div>
-      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> أول موقع تجاري بسيط يعرض منتجاته من قاعدة بيانات MySQL عبر صفحات PHP — النموذج الذي سيهيمن على الويب لعقدين قادمين وُلد للتو.</div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> أول موقع تجاري بسيط يعرض منتجاته من قاعدة بيانات MySQL عبر صفحات PHP — النموذج الذي سيهيمن على الويب لعقدين قادمين وُلد للتو.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> the first simple commercial site displays its products from a MySQL database via PHP pages — the model that will dominate the web for the next two decades has just been born.</div>
     </div>
 
     <!-- STORY CARD 5 -->
@@ -811,45 +932,56 @@
       <div class="story-card-head">
         <div class="sc-title-block">
           <div class="sc-num">المحطة 05 // BIG DATA & MINING</div>
-          <div class="sc-title">عصر البيانات الضخمة والتنقيب: حين لا تكفي الجداول والأعمدة</div>
-          <div class="sc-hook">السؤال لم يعد "كيف أخزّن البيانات؟" بل "كيف أفهم معنى مليارات السجلات التي لا تشبه بعضها بنية أو شكلاً؟"</div>
+          <div class="sc-title lang-ar">عصر البيانات الضخمة والتنقيب: حين لا تكفي الجداول والأعمدة</div>
+          <div class="sc-title lang-en">The Big Data & Mining Era: When Rows and Columns Are No Longer Enough</div>
+          <div class="sc-hook lang-ar">السؤال لم يعد "كيف أخزّن البيانات؟" بل "كيف أفهم معنى مليارات السجلات التي لا تشبه بعضها بنية أو شكلاً؟"</div>
+          <div class="sc-hook lang-en">The question is no longer "how do I store the data?" but "how do I make sense of billions of records that don't resemble each other in structure or form?"</div>
         </div>
         <div class="sc-years">2000s — 2026</div>
       </div>
       <div class="sc-body">
         <div class="sc-domain identity">
           <div class="sc-dlabel">CORE LANGUAGES</div>
-          <div class="sc-dtech">Python تتصدر المشهد</div>
-          <div class="sc-dnote">بفضل بساطتها وأطر عملها الغنية، تصبح اللغة الموحّدة تقريباً لعلم البيانات والذكاء الاصطناعي.</div>
+          <div class="sc-dtech lang-ar">Python تتصدر المشهد</div>
+          <div class="sc-dtech lang-en">Python takes the lead</div>
+          <div class="sc-dnote lang-ar">بفضل بساطتها وأطر عملها الغنية، تصبح اللغة الموحّدة تقريباً لعلم البيانات والذكاء الاصطناعي.</div>
+          <div class="sc-dnote lang-en">Thanks to its simplicity and rich frameworks, it becomes nearly the unified language for data science and artificial intelligence.</div>
         </div>
         <div class="sc-domain files">
           <div class="sc-dlabel">IDE / VISUAL</div>
-          <div class="sc-dtech">بيئات سحابية ودفاتر تفاعلية</div>
-          <div class="sc-dnote">Jupyter وVS Code وبيئات التطوير السحابية تحل محل بيئات سطح المكتب التقليدية المثبّتة محلياً.</div>
+          <div class="sc-dtech lang-ar">بيئات سحابية ودفاتر تفاعلية</div>
+          <div class="sc-dtech lang-en">Cloud environments & interactive notebooks</div>
+          <div class="sc-dnote lang-ar">Jupyter وVS Code وبيئات التطوير السحابية تحل محل بيئات سطح المكتب التقليدية المثبّتة محلياً.</div>
+          <div class="sc-dnote lang-en">Jupyter, VS Code, and cloud development environments replace traditional locally-installed desktop environments.</div>
         </div>
         <div class="sc-domain gateway">
           <div class="sc-dlabel">DATABASES</div>
-          <div class="sc-dtech">البيانات غير المهيكلة تتصدر</div>
-          <div class="sc-dnote">نصوص، صور، فيديو، وسجلات استشعار لا تتوافق مع جداول SQL التقليدية — تظهر قواعد بيانات NoSQL ومستودعات بيانات ضخمة كاستجابة مباشرة.</div>
+          <div class="sc-dtech lang-ar">البيانات غير المهيكلة تتصدر</div>
+          <div class="sc-dtech lang-en">Unstructured data takes the lead</div>
+          <div class="sc-dnote lang-ar">نصوص، صور، فيديو، وسجلات استشعار لا تتوافق مع جداول SQL التقليدية — تظهر قواعد بيانات NoSQL ومستودعات بيانات ضخمة كاستجابة مباشرة.</div>
+          <div class="sc-dnote lang-en">Text, images, video, and sensor logs don't fit traditional SQL tables — NoSQL databases and massive data warehouses emerge as a direct response.</div>
         </div>
         <div class="sc-domain comms">
           <div class="sc-dlabel">WEB & BIG DATA</div>
           <div class="sc-dtech">Big Data + Data Mining</div>
-          <div class="sc-dnote">التنقيب في تدفقات البيانات الهائلة القادمة من الويب والتطبيقات والأجهزة الذكية يصبح تخصصاً قائماً بذاته لا مجرد استعلام SQL بسيط.</div>
+          <div class="sc-dnote lang-ar">التنقيب في تدفقات البيانات الهائلة القادمة من الويب والتطبيقات والأجهزة الذكية يصبح تخصصاً قائماً بذاته لا مجرد استعلام SQL بسيط.</div>
+          <div class="sc-dnote lang-en">Mining the massive data streams flowing from the web, applications, and smart devices becomes an independent discipline, not just a simple SQL query.</div>
         </div>
       </div>
-      <div class="sc-foot">🎬 <b>مشهد الإغلاق:</b> من بطاقة مثقّبة واحدة تحمل سطراً برمجياً واحداً، إلى نظام يُنقّب في مليارات السجلات غير المتجانسة كل ثانية — الرحلة نفسها أصبحت قصة عن تسارع الزمن لا مجرد تطور تقني.</div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> من بطاقة مثقّبة واحدة تحمل سطراً برمجياً واحداً، إلى نظام يُنقّب في مليارات السجلات غير المتجانسة كل ثانية — الرحلة نفسها أصبحت قصة عن تسارع الزمن لا مجرد تطور تقني.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> from a single punch card carrying one line of code, to a system mining billions of heterogeneous records every second — this journey itself has become a story about the acceleration of time, not just technical evolution.</div>
     </div>
 
   </div>
 
   <!-- ============ FULL CHRONOLOGICAL TIMELINE ============ -->
   <div class="story-header full-timeline">
-    <div class="eyebrow">APPENDIX // مرجع سريع بكل التواريخ</div>
-    <h2>الخط الزمني الكامل: كل الأحداث بالترتيب</h2>
+    <div class="eyebrow">APPENDIX // <span class="lang-ar">مرجع سريع بكل التواريخ</span><span class="lang-en">A quick reference for every date</span></div>
+    <h2 class="lang-ar">الخط الزمني الكامل: كل الأحداث بالترتيب</h2>
+    <h2 class="lang-en">The Full Timeline: Every Event, in Order</h2>
   </div>
 
-  <div class="tl-list">
+  <div class="tl-list lang-ar">
     <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">أواخر 1940s</div><div class="tl-text"><b>لغة الآلة والأسمبلي</b> — برمجة مباشرة على المسجلات والذاكرة</div></div>
     <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1957</div><div class="tl-text"><b>Fortran</b> — أول لغة برمجة عليا للحوسبة العلمية</div></div>
     <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1959</div><div class="tl-text"><b>Cobol</b> — لغة عالم الأعمال والمحاسبة</div></div>
@@ -857,15 +989,33 @@
     <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1969</div><div class="tl-text"><b>إطلاق ARPANET</b> — أول شبكة حواسيب متصلة</div></div>
     <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1970</div><div class="tl-text"><b>Pascal</b> — لتعليم البرمجة البنيوية المنضبطة</div></div>
     <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1972</div><div class="tl-text"><b>لغة C</b> — أساس أنظمة التشغيل والبرمجيات منخفضة المستوى</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1979–85</div><div class="tl-text">➕ <b>C++</b> — بيارن ستروستروب يُدخل البرمجة الكائنية (OOP) إلى عائلة C</div></div>
     <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1984</div><div class="tl-text"><b>FoxBASE / FoxPro</b> — أول دمج بين لغة برمجة وقاعدة بيانات مكتبية</div></div>
     <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">1991</div><div class="tl-text"><b>Visual Basic</b> (البرمجة المرئية) و<b>HTML</b> (الويب الثابت) — تزامن تاريخي لافت في نفس العام</div></div>
-    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">1995</div><div class="tl-text"><b>Java وMySQL وPHP</b> معاً — ثلاثة أعمدة ستشكّل بنية الويب التحتية لعقدين قادمين</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">1995</div><div class="tl-text"><b>Java وMySQL وPHP وJavaScript</b> معاً — أربعة أعمدة ستشكّل بنية الويب التحتية لعقدين قادمين</div></div>
     <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">2002</div><div class="tl-text"><b>.NET Framework</b> — يوحّد C# وVB.NET تحت بيئة تطوير واحدة</div></div>
     <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2000s</div><div class="tl-text">ذروة تطبيقات سطح المكتب عبر <b>Windows Forms / WPF</b></div></div>
     <div class="tl-item tl-c5"><div class="tl-dot"></div><div class="tl-year">2000s–2026</div><div class="tl-text"><b>Big Data + Data Mining</b>؛ صعود Python وبيئات التطوير السحابية (Jupyter, VS Code)</div></div>
   </div>
 
-  <div class="tl-legend">
+  <div class="tl-list lang-en">
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">Late 1940s</div><div class="tl-text"><b>Machine language & Assembly</b> — programming directly against registers and memory</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1957</div><div class="tl-text"><b>Fortran</b> — the first high-level language for scientific computing</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1959</div><div class="tl-text"><b>Cobol</b> — the language of business and accounting</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1964</div><div class="tl-text"><b>BASIC</b> — to simplify learning to program for beginners</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1969</div><div class="tl-text"><b>ARPANET launches</b> — the first connected computer network</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1970</div><div class="tl-text"><b>Pascal</b> — to teach disciplined structured programming</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1972</div><div class="tl-text">The <b>C language</b> — the foundation of operating systems and low-level software</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1979–85</div><div class="tl-text">➕ <b>C++</b> — Bjarne Stroustrup brings object-oriented programming (OOP) into the C family</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1984</div><div class="tl-text"><b>FoxBASE / FoxPro</b> — the first fusion of a programming language and a desktop database</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">1991</div><div class="tl-text"><b>Visual Basic</b> (visual programming) and <b>HTML</b> (the static web) — a striking historical coincidence in the same year</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">1995</div><div class="tl-text"><b>Java, MySQL, PHP, and JavaScript</b> together — four pillars that would shape the web's infrastructure for the next two decades</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">2002</div><div class="tl-text"><b>.NET Framework</b> — unifies C# and VB.NET under one development environment</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2000s</div><div class="tl-text">Desktop applications peak via <b>Windows Forms / WPF</b></div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot"></div><div class="tl-year">2000s–2026</div><div class="tl-text"><b>Big Data + Data Mining</b>; the rise of Python and cloud development environments (Jupyter, VS Code)</div></div>
+  </div>
+
+  <div class="tl-legend lang-ar">
     <div class="li"><span class="sw" style="background:var(--c0);"></span>العصر الآلي: الأسمبلي</div>
     <div class="li"><span class="sw" style="background:var(--c1);"></span>ميلاد اللغات العليا</div>
     <div class="li"><span class="sw" style="background:var(--c2);"></span>البنيوية وقواعد البيانات المكتبية</div>
@@ -873,15 +1023,30 @@
     <div class="li"><span class="sw" style="background:var(--c4);"></span>قواعد البيانات والويب المبكر</div>
     <div class="li"><span class="sw" style="background:var(--c5);"></span>البيانات الضخمة والتنقيب</div>
   </div>
+  <div class="tl-legend lang-en">
+    <div class="li"><span class="sw" style="background:var(--c0);"></span>The Machine Age: Assembly</div>
+    <div class="li"><span class="sw" style="background:var(--c1);"></span>The Birth of High-Level Languages</div>
+    <div class="li"><span class="sw" style="background:var(--c2);"></span>Structured Programming & Desktop Databases</div>
+    <div class="li"><span class="sw" style="background:var(--c3);"></span>Visual Programming & .NET</div>
+    <div class="li"><span class="sw" style="background:var(--c4);"></span>Databases & the Early Web</div>
+    <div class="li"><span class="sw" style="background:var(--c5);"></span>Big Data & Data Mining</div>
+  </div>
 
 </div>
 <script>
+  document.querySelectorAll('[data-en-title]').forEach(function(el){
+    el.dataset.arTitle = el.title;
+  });
+
   function applyLang(lang){
     document.body.classList.toggle("is-en", lang === "en");
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === "en" ? "ltr" : "rtl";
     document.getElementById("btnAr").classList.toggle("active", lang === "ar");
     document.getElementById("btnEn").classList.toggle("active", lang === "en");
+    document.querySelectorAll('[data-en-title]').forEach(function(el){
+      el.title = lang === 'en' ? el.dataset.enTitle : el.dataset.arTitle;
+    });
     try { localStorage.setItem("bcs_lang", lang); } catch (e) {}
   }
   document.getElementById("btnAr").addEventListener("click", () => applyLang("ar"));

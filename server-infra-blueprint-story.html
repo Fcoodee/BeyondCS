@@ -181,6 +181,11 @@
 
   /* vertical trigger lines (colored per event type) */
   .trigger-line{position:absolute;top:0;bottom:0;width:0;border-right:1px dashed var(--gold-dim);}
+  .qmark{
+    position:absolute;top:8%;transform:translate(50%,0);
+    font-size:15px;text-align:center;cursor:default;z-index:2;
+  }
+  .qmark-label{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;margin-top:2px;color:inherit;}
   .trigger-flag{position:absolute;top:-66px;transform:translateX(50%);width:150px;text-align:center;}
   .trigger-flag .yr{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;}
   .trigger-flag .lbl{font-size:10.5px;color:var(--ink-dim);line-height:1.3;margin-top:2px;}
@@ -538,10 +543,10 @@
               <div class="name lang-en">Azure AD Connect<br>A hybrid environment</div>
             </div>
             <div class="dot" style="right:55%;"></div>
-            <div class="node identity" style="right:55%;" title="Azure AD يدار بنسبة 90% من السحاب؛ فحص أمان الهاتف قبل السماح بالوصول (Zero Trust)." data-en-title="Azure AD is 90% cloud-managed; phone security is checked before granting access (Zero Trust).">
+            <div class="node identity" style="right:55%;" title="Azure AD يدار بنسبة 90% من السحاب؛ فحص أمان الهاتف قبل السماح بالوصول (Zero Trust)؛ المصادقة متعددة العوامل (MFA) تصبح إلزامية — كلمة المرور وحدها لم تعد كافية أبداً." data-en-title="Azure AD is 90% cloud-managed; phone security is checked before granting access (Zero Trust); multi-factor authentication (MFA) becomes mandatory — a password alone is never enough anymore.">
               <div class="period">2016–2022</div>
-              <div class="name lang-ar">Azure AD سحابي 90%<br>Zero Trust Access</div>
-              <div class="name lang-en">Azure AD 90% cloud<br>Zero Trust Access</div>
+              <div class="name lang-ar">Azure AD سحابي 90%<br>Zero Trust + MFA إلزامي</div>
+              <div class="name lang-en">Azure AD 90% cloud<br>Zero Trust + Mandatory MFA</div>
             </div>
             <div class="dot" style="right:80%;"></div>
             <div class="node identity" style="right:80%;" title="Microsoft Entra ID مع سياسات هوية جديدة لحماية الحسابات من التسريب عبر أدوات AI." data-en-title="Microsoft Entra ID with new identity policies protecting accounts from leaks via AI tools.">
@@ -573,6 +578,7 @@
               <div class="name lang-ar">SharePoint/OneDrive<br>نهاية عصر FTP</div>
               <div class="name lang-en">SharePoint/OneDrive<br>The end of the FTP era</div>
             </div>
+            <div class="qmark" style="right:36%; color:var(--gold);" title="المحاكاة الافتراضية (VMware ثم Hyper-V) تُعيد تشكيل غرفة السيرفرات جذرياً — عشرات السيرفرات الفيزيائية تتحول إلى أجهزة افتراضية تعمل على عدد أقل بكثير من الأجهزة المادية، قبل الانتقال الكامل لاحقاً للسحاب." data-en-title="Virtualization (VMware, then Hyper-V) radically reshapes the server room — dozens of physical servers become virtual machines running on far fewer physical boxes, ahead of the later full move to the cloud.">🖥️<span class="qmark-label">VMware</span></div>
             <div class="dot" style="right:55%;"></div>
             <div class="node files" style="right:55%;" title="لا وجود لـFTP إطلاقاً؛ روابط مشفرة وصلاحيات متقدمة عبر Microsoft Purview." data-en-title="No FTP at all anymore; encrypted links and advanced permissions via Microsoft Purview.">
               <div class="period">2016–2022</div>
@@ -592,7 +598,7 @@
         <div class="lane gateway">
           <div class="lane-track">
             <div class="dot" style="right:2%;"></div>
-            <div class="node gateway" style="right:2%;" title="Proxy بدائي (WinGate/Squid) بقوائم حجب يدوية — أول ضحاياها Friendster وHi5 وMySpace." data-en-title="A primitive proxy (WinGate/Squid) with manual blocklists — its first victims: Friendster, Hi5, and MySpace.">
+            <div class="node gateway" style="right:2%;" title="Proxy بدائي (WinGate/Squid) بقوائم حجب يدوية — أول ضحاياها Friendster وHi5 وMySpace. مارك زوكربيرغ يؤسس فيسبوك عام 2004، والذي سيرث تدريجياً حيز هذه المنصات المبكرة ليصبح الهدف الأبرز لقوائم الحجب لاحقاً." data-en-title="A primitive proxy (WinGate/Squid) with manual blocklists — its first victims: Friendster, Hi5, and MySpace. Mark Zuckerberg founds Facebook in 2004, which would gradually inherit these early platforms' space and become the most prominent blocklist target later on.">
               <div class="period">2003–2009</div>
               <div class="name lang-ar">Proxy بدائي<br>حجب Friendster/Hi5/MySpace</div>
               <div class="name lang-en">A primitive proxy<br>Blocking Friendster/Hi5/MySpace</div>
@@ -616,7 +622,7 @@
               <div class="name lang-en">The Zero Trust model<br>Trust no one, always verify</div>
             </div>
             <div class="dot" style="right:80%;"></div>
-            <div class="node gateway" style="right:80%;" title="سياسات حجب/تنظيم استخدام أدوات AI التوليدي لحماية الملكية الفكرية." data-en-title="Policies to block or regulate the use of generative AI tools to protect intellectual property.">
+            <div class="node gateway" style="right:80%;" title="سياسات حجب/تنظيم استخدام أدوات AI التوليدي لحماية الملكية الفكرية. في نفس هذه الفترة، تتحول منصة تويتر (أسسها جاك دورسي وآخرون 2006) إلى X تحت ملكية إيلون ماسك (2023)، مع دمج مساعد الذكاء الاصطناعي Grok مباشرة داخل المنصة — مثال إضافي على تشابك أدوات AI التوليدي بمنصات التواصل التي تحتاج الشركات لضبط سياسات التعامل معها." data-en-title="Policies to block or regulate the use of generative AI tools to protect intellectual property. In this same period, Twitter (founded by Jack Dorsey and others in 2006) rebrands as X under Elon Musk's ownership (2023), integrating the Grok AI assistant directly into the platform — another example of generative AI tools intertwining with social platforms that companies need policies to manage.">
               <div class="period">2022–2026</div>
               <div class="name lang-ar">سياسات AI التوليدي<br>حماية الملكية الفكرية</div>
               <div class="name lang-en">Generative AI policies<br>Protecting intellectual property</div>
@@ -1024,28 +1030,36 @@
   <div class="tl-list lang-ar">
     <div class="tl-item" style="border-inline-start-color:var(--paper);"><div class="tl-dot" style="background:var(--paper);"></div><div class="tl-year" style="color:var(--paper);">ما قبل 2003</div><div class="tl-text">الحقبة الورقية — <b>دفاتر الأستاذ، الفاكس، الأرشيف الورقي</b>، وأول حاسوب مكتبي كآلة كاتبة بلا شبكة (تمثيل نمطي عام)</div></div>
     <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">2003–2009</div><div class="tl-text">حقبة ما قبل الدومين — إدارة البريد عبر <b>BlackBerry وBES</b>، وحجب <b>Friendster وHi5 وMySpace</b> عبر Proxy بدائي</div></div>
+    <div class="tl-item tl-c0"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">2004</div><div class="tl-text">👤 مارك زوكربيرغ يؤسس <b>فيسبوك</b> — سيرث لاحقاً حيز Friendster/Hi5/MySpace كهدف رئيسي لقوائم الحجب</div></div>
     <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">2010</div><div class="tl-text">تأسيس دومين <b>8-bit.net</b> على Windows Server 2008 R2، مع ISA/TMG وCisco CUCM 8.x</div></div>
     <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">2009–2013</div><div class="tl-text">معركة <b>BES ضد iPhone/Galaxy</b> عبر Exchange ActiveSync — أول موجة BYOD حقيقية</div></div>
     <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">أغسطس 2012</div><div class="tl-text">حكم قضائي بتعويض <b>1.05 مليار دولار</b> لصالح آبل ضد سامسونج (دعابة "العملات المعدنية" خرافة غير حقيقية)</div></div>
     <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">2013</div><div class="tl-text">أول ربط هجين عبر <b>DirSync ثم Azure AD Connect</b>؛ بداية الانتقال لـSharePoint/OneDrive</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">2013–2016</div><div class="tl-text">🖥️ <b>المحاكاة الافتراضية</b> (VMware ثم Hyper-V) تُعيد تشكيل غرفة السيرفرات جذرياً</div></div>
     <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">2015</div><div class="tl-text">توقف دعم <b>TMG نهائياً</b>؛ اعتماد أول جدار ناري حديث (Fortigate NGFW)</div></div>
     <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">2016–2020</div><div class="tl-text">التحول لـ<b>Microsoft Purview</b> وZero Trust؛ لا وجود لـFTP بعد الآن</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">2016–2022</div><div class="tl-text">🔐 <b>المصادقة متعددة العوامل (MFA)</b> تصبح إلزامية — كلمة المرور وحدها لم تعد كافية</div></div>
     <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">2020</div><div class="tl-text">الجائحة — تراجع حاد للسنترال المكتبي، صعود <b>Microsoft Teams / Cisco Webex Calling</b></div></div>
     <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">نهاية 2022</div><div class="tl-text">إطلاق <b>GPT-3.5</b> — السؤال الأمني يتحول من "من يصل للملفات؟" إلى "كيف نحمي البيانات من AI؟"</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">2023</div><div class="tl-text">🐦 <b>تويتر يتحول إلى X</b> تحت ملكية إيلون ماسك، مع دمج مساعد الذكاء الاصطناعي <b>Grok</b> مباشرة داخل المنصة</div></div>
     <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2022–2026</div><div class="tl-text"><b>Microsoft Entra ID</b>، وسياسات DLP موجّهة لأدوات الذكاء الاصطناعي، وTeams Phone سحابي بالكامل</div></div>
   </div>
 
   <div class="tl-list lang-en">
     <div class="tl-item" style="border-inline-start-color:var(--paper);"><div class="tl-dot" style="background:var(--paper);"></div><div class="tl-year" style="color:var(--paper);">Before 2003</div><div class="tl-text">The paper era — <b>ledgers, fax, paper archives</b>, and the first office computer as a networkless typewriter (a general, typical representation)</div></div>
     <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">2003–2009</div><div class="tl-text">The pre-domain era — email managed via <b>BlackBerry and BES</b>, and <b>Friendster, Hi5, and MySpace</b> blocked via a primitive proxy</div></div>
+    <div class="tl-item tl-c0"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">2004</div><div class="tl-text">👤 Mark Zuckerberg founds <b>Facebook</b> — later inheriting Friendster/Hi5/MySpace's space as the primary blocklist target</div></div>
     <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">2010</div><div class="tl-text">The <b>8-bit.net</b> domain is founded on Windows Server 2008 R2, with ISA/TMG and Cisco CUCM 8.x</div></div>
     <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">2009–2013</div><div class="tl-text">The <b>BES vs. iPhone/Galaxy</b> battle via Exchange ActiveSync — the first real BYOD wave</div></div>
     <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">August 2012</div><div class="tl-text">A <b>$1.05 billion</b> verdict in Apple's favor against Samsung (the "coins" joke is a hoax, not a fact)</div></div>
     <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">2013</div><div class="tl-text">The first hybrid link via <b>DirSync, then Azure AD Connect</b>; the shift to SharePoint/OneDrive begins</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">2013–2016</div><div class="tl-text">🖥️ <b>Virtualization</b> (VMware, then Hyper-V) radically reshapes the server room</div></div>
     <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">2015</div><div class="tl-text"><b>TMG support ends</b> for good; the first modern firewall (Fortigate NGFW) is adopted</div></div>
     <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">2016–2020</div><div class="tl-text">The shift to <b>Microsoft Purview</b> and Zero Trust; FTP no longer exists</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">2016–2022</div><div class="tl-text">🔐 <b>Multi-factor authentication (MFA)</b> becomes mandatory — a password alone is never enough anymore</div></div>
     <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">2020</div><div class="tl-text">The pandemic — a sharp decline in the office PBX, and the rise of <b>Microsoft Teams / Cisco Webex Calling</b></div></div>
     <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">Late 2022</div><div class="tl-text"><b>GPT-3.5</b> launches — the security question shifts from "who can access the files?" to "how do we protect data from AI?"</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">2023</div><div class="tl-text">🐦 <b>Twitter rebrands as X</b> under Elon Musk's ownership, integrating the <b>Grok</b> AI assistant directly into the platform</div></div>
     <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2022–2026</div><div class="tl-text"><b>Microsoft Entra ID</b>, AI-focused DLP policies, and Teams Phone, fully cloud-based</div></div>
   </div>
 
