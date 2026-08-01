@@ -118,6 +118,24 @@
   }
   .mini-strip .pt:first-child .line{display:none;}
 
+  .quick-refs{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:16px;
+    max-width:900px;margin:34px auto 0;
+  }
+  @media(max-width:700px){.quick-refs{grid-template-columns:1fr;}}
+  .qref-item{
+    display:flex;align-items:center;gap:14px;
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:12px;
+    padding:16px 18px;text-decoration:none;color:inherit;transition:border-color .2s,background .2s;
+  }
+  a.qref-item:hover{border-color:#a78bfa88;background:rgba(167,139,250,0.06);}
+  .qref-item.qref-static{cursor:default;}
+  .qref-icon{font-size:24px;flex-shrink:0;}
+  .qref-text{flex:1;min-width:0;}
+  .qref-title{font-size:14px;font-weight:800;color:var(--ink);}
+  .qref-desc{font-size:11.5px;color:var(--ink-dim);line-height:1.6;margin-top:3px;}
+  .qref-arrow{font-size:16px;color:#a78bfa;flex-shrink:0;}
+
   /* Project cards */
   .section-label{
     font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px;
@@ -156,6 +174,9 @@
   .card.c8{border-color:#8b5cf655;}
   .card.c8::before{background:linear-gradient(90deg, #a78bfa, #6d28d9);}
   .card.c8 .card-num{color:#a78bfa;}
+  .card.c9{border-color:#2dd4bf55;}
+  .card.c9::before{background:linear-gradient(90deg, #2dd4bf, #0e7490);}
+  .card.c9 .card-num{color:#2dd4bf;}
 
   .card-head{padding:26px 24px 14px;}
   .card-num{
@@ -233,6 +254,49 @@
     animation:modalIn .18s ease;
   }
   @keyframes modalIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+  /* ===== Digital Transformation modal ===== */
+  .dt-overlay{
+    display:none;position:fixed;inset:0;z-index:1000;
+    background:rgba(4,10,8,0.82);backdrop-filter:blur(4px);
+    align-items:center;justify-content:center;padding:20px;
+  }
+  .dt-overlay.open{display:flex;}
+  .dt-card{
+    position:relative;width:100%;max-width:620px;max-height:92vh;overflow-y:auto;
+    background:var(--panel);border:1px solid #2dd4bf40;border-radius:16px;
+    padding:30px 28px 26px;box-shadow:0 24px 70px rgba(0,0,0,0.55);
+    animation:modalIn .2s ease;
+  }
+  .dt-close{
+    position:absolute;top:14px;left:14px;width:30px;height:30px;border-radius:8px;
+    border:1px solid var(--panel-line);background:rgba(255,255,255,0.03);color:var(--ink-dim);
+    cursor:pointer;font-size:14px;line-height:1;
+  }
+  .dt-close:hover{color:var(--ink);border-color:#2dd4bf88;}
+  .dt-eyebrow{font-family:'JetBrains Mono',monospace;color:#2dd4bf;font-size:11px;letter-spacing:2px;text-align:center;margin-bottom:8px;}
+  .dt-title{font-size:26px;font-weight:800;text-align:center;margin:0 0 18px;color:var(--ink);}
+
+  .dt-carousel{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--panel-line);background:#000;aspect-ratio:16/7.5;}
+  .dt-slides{position:relative;width:100%;height:100%;}
+  .dt-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s ease;}
+  .dt-slide.active{opacity:1;}
+  .dt-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:2;}
+  .dt-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.35);cursor:pointer;transition:background .2s;}
+  .dt-dot.active{background:#2dd4bf;}
+
+  .dt-progress-wrap{margin-top:22px;}
+  .dt-progress-labels{display:flex;justify-content:space-between;align-items:baseline;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-dim);margin-bottom:6px;}
+  .dt-progress-now{color:#2dd4bf;font-weight:700;font-size:13px;}
+  .dt-progress-track{height:8px;border-radius:5px;background:rgba(255,255,255,0.06);overflow:hidden;border:1px solid var(--panel-line);}
+  .dt-progress-fill{height:100%;width:0%;border-radius:5px;background:linear-gradient(90deg,#0e7490,#2dd4bf);transition:width 14s linear;}
+  .dt-progress-note{font-size:11px;color:var(--ink-dim);margin-top:8px;line-height:1.7;text-align:center;}
+
+  .dt-ref{margin-top:22px;padding-top:18px;border-top:1px dashed var(--panel-line);}
+  .dt-ref-label{font-family:'JetBrains Mono',monospace;color:#2dd4bf;font-size:11px;letter-spacing:1.5px;margin-bottom:8px;}
+  .dt-ref p{font-size:12.5px;line-height:1.9;color:var(--ink-dim);margin:0 0 12px;}
+  .dt-ref-link{display:inline-block;font-size:12.5px;font-weight:700;color:#2dd4bf;text-decoration:none;border:1px solid #2dd4bf55;background:rgba(45,212,191,0.07);padding:8px 14px;border-radius:8px;}
+  .dt-ref-link:hover{background:rgba(45,212,191,0.16);}
   .modal-eyebrow{
     font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:11px;
     letter-spacing:2px;margin-bottom:10px;text-align:center;
@@ -375,7 +439,31 @@
       <div class="pt"><div class="line"></div><div class="dot"></div>1947</div>
       <div class="pt"><div class="line"></div><div class="dot"></div>1991</div>
       <div class="pt"><div class="line"></div><div class="dot"></div>2022</div>
+      <div class="pt"><div class="line"></div><div class="dot"></div>2026</div>
+      <div class="pt"><div class="line"></div><div class="dot"></div>2030</div>
       <div class="pt qdot"><div class="line"></div><div class="dot"></div>؟</div>
+    </div>
+  </div>
+
+  <div class="quick-refs">
+    <a class="qref-item" href="future-horizon-blueprint.html">
+      <div class="qref-icon">🔮</div>
+      <div class="qref-text">
+        <div class="qref-title lang-ar">الأفق المستقبلي</div>
+        <div class="qref-title lang-en">The Future Horizon</div>
+        <div class="qref-desc lang-ar">استشراف تقني — ستة مسارات تنظر لما بعد 2026 استناداً لخارطات طريق مؤسسات بحثية فعلية</div>
+        <div class="qref-desc lang-en">Technical foresight — six tracks looking beyond 2026, grounded in real institutional roadmaps</div>
+      </div>
+      <div class="qref-arrow">←</div>
+    </a>
+    <div class="qref-item qref-static">
+      <div class="qref-icon">📚</div>
+      <div class="qref-text">
+        <div class="qref-title lang-ar">المصادر والمراجع</div>
+        <div class="qref-title lang-en">Sources &amp; References</div>
+        <div class="qref-desc lang-ar">كل صفحة من الصفحات الثماني تنتهي بقسم مصادر موثّق يضم روابط حقيقية محقّقة تدعم معلوماتها</div>
+        <div class="qref-desc lang-en">Each of the eight pages ends with a verified sources section listing real, checked links supporting its content</div>
+      </div>
     </div>
   </div>
 
@@ -568,6 +656,29 @@
       </div>
     </div>
 
+    <div class="card c9" id="dtCardTrigger" style="cursor:pointer;">
+      <div class="card-head">
+        <div class="card-num">EXTRA // ORGANIZATIONS, NOT TECH ALONE</div>
+        <div class="card-icon">🦋</div>
+        <div class="card-title lang-ar">التحول الرقمي</div>
+        <div class="card-title lang-en">Digital Transformation</div>
+        <div class="card-span">2023 → 2038</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc lang-ar">بطاقة تفاعلية منفصلة عن الخط السردي التقني للمشروع — تعرض عرضاً بصرياً بالكاروسيل حول التحول الرقمي كعملية مؤسسية محورها الإنسان قبل التقنية، مع شريط تقدّم يمتد نحو أفق 2038 ومرجع مقتبس.</div>
+        <div class="card-desc lang-en">An interactive card separate from the project's technical narrative — a carousel visual on digital transformation as an organizational process centered on people before technology, with a progress bar extending toward the 2038 horizon and a cited reference.</div>
+        <div class="card-tags lang-ar">
+          <span>كاروسيل صور</span><span>شريط تقدّم 2038</span><span>مرجع خارجي</span>
+        </div>
+        <div class="card-tags lang-en">
+          <span>image carousel</span><span>2038 progress bar</span><span>external reference</span>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span class="btn"><span class="lang-ar">استعرض البطاقة</span><span class="lang-en">View card</span> <span class="arrow">←</span></span>
+      </div>
+    </div>
+
   </div>
 
   <div class="footnote lang-ar">
@@ -582,6 +693,64 @@
 </div>
 
 <!-- ============ AUTH MODAL ============ -->
+<div class="dt-overlay" id="dtModal">
+  <div class="dt-card">
+    <button class="dt-close" id="dtCloseBtn" aria-label="Close">✕</button>
+
+    <div class="dt-eyebrow">EXTRA CARD // <span class="lang-ar">التحول الرقمي</span><span class="lang-en">Digital Transformation</span></div>
+    <h2 class="dt-title lang-ar">التحول الرقمي</h2>
+    <h2 class="dt-title lang-en">Digital Transformation</h2>
+
+    <div class="dt-carousel">
+      <div class="dt-slides" id="dtSlides">
+        <img src="assets/dt-01-dial.jpg" class="dt-slide active" alt="Digital Transformation dial">
+        <img src="assets/dt-04-head-circuit.png" class="dt-slide" alt="Digital Transformation head circuit">
+        <img src="assets/dt-02-butterfly-wide.jpg" class="dt-slide" alt="Digital Transformation butterfly">
+        <img src="assets/dt-03-butterfly-crop.jpg" class="dt-slide" alt="Digital Transformation butterfly closeup">
+      </div>
+      <div class="dt-dots" id="dtDots">
+        <span class="dt-dot active" data-i="0"></span>
+        <span class="dt-dot" data-i="1"></span>
+        <span class="dt-dot" data-i="2"></span>
+        <span class="dt-dot" data-i="3"></span>
+      </div>
+    </div>
+
+    <div class="dt-progress-wrap">
+      <div class="dt-progress-labels">
+        <span class="dt-progress-start">2023</span>
+        <span class="dt-progress-now" id="dtProgressYear">2023</span>
+        <span class="dt-progress-end">2038</span>
+      </div>
+      <div class="dt-progress-track">
+        <div class="dt-progress-fill" id="dtProgressFill"></div>
+      </div>
+      <div class="dt-progress-note lang-ar">مسار زمني رمزي يمثّل استمرارية عملية التحول الرقمي كجهد مؤسسي متواصل، لا حدثاً لحظياً</div>
+      <div class="dt-progress-note lang-en">A symbolic timeline representing digital transformation's continuity as an ongoing organizational effort, not a one-time event</div>
+    </div>
+
+    <div class="dt-ref">
+      <div class="dt-ref-label lang-ar">📎 مرجع</div>
+      <div class="dt-ref-label lang-en">📎 Reference</div>
+      <p class="lang-ar">
+        بحسب مقال منشور على مدونة Uneecops (يونيو 2023)، العامل البشري — لا التقنية وحدها — هو القوة الدافعة الحقيقية للتحول الرقمي المؤسسي:
+        الموظفون هم من يقود التبني الفعلي للأدوات الجديدة، ويحملون القدرة على التفكير النقدي والإبداعي التي لا تستطيع الآلة استبدالها،
+        ويقودون إدارة التغيير التنظيمي اللازم لنجاح أي مبادرة رقمية. التقنية عامل تمكين، لكن الناس هم من يحوّلونها إلى نتيجة فعلية.
+      </p>
+      <p class="lang-en">
+        According to an article published on the Uneecops blog (June 2023), the human element — not technology alone — is the real
+        driving force behind enterprise digital transformation: employees drive the actual adoption of new tools, bring critical and
+        creative thinking machines cannot replace, and lead the organizational change management any digital initiative needs to
+        succeed. Technology is an enabler, but people are what turn it into an actual result.
+      </p>
+      <a class="dt-ref-link" href="https://www.uneecops.com/blog/why-people-are-important-for-digital-transformation/" target="_blank" rel="noopener">
+        <span class="lang-ar">↗ اقرأ المقال الأصلي — Uneecops.com</span>
+        <span class="lang-en">↗ Read the original article — Uneecops.com</span>
+      </a>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="authModal">
   <div class="modal-card">
     <div class="modal-eyebrow">BEYOND#COMPUTER_SCIENCE // ACCESS</div>
@@ -725,6 +894,70 @@
   }
   document.getElementById('logoutLink').addEventListener('click', handleLogout);
   document.getElementById('logoutLinkEn').addEventListener('click', handleLogout);
+
+  // ===== Digital Transformation card modal =====
+  (function(){
+    var dtModal = document.getElementById('dtModal');
+    var dtTrigger = document.getElementById('dtCardTrigger');
+    var dtCloseBtn = document.getElementById('dtCloseBtn');
+    var dtSlides = document.querySelectorAll('#dtSlides .dt-slide');
+    var dtDots = document.querySelectorAll('#dtDots .dt-dot');
+    var dtProgressFill = document.getElementById('dtProgressFill');
+    var dtProgressYear = document.getElementById('dtProgressYear');
+    var slideIndex = 0;
+    var slideTimer = null;
+    var yearTimer = null;
+
+    function showSlide(i){
+      slideIndex = (i + dtSlides.length) % dtSlides.length;
+      dtSlides.forEach(function(s, idx){ s.classList.toggle('active', idx === slideIndex); });
+      dtDots.forEach(function(d, idx){ d.classList.toggle('active', idx === slideIndex); });
+    }
+    function nextSlide(){ showSlide(slideIndex + 1); }
+    dtDots.forEach(function(d){
+      d.addEventListener('click', function(){ showSlide(parseInt(d.dataset.i, 10)); resetSlideTimer(); });
+    });
+    function resetSlideTimer(){
+      if(slideTimer) clearInterval(slideTimer);
+      slideTimer = setInterval(nextSlide, 4200);
+    }
+
+    function startProgress(){
+      dtProgressFill.style.transition = 'none';
+      dtProgressFill.style.width = '0%';
+      dtProgressYear.textContent = '2023';
+      void dtProgressFill.offsetWidth; // force reflow
+      dtProgressFill.style.transition = 'width 15s linear';
+      setTimeout(function(){ dtProgressFill.style.width = '100%'; }, 30);
+
+      var startYear = 2023, endYear = 2038, durationMs = 15000;
+      var startTime = Date.now();
+      if(yearTimer) clearInterval(yearTimer);
+      yearTimer = setInterval(function(){
+        var elapsed = Date.now() - startTime;
+        var frac = Math.min(elapsed / durationMs, 1);
+        var y = Math.round(startYear + frac * (endYear - startYear));
+        dtProgressYear.textContent = y;
+        if(frac >= 1) clearInterval(yearTimer);
+      }, 200);
+    }
+
+    function openDtModal(){
+      dtModal.classList.add('open');
+      showSlide(0);
+      resetSlideTimer();
+      startProgress();
+    }
+    function closeDtModal(){
+      dtModal.classList.remove('open');
+      if(slideTimer) clearInterval(slideTimer);
+      if(yearTimer) clearInterval(yearTimer);
+    }
+    if(dtTrigger) dtTrigger.addEventListener('click', openDtModal);
+    if(dtCloseBtn) dtCloseBtn.addEventListener('click', closeDtModal);
+    if(dtModal) dtModal.addEventListener('click', function(e){ if(e.target === dtModal) closeDtModal(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeDtModal(); });
+  })();
 </script>
 <div class="cl-overlay" id="clOverlay">
   <div class="cl-card">
