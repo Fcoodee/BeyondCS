@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>الأفق المستقبلي — استشراف تقني | Beyond#Computer_Science</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #120a1e;
+    --bg-grid: #1c1030;
+    --panel: #1f1233;
+    --panel-line: #3d2a5c;
+    --ink: #ede9fe;
+    --ink-dim: #b3a2d6;
+    --accent: #a78bfa;
+    --accent-dim: #6d28d9;
+    --warn: #f2a65a;
+    --warn-bg: rgba(242,166,90,0.10);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Cairo',sans-serif;}
+  body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
+  body.copy-unlocked{-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text;}
+  .lang-en{display:none;}
+  body.is-en .lang-en{display:revert;}
+  body.is-en .lang-ar{display:none;}
+  body.is-en{direction:ltr;}
+
+  .lang-toggle{position:fixed;top:16px;left:16px;z-index:200;display:flex;gap:6px;background:rgba(18,10,30,0.85);backdrop-filter:blur(6px);padding:6px;border-radius:10px;border:1px solid var(--panel-line);}
+  .lang-toggle button{font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 12px;border-radius:7px;border:none;background:transparent;color:var(--ink-dim);cursor:pointer;}
+  .lang-toggle button.active{background:var(--accent);color:#120a1e;}
+  .lang-toggle button.cl-active{background:#3fae6a;color:#06130b;}
+
+  .wrap{max-width:1400px;margin:0 auto;padding:70px clamp(16px,4vw,40px) 40px;}
+  .home-btn{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-dim);text-decoration:none;margin-bottom:22px;}
+  .home-btn:hover{color:var(--accent);}
+  .home-btn .arrow{font-size:14px;}
+
+  header{margin-bottom:30px;padding-bottom:26px;border-bottom:1px solid var(--panel-line);}
+  .eyebrow{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:12px;letter-spacing:3px;margin-bottom:10px;}
+  h1{font-size:clamp(24px,3.6vw,38px);font-weight:800;margin:0 0 12px;line-height:1.3;}
+  .subtitle{color:var(--ink-dim);font-size:14.5px;max-width:760px;line-height:1.8;}
+
+  .disclaimer-banner{display:flex;gap:14px;align-items:flex-start;background:var(--warn-bg);border:1.5px solid var(--warn);border-radius:12px;padding:18px 22px;margin-bottom:34px;}
+  .disclaimer-banner .dicon{font-size:26px;flex-shrink:0;}
+  .disclaimer-banner .dtext{font-size:14px;font-weight:700;color:var(--ink);line-height:1.8;}
+  .disclaimer-banner .dtext small{display:block;font-weight:400;color:var(--ink-dim);font-size:12.5px;margin-top:6px;line-height:1.8;}
+
+  .axis-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:22px;margin-bottom:20px;}
+  .axis-card{background:var(--panel);border:1px solid var(--panel-line);border-radius:14px;padding:22px 24px;position:relative;}
+  .axis-tag{position:absolute;top:18px;left:20px;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:1.5px;color:var(--accent);background:rgba(167,139,250,0.12);border:1px solid var(--accent-dim);border-radius:20px;padding:4px 10px;}
+  body.is-en .axis-tag{left:auto;right:20px;}
+  .axis-icon{font-size:30px;margin-bottom:10px;}
+  .axis-title{font-size:18px;font-weight:800;margin-bottom:4px;}
+  .axis-sub{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--ink-dim);letter-spacing:1px;margin-bottom:16px;}
+  .axis-block{margin-bottom:14px;}
+  .axis-block .ablabel{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--accent);letter-spacing:1px;margin-bottom:5px;}
+  .axis-block p{margin:0;font-size:13.5px;line-height:1.85;color:var(--ink-dim);}
+  .axis-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:14px;border-top:1px dashed var(--panel-line);}
+  .axis-links a{font-size:12px;color:var(--accent);text-decoration:none;font-weight:700;background:rgba(167,139,250,0.08);padding:6px 12px;border-radius:8px;border:1px solid var(--accent-dim);}
+  .axis-links a:hover{background:rgba(167,139,250,0.18);}
+  .axis-sources{margin-top:12px;}
+  .axis-sources a{display:block;font-size:11.5px;color:var(--ink-dim);text-decoration:none;padding:4px 0;}
+  .axis-sources a:hover{color:var(--accent);}
+
+  .footer-note{margin-top:44px;padding-top:24px;border-top:1px solid var(--panel-line);font-size:12.5px;color:var(--ink-dim);line-height:1.9;}
+
+  .cl-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(5,2,10,0.8);backdrop-filter:blur(3px);align-items:center;justify-content:center;padding:20px;}
+  .cl-overlay.open{display:flex;}
+  .cl-card{width:100%;max-width:380px;background:var(--panel);border:1px solid var(--panel-line);border-radius:14px;padding:28px 26px;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+  .cl-eyebrow{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:11px;letter-spacing:2px;margin-bottom:10px;text-align:center;}
+  .cl-title{font-size:17px;font-weight:800;margin:0 0 8px;text-align:center;}
+  .cl-sub{color:var(--ink-dim);font-size:12.5px;text-align:center;margin-bottom:20px;line-height:1.8;}
+  .cl-card label{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-dim);margin-bottom:6px;}
+  .cl-card input{width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--panel-line);border-radius:8px;color:var(--ink);font-family:'Cairo',sans-serif;font-size:14px;padding:10px 13px;margin-bottom:13px;}
+  .cl-card input:focus{outline:none;border-color:var(--accent-dim);}
+  .cl-actions{display:flex;gap:10px;margin-top:4px;}
+  .cl-actions button{flex:1;padding:10px 14px;border-radius:8px;font-family:'Cairo',sans-serif;font-weight:700;font-size:13px;cursor:pointer;}
+  .cl-submit{border:1px solid var(--accent-dim);color:var(--accent);background:rgba(167,139,250,0.08);}
+  .cl-submit:hover{background:var(--accent);color:#120a1e;}
+  .cl-cancel{border:1px solid var(--panel-line);color:var(--ink-dim);background:transparent;}
+  .cl-error{margin-top:12px;font-size:11.5px;padding:8px 11px;border-radius:8px;display:none;background:rgba(224,99,122,0.08);border:1px solid #e0637a;color:#e0637a;}
+</style>
+</head>
+<body>
+<script>
+  if (sessionStorage.getItem("bcs_auth") !== "1") {
+    window.location.href = "index.html";
+  }
+</script>
+
+<div class="lang-toggle">
+  <button id="btnAr" class="active">عربي</button>
+  <button id="btnEn">EN</button>
+  <button id="copyLockBtn" title="حقوق المحتوى — اضغط لإلغاء القيد">🔒</button>
+</div>
+
+<div class="wrap">
+  <a class="home-btn lang-ar" href="index.html"><span class="arrow">→</span> العودة للصفحة الرئيسية</a>
+  <a class="home-btn lang-en" href="index.html"><span class="arrow">→</span> Back to home</a>
+
+  <header>
+    <div class="eyebrow">FORESIGHT // <span class="lang-ar">لا سرد تاريخي — استشراف تقني مستقبلي</span><span class="lang-en">Not a historical narrative — technical foresight</span></div>
+    <h1 class="lang-ar">الأفق المستقبلي</h1>
+    <h1 class="lang-en">The Future Horizon</h1>
+    <div class="subtitle lang-ar">محور استشرافي مستقل يربط بين كل صفحات مشروع Beyond#Computer_Science — ستة مسارات تقنية ينظر كل منها إلى ما بعد 2026، بالاستناد إلى خارطات طريق وتقارير مؤسسات بحثية فعلية، لا تخمين حر.</div>
+    <div class="subtitle lang-en">An independent foresight hub connecting every page of the Beyond#Computer_Science project — six technical tracks looking beyond 2026, grounded in real institutional roadmaps and reports, not free speculation.</div>
+  </header>
+
+  <div class="disclaimer-banner">
+    <div class="dicon">⚠️</div>
+    <div class="dtext lang-ar">
+      استشراف تقني — ليس توثيقاً تاريخياً
+      <small>كل ما يلي توقعات مؤسسات بحثية وشركات تقنية بتاريخ كتابة هذه الصفحة (أغسطس 2026)، قابلة للتغيير أو التأخر أو التجاوز. لا تُقرأ كحقائق مؤكدة — بل كأفضل تقدير متاح اليوم لما قد يحدث. راجع الصفحات الثمانية الأخرى في المشروع للأحداث الموثّقة تاريخياً فعلاً.</small>
+    </div>
+    <div class="dtext lang-en">
+      Technical foresight — not historical documentation
+      <small>Everything below reflects the projections of research institutions and technology companies as of this page's writing (August 2026), subject to change, delay, or being overtaken by events. This should not be read as confirmed fact — only as the best available estimate today of what might happen. See the other eight pages in the project for actually documented historical events.</small>
+    </div>
+  </div>
+
+  <div class="axis-grid">
+
+    <!-- AXIS 1: QUANTUM -->
+    <div class="axis-card">
+      <div class="axis-tag lang-ar">استشراف</div>
+      <div class="axis-tag lang-en">FORESIGHT</div>
+      <div class="axis-icon">⚛️</div>
+      <div class="axis-title lang-ar">الحوسبة الكمية والكيوبت</div>
+      <div class="axis-title lang-en">Quantum Computing &amp; the Qubit</div>
+      <div class="axis-sub">QUANTUM // BEYOND THE CLASSICAL BIT</div>
+      <div class="axis-block">
+        <div class="ablabel lang-ar">الوضع الحالي (2026)</div>
+        <div class="ablabel lang-en">Current State (2026)</div>
+        <p class="lang-ar">معالجات مثل IBM Heron تدير مئات الكيوبتات الفيزيائية، لكن تصحيح الأخطاء الكمي لا يزال في طور الإثبات المخبري — لا حواسيب كمية عملية واسعة النطاق بعد.</p>
+        <p class="lang-en">Processors like IBM Heron manage hundreds of physical qubits, but quantum error correction remains in the laboratory-proof stage — no large-scale practical quantum computers yet.</p>
+      </div>
+      <div class="axis-block">
+        <div class="ablabel lang-ar">الاستشراف</div>
+        <div class="ablabel lang-en">The Forecast</div>
+        <p class="lang-ar">تستهدف IBM إثبات "أفضلية كمية علمية" أولى بنهاية 2026، ونظام Starling المصحَّح للأخطاء بحلول 2029، ثم Blue Jay (2000 كيوبت منطقي) بعد 2033 — نقلة من "بت واحد = 0 أو 1" إلى "كيوبت = تراكب احتمالي" ستُعيد تعريف بعض مسائل الحوسبة الأصعب (كيمياء، تحسين، تشفير).</p>
+        <p class="lang-en">IBM targets a first "scientific quantum advantage" by end of 2026, an error-corrected Starling system by 2029, then Blue Jay (2,000 logical qubits) beyond 2033 — a shift from "one bit = 0 or 1" to "a qubit = probabilistic superposition" that will redefine some of computing's hardest problems (chemistry, optimization, cryptography).</p>
+      </div>
+      <div class="axis-links">
+        <a href="bit-evolution-blueprint.html"><span class="lang-ar">🔗 صفحة البت</span><span class="lang-en">🔗 The Bit page</span></a>
+        <a href="computer-science-evolution-blueprint.html"><span class="lang-ar">🔗 علوم الحاسوب</span><span class="lang-en">🔗 Computer Science</span></a>
+      </div>
+      <div class="axis-sources">
+        <a href="https://www.ibm.com/roadmaps/quantum" target="_blank" rel="noopener">↗ IBM Quantum Roadmap (الرسمي / Official)</a>
+      </div>
+    </div>
+
+    <!-- AXIS 2: AI BEYOND CURRENT -->
+    <div class="axis-card">
+      <div class="axis-tag lang-ar">استشراف</div>
+      <div class="axis-tag lang-en">FORESIGHT</div>
+      <div class="axis-icon">🤖</div>
+      <div class="axis-title lang-ar">ما بعد الذكاء الاصطناعي التوليدي الحالي</div>
+      <div class="axis-title lang-en">Beyond Today's Generative AI</div>
+      <div class="axis-sub">AI // FROM ASSISTANCE TO AUTONOMY</div>
+      <div class="axis-block">
+        <div class="ablabel lang-ar">الوضع الحالي (2026)</div>
+        <div class="ablabel lang-en">Current State (2026)</div>
+        <p class="lang-ar">نماذج اللغة الكبيرة (GPT، Claude، Gemini، Grok) تعمل بشكل أساسي كمساعِدات تفاعلية — يطلب المستخدم، يستجيب النموذج.</p>
+        <p class="lang-en">Large language models (GPT, Claude, Gemini, Grok) function primarily as interactive assistants — the user requests, the model responds.</p>
+      </div>
+      <div class="axis-block">
+        <div class="ablabel lang-ar">الاستشراف</div>
+        <div class="ablabel lang-en">The Forecast</div>
+        <p class="lang-ar">تقدّر ماكنزي أن الذكاء الاصطناعي التوليدي قد يضيف 2.6 إلى 4.4 تريليون دولار سنوياً للاقتصاد العالمي، مع أتمتة نصف مهام العمل الحالية بين 2030 و2060. توقعات Gartner تشير لانتقال حاسم من "المساعدة السلبية" إلى "قدرات مستقلة محدودة" (Agentic AI) — تحوّل جوهري في طبيعة العلاقة بين الإنسان والنظام، لا مجرد تحسين تدريجي في الدقة.</p>
+        <p class="lang-en">McKinsey estimates generative AI could add $2.6–4.4 trillion annually to the global economy, automating half of today's work activities between 2030 and 2060. Gartner forecasts a decisive shift from "passive assistance" to "limited autonomous capabilities" (agentic AI) — a fundamental change in the human-system relationship, not just incremental accuracy gains.</p>
+      </div>
+      <div class="axis-links">
+        <a href="ai-evolution-blueprint.html"><span class="lang-ar">🔗 صفحة الذكاء الاصطناعي</span><span class="lang-en">🔗 The AI page</span></a>
+      </div>
+      <div class="axis-sources">
+        <a href="https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/the-economic-potential-of-generative-ai-the-next-productivity-frontier" target="_blank" rel="noopener">↗ McKinsey — Economic Potential of Generative AI</a>
+        <a href="https://www.gartner.com/en/newsroom/press-releases/2026-07-20-gartner-forecasts-worldwide-ai-platforms-and-models-market-to-grow-63-percent-in-2026" target="_blank" rel="noopener">↗ Gartner Newsroom (الرسمي / Official)</a>
+      </div>
+    </div>
+
+    <!-- AXIS 3: DATA GOVERNANCE -->
+    <div class="axis-card">
+      <div class="axis-tag lang-ar">استشراف</div>
+      <div class="axis-tag lang-en">FORESIGHT</div>
+      <div class="axis-icon">🗄️</div>
+      <div class="axis-title lang-ar">حوكمة البيانات وخصوصيتها مستقبلاً</div>
+      <div class="axis-title lang-en">The Future of Data Governance &amp; Privacy</div>
+      <div class="axis-sub">DATA // GOVERNANCE AT AI SCALE</div>
+      <div class="axis-block">
+        <div class="ablabel lang-ar">الوضع الحالي (2026)</div>
+        <div class="ablabel lang-en">Current State (2026)</div>
+        <p class="lang-ar">GDPR (2018) لا يزال الإطار المرجعي الأبرز عالمياً، لكن نماذج AI تستهلك بيانات بحجم وسرعة لم يُصمَّم الإطار القانوني الحالي لاستيعابهما بالكامل.</p>
+        <p class="lang-en">GDPR (2018) remains the leading global reference framework, but AI models consume data at a volume and speed the current legal framework wasn't fully designed to accommodate.</p>
+      </div>
+      <div class="axis-block">
+        <div class="ablabel lang-ar">الاستشراف</div>
+        <div class="ablabel lang-en">The Forecast</div>
+        <p class="lang-ar">تتوقع Gartner أن تتلاشى الحدود بين الذكاء البشري والآلي والمؤسسي أكثر خلال 2026، مع ضغط متزايد لحوكمة بيانات تراعي أنظمة AI كـ"شريك" لا كأداة معالجة بسيطة — يشمل ذلك أطر جديدة للمساءلة عن قرارات مبنية على بيانات تُنتجها أنظمة AI نفسها، لا بيانات بشرية مباشرة فقط.</p>
+        <p class="lang-en">Gartner expects the boundaries between human, machine, and organizational intelligence to blur further through 2026, with growing pressure for data governance that treats AI systems as a "partner," not a simple processing tool — including new accountability frameworks for decisions built on data that AI systems themselves generate, not just direct human data.</p>
+      </div>
+      <div class="axis-links">
+        <a href="data-evolution-blueprint.html"><span class="lang-ar">🔗 صفحة البيانات</span><span class="lang-en">🔗 The Data page</span></a>
+      </div>
+      <div class="axis-sources">
+        <a href="https://commission.europa.eu/law/law-topic/data-protection/legal-framework-eu-data-protection_en" target="_blank" rel="noopener">↗ European Commission (الرسمي / Official)</a>
+        <a href="https://www.gartner.com/en/newsroom/press-releases/2026-03-11-gartner-announces-top-predictions-for-data-and-analytics-in-2026" target="_blank" rel="noopener">↗ Gartner Newsroom (الرسمي / Official)</a>
+      </div>
+    </div>
+
+    <!-- AXIS 4: 6G & POST-QUANTUM CRYPTO -->
+    <div class="axis-card">
+      <div class="axis-tag lang-ar">استشراف</div>
+      <div class="axis-tag lang-en">FORESIGHT</div>
+      <div class="axis-icon">📡</div>
+      <div class="axis-title lang-ar">الشبكات: 6G وتشفير ما بعد الكم</div>
+      <div class="axis-title lang-en">Networks: 6G &amp; Post-Quantum Cryptography</div>
+      <div class="axis-sub">NETWORKS // SPEED MEETS SECURITY</div>
+      <div class="axis-block">
+        <div class="ablabel lang-ar">الوضع الحالي (2026)</div>
+        <div class="ablabel lang-en">Current State (2026)</div>
+        <p class="lang-ar">شبكات 5G منتشرة تجارياً؛ NIST أصدر بالفعل معايير تشفير رسمية مقاومة للكم (ML-KEM وML-DSA) جاهزة للتطبيق الآن.</p>
+        <p class="lang-en">5G networks are commercially widespread; NIST has already released official quantum-resistant encryption standards (ML-KEM and ML-DSA) ready for implementation now.</p>
+      </div>
+      <div class="axis-block">
+        <div class="ablabel lang-ar">الاستشراف</div>
+        <div class="ablabel lang-en">The Forecast</div>
+        <p class="lang-ar">يستهدف إطار ITU-R IMT-2030 تحديد مواصفات 6G التقنية النهائية بين 2027 و2029، مع تجارب تجارية مبكرة تبدأ بحلول 2027. بالتوازي، تحذّر Gartner من أن الحوسبة الكمية قد تجعل التشفير غير المتماثل الحالي غير آمن بحلول 2030 — ما يجعل "الاستيلاء الآن، فك التشفير لاحقاً" (Harvest Now, Decrypt Later) تهديداً فعلياً يستوجب الانتقال المبكر للتشفير المقاوم للكم، لا انتظار الحوسبة الكمية نفسها.</p>
+        <p class="lang-en">The ITU-R IMT-2030 framework targets finalizing 6G technical specifications between 2027 and 2029, with early commercial trials beginning by 2027. In parallel, Gartner warns that quantum computing could render current asymmetric cryptography unsafe by 2030 — making "harvest now, decrypt later" a real threat that demands early migration to quantum-resistant cryptography, not waiting for quantum computing itself.</p>
+      </div>
+      <div class="axis-links">
+        <a href="communications-evolution-blueprint.html"><span class="lang-ar">🔗 صفحة Communications</span><span class="lang-en">🔗 The Communications page</span></a>
+        <a href="bit-evolution-blueprint.html"><span class="lang-ar">🔗 صفحة البت</span><span class="lang-en">🔗 The Bit page</span></a>
+      </div>
+      <div class="axis-sources">
+        <a href="https://www.nist.gov/pqc" target="_blank" rel="noopener">↗ NIST — Post-Quantum Cryptography (الرسمي / Official)</a>
+        <a href="https://www.gartner.com/en/newsroom/press-releases/2026-02-05-gartner-identifies-the-top-cybersecurity-trends-for-2026" target="_blank" rel="noopener">↗ Gartner Newsroom (الرسمي / Official)</a>
+      </div>
+    </div>
+
+    <!-- AXIS 5: PROGRAMMING LANGUAGES + AI -->
+    <div class="axis-card">
+      <div class="axis-tag lang-ar">استشراف</div>
+      <div class="axis-tag lang-en">FORESIGHT</div>
+      <div class="axis-icon">⌨️</div>
+      <div class="axis-title lang-ar">تطور لغات البرمجة بمساعدة الذكاء الاصطناعي</div>
+      <div class="axis-title lang-en">Programming Languages Evolving With AI</div>
+      <div class="axis-sub">LANGUAGES // FROM SYNTAX TO INTENT</div>
+      <div class="axis-block">
+        <div class="ablabel lang-ar">الوضع الحالي (2026)</div>
+        <div class="ablabel lang-en">Current State (2026)</div>
+        <p class="lang-ar">أدوات مثل GitHub Copilot تولّد بالفعل نسبة كبيرة من الأكواد المكتوبة على GitHub؛ لغات مثل TypeScript تتصدر بفضل قوة الأنماط الثابتة المفيدة لأدوات AI.</p>
+        <p class="lang-en">Tools like GitHub Copilot already generate a significant share of code written on GitHub; languages like TypeScript are rising, partly thanks to strong typing that benefits AI tools.</p>
+      </div>
+      <div class="axis-block">
+        <div class="ablabel lang-ar">الاستشراف</div>
+        <div class="ablabel lang-en">The Forecast</div>
+        <p class="lang-ar">تتوقع Gartner أن يستخدم 90٪ من مهندسي البرمجيات في المؤسسات أدوات مساعدة AI بحلول 2028 (مقارنة بأقل من 14٪ مطلع 2024) — نقلة تُعيد توزيع قيمة العمل من "كتابة الكود" نحو "تصميم الأنظمة واتخاذ القرار المعماري"، لا استبدالاً كاملاً للمبرمج البشري.</p>
+        <p class="lang-en">Gartner predicts 90% of enterprise software engineers will use AI code assistants by 2028 (up from under 14% in early 2024) — a shift redistributing the value of work from "writing code" toward "system design and architectural decision-making," not a full replacement of the human programmer.</p>
+      </div>
+      <div class="axis-links">
+        <a href="programming-languages-evolution-blueprint.html"><span class="lang-ar">🔗 صفحة لغات البرمجة</span><span class="lang-en">🔗 The Programming Languages page</span></a>
+      </div>
+      <div class="axis-sources">
+        <a href="https://github.com/resources/whitepapers/gartner-magic-quadrant-and-critical-capabilities-for-ai-code-assistants" target="_blank" rel="noopener">↗ Gartner Magic Quadrant for AI Code Assistants (عبر GitHub)</a>
+      </div>
+    </div>
+
+    <!-- AXIS 6: EDGE COMPUTING & INFRASTRUCTURE -->
+    <div class="axis-card">
+      <div class="axis-tag lang-ar">استشراف</div>
+      <div class="axis-tag lang-en">FORESIGHT</div>
+      <div class="axis-icon">🖥️</div>
+      <div class="axis-title lang-ar">الحوسبة الطرفية والبنية التحتية</div>
+      <div class="axis-title lang-en">Edge Computing &amp; Infrastructure</div>
+      <div class="axis-sub">INFRASTRUCTURE // COMPUTE MOVES OUTWARD</div>
+      <div class="axis-block">
+        <div class="ablabel lang-ar">الوضع الحالي (2026)</div>
+        <div class="ablabel lang-en">Current State (2026)</div>
+        <p class="lang-ar">مراكز البيانات السحابية والفرتشوالايزيشن (VMware، Hyper-V) لا تزال العمود الفقري لمعظم البنية التحتية المؤسسية.</p>
+        <p class="lang-en">Cloud data centers and virtualization (VMware, Hyper-V) remain the backbone of most enterprise infrastructure.</p>
+      </div>
+      <div class="axis-block">
+        <div class="ablabel lang-ar">الاستشراف</div>
+        <div class="ablabel lang-en">The Forecast</div>
+        <p class="lang-ar">تتوقع Gartner أن أكثر من ثلثي بيانات المؤسسات ستُنشأ وتُعالَج خارج مركز البيانات أو السحابة بحلول 2028، مدفوعة بـ"الذكاء الاصطناعي الفيزيائي" (روبوتات، معدات ذكية). هذا يعني إعادة توزيع جغرافي فعلي لمكان حدوث الحوسبة — من مركز مركزي بعيد إلى نقاط قريبة من مصدر البيانات نفسه، بما يفرض تحديات جديدة في الإدارة والأمن لم تكن موجودة في نموذج السحابة المركزية.</p>
+        <p class="lang-en">Gartner predicts more than two-thirds of enterprise data will be created and processed outside the data center or cloud by 2028, driven by "physical AI" (robots, smart equipment). This means an actual geographic redistribution of where computing happens — from a distant central hub to points close to the data source itself, raising new management and security challenges absent from the centralized cloud model.</p>
+      </div>
+      <div class="axis-links">
+        <a href="server-infra-blueprint-story.html"><span class="lang-ar">🔗 صفحة 8-bit.net</span><span class="lang-en">🔗 The 8-bit.net page</span></a>
+      </div>
+      <div class="axis-sources">
+        <a href="https://www.gartner.com/en/newsroom/press-releases/2025-10-20-gartner-identifies-the-top-strategic-technology-trends-for-2026" target="_blank" rel="noopener">↗ Gartner Newsroom (الرسمي / Official)</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-note lang-ar">
+    <b>ملاحظة منهجية أخيرة:</b> هذه الصفحة تُحدَّث بشكل غير دوري لتعكس أحدث خارطات الطريق المتاحة وقت المراجعة. التواريخ المذكورة أعلاه (2027، 2029، 2030، 2033...) هي أهداف مؤسسية معلنة، لا التزامات مضمونة — التأخير أو التسريع كلاهما وارد بنفس الاحتمالية تقريباً في مجالات بهذا المستوى من التعقيد التقني.
+  </div>
+  <div class="footer-note lang-en">
+    <b>A final methodological note:</b> this page is updated irregularly to reflect the latest roadmaps available at the time of review. The dates mentioned above (2027, 2029, 2030, 2033...) are stated institutional targets, not guaranteed commitments — delay or acceleration are both roughly equally plausible in fields with this level of technical complexity.
+  </div>
+
+</div>
+
+<div class="cl-overlay" id="clOverlay">
+  <div class="cl-card">
+    <div class="cl-eyebrow">BEYOND#COMPUTER_SCIENCE // CONTENT RIGHTS</div>
+    <div class="cl-title">تحقق الصلاحية لإلغاء القفل</div>
+    <div class="cl-sub">النسخ والتحديد مقيّدان افتراضياً لحماية المحتوى. أدخل بيانات الدخول لإلغاء القيد لهذه الجلسة فقط.</div>
+    <form id="clForm">
+      <label for="clUser">اسم المستخدم</label>
+      <input type="text" id="clUser" autocomplete="username" required>
+      <label for="clPass">كلمة المرور</label>
+      <input type="password" id="clPass" autocomplete="current-password" required>
+      <div class="cl-actions">
+        <button type="submit" class="cl-submit" id="clSubmitBtn">تحقق</button>
+        <button type="button" class="cl-cancel" id="clCancelBtn">إلغاء</button>
+      </div>
+    </form>
+    <div class="cl-error" id="clError"></div>
+  </div>
+</div>
+<script>
+  function applyLang(lang){
+    document.body.classList.toggle("is-en", lang === "en");
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === "en" ? "ltr" : "rtl";
+    document.getElementById("btnAr").classList.toggle("active", lang === "ar");
+    document.getElementById("btnEn").classList.toggle("active", lang === "en");
+    try { localStorage.setItem("bcs_lang", lang); } catch (e) {}
+  }
+  document.getElementById("btnAr").addEventListener("click", () => applyLang("ar"));
+  document.getElementById("btnEn").addEventListener("click", () => applyLang("en"));
+  let savedLang = "ar";
+  try { savedLang = localStorage.getItem("bcs_lang") || "ar"; } catch (e) {}
+  applyLang(savedLang);
+
+  document.addEventListener('copy', function(e){ if(sessionStorage.getItem('bcs_copy_unlock')!=='1') e.preventDefault(); });
+  document.addEventListener('cut', function(e){ if(sessionStorage.getItem('bcs_copy_unlock')!=='1') e.preventDefault(); });
+
+  (function(){
+    var clOverlay = document.getElementById('clOverlay');
+    var clForm = document.getElementById('clForm');
+    var clUser = document.getElementById('clUser');
+    var clPass = document.getElementById('clPass');
+    var clError = document.getElementById('clError');
+    var clSubmitBtn = document.getElementById('clSubmitBtn');
+    var clCancelBtn = document.getElementById('clCancelBtn');
+    var copyLockBtn = document.getElementById('copyLockBtn');
+
+    function isUnlocked(){
+      try { return sessionStorage.getItem('bcs_copy_unlock') === '1'; } catch(e){ return false; }
+    }
+    function applyCopyLockUI(){
+      if(!copyLockBtn) return;
+      if(isUnlocked()){
+        copyLockBtn.textContent = '🔓';
+        copyLockBtn.title = 'المحتوى متاح للنسخ — اضغط لإعادة القفل';
+        copyLockBtn.classList.add('cl-active');
+        document.body.classList.add('copy-unlocked');
+      } else {
+        copyLockBtn.textContent = '🔒';
+        copyLockBtn.title = 'حقوق المحتوى — اضغط لإلغاء القيد';
+        copyLockBtn.classList.remove('cl-active');
+        document.body.classList.remove('copy-unlocked');
+      }
+    }
+    function openClModal(){
+      if(!clOverlay) return;
+      clError.style.display = 'none';
+      clUser.value = ''; clPass.value = '';
+      clOverlay.classList.add('open');
+      setTimeout(function(){ clUser.focus(); }, 50);
+    }
+    function closeClModal(){ if(clOverlay) clOverlay.classList.remove('open'); }
+
+    if(copyLockBtn){
+      copyLockBtn.addEventListener('click', function(){
+        if(isUnlocked()){
+          try { sessionStorage.removeItem('bcs_copy_unlock'); } catch(e){}
+          applyCopyLockUI();
+        } else {
+          openClModal();
+        }
+      });
+    }
+    if(clCancelBtn) clCancelBtn.addEventListener('click', closeClModal);
+    if(clOverlay) clOverlay.addEventListener('click', function(e){ if(e.target===clOverlay) closeClModal(); });
+
+    if(clForm){
+      clForm.addEventListener('submit', function(e){
+        e.preventDefault();
+        clError.style.display = 'none';
+        clSubmitBtn.disabled = true;
+        var userInput = clUser.value.trim();
+        var passInput = clPass.value.trim();
+        fetch('access.txt', { cache: 'no-store' }).then(function(res){
+          if(!res.ok) throw new Error('fetch-failed');
+          return res.text();
+        }).then(function(text){
+          var validUser='', validPass='';
+          text.split('\n').forEach(function(line){
+            var l = line.trim();
+            if(l.indexOf('username=')===0) validUser = l.slice('username='.length).trim();
+            if(l.indexOf('password=')===0) validPass = l.slice('password='.length).trim();
+          });
+          if(userInput===validUser && passInput===validPass){
+            try { sessionStorage.setItem('bcs_copy_unlock','1'); } catch(e){}
+            closeClModal();
+            applyCopyLockUI();
+          } else {
+            clError.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة.';
+            clError.style.display = 'block';
+          }
+          clSubmitBtn.disabled = false;
+        }).catch(function(){
+          clError.textContent = 'تعذّر التحقق من بيانات الدخول.';
+          clError.style.display = 'block';
+          clSubmitBtn.disabled = false;
+        });
+      });
+    }
+
+    applyCopyLockUI();
+  })();
+</script>
+</body>
+</html>
