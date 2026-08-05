@@ -1316,6 +1316,12 @@
     table.bench-table tr:nth-child(even){background:rgba(255,255,255,0.015);}
     table.bench-table td.dev{color:var(--ink);font-weight:700;text-align:right;font-family:'Cairo',sans-serif;font-size:12px;}
     table.bench-table td.score{color:var(--gold);font-weight:700;}
+    table.bench-table td.chip{color:var(--ink);font-size:11px;}
+    table.bench-table td.gpu{color:var(--ink-dim);font-size:11px;}
+    table.bench-table td.npu{font-size:10.5px;line-height:1.5;}
+    table.bench-table td.npu-weak{color:#e0a458;}
+    table.bench-table td.npu-strong{color:#5fd9a8;}
+    table.bench-table-wide th, table.bench-table-wide td{padding:8px 10px;}
     .bench-note{font-size:12px;color:var(--ink-dim);margin-top:10px;line-height:1.8;}
     .integrity-warn{
       margin-top:22px;display:flex;gap:14px;align-items:flex-start;
@@ -1355,21 +1361,32 @@
   <div class="bench-note lang-en">📅 Data source: an independent testing database (Jarrod's Tech) — source page last updated: July 2026. Sorted by Multi Core score.</div>
 
   <div class="bench-table-wrap">
-    <table class="bench-table">
-      <tr><th>#</th><th><span class="lang-ar">الحاسوب المحمول والمعالج</span><span class="lang-en">Laptop &amp; CPU</span></th><th><span class="lang-ar">Multi Core</span><span class="lang-en">Multi Core</span></th></tr>
-      <tr><td>1</td><td class="dev">Lenovo Legion 9i (2025) — Core Ultra 9 275HX</td><td class="score">2,251</td></tr>
-      <tr><td>2</td><td class="dev">Alienware 18 Area-51 (2025) — Core Ultra 9 275HX</td><td class="score">2,246</td></tr>
-      <tr><td>3</td><td class="dev">ASUS Strix G16 (2025) — Core Ultra 9 275HX</td><td class="score">2,232</td></tr>
-      <tr><td>4</td><td class="dev">Alienware 16 Area-51 (2025) — Core Ultra 9 275HX</td><td class="score">2,224</td></tr>
-      <tr><td>5</td><td class="dev">Lenovo Legion Pro 7i (2025) — Core Ultra 9 275HX</td><td class="score">2,218</td></tr>
-      <tr><td>6</td><td class="dev">ASUS Strix Scar 16 (2025) — Core Ultra 9 275HX</td><td class="score">2,201</td></tr>
-      <tr><td>7</td><td class="dev">Razer Blade 18 (2025) — Core Ultra 9 275HX</td><td class="score">2,185</td></tr>
-      <tr><td>8</td><td class="dev">MSI Titan 18 HX (2025) — Core Ultra 9 285HX</td><td class="score">2,162</td></tr>
-      <tr><td>9</td><td class="dev">ASUS Strix Scar 18 (2025) — Core Ultra 9 275HX</td><td class="score">2,159</td></tr>
-      <tr><td>10</td><td class="dev">Lenovo Legion Pro 5i (2025) — Core Ultra 9 275HX</td><td class="score">2,121</td></tr>
+    <table class="bench-table bench-table-wide">
+      <tr>
+        <th>#</th>
+        <th><span class="lang-ar">الحاسوب المحمول</span><span class="lang-en">Laptop</span></th>
+        <th><span class="lang-ar">شريحة المعالج</span><span class="lang-en">Chip</span></th>
+        <th><span class="lang-ar">GPU المدمج</span><span class="lang-en">Integrated GPU</span></th>
+        <th>NPU</th>
+        <th><span class="lang-ar">Multi Core</span><span class="lang-en">Multi Core</span></th>
+      </tr>
+      <tr><td>1</td><td class="dev">Lenovo Legion 9i (2025)</td><td class="chip">Core Ultra 9 275HX</td><td class="gpu">Arc / Xe4 · 64EU</td><td class="npu npu-weak">AI Boost<br>~13 TOPS</td><td class="score">2,251</td></tr>
+      <tr><td>2</td><td class="dev">Alienware 18 Area-51 (2025)</td><td class="chip">Core Ultra 9 275HX</td><td class="gpu">Arc / Xe4 · 64EU</td><td class="npu npu-weak">AI Boost<br>~13 TOPS</td><td class="score">2,246</td></tr>
+      <tr><td>3</td><td class="dev">ASUS Strix G16 (2025)</td><td class="chip">Core Ultra 9 275HX</td><td class="gpu">Arc / Xe4 · 64EU</td><td class="npu npu-weak">AI Boost<br>~13 TOPS</td><td class="score">2,232</td></tr>
+      <tr><td>4</td><td class="dev">Alienware 16 Area-51 (2025)</td><td class="chip">Core Ultra 9 275HX</td><td class="gpu">Arc / Xe4 · 64EU</td><td class="npu npu-weak">AI Boost<br>~13 TOPS</td><td class="score">2,224</td></tr>
+      <tr><td>5</td><td class="dev">Lenovo Legion Pro 7i (2025)</td><td class="chip">Core Ultra 9 275HX</td><td class="gpu">Arc / Xe4 · 64EU</td><td class="npu npu-weak">AI Boost<br>~13 TOPS</td><td class="score">2,218</td></tr>
+      <tr><td>6</td><td class="dev">ASUS Strix Scar 16 (2025)</td><td class="chip">Core Ultra 9 275HX</td><td class="gpu">Arc / Xe4 · 64EU</td><td class="npu npu-weak">AI Boost<br>~13 TOPS</td><td class="score">2,201</td></tr>
+      <tr><td>7</td><td class="dev">Razer Blade 18 (2025)</td><td class="chip">Core Ultra 9 275HX</td><td class="gpu">Arc / Xe4 · 64EU</td><td class="npu npu-weak">AI Boost<br>~13 TOPS</td><td class="score">2,185</td></tr>
+      <tr><td>8</td><td class="dev">MSI Titan 18 HX (2025)</td><td class="chip">Core Ultra 9 285HX</td><td class="gpu">Arc / Xe4 · 64EU</td><td class="npu npu-weak">AI Boost<br>~13 TOPS</td><td class="score">2,162</td></tr>
+      <tr><td>9</td><td class="dev">ASUS Strix Scar 18 (2025)</td><td class="chip">Core Ultra 9 275HX</td><td class="gpu">Arc / Xe4 · 64EU</td><td class="npu npu-weak">AI Boost<br>~13 TOPS</td><td class="score">2,159</td></tr>
+      <tr><td>10</td><td class="dev">Lenovo Legion Pro 5i (2025)</td><td class="chip">Core Ultra 9 275HX</td><td class="gpu">Arc / Xe4 · 64EU</td><td class="npu npu-weak">AI Boost<br>~13 TOPS</td><td class="score">2,121</td></tr>
     </table>
   </div>
-  <div class="bench-note lang-ar">🔎 <b>ملاحظة لافتة:</b> كل الحواسيب العشرة الأعلى أداءً تعتمد شريحة Intel Core Ultra 9 275HX/285HX نفسها تقريباً — الفروقات بينها عائدة بالكامل لتصميم التبريد وإدارة الطاقة لدى كل مُصنِّع، لا للمعالج ذاته. هذا يؤكد ما ذكرناه في مسار "تقارب GPU/AI" أعلاه: الشريحة موحّدة، والتنفيذ الفيزيائي حول التبريد هو الفارق الحقيقي.</div>
+  <div class="bench-note lang-ar">🔎 <b>ملاحظة أداء:</b> كل الحواسيب العشرة الأعلى أداءً تعتمد شريحة Intel Core Ultra 9 275HX/285HX نفسها تقريباً — الفروقات بينها عائدة بالكامل لتصميم التبريد وإدارة الطاقة لدى كل مُصنِّع، لا للمعالج ذاته.</div>
+  <div class="bench-note lang-en">🔎 <b>Performance note:</b> all ten top-performing laptops use nearly the same Intel Core Ultra 9 275HX/285HX chip — the differences between them come entirely from each manufacturer's cooling design and power management, not the processor itself.</div>
+
+  <div class="bench-note lang-ar">⚠️ <b>ملاحظة تقرير القرار الأهم في هذا الجدول:</b> رغم كونها أعلى 10 حواسيب محمولة أداءً في Cinebench عالمياً، فإن NPU المدمج فيها (~13 TOPS) <b>أضعف</b> من الحد الأدنى المطلوب لشهادة "Copilot+ PC" الرسمية من مايكروسوفت (40+ TOPS) — لأن فئة HX تُخصِّص مساحة الشريحة بالكامل تقريباً لأداء CPU/GPU الخام (الألعاب والتصيير)، لا لتسريع الذكاء الاصطناعي. <b>إن كانت أولويتك مهام AI محلية قوية لا الألعاب الثقيلة، فحواسيب فئة Core Ultra H/V الأخف (Lunar Lake، حتى 48 TOPS) قد تخدمك أفضل من هذه القائمة رغم نتائجها الأضعف في Cinebench.</b></div>
+  <div class="bench-note lang-en">⚠️ <b>This table's most decision-relevant note:</b> despite being the top 10 highest-performing laptops in Cinebench globally, their built-in NPU (~13 TOPS) is <b>weaker</b> than the minimum required for Microsoft's official "Copilot+ PC" certification (40+ TOPS) — because the HX tier dedicates nearly the entire chip budget to raw CPU/GPU performance (gaming, rendering), not AI acceleration. <b>If your priority is strong local AI tasks rather than heavy gaming, lighter Core Ultra H/V laptops (Lunar Lake, up to 48 TOPS) may serve you better than this list despite their weaker Cinebench scores.</b></div>
   <div class="bench-note lang-en">🔎 <b>A notable observation:</b> all ten top-performing laptops use nearly the same Intel Core Ultra 9 275HX/285HX chip — the differences between them come entirely from each manufacturer's cooling design and power management, not the processor itself. This confirms what's noted in the "GPU/AI Convergence" track above: the chip is unified; the physical implementation around cooling is the real differentiator.</div>
 
   <div class="integrity-warn">

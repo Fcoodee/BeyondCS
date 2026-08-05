@@ -1242,6 +1242,12 @@
     table.bench-table tr:nth-child(even){background:rgba(255,255,255,0.015);}
     table.bench-table td.dev{color:var(--ink);font-weight:700;text-align:right;font-family:'Cairo',sans-serif;}
     table.bench-table td.score{color:var(--gold);font-weight:700;}
+    table.bench-table td.chip{color:var(--ink);font-size:11px;}
+    table.bench-table td.gpu{color:var(--ink-dim);font-size:11px;}
+    table.bench-table td.npu{font-size:10.5px;line-height:1.5;}
+    table.bench-table td.npu-weak{color:#e0a458;}
+    table.bench-table td.npu-strong{color:#5fd9a8;}
+    table.bench-table-wide th, table.bench-table-wide td{padding:8px 10px;}
     .bench-note{font-size:12px;color:var(--ink-dim);margin-top:10px;line-height:1.8;}
     .integrity-warn{
       margin-top:22px;display:flex;gap:14px;align-items:flex-start;
@@ -1291,36 +1297,54 @@
   <div class="bench-note lang-en">📅 Last update stated on the official site: <b>July 2026 (Test version V11)</b> — the list updates monthly, and results are averages, not record highs.</div>
 
   <div class="bench-table-wrap">
-    <table class="bench-table">
-      <tr><th>#</th><th><span class="lang-ar">جهاز أندرويد</span><span class="lang-en">Android Device</span></th><th><span class="lang-ar">النتيجة</span><span class="lang-en">Score</span></th></tr>
-      <tr><td>1</td><td class="dev">Red Magic 11 Pro</td><td class="score">4,005,248</td></tr>
-      <tr><td>2</td><td class="dev">OPPO Find X9 Ultra</td><td class="score">3,766,902</td></tr>
-      <tr><td>3</td><td class="dev">iQOO 15</td><td class="score">3,714,661</td></tr>
-      <tr><td>4</td><td class="dev">Poco F8 Ultra</td><td class="score">3,668,860</td></tr>
-      <tr><td>5</td><td class="dev">OnePlus 15</td><td class="score">3,646,161</td></tr>
-      <tr><td>6</td><td class="dev">Xiaomi 17 Ultra</td><td class="score">3,579,338</td></tr>
-      <tr><td>7</td><td class="dev">Galaxy S26 Ultra</td><td class="score">3,437,807</td></tr>
-      <tr><td>8</td><td class="dev">vivo X300 Pro</td><td class="score">3,258,010</td></tr>
-      <tr><td>9</td><td class="dev">OPPO Find X9 Pro</td><td class="score">3,254,273</td></tr>
-      <tr><td>10</td><td class="dev">Mi 17</td><td class="score">3,207,732</td></tr>
+    <table class="bench-table bench-table-wide">
+      <tr>
+        <th>#</th>
+        <th><span class="lang-ar">جهاز أندرويد</span><span class="lang-en">Android Device</span></th>
+        <th><span class="lang-ar">شريحة المعالج</span><span class="lang-en">Chip</span></th>
+        <th>GPU</th>
+        <th>NPU</th>
+        <th><span class="lang-ar">النتيجة</span><span class="lang-en">Score</span></th>
+      </tr>
+      <tr><td>1</td><td class="dev">Red Magic 11 Pro</td><td class="chip">Snapdragon 8 Elite Gen 5</td><td class="gpu">Adreno (RT)</td><td class="npu npu-strong">Hexagon<br>+37%</td><td class="score">4,005,248</td></tr>
+      <tr><td>2</td><td class="dev">OPPO Find X9 Ultra</td><td class="chip">Snapdragon 8 Elite Gen 5</td><td class="gpu">Adreno (RT)</td><td class="npu npu-strong">Hexagon<br>+37%</td><td class="score">3,766,902</td></tr>
+      <tr><td>3</td><td class="dev">iQOO 15</td><td class="chip">Snapdragon 8 Elite Gen 5</td><td class="gpu">Adreno (RT)</td><td class="npu npu-strong">Hexagon<br>+37%</td><td class="score">3,714,661</td></tr>
+      <tr><td>4</td><td class="dev">Poco F8 Ultra</td><td class="chip">Snapdragon 8 Elite Gen 5</td><td class="gpu">Adreno (RT)</td><td class="npu npu-strong">Hexagon<br>+37%</td><td class="score">3,668,860</td></tr>
+      <tr><td>5</td><td class="dev">OnePlus 15</td><td class="chip">Snapdragon 8 Elite Gen 5</td><td class="gpu">Adreno (RT)</td><td class="npu npu-strong">Hexagon<br>+37%</td><td class="score">3,646,161</td></tr>
+      <tr><td>6</td><td class="dev">Xiaomi 17 Ultra</td><td class="chip">Snapdragon 8 Elite Gen 5</td><td class="gpu">Adreno (RT)</td><td class="npu npu-strong">Hexagon<br>+37%</td><td class="score">3,579,338</td></tr>
+      <tr><td>7</td><td class="dev">Galaxy S26 Ultra</td><td class="chip">Snapdragon 8 Elite Gen 5</td><td class="gpu">Adreno (RT)</td><td class="npu npu-strong">Hexagon<br>+37%</td><td class="score">3,437,807</td></tr>
+      <tr><td>8</td><td class="dev">vivo X300 Pro</td><td class="chip">Snapdragon 8 Elite Gen 5</td><td class="gpu">Adreno (RT)</td><td class="npu npu-strong">Hexagon<br>+37%</td><td class="score">3,258,010</td></tr>
+      <tr><td>9</td><td class="dev">OPPO Find X9 Pro</td><td class="chip">Snapdragon 8 Elite Gen 5</td><td class="gpu">Adreno (RT)</td><td class="npu npu-strong">Hexagon<br>+37%</td><td class="score">3,254,273</td></tr>
+      <tr><td>10</td><td class="dev">Mi 17</td><td class="chip">Snapdragon 8 Elite Gen 5</td><td class="gpu">Adreno (RT)</td><td class="npu npu-strong">Hexagon<br>+37%</td><td class="score">3,207,732</td></tr>
     </table>
   </div>
+  <div class="bench-note lang-ar">📌 كل الأجهزة العشرة تعتمد Snapdragon 8 Elite Gen 5 (Oryon Gen 3، 8 أنوية حتى 4.74GHz)؛ NPU Hexagon فيها يدعم تشغيل نماذج لغوية توليدية محلياً — على عكس فئة الحاسوب المحمول HX (راجع صفحة "الحاسوب")، هذه الشريحة توازن فعلياً بين الأداء الخام والذكاء الاصطناعي المحلي.</div>
+  <div class="bench-note lang-en">📌 All ten devices use the Snapdragon 8 Elite Gen 5 (Oryon Gen 3, 8 cores up to 4.74GHz); its Hexagon NPU supports running generative language models locally — unlike the laptop HX tier (see the "Computer" page), this chip genuinely balances raw performance with local AI.</div>
 
   <div class="bench-table-wrap" style="margin-top:16px;">
-    <table class="bench-table">
-      <tr><th>#</th><th><span class="lang-ar">جهاز iOS</span><span class="lang-en">iOS Device</span></th><th><span class="lang-ar">النتيجة</span><span class="lang-en">Score</span></th></tr>
-      <tr><td>1</td><td class="dev">iPad Pro 2025 13" (M5)</td><td class="score">3,198,524</td></tr>
-      <tr><td>2</td><td class="dev">iPad Pro 2025 11" (M5)</td><td class="score">3,194,264</td></tr>
-      <tr><td>3</td><td class="dev">iPad Pro 2024 11" (M4)</td><td class="score">2,978,817</td></tr>
-      <tr><td>4</td><td class="dev">iPad Pro 2024 13" (M4)</td><td class="score">2,974,268</td></tr>
-      <tr><td>5</td><td class="dev"><b>iPhone 17 Pro Max</b> (A19 Pro)</td><td class="score">2,434,710</td></tr>
-      <tr><td>6</td><td class="dev">iPad Air 2025 13" (M3)</td><td class="score">2,420,735</td></tr>
-      <tr><td>7</td><td class="dev"><b>iPhone 17 Pro</b> (A19 Pro)</td><td class="score">2,399,382</td></tr>
-      <tr><td>8</td><td class="dev">iPad Air 2025 11" (M3)</td><td class="score">2,357,574</td></tr>
-      <tr><td>9</td><td class="dev">iPad Pro 6 12.9" (M2)</td><td class="score">2,348,972</td></tr>
-      <tr><td>10</td><td class="dev">iPad Air (M2)</td><td class="score">~2,300,000</td></tr>
+    <table class="bench-table bench-table-wide">
+      <tr>
+        <th>#</th>
+        <th><span class="lang-ar">جهاز iOS</span><span class="lang-en">iOS Device</span></th>
+        <th><span class="lang-ar">شريحة المعالج</span><span class="lang-en">Chip</span></th>
+        <th>GPU</th>
+        <th>NPU</th>
+        <th><span class="lang-ar">النتيجة</span><span class="lang-en">Score</span></th>
+      </tr>
+      <tr><td>1</td><td class="dev">iPad Pro 2025 13"</td><td class="chip">Apple M5</td><td class="gpu">10-core + Neural Accelerator</td><td class="npu npu-strong">Neural Engine<br>16-core</td><td class="score">3,198,524</td></tr>
+      <tr><td>2</td><td class="dev">iPad Pro 2025 11"</td><td class="chip">Apple M5</td><td class="gpu">10-core + Neural Accelerator</td><td class="npu npu-strong">Neural Engine<br>16-core</td><td class="score">3,194,264</td></tr>
+      <tr><td>3</td><td class="dev">iPad Pro 2024 11"</td><td class="chip">Apple M4</td><td class="gpu">10-core</td><td class="npu npu-strong">Neural Engine<br>16-core</td><td class="score">2,978,817</td></tr>
+      <tr><td>4</td><td class="dev">iPad Pro 2024 13"</td><td class="chip">Apple M4</td><td class="gpu">10-core</td><td class="npu npu-strong">Neural Engine<br>16-core</td><td class="score">2,974,268</td></tr>
+      <tr><td>5</td><td class="dev"><b>iPhone 17 Pro Max</b></td><td class="chip">Apple A19 Pro</td><td class="gpu">6-core</td><td class="npu npu-strong">Neural Engine<br>16-core</td><td class="score">2,434,710</td></tr>
+      <tr><td>6</td><td class="dev">iPad Air 2025 13"</td><td class="chip">Apple M3</td><td class="gpu">10-core</td><td class="npu npu-strong">Neural Engine<br>16-core</td><td class="score">2,420,735</td></tr>
+      <tr><td>7</td><td class="dev"><b>iPhone 17 Pro</b></td><td class="chip">Apple A19 Pro</td><td class="gpu">6-core</td><td class="npu npu-strong">Neural Engine<br>16-core</td><td class="score">2,399,382</td></tr>
+      <tr><td>8</td><td class="dev">iPad Air 2025 11"</td><td class="chip">Apple M3</td><td class="gpu">10-core</td><td class="npu npu-strong">Neural Engine<br>16-core</td><td class="score">2,357,574</td></tr>
+      <tr><td>9</td><td class="dev">iPad Pro 6 12.9"</td><td class="chip">Apple M2</td><td class="gpu">10-core</td><td class="npu npu-strong">Neural Engine<br>16-core</td><td class="score">2,348,972</td></tr>
+      <tr><td>10</td><td class="dev">iPad Air</td><td class="chip">Apple M2</td><td class="gpu">10-core</td><td class="npu npu-strong">Neural Engine<br>16-core</td><td class="score">~2,300,000</td></tr>
     </table>
   </div>
+  <div class="bench-note lang-ar">📌 كل شريحة Apple — من M2 إلى M5 ومن A19 إلى A19 Pro — تحمل Neural Engine بـ16 نواة ثابتة العدد؛ الفارق الحقيقي بين الأجيال هو <b>معمارية</b> هذه الأنوية لا عددها (M5 يضيف "مسرِّع عصبي" داخل كل نواة GPU أيضاً، رافعاً أداء AI الرسومي 4 أضعاف M4).</div>
+  <div class="bench-note lang-en">📌 Every Apple chip — from M2 to M5 and A19 to A19 Pro — carries a 16-core Neural Engine with a fixed core count; the real generational difference is the <b>architecture</b> of those cores, not their number (M5 adds a "neural accelerator" inside every GPU core too, raising graphics-AI performance 4x over M4).</div>
   <div class="bench-note lang-ar">
     ⚠️ <b>ملاحظة صريحة حول قائمة iOS:</b> رقاقة Apple M بذاتها (المستخدمة في آيباد) تتصدر عملياً كل قائمة iOS — <b>7 من أعلى 10 أجهزة آيباد لا آيفون</b>، لأن رقاقات M تحمل أنوية معالجة ورسوميات أكثر وغلافاً حرارياً أكبر لتبديدها. هذا في الواقع يؤكد ما ناقشناه سابقاً: مقارنة أداء خام بحتة تُغفل أن الآيباد جهاز مختلف عن الهاتف في تصميمه الحراري والغرض منه، رغم مشاركته نفس النظام.
     <br><br>
