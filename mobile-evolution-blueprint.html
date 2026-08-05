@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>الهاتف — من أداة اتصال إلى حاسوب في الجيب | Beyond#Computer_Science</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a1826;
+    --bg-grid: #12293e;
+    --panel: #0f2438;
+    --panel-line: #1c3b57;
+    --ink: #e7eef5;
+    --ink-dim: #8fa6bb;
+    --gold: #d3a94e;
+    --gold-dim: #8a7038;
+
+    --lane-identity: #9b8cf2;
+    --lane-identity-bg: rgba(155,140,242,0.10);
+    --lane-files: #4fd0c8;
+    --lane-files-bg: rgba(79,208,200,0.10);
+    --lane-gateway: #f2a65a;
+    --lane-gateway-bg: rgba(242,166,90,0.10);
+    --lane-comms: #ef8c7a;
+    --lane-comms-bg: rgba(239,140,122,0.10);
+    --lane-spatial: #5fd9a8;
+    --lane-spatial-bg: rgba(95,217,168,0.10);
+
+    --c0: #7a8a99;
+    --c1: #6d7fd6;
+    --c2: #3fb6c9;
+    --c3: #a879e0;
+    --c4: #e0a458;
+    --c5: #e0637a;
+    --c6: #5fd9a8;
+    --holo: #7fd9ff;
+    --namebit: #ffd166;
+  }
+
+  *{box-sizing:border-box;}
+  body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
+  input, textarea{-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Cairo',sans-serif;}
+
+  body{
+    background-image:
+      linear-gradient(var(--bg-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    padding: 36px 28px 60px;
+  }
+
+  .wrap{max-width:1650px;margin:0 auto;}
+
+  header{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    border-bottom:2px solid var(--panel-line);padding-bottom:18px;margin-bottom:28px;
+    gap:24px;flex-wrap:wrap;
+  }
+  .title-block .eyebrow{
+    font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px;
+    letter-spacing:2px;margin-bottom:8px;
+  }
+  h1{font-size:27px;font-weight:800;margin:0 0 6px;line-height:1.3;}
+  .subtitle{color:var(--ink-dim);font-size:14px;max-width:660px;}
+  .domain-code{
+    font-family:'JetBrains Mono',monospace;text-align:left;direction:ltr;
+    color:var(--ink-dim);font-size:11px;line-height:1.9;
+    border:1px solid var(--panel-line);border-radius:4px;padding:10px 14px;background:var(--panel);
+  }
+  .domain-code b{color:var(--gold);}
+
+  .home-btn{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;
+    color:var(--ink-dim);text-decoration:none;
+    border:1px solid var(--panel-line);border-radius:20px;
+    padding:6px 14px;margin-bottom:14px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .home-btn:hover{color:var(--gold);border-color:var(--gold-dim);}
+  .home-btn .arrow{font-size:13px;}
+
+  .chapters-strip{position:relative;display:grid;grid-template-columns: 200px 1fr;margin-bottom:0;}
+  .chapters-track{position:relative;height:46px;}
+  .chapter-tag{
+    position:absolute;top:0;height:46px;display:flex;flex-direction:column;justify-content:center;
+    padding:0 10px;border-radius:6px 6px 0 0;font-family:'JetBrains Mono',monospace;overflow:hidden;
+  }
+  .chapter-tag .cnum{font-size:9.5px;letter-spacing:1px;opacity:.85;}
+  .chapter-tag .cname{font-size:11px;font-weight:700;color:var(--ink);margin-top:2px;font-family:'Cairo',sans-serif;}
+
+  .axis{position:relative;display:grid;grid-template-columns: 200px 1fr;margin-bottom:2px;}
+  .axis .years{position:relative;height:30px;border-bottom:1px solid var(--panel-line);}
+  .axis .years span{
+    position:absolute;top:0;transform:translateX(50%);
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);font-weight:700;
+  }
+
+  .triggers{position:relative;grid-column: 2 / -1;}
+
+  .board{position:relative;display:grid;grid-template-columns: 200px 1fr;}
+
+  .lane-labels{display:flex;flex-direction:column;}
+  .lane-label{
+    height:150px;display:flex;align-items:center;justify-content:flex-end;
+    padding-inline-end:14px;border-bottom:1px solid var(--panel-line);
+  }
+  .lane-label .tag{font-weight:700;font-size:13px;text-align:right;line-height:1.5;}
+  .lane-label .tag small{
+    display:block;font-family:'JetBrains Mono',monospace;font-weight:400;
+    font-size:9px;color:var(--ink-dim);letter-spacing:0.5px;margin-top:3px;
+  }
+  .lane-label.identity{border-inline-end:4px solid var(--lane-identity);}
+  .lane-label.files{border-inline-end:4px solid var(--lane-files);}
+  .lane-label.gateway{border-inline-end:4px solid var(--lane-gateway);}
+  .lane-label.comms{border-inline-end:4px solid var(--lane-comms);}
+  .lane-label.spatial{border-inline-end:4px solid var(--lane-spatial);}
+
+  .lanes{position:relative;}
+  .lane{
+    position:relative;height:150px;border-bottom:1px solid var(--panel-line);
+    display:flex;align-items:center;padding:0 18px;
+  }
+  .lane.identity{background:var(--lane-identity-bg);}
+  .lane.files{background:var(--lane-files-bg);}
+  .lane.gateway{background:var(--lane-gateway-bg);}
+  .lane.comms{background:var(--lane-comms-bg);}
+  .lane.spatial{background:var(--lane-spatial-bg);}
+
+  .lane-track{position:relative;width:100%;height:2px;background:var(--panel-line);}
+
+  .node{
+    position:absolute;top:50%;transform:translate(50%,-50%);width:176px;
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:6px;
+    padding:8px 10px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,0.35);cursor:default;
+  }
+  .node .period{
+    font-family:'JetBrains Mono',monospace;font-size:8.8px;color:var(--gold);
+    margin-bottom:3px;letter-spacing:0.5px;
+  }
+  .node .name{font-weight:700;font-size:11px;line-height:1.4;}
+  .node.empty{opacity:.5;font-style:italic;}
+  .node.identity{border-top:3px solid var(--lane-identity);}
+  .node.files{border-top:3px solid var(--lane-files);}
+  .node.gateway{border-top:3px solid var(--lane-gateway);}
+  .node.comms{border-top:3px solid var(--lane-comms);}
+  .node.spatial{border-top:3px solid var(--lane-spatial);}
+  .node.holo-node{border-style:dashed;border-color:var(--holo);opacity:.92;}
+  .node.holo-node .period{color:var(--holo);}
+  .dot.holo-dot{background:var(--holo);}
+
+  .qmark{
+    position:absolute;top:50%;transform:translate(50%,-50%);
+    width:11px;height:11px;display:flex;align-items:center;justify-content:center;
+    font-size:11px;cursor:default;z-index:3;
+  }
+  .qmark-label{
+    position:absolute;top:-20px;transform:translateX(50%);
+    font-family:'JetBrains Mono',monospace;font-size:9px;white-space:nowrap;
+  }
+
+  .node.namebit-node{border-color:var(--namebit); box-shadow:0 0 0 1px var(--namebit), 0 4px 14px rgba(255,209,102,0.25);}
+  .node.namebit-node .period{color:var(--namebit);}
+  .dot.namebit-dot{background:var(--namebit);}
+
+  .terms-note{
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:10px;
+    padding:16px 20px;margin-bottom:20px;font-size:13px;color:var(--ink-dim);line-height:1.9;
+  }
+  .terms-note b{color:var(--ink);}
+  .terms-note{transition:box-shadow .25s;}
+  .terms-note:hover{box-shadow:0 0 16px rgba(211,169,78,0.25);}
+
+  .necessity-banner{
+    display:flex;align-items:center;gap:18px;
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:10px;
+    padding:18px 22px;margin-bottom:26px;
+  }
+  .necessity-banner .nicon{font-size:26px;}
+  .necessity-banner .ntext{font-size:14.5px;font-weight:700;color:var(--ink);}
+  .necessity-banner .ntext small{
+    display:block;font-weight:400;color:var(--ink-dim);font-size:12px;margin-top:4px;line-height:1.7;
+  }
+
+  .dot{
+    position:absolute;top:50%;width:9px;height:9px;border-radius:50%;
+    transform:translate(50%,-50%);background:var(--gold);box-shadow:0 0 0 3px var(--bg);
+  }
+
+  .chapter-band{position:absolute;top:0;bottom:0;opacity:.55;pointer-events:none;}
+
+  .trigger-line{position:absolute;top:0;bottom:0;width:0;border-right:1px dashed var(--gold-dim);}
+  .trigger-flag{position:absolute;top:-66px;transform:translateX(50%);width:160px;text-align:center;}
+  .trigger-flag.mini{top:-96px;width:120px;}
+  .trigger-flag.mini .yr{font-size:9.5px;}
+  .trigger-flag.mini .lbl{font-size:9px;}
+  .trigger-flag .yr{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;}
+  .trigger-flag .lbl{font-size:10.5px;color:var(--ink-dim);line-height:1.3;margin-top:2px;}
+
+  .board-outer{
+    position:relative;border:1px solid var(--panel-line);border-radius:8px;
+    overflow:visible;margin-top:78px;background:var(--panel);
+  }
+
+  .legend{
+    display:flex;gap:20px;flex-wrap:wrap;margin-top:26px;padding-top:18px;
+    border-top:1px solid var(--panel-line);font-size:12px;color:var(--ink-dim);
+  }
+  .legend .item{display:flex;align-items:center;gap:7px;}
+  .legend .swatch{width:12px;height:12px;border-radius:3px;}
+
+  .note{
+    margin-top:22px;background:var(--panel);border:1px solid var(--panel-line);
+    border-radius:8px;padding:16px 20px;font-size:13px;color:var(--ink-dim);line-height:1.9;
+  }
+  .note b{color:var(--ink);}
+  .note code{
+    font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.06);
+    padding:1px 6px;border-radius:4px;color:var(--gold);direction:ltr;display:inline-block;
+  }
+
+  .story-header{margin-top:56px;padding-bottom:14px;border-bottom:2px solid var(--panel-line);}
+  .story-header .eyebrow{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px;letter-spacing:2px;margin-bottom:6px;}
+  .story-header h2{font-size:22px;font-weight:800;margin:0;}
+
+  .story-grid{display:flex;flex-direction:column;gap:18px;margin-top:22px;}
+
+  .story-card{position:relative;background:var(--panel);border:1px solid var(--panel-line);border-radius:10px;overflow:hidden;}
+  .story-card::before{content:"";position:absolute;top:0;bottom:0;right:0;width:5px;}
+  .story-card.sc0::before{background:var(--c0);}
+  .story-card.sc1::before{background:var(--c1);}
+  .story-card.sc2::before{background:var(--c2);}
+  .story-card.sc3::before{background:var(--c3);}
+  .story-card.sc4::before{background:var(--c4);}
+  .story-card.sc5::before{background:var(--c5);}
+  .story-card.sc6::before{background:var(--c6);}
+
+  .story-card-head{
+    padding:18px 22px 14px;border-bottom:1px solid var(--panel-line);
+    display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;
+  }
+  .sc-title-block{max-width:700px;}
+  .sc-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;margin-bottom:6px;}
+  .sc0 .sc-num{color:var(--c0);} .sc1 .sc-num{color:var(--c1);} .sc2 .sc-num{color:var(--c2);}
+  .sc3 .sc-num{color:var(--c3);} .sc4 .sc-num{color:var(--c4);} .sc5 .sc-num{color:var(--c5);}
+  .sc6 .sc-num{color:var(--c6);}
+  .sc-title{font-size:18px;font-weight:800;margin-bottom:6px;}
+  .sc-hook{font-size:13px;color:var(--ink-dim);font-style:italic;line-height:1.8;}
+  .sc-years{
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);font-weight:700;
+    background:rgba(211,169,78,0.08);border:1px solid var(--gold-dim);border-radius:20px;
+    padding:6px 16px;white-space:nowrap;
+  }
+
+  .sc-body{padding:18px 22px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media (max-width:1100px){.sc-body{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:640px){.sc-body{grid-template-columns:1fr;}}
+
+  .sc-domain{background:rgba(255,255,255,0.03);border-radius:8px;padding:12px 14px;border-inline-start:3px solid transparent;}
+  .sc-domain.identity{border-inline-start-color:var(--lane-identity);}
+  .sc-domain.files{border-inline-start-color:var(--lane-files);}
+  .sc-domain.gateway{border-inline-start-color:var(--lane-gateway);}
+  .sc-domain.comms{border-inline-start-color:var(--lane-comms);}
+  .sc-dlabel{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.5px;margin-bottom:5px;}
+  .sc-domain.identity .sc-dlabel{color:var(--lane-identity);}
+  .sc-domain.files .sc-dlabel{color:var(--lane-files);}
+  .sc-domain.gateway .sc-dlabel{color:var(--lane-gateway);}
+  .sc-domain.comms .sc-dlabel{color:var(--lane-comms);}
+  .sc-dtech{font-weight:700;font-size:13px;margin-bottom:5px;line-height:1.4;}
+  .sc-dnote{font-size:12px;color:var(--ink-dim);line-height:1.7;}
+
+  .sc-cross{
+    grid-column:1/-1;
+    background:rgba(211,169,78,0.05);
+    border:1px dashed var(--gold-dim);
+    border-radius:8px;
+    padding:11px 14px;
+    font-size:12px;
+    color:var(--ink-dim);
+    line-height:1.7;
+  }
+  .sc-cross b{color:var(--gold);}
+
+  .sc-foot{padding:13px 22px 18px;font-size:12.5px;color:var(--ink-dim);display:flex;gap:8px;}
+  .sc-foot b{color:var(--ink);}
+
+  .role-strip{
+    display:flex;align-items:center;gap:6px;margin-top:24px;flex-wrap:wrap;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;
+  }
+  .role-strip .role{
+    background:var(--panel);border:1px solid var(--panel-line);color:var(--ink);
+    padding:7px 14px;border-radius:20px;white-space:nowrap;
+  }
+  .role-strip .arrow{color:var(--gold);font-size:15px;}
+
+  /* ===== Full chronological timeline appendix ===== */
+  .full-timeline{margin-top:56px;}
+  .tl-list{position:relative;margin-top:22px;}
+  .tl-list::before{content:"";position:absolute;top:6px;bottom:6px;right:6px;width:1px;background:var(--panel-line);}
+  .tl-item{
+    position:relative;display:flex;gap:16px;align-items:baseline;flex-wrap:wrap;
+    padding:12px 18px 12px 14px;padding-inline-end:30px;border-radius:8px;
+    border-inline-start:3px solid transparent;
+  }
+  .tl-item:nth-child(odd){background:rgba(255,255,255,0.015);}
+  .tl-item .tl-dot{
+    position:absolute;right:2px;top:19px;width:9px;height:9px;border-radius:50%;
+    background:var(--gold);box-shadow:0 0 0 3px var(--bg);z-index:2;
+  }
+  .tl-item .tl-year{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--gold);
+    font-weight:700;min-width:108px;flex-shrink:0;
+  }
+  .tl-item .tl-text{font-size:13px;color:var(--ink-dim);line-height:1.8;flex:1;min-width:200px;}
+  .tl-item .tl-text b{color:var(--ink);font-weight:700;}
+
+  .tl-item.tl-c0{border-inline-start-color:var(--c0);}
+  .tl-item.tl-c0 .tl-dot{background:var(--c0);}
+  .tl-item.tl-c0 .tl-year{color:var(--c0);}
+  .tl-item.tl-c1{border-inline-start-color:var(--c1);}
+  .tl-item.tl-c1 .tl-dot{background:var(--c1);}
+  .tl-item.tl-c1 .tl-year{color:var(--c1);}
+  .tl-item.tl-c2{border-inline-start-color:var(--c2);}
+  .tl-item.tl-c2 .tl-dot{background:var(--c2);}
+  .tl-item.tl-c2 .tl-year{color:var(--c2);}
+  .tl-item.tl-c3{border-inline-start-color:var(--c3);}
+  .tl-item.tl-c3 .tl-dot{background:var(--c3);}
+  .tl-item.tl-c3 .tl-year{color:var(--c3);}
+  .tl-item.tl-c4{border-inline-start-color:var(--c4);}
+  .tl-item.tl-c4 .tl-dot{background:var(--c4);}
+  .tl-item.tl-c4 .tl-year{color:var(--c4);}
+  .tl-item.tl-c5{border-inline-start-color:var(--c5);}
+  .tl-item.tl-c5 .tl-dot{background:var(--c5);}
+  .tl-item.tl-c5 .tl-year{color:var(--c5);}
+  .tl-item.tl-c6{border-inline-start-color:var(--c6);}
+  .tl-item.tl-c6 .tl-dot{background:var(--c6);}
+  .tl-item.tl-c6 .tl-year{color:var(--c6);}
+  .tl-item.tl-holo{border-inline-start-color:var(--holo);}
+  .tl-item.tl-holo .tl-dot{background:var(--holo);}
+  .tl-item.tl-holo .tl-year{color:var(--holo);}
+
+  .tl-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;font-size:11.5px;color:var(--ink-dim);}
+  .tl-legend .li{display:flex;align-items:center;gap:6px;}
+  .tl-legend .sw{width:10px;height:10px;border-radius:3px;}
+
+  @media (max-width: 1300px){
+    .board-outer{overflow-x:auto;}
+    .board, .axis, .chapters-strip{min-width:1500px;}
+  }
+  .lang-en{display:none;}
+  body.is-en .lang-en{display:revert;}
+  body.is-en .lang-ar{display:none;}
+  body.is-en{direction:ltr;}
+
+  .lang-toggle{
+    position:fixed;top:18px;left:18px;z-index:900;
+    display:flex;align-items:center;gap:6px;
+    background:var(--panel);border:1px solid var(--panel-line);
+    border-radius:20px;padding:6px 8px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+    box-shadow:0 6px 18px rgba(0,0,0,0.35);
+  }
+  .lang-toggle button{
+    border:none;background:transparent;color:var(--ink-dim);
+    padding:5px 10px;border-radius:14px;cursor:pointer;
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+    transition:background .15s ease, color .15s ease;
+  }
+  .lang-toggle button.active{background:var(--gold);color:var(--bg);}
+  .lang-toggle button.cl-active{background:#3fae6a;color:#06130b;}
+  body.copy-unlocked{-webkit-user-select:text!important;-moz-user-select:text!important;-ms-user-select:text!important;user-select:text!important;}
+
+  .cl-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(5,12,20,0.75);backdrop-filter:blur(3px);align-items:center;justify-content:center;padding:20px;}
+  .cl-overlay.open{display:flex;}
+  .cl-card{width:100%;max-width:380px;background:var(--panel);border:1px solid var(--panel-line);border-radius:14px;padding:28px 26px;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+  .cl-eyebrow{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:11px;letter-spacing:2px;margin-bottom:10px;text-align:center;}
+  .cl-title{font-size:17px;font-weight:800;margin:0 0 8px;text-align:center;}
+  .cl-sub{color:var(--ink-dim);font-size:12.5px;text-align:center;margin-bottom:20px;line-height:1.8;}
+  .cl-card label{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-dim);margin-bottom:6px;}
+  .cl-card input{width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--panel-line);border-radius:8px;color:var(--ink);font-family:'Cairo',sans-serif;font-size:14px;padding:10px 13px;margin-bottom:13px;}
+  .cl-card input:focus{outline:none;border-color:var(--gold-dim);}
+  .cl-actions{display:flex;gap:10px;margin-top:4px;}
+  .cl-actions button{flex:1;padding:10px 14px;border-radius:8px;font-family:'Cairo',sans-serif;font-weight:700;font-size:13px;cursor:pointer;}
+  .cl-submit{border:1px solid var(--gold-dim);color:var(--gold);background:rgba(211,169,78,0.08);}
+  .cl-submit:hover{background:var(--gold);color:var(--bg);}
+  .cl-cancel{border:1px solid var(--panel-line);color:var(--ink-dim);background:transparent;}
+  .cl-error{margin-top:12px;font-size:11.5px;padding:8px 11px;border-radius:8px;display:none;background:rgba(224,99,122,0.08);border:1px solid #e0637a;color:#e0637a;}
+</style>
+<style>
+  /* ===== Neon hover glow — matches each element's own accent color ===== */
+  .story-card{transition:box-shadow .25s, transform .18s;}
+  .story-card:hover{transform:translateY(-2px);}
+  .story-card.sc0:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c0) 55%, transparent);}
+  .story-card.sc1:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c1) 55%, transparent);}
+  .story-card.sc2:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c2) 55%, transparent);}
+  .story-card.sc3:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c3) 55%, transparent);}
+  .story-card.sc4:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c4) 55%, transparent);}
+  .story-card.sc5:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c5) 55%, transparent);}
+
+  .node{transition:box-shadow .2s, transform .15s;}
+  .node:hover{transform:scale(1.07);z-index:5;}
+  .node.identity:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-identity) 60%, transparent);}
+  .node.files:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-files) 60%, transparent);}
+  .node.gateway:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-gateway) 60%, transparent);}
+  .node.comms:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-comms) 60%, transparent);}
+
+  .lane-label{transition:box-shadow .2s;}
+  .lane-label.identity:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-identity) 45%, transparent);}
+  .lane-label.files:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-files) 45%, transparent);}
+  .lane-label.gateway:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-gateway) 45%, transparent);}
+  .lane-label.comms:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-comms) 45%, transparent);}
+
+  .metaphor-box{transition:box-shadow .25s;}
+  .metaphor-box:hover{box-shadow:0 0 18px rgba(211,169,78,0.35);}
+  .why8-box{transition:box-shadow .25s;}
+  .why8-box:hover{box-shadow:0 0 18px rgba(211,169,78,0.35);}
+  .encoding-note{transition:box-shadow .25s;}
+  .encoding-note:hover{box-shadow:0 0 18px color-mix(in srgb, var(--lane-identity) 45%, transparent);}
+  .numsys-card{transition:box-shadow .25s, border-color .25s;}
+  .numsys-card:hover{border-color:var(--gold-dim);box-shadow:0 0 16px rgba(211,169,78,0.3);}
+  .letter-cell{transition:box-shadow .25s, border-color .25s;}
+  .letter-cell:hover{border-color:var(--gold-dim);box-shadow:0 0 14px rgba(211,169,78,0.3);}
+  .ethics-card{transition:box-shadow .25s;}
+  .ethics-card:hover{box-shadow:0 0 18px rgba(167,139,250,0.3);}
+  .bridge-card{transition:box-shadow .25s;}
+  .bridge-card:hover{box-shadow:0 0 18px rgba(167,139,250,0.3);}
+  .foresight-link:hover{box-shadow:0 0 20px rgba(139,92,246,0.35);}
+  .chapter-tag{transition:box-shadow .2s, filter .2s;}
+  .chapter-tag:hover{filter:brightness(1.25);box-shadow:0 0 14px rgba(255,255,255,0.15);}
+</style>
+<style>
+  /* ===== Neon hover glow — matches each element's own accent color ===== */
+  .story-card{transition:box-shadow .25s, transform .18s;}
+  .story-card:hover{transform:translateY(-2px);}
+  .story-card.sc0:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c0) 55%, transparent);}
+  .story-card.sc1:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c1) 55%, transparent);}
+  .story-card.sc2:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c2) 55%, transparent);}
+  .story-card.sc3:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c3) 55%, transparent);}
+  .story-card.sc4:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c4) 55%, transparent);}
+  .story-card.sc5:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c5) 55%, transparent);}
+
+  .node{transition:box-shadow .2s, transform .15s;}
+  .node:hover{transform:scale(1.07);z-index:5;}
+  .node.identity:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-identity) 60%, transparent);}
+  .node.files:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-files) 60%, transparent);}
+  .node.gateway:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-gateway) 60%, transparent);}
+  .node.comms:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-comms) 60%, transparent);}
+
+  .lane-label{transition:box-shadow .2s;}
+  .lane-label.identity:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-identity) 45%, transparent);}
+  .lane-label.files:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-files) 45%, transparent);}
+  .lane-label.gateway:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-gateway) 45%, transparent);}
+  .lane-label.comms:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-comms) 45%, transparent);}
+
+  .metaphor-box{transition:box-shadow .25s;}
+  .metaphor-box:hover{box-shadow:0 0 18px rgba(211,169,78,0.35);}
+  .why8-box{transition:box-shadow .25s;}
+  .why8-box:hover{box-shadow:0 0 18px rgba(211,169,78,0.35);}
+  .encoding-note{transition:box-shadow .25s;}
+  .encoding-note:hover{box-shadow:0 0 18px color-mix(in srgb, var(--lane-identity) 45%, transparent);}
+  .numsys-card{transition:box-shadow .25s, border-color .25s;}
+  .numsys-card:hover{border-color:var(--gold-dim);box-shadow:0 0 16px rgba(211,169,78,0.3);}
+  .letter-cell{transition:box-shadow .25s, border-color .25s;}
+  .letter-cell:hover{border-color:var(--gold-dim);box-shadow:0 0 14px rgba(211,169,78,0.3);}
+  .ethics-card{transition:box-shadow .25s;}
+  .ethics-card:hover{box-shadow:0 0 18px rgba(167,139,250,0.3);}
+  .bridge-card{transition:box-shadow .25s;}
+  .bridge-card:hover{box-shadow:0 0 18px rgba(167,139,250,0.3);}
+  .foresight-link:hover{box-shadow:0 0 20px rgba(139,92,246,0.35);}
+  .chapter-tag{transition:box-shadow .2s, filter .2s;}
+  .chapter-tag:hover{filter:brightness(1.25);box-shadow:0 0 14px rgba(255,255,255,0.15);}
+</style>
+</head>
+
+
+<body>
+
+<div class="lang-toggle">
+  <button id="btnAr" class="active">عربي</button>
+  <button id="btnEn">EN</button>
+  <button id="copyLockBtn" title="حقوق المحتوى — اضغط لإلغاء القيد">🔒</button>
+</div>
+
+<script>
+  if (sessionStorage.getItem("bcs_auth") !== "1") {
+    window.location.href = "index.html";
+  }
+</script>
+<div class="wrap">
+  <a class="home-btn lang-ar" href="index.html"><span class="arrow">→</span> العودة للصفحة الرئيسية</a>
+  <a class="home-btn lang-en" href="index.html"><span class="arrow">→</span> Back to home</a>
+
+  <header>
+    <div class="title-block">
+      <div class="eyebrow">MOBILE PHONE // BLUEPRINT NARRATIVE MAP</div>
+      <h1 class="lang-ar">الهاتف: من أداة اتصال إلى حاسوب في الجيب</h1>
+      <h1 class="lang-en">The Phone: From a Communication Tool to a Computer in Your Pocket</h1>
+      <div class="subtitle lang-ar">أربعة مسارات متوازية — العتاد، البرمجيات ونظم التشغيل، الذكاء الاصطناعي المدمج، والواجهة المستقبلية — تروي كيف تقاطعت تقنيات منفصلة (معالجات، شبكات، ذكاء اصطناعي) داخل جهاز واحد في الجيب. هذه الصفحة لا تكرر تاريخ الشبكات (راجع Communications) ولا تاريخ المعالج العام (راجع البت) — بل تروي كيف اجتمعا داخل الهاتف تحديداً.</div>
+      <div class="subtitle lang-en">Four parallel tracks — hardware, software &amp; operating systems, on-device AI, and the future interface — tell the story of how separate technologies (processors, networks, AI) converged inside one pocket device. This page doesn't repeat network history (see Communications) or general processor history (see The Bit) — it tells how they met specifically inside the phone.</div>
+    </div>
+    <div class="domain-code">
+      <div>SUBJECT: <b>MOBILE PHONE</b></div>
+      <div>SPAN: <b>1973 → 2026+</b></div>
+      <div>TRACKS: <b>04</b> · CHAPTERS: <b>06</b> · TRIGGERS: <b>06</b></div>
+    </div>
+  </header>
+
+  <div class="necessity-banner">
+    <div class="nicon">📱</div>
+    <div class="ntext lang-ar">
+      من طوبة بوزن 1.1 كيلوغرام إلى حاسوب يفهم صوتك ويرى ما تراه
+      <small>هذه الصفحة تروي التقارب (Convergence) — كيف اجتمعت أربع ثورات تقنية منفصلة تماماً (الاتصال، الحوسبة، البرمجيات، الذكاء الاصطناعي) داخل جهاز واحد يُحمل بيد واحدة.</small>
+    </div>
+    <div class="ntext lang-en">
+      From a 1.1kg brick to a computer that understands your voice and sees what you see
+      <small>This page tells the story of convergence — how four entirely separate technical revolutions (connectivity, computing, software, AI) merged inside one device held in a single hand.</small>
+    </div>
+  </div>
+
+  <div class="board-outer">
+
+    <!-- Chapter banner strip -->
+    <div class="chapters-strip">
+      <div></div>
+      <div class="chapters-track">
+        <div class="chapter-tag" style="right:0%; width:15%; background:color-mix(in srgb, var(--c0) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c0);">CH.00 · 1973–83</div>
+          <div class="cname lang-ar">الميلاد: أول مكالمة محمولة</div>
+          <div class="cname lang-en">The Birth: The First Mobile Call</div>
+        </div>
+        <div class="chapter-tag" style="right:15%; width:17%; background:color-mix(in srgb, var(--c1) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c1);">CH.01 · 1990s–2001</div>
+          <div class="cname lang-ar">عصر الهيمنة والميزات</div>
+          <div class="cname lang-en">The Era of Dominance &amp; Features</div>
+        </div>
+        <div class="chapter-tag" style="right:32%; width:16%; background:color-mix(in srgb, var(--c2) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c2);">CH.02 · 1999–2002</div>
+          <div class="cname lang-ar">اللاسلكي والبريد في اليد</div>
+          <div class="cname lang-en">Wireless &amp; Email in Hand</div>
+        </div>
+        <div class="chapter-tag" style="right:48%; width:16%; background:color-mix(in srgb, var(--c3) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c3);">CH.03 · 2007–08</div>
+          <div class="cname lang-ar">ثورة اللمس</div>
+          <div class="cname lang-en">The Touch Revolution</div>
+        </div>
+        <div class="chapter-tag" style="right:64%; width:17%; background:color-mix(in srgb, var(--c4) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c4);">CH.04 · 2010s</div>
+          <div class="cname lang-ar">نضج التطبيقات والمعالجات</div>
+          <div class="cname lang-en">Apps &amp; Processors Mature</div>
+        </div>
+        <div class="chapter-tag" style="right:81%; width:19%; background:color-mix(in srgb, var(--c5) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c5);">CH.05 · 2017–2026</div>
+          <div class="cname lang-ar">الذكاء الاصطناعي المدمج</div>
+          <div class="cname lang-en">On-Device AI</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trigger flags row -->
+    <div class="axis" style="margin-top:6px;">
+      <div></div>
+      <div class="triggers" style="grid-column: 2/-1; height:0;">
+        <div class="trigger-flag" style="right:15%;"><div class="yr">1973</div><div class="lbl"><span class="lang-ar">📞 أول مكالمة محمولة — مارتن كوبر</span><span class="lang-en">📞 The first mobile call — Martin Cooper</span></div></div>
+        <div class="trigger-flag" style="right:32%;"><div class="yr">1997</div><div class="lbl"><span class="lang-ar">🎨 أول شاشة ملونة — Siemens S10</span><span class="lang-en">🎨 The first color screen — Siemens S10</span></div></div>
+        <div class="trigger-flag" style="right:48%;"><div class="yr">1999</div><div class="lbl"><span class="lang-ar">📧 بلاك بيري والبريد الفوري</span><span class="lang-en">📧 BlackBerry &amp; push email</span></div></div>
+        <div class="trigger-flag" style="right:64%;"><div class="yr">2007</div><div class="lbl"><span class="lang-ar">👆 آيفون يُلغي لوحة المفاتيح</span><span class="lang-en">👆 iPhone kills the keyboard</span></div></div>
+        <div class="trigger-flag" style="right:81%;"><div class="yr">2017</div><div class="lbl"><span class="lang-ar">🧠 أول NPU مخصص — Kirin 970</span><span class="lang-en">🧠 The first dedicated NPU — Kirin 970</span></div></div>
+      </div>
+    </div>
+
+    <!-- Year axis -->
+    <div class="axis">
+      <div></div>
+      <div class="years">
+        <span style="right:0%;">1973</span>
+        <span style="right:32%;">1997</span>
+        <span style="right:48%;">1999</span>
+        <span style="right:64%;">2007</span>
+        <span style="right:98%;">2026</span>
+      </div>
+    </div>
+
+    <!-- Board -->
+    <div class="board">
+      <div class="lane-labels">
+        <div class="lane-label identity"><div class="tag"><span class="lang-ar">عتاد الهاتف</span><span class="lang-en">Phone Hardware</span><small>HARDWARE · BRICK → NPU SILICON</small></div></div>
+        <div class="lane-label files"><div class="tag"><span class="lang-ar">برمجيات ونظم التشغيل</span><span class="lang-en">Software &amp; Operating Systems</span><small>SOFTWARE · SYMBIAN → AI-NATIVE OS</small></div></div>
+        <div class="lane-label gateway"><div class="tag"><span class="lang-ar">الذكاء الاصطناعي المدمج بالجهاز</span><span class="lang-en">On-Device AI</span><small>ON-DEVICE AI · NONE → LOCAL LLM</small></div></div>
+        <div class="lane-label comms"><div class="tag"><span class="lang-ar">الواجهة المستقبلية</span><span class="lang-en">The Future Interface</span><small>FUTURE UI · TOUCH → AERIAL DISPLAY</small></div></div>
+      </div>
+
+      <div class="lanes">
+
+        <!-- HARDWARE lane -->
+        <div class="lane identity">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node identity" style="right:2%;" title="مارتن كوبر ومهندسو موتورولا يبنون DynaTAC خلال 90 يوماً فقط — نموذج تجريبي بوزن 1.1 كيلوغرام؛ يصل للأسواق تجارياً بعد عقد كامل من الصراع التنظيمي (1983) بسعر 3995 دولاراً وبطارية تدوم 30 دقيقة كلام فقط." data-en-title="Martin Cooper and Motorola's engineers build the DynaTAC in just 90 days — a 1.1kg prototype; it reaches the commercial market a full decade of regulatory battles later (1983), priced at $3,995, with a battery lasting just 30 minutes of talk time.">
+              <div class="period">1973–83</div>
+              <div class="name lang-ar">DynaTAC — "الطوبة"<br>1.1كغ، 30 دقيقة كلام فقط</div>
+              <div class="name lang-en">DynaTAC — "The Brick"<br>1.1kg, just 30 min. talk time</div>
+            </div>
+            <div class="dot" style="right:16%;"></div>
+            <div class="node identity" style="right:16%;" title="Siemens S10 (1997) أول هاتف بشاشة ملونة (4 ألوان فقط)؛ Sharp J-SH04 (2000) أول هاتف بكاميرا مدمجة، متاح حصرياً في اليابان — بداية تحول الهاتف من أداة كلام إلى جهاز وسائط متعددة." data-en-title="The Siemens S10 (1997) is the first phone with a color screen (just 4 colors); the Sharp J-SH04 (2000) is the first phone with a built-in camera, exclusive to Japan — the beginning of the phone's shift from a talking tool to a multimedia device.">
+              <div class="period">1997–2001</div>
+              <div class="name lang-ar">أول شاشة ملونة ثم كاميرا<br>Siemens S10 → Sharp J-SH04</div>
+              <div class="name lang-en">First color screen, then camera<br>Siemens S10 → Sharp J-SH04</div>
+            </div>
+            <div class="dot" style="right:30%;"></div>
+            <div class="node identity" style="right:30%;" title="إريكسون T39 أول هاتف تجاري يدعم البلوتوث (2001) — أول اتصال لاسلكي قصير المدى بين الهاتف وملحقاته (سماعات، حواسيب) بلا أي كابل فعلي." data-en-title="The Ericsson T39 is the first commercial phone to support Bluetooth (2001) — the first short-range wireless connection between a phone and its accessories (headsets, computers) without any physical cable.">
+              <div class="period">2001</div>
+              <div class="name lang-ar">أول هاتف بلوتوث تجاري<br>Ericsson T39</div>
+              <div class="name lang-en">The first commercial Bluetooth phone<br>Ericsson T39</div>
+            </div>
+            <div class="dot" style="right:48%;"></div>
+            <div class="node identity" style="right:48%;" title="آيفون 2007 يستبدل لوحة المفاتيح الفعلية بالكامل بشاشة لمس سعوية متعددة النقاط (Multi-touch) — تحوّل جذري في تصميم العتاد لا يزال المعيار السائد حتى اليوم." data-en-title="The 2007 iPhone completely replaces the physical keyboard with a multi-touch capacitive screen — a radical hardware design shift that remains the dominant standard to this day.">
+              <div class="period">2007</div>
+              <div class="name lang-ar">شاشة لمس سعوية تُلغي الكيبورد<br>آيفون الأول</div>
+              <div class="name lang-en">Capacitive touch replaces the keyboard<br>The first iPhone</div>
+            </div>
+            <div class="dot" style="right:65%;"></div>
+            <div class="node identity" style="right:65%;" title="معالجات ARM متعددة الأنوية، كاميرات متعددة العدسات، وذاكرة أكبر — سباق تسلّح عتادي بين آبل وكوالكوم وسامسونج يتسارع طوال العقد." data-en-title="Multi-core ARM processors, multi-lens cameras, and larger memory — a hardware arms race between Apple, Qualcomm, and Samsung accelerates throughout the decade.">
+              <div class="period">2010s</div>
+              <div class="name lang-ar">معالجات متعددة الأنوية<br>كاميرات متعددة العدسات</div>
+              <div class="name lang-en">Multi-core processors<br>Multi-lens cameras</div>
+            </div>
+            <div class="dot" style="right:82%;"></div>
+            <div class="node identity" style="right:82%;" title="Huawei Kirin 970 (2017) أول رقاقة هاتف تحمل وحدة معالجة عصبية مخصصة (NPU) منفصلة عن المعالج العام؛ يتبعها Apple Neural Engine وGoogle Tensor — عتاد مصمم خصيصاً لتشغيل نماذج الذكاء الاصطناعي محلياً." data-en-title="The Huawei Kirin 970 (2017) is the first phone chip to carry a dedicated Neural Processing Unit (NPU) separate from the general processor; followed by Apple's Neural Engine and Google's Tensor — hardware designed specifically to run AI models locally.">
+              <div class="period">2017–2026</div>
+              <div class="name lang-ar">أول NPU مخصص<br>Kirin 970 → Neural Engine → Tensor</div>
+              <div class="name lang-en">The first dedicated NPU<br>Kirin 970 → Neural Engine → Tensor</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SOFTWARE/OS lane -->
+        <div class="lane files">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node files empty" style="right:2%;" title="لا نظام تشغيل بمعناه الحقيقي؛ دارات ثابتة (Fixed Circuitry) تدير وظيفة الاتصال فقط، بلا أي قابلية للبرمجة أو التخصيص." data-en-title="No real operating system; fixed circuitry manages only the calling function, with no programmability or customization.">
+              <div class="period">1973–83</div>
+              <div class="name lang-ar">لا نظام تشغيل<br>دارات ثابتة فقط</div>
+              <div class="name lang-en">No operating system<br>Fixed circuitry only</div>
+            </div>
+            <div class="dot" style="right:16%;"></div>
+            <div class="node files" style="right:16%;" title="Symbian (مبني على EPOC من شركة Psion) يصبح أول نظام تشغيل هاتف حقيقي منتشر تجارياً؛ نوكيا تتبناه بقوة فتهيمن على السوق العالمي — 40% حصة سوقية بحلول 2007، نصف كل هاتف يُباع عالمياً يحمل شعار نوكيا." data-en-title="Symbian (built on Psion's EPOC) becomes the first real, commercially widespread phone operating system; Nokia adopts it heavily and dominates the global market — 40% market share by 2007, with half of every phone sold worldwide carrying the Nokia logo.">
+              <div class="period">1990s–2001</div>
+              <div class="name lang-ar">Symbian — أول نظام هاتف حقيقي<br>نوكيا تهيمن على السوق</div>
+              <div class="name lang-en">Symbian — the first real phone OS<br>Nokia dominates the market</div>
+            </div>
+            <div class="dot" style="right:30%;"></div>
+            <div class="node files" style="right:30%;" title="BlackBerry OS يقدّم 'البريد الفوري' (Push Email، 1999) — الرسائل تصل للجهاز تلقائياً فور وصولها للخادم، بلا حاجة لطلبها يدوياً؛ لأول مرة، العمل المكتبي يلاحق المستخدم أينما ذهب، لا العكس." data-en-title="BlackBerry OS introduces 'push email' (1999) — messages arrive on the device automatically the instant they hit the server, with no manual request needed; for the first time, office work follows the user wherever they go, not the other way around.">
+              <div class="period">1999–2002</div>
+              <div class="name lang-ar">BlackBerry OS والبريد الفوري<br>العمل يلاحقك أينما ذهبت</div>
+              <div class="name lang-en">BlackBerry OS &amp; push email<br>Work follows you everywhere</div>
+            </div>
+            <div class="dot" style="right:48%;"></div>
+            <div class="node files" style="right:48%;" title="iOS (2007) وAndroid (2008) يقدّمان نموذج 'متجر التطبيقات' — أول مرة يستطيع أي مطور خارجي نشر برنامج مباشرة لملايين المستخدمين، لا الشركة المصنّعة للهاتف وحدها." data-en-title="iOS (2007) and Android (2008) introduce the 'app store' model — for the first time, any outside developer can publish software directly to millions of users, not just the phone manufacturer itself.">
+              <div class="period">2007–08</div>
+              <div class="name lang-ar">iOS وAndroid<br>نموذج متجر التطبيقات يولد</div>
+              <div class="name lang-en">iOS &amp; Android<br>The app-store model is born</div>
+            </div>
+            <div class="dot" style="right:65%;"></div>
+            <div class="node files" style="right:65%;" title="نظاما التشغيل ينضجان لمنصتين متكاملتين بملايين التطبيقات؛ الهاتف يتحول من جهاز اتصال إلى منصة حوسبة عامة تُنجز عليها أي مهمة تقريباً." data-en-title="Both operating systems mature into full-fledged platforms with millions of apps; the phone shifts from a communication device to a general computing platform capable of nearly any task.">
+              <div class="period">2010s</div>
+              <div class="name lang-ar">نضج منصتي iOS وAndroid<br>ملايين التطبيقات</div>
+              <div class="name lang-en">iOS &amp; Android platforms mature<br>Millions of apps</div>
+            </div>
+            <div class="dot" style="right:82%;"></div>
+            <div class="node files" style="right:82%;" title="مساعدات ذكاء اصطناعي مدمجة داخل النظام نفسه (Apple Intelligence، Gemini Nano) — النظام لا يستضيف تطبيقات AI فقط، بل يصبح هو نفسه واجهة ذكية تتوسط كل تفاعل." data-en-title="AI assistants embedded directly into the OS itself (Apple Intelligence, Gemini Nano) — the system no longer just hosts AI apps, but becomes itself an intelligent interface mediating every interaction.">
+              <div class="period">2017–2026</div>
+              <div class="name lang-ar">AI مدمج داخل النظام نفسه<br>Apple Intelligence · Gemini Nano</div>
+              <div class="name lang-en">AI embedded in the OS itself<br>Apple Intelligence · Gemini Nano</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ON-DEVICE AI lane -->
+        <div class="lane gateway">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node gateway empty" style="right:2%;" title="لا وجود لأي معالجة ذكية؛ الجهاز دارة اتصال بحتة." data-en-title="No intelligent processing exists at all; the device is a pure communication circuit.">
+              <div class="period">—</div>
+              <div class="name lang-ar">لا وجود بعد</div>
+              <div class="name lang-en">Doesn't exist yet</div>
+            </div>
+            <div class="dot" style="right:16%;"></div>
+            <div class="node gateway empty" style="right:16%;" title="لا معالجة ذكية بعد؛ أقصى ما تقدمه الأجهزة تنبؤ نصي بسيط قائم على قاموس ثابت (T9)، لا تعلّم آلي فعلي." data-en-title="No intelligent processing yet; the most devices offer is simple dictionary-based text prediction (T9), not real machine learning.">
+              <div class="period">—</div>
+              <div class="name lang-ar">لا وجود بعد<br>(T9 تنبؤ نصي بسيط فقط)</div>
+              <div class="name lang-en">Doesn't exist yet<br>(T9 simple text prediction only)</div>
+            </div>
+            <div class="dot" style="right:30%;"></div>
+            <div class="node gateway empty" style="right:30%;" title="لا وجود بعد؛ حتى البريد الفوري في بلاك بيري نظام قواعد ثابتة (Rule-based)، لا تعلّم آلي." data-en-title="Doesn't exist yet; even BlackBerry's push email is a fixed rule-based system, not machine learning.">
+              <div class="period">—</div>
+              <div class="name lang-ar">لا وجود بعد</div>
+              <div class="name lang-en">Doesn't exist yet</div>
+            </div>
+            <div class="dot" style="right:48%;"></div>
+            <div class="node gateway empty" style="right:48%;" title="معالجة صور بسيطة (تحسين تلقائي للصورة) موجودة، لكن معظم الذكاء الفعلي (مثل التعرف الصوتي على Siri لاحقاً) يعتمد على معالجة سحابية بعيدة، لا محلية." data-en-title="Simple image processing (auto image enhancement) exists, but most real intelligence (like Siri's voice recognition later) relies on remote cloud processing, not local.">
+              <div class="period">2007–08</div>
+              <div class="name lang-ar">معالجة صور بسيطة فقط<br>الذكاء الفعلي سحابي لا محلي</div>
+              <div class="name lang-en">Only simple image processing<br>Real intelligence is cloud-based</div>
+            </div>
+            <div class="dot" style="right:65%;"></div>
+            <div class="node gateway empty" style="right:65%;" title="مساعدات صوتية (Siri 2011، Google Now) تظهر، لكن تعتمد كلياً تقريباً على الاتصال بالسحابة لمعالجة الطلب — لا ذكاء حقيقي يعمل بمعزل عن الإنترنت بعد." data-en-title="Voice assistants (Siri 2011, Google Now) appear, but rely almost entirely on cloud connectivity to process requests — no real intelligence works offline yet.">
+              <div class="period">2010s</div>
+              <div class="name lang-ar">مساعدات صوتية سحابية<br>Siri · Google Now</div>
+              <div class="name lang-en">Cloud-based voice assistants<br>Siri · Google Now</div>
+            </div>
+            <div class="dot namebit-dot" style="right:82%;"></div>
+            <div class="node gateway namebit-node" style="right:82%;" title="Huawei Kirin 970 (2017) أول رقاقة هاتف بوحدة NPU مخصصة؛ يتبعها Apple Neural Engine (2017) وGoogle Tensor (2021)؛ بحلول 2024-2026، نماذج لغوية مصغّرة (Gemini Nano) تعمل بالكامل محلياً على الجهاز دون اتصال إنترنت." data-en-title="Huawei's Kirin 970 (2017) is the first phone chip with a dedicated NPU; followed by Apple's Neural Engine (2017) and Google's Tensor (2021); by 2024-2026, compact language models (Gemini Nano) run entirely locally on-device without an internet connection.">
+              <div class="period">2017–2026</div>
+              <div class="name lang-ar">🧠 أول NPU مخصص (2017)<br>نماذج لغوية محلية بحلول 2026</div>
+              <div class="name lang-en">🧠 First dedicated NPU (2017)<br>Local language models by 2026</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FUTURE INTERFACE lane -->
+        <div class="lane comms">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node comms empty" style="right:2%;" title="لا وجود؛ واجهة الاتصال هي القرص الدوار أو الأزرار فقط." data-en-title="Doesn't exist; the interface is a rotary dial or buttons only.">
+              <div class="period">—</div>
+              <div class="name lang-ar">لا وجود بعد</div>
+              <div class="name lang-en">Doesn't exist yet</div>
+            </div>
+            <div class="dot" style="right:16%;"></div>
+            <div class="node comms empty" style="right:16%;" title="لا وجود؛ الواجهة زر فعلي ونص وحروف على شاشة صغيرة أحادية أو رباعية اللون." data-en-title="Doesn't exist; the interface is physical buttons and text on a small monochrome or 4-color screen.">
+              <div class="period">—</div>
+              <div class="name lang-ar">لا وجود بعد</div>
+              <div class="name lang-en">Doesn't exist yet</div>
+            </div>
+            <div class="dot" style="right:30%;"></div>
+            <div class="node comms empty" style="right:30%;" title="لا وجود؛ لوحة مفاتيح فعلية ونص فقط." data-en-title="Doesn't exist; physical keyboard and text only.">
+              <div class="period">—</div>
+              <div class="name lang-ar">لا وجود بعد</div>
+              <div class="name lang-en">Doesn't exist yet</div>
+            </div>
+            <div class="dot" style="right:48%;"></div>
+            <div class="node comms empty" style="right:48%;" title="اللمس المتعدد نفسه هو الابتكار؛ لا واجهة تتجاوز الشاشة الفعلية بعد." data-en-title="Multi-touch itself is the innovation; no interface beyond the physical screen yet.">
+              <div class="period">—</div>
+              <div class="name lang-ar">اللمس نفسه هو الابتكار</div>
+              <div class="name lang-en">Touch itself is the innovation</div>
+            </div>
+            <div class="dot" style="right:65%;"></div>
+            <div class="node comms" style="right:65%;" title="ARKit (آبل) وARCore (جوجل) يُطلقان عام 2017 — أول أدوات مطورين رسمية لبناء تطبيقات واقع معزز (AR) تراكب محتوى رقمياً فوق كاميرا الهاتف؛ لا يزال يتطلب النظر عبر شاشة الهاتف، لا نظارة أو عرض هوائي." data-en-title="ARKit (Apple) and ARCore (Google) launch in 2017 — the first official developer tools for building augmented reality (AR) apps that overlay digital content on the phone's camera view; still requires looking through the phone screen, not glasses or an aerial display.">
+              <div class="period">2017</div>
+              <div class="name lang-ar">ARKit وARCore<br>الواقع المعزز عبر شاشة الهاتف</div>
+              <div class="name lang-en">ARKit &amp; ARCore<br>AR through the phone screen</div>
+            </div>
+            <div class="qmark" style="right:90%; color:var(--gold);" title="راجع قسم 'الترقّب' في أسفل هذه الصفحة — الرؤية المستقبلية لعرض هوائي حقيقي بلا نظارة أو عدسة لا تزال بحثية/تجارية محدودة النطاق (لافتات، أكشاك)، لا ميزة هاتف ذكي تجارية بعد." data-en-title="See the 'Outlook' section at the bottom of this page — the future vision of a real aerial display with no glasses or lens remains research-stage / limited commercial use (signage, kiosks), not yet a commercial smartphone feature.">🔮<span class="qmark-label"><span class="lang-ar">الترقّب ↓</span><span class="lang-en">Outlook ↓</span></span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="legend lang-ar">
+    <div class="item"><span class="swatch" style="background:var(--lane-identity)"></span> عتاد الهاتف</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-files)"></span> برمجيات ونظم التشغيل</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-gateway)"></span> الذكاء الاصطناعي المدمج بالجهاز</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-comms)"></span> الواجهة المستقبلية</div>
+    <div class="item">┄┄ خط ذهبي متقطع = حدث تحوّل مشترك أثّر على أكثر من مسار في نفس اللحظة</div>
+    <div class="item">💡 مرّر المؤشر فوق أي بطاقة لقراءة السياق الكامل</div>
+  </div>
+  <div class="legend lang-en">
+    <div class="item"><span class="swatch" style="background:var(--lane-identity)"></span> Phone Hardware</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-files)"></span> Software &amp; Operating Systems</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-gateway)"></span> On-Device AI</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-comms)"></span> The Future Interface</div>
+    <div class="item">┄┄ Dashed gold line = a shared turning point affecting more than one track at once</div>
+    <div class="item">💡 Hover over any card to read the full context</div>
+  </div>
+
+  <div class="note lang-ar">
+    <b>لإعادة بنائه في Microsoft Visio:</b> نفس نمط <b>Swimlane Timeline</b> — استخدم <code>File → New → Schedule → Timeline</code>.
+    لاحظ أن مسار "الذكاء الاصطناعي المدمج" فارغ تماماً حتى 2017 عمداً — التقارب بين العتاد الكافي (NPU) والبرمجيات الكافية (نماذج مصغّرة) لم يحدث قبل ذلك التاريخ.
+    <br><br>
+    <b>ملاحظة تقاطع متعمّد:</b> هذه الصفحة تتقاطع عمداً مع صفحات Communications (الشبكات)، البت (المعالجات عموماً)، والذكاء الاصطناعي (النظرية العامة) — لكن الزاوية هنا محصورة بالجهاز نفسه: كيف التقت هذه التقنيات المنفصلة داخل هاتف واحد، لا إعادة شرح كل تقنية من جذورها.
+  </div>
+  <div class="note lang-en">
+    <b>To rebuild this in Microsoft Visio:</b> the same <b>Swimlane Timeline</b> pattern — use <code>File → New → Schedule → Timeline</code>.
+    Note that the "On-Device AI" track is deliberately completely empty until 2017 — the convergence of sufficient hardware (NPU) and sufficient software (compact models) didn't happen before that date.
+    <br><br>
+    <b>Deliberate cross-reference note:</b> this page intentionally intersects with the Communications (networks), Bit (general processors), and AI (general theory) pages — but the angle here is confined to the device itself: how these separate technologies met inside one phone, not re-explaining each technology from its roots.
+  </div>
+
+  <div class="story-header">
+    <div class="eyebrow">FULL NARRATIVE // <span class="lang-ar">كل محطة بتفاصيلها الكاملة</span><span class="lang-en">Every station, in full detail</span></div>
+    <h2 class="lang-ar">الرحلة الكاملة: من طوبة بوزن كيلوغرام إلى مساعد ذكي في الجيب</h2>
+    <h2 class="lang-en">The Full Journey: From a One-Kilogram Brick to a Smart Assistant in Your Pocket</h2>
+  </div>
+
+  <div class="role-strip lang-ar">
+    <div class="role">📞 مهندس يحمل طوبة بوزن كيلوغرام</div>
+    <span class="arrow">←</span>
+    <div class="role">🎨 مستخدم يفتخر بأول شاشة ملونة</div>
+    <span class="arrow">←</span>
+    <div class="role">📧 موظف يتلقى بريده الفوري في يده</div>
+    <span class="arrow">←</span>
+    <div class="role">👆 مستخدم يلمس الزجاج بدل الأزرار</div>
+    <span class="arrow">←</span>
+    <div class="role">🧠 هاتف يفهم صوت مستخدمه محلياً</div>
+  </div>
+  <div class="role-strip lang-en">
+    <div class="role">📞 An engineer carrying a one-kilogram brick</div>
+    <span class="arrow">←</span>
+    <div class="role">🎨 A user proud of their first color screen</div>
+    <span class="arrow">←</span>
+    <div class="role">📧 An employee receiving push email in hand</div>
+    <span class="arrow">←</span>
+    <div class="role">👆 A user touching glass instead of buttons</div>
+    <span class="arrow">←</span>
+    <div class="role">🧠 A phone understanding its user's voice locally</div>
+  </div>
+
+  <div class="story-grid">
+
+    <div class="story-card sc0">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 00 // THE BIRTH</div>
+          <div class="sc-title lang-ar">الميلاد: أول مكالمة محمولة في التاريخ</div>
+          <div class="sc-title lang-en">The Birth: History's First Mobile Call</div>
+          <div class="sc-hook lang-ar">مهندس يقف على رصيف في نيويورك، يتصل بمنافسه المباشر ليقول له ببساطة: "أنا أتصل بك من هاتف محمول — هاتف محمول حقيقي".</div>
+          <div class="sc-hook lang-en">An engineer stands on a New York sidewalk, calling his direct rival just to say: "I'm calling you from a mobile phone — a real handheld mobile phone."</div>
+        </div>
+        <div class="sc-years">1973 — 1983</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech">DynaTAC 8000X</div>
+          <div class="sc-dnote lang-ar">مارتن كوبر وفريقه في موتورولا يبنون النموذج الأول خلال 90 يوماً فقط، رداً على خطة AT&amp;T لاحتكار هاتف السيارة؛ يصل تجارياً بعد عقد من الصراع التنظيمي، بوزن 1.1 كيلوغرام وبطارية تدوم 30 دقيقة كلام فقط، بسعر 3995 دولاراً.</div>
+          <div class="sc-dnote lang-en">Martin Cooper and his Motorola team build the first prototype in just 90 days, in response to AT&amp;T's plan to monopolize the car phone; it reaches the market commercially after a decade of regulatory battles, weighing 1.1kg with a battery lasting just 30 minutes of talk time, priced at $3,995.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">SOFTWARE</div>
+          <div class="sc-dtech lang-ar">لا نظام تشغيل</div>
+          <div class="sc-dtech lang-en">No operating system</div>
+          <div class="sc-dnote lang-ar">دارات ثابتة تدير وظيفة الاتصال فقط؛ لا مفهوم "برمجية" منفصلة عن العتاد بعد.</div>
+          <div class="sc-dnote lang-en">Fixed circuitry manages only the calling function; no concept of "software" separate from hardware yet.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">ON-DEVICE AI</div>
+          <div class="sc-dtech lang-ar">لا وجود بعد</div>
+          <div class="sc-dtech lang-en">Doesn't exist yet</div>
+          <div class="sc-dnote lang-ar">مفهوم "الذكاء" في جهاز محمول لا يزال بعيداً عقوداً كاملة.</div>
+          <div class="sc-dnote lang-en">The concept of "intelligence" in a mobile device is still decades away.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">FUTURE UI</div>
+          <div class="sc-dtech lang-ar">لا وجود بعد</div>
+          <div class="sc-dtech lang-en">Doesn't exist yet</div>
+          <div class="sc-dnote lang-ar">الواجهة أزرار فعلية فقط؛ لا تصوّر لأي واجهة أخرى.</div>
+          <div class="sc-dnote lang-en">The interface is physical buttons only; no concept of any other interface.</div>
+        </div>
+      </div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> كوبر يطوي الطوبة الثقيلة في جيب معطفه بصعوبة — لا يدرك أن هذا الجهاز الخام سيتقلّص خلال خمسين عاماً ليصبح أرقّ من محفظته.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> Cooper struggles to fold the heavy brick into his coat pocket — unaware this raw device will shrink over fifty years to become thinner than his wallet.</div>
+    </div>
+
+    <div class="story-card sc1">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 01 // THE ERA OF DOMINANCE &amp; FEATURES</div>
+          <div class="sc-title lang-ar">عصر الهيمنة والميزات: نوكيا تتفوق على موتورولا</div>
+          <div class="sc-title lang-en">The Era of Dominance &amp; Features: Nokia Overtakes Motorola</div>
+          <div class="sc-hook lang-ar">من صانع الهاتف الأول إلى مجرد منافس ثانٍ — موتورولا تخسر عرشها لصالح شركة فنلندية كانت تصنّع الورق والمطاط قبل عقود قليلة فقط.</div>
+          <div class="sc-hook lang-en">From the maker of the first phone to just a second-place competitor — Motorola loses its throne to a Finnish company that made paper and rubber just decades earlier.</div>
+        </div>
+        <div class="sc-years">1990s — 2001</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech lang-ar">أول شاشة ملونة ثم كاميرا</div>
+          <div class="sc-dtech lang-en">First color screen, then camera</div>
+          <div class="sc-dnote lang-ar">Siemens S10 (1997) يقدّم أول شاشة ملونة بأربعة ألوان فقط؛ Sharp J-SH04 (2000) يقدّم أول كاميرا مدمجة، حصرياً في اليابان — بداية تحوّل الهاتف من أداة كلام إلى جهاز وسائط.</div>
+          <div class="sc-dnote lang-en">The Siemens S10 (1997) introduces the first color screen with just four colors; the Sharp J-SH04 (2000) introduces the first built-in camera, exclusive to Japan — the beginning of the phone's shift from a talking tool to a media device.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">SOFTWARE</div>
+          <div class="sc-dtech">Symbian</div>
+          <div class="sc-dnote lang-ar">مبني على EPOC من شركة Psion البريطانية، يصبح أول نظام تشغيل هاتف حقيقي منتشر تجارياً؛ نوكيا تتبناه بقوة فتتفوق على موتورولا بحلول 1998 بحصة سوقية 38%، وتصل لـ40% بحلول 2007 — نصف كل هاتف يُباع عالمياً يحمل شعارها.</div>
+          <div class="sc-dnote lang-en">Built on EPOC from Britain's Psion, it becomes the first real, commercially widespread phone operating system; Nokia adopts it heavily, overtaking Motorola by 1998 with 38% market share, reaching 40% by 2007 — half of every phone sold worldwide carrying its logo.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">ON-DEVICE AI</div>
+          <div class="sc-dtech lang-ar">لا وجود بعد</div>
+          <div class="sc-dtech lang-en">Doesn't exist yet</div>
+          <div class="sc-dnote lang-ar">أقصى ما تقدمه الأجهزة تنبؤ نصي بقاموس ثابت (T9)، لا تعلّم آلي فعلي بأي شكل.</div>
+          <div class="sc-dnote lang-en">The most devices offer is dictionary-based text prediction (T9), no real machine learning in any form.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">FUTURE UI</div>
+          <div class="sc-dtech lang-ar">لا وجود بعد</div>
+          <div class="sc-dtech lang-en">Doesn't exist yet</div>
+          <div class="sc-dnote lang-ar">الواجهة أزرار ونص على شاشة صغيرة؛ لا أي تصوّر لواجهة تتجاوز الشاشة الفعلية.</div>
+          <div class="sc-dnote lang-en">The interface is buttons and text on a small screen; no concept of an interface beyond the physical screen.</div>
+        </div>
+      </div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> مراهق يفتخر بلعبة "Snake" على شاشة نوكيا 3310 التي لا تُكسر — لا يدرك أن نفس الشركة ستفقد كل هذا العرش خلال عقد واحد فقط بسبب رهانها الخاطئ على نفس النظام الذي صنع مجدها.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> a teenager shows off "Snake" on his unbreakable Nokia 3310 — unaware the same company will lose this entire throne within a single decade, due to its misplaced bet on the very system that made its glory.</div>
+    </div>
+
+    <div class="story-card sc2">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 02 // WIRELESS &amp; EMAIL IN HAND</div>
+          <div class="sc-title lang-ar">اللاسلكي والبريد في اليد: المكتب يلاحقك أينما ذهبت</div>
+          <div class="sc-title lang-en">Wireless &amp; Email in Hand: The Office Follows You Everywhere</div>
+          <div class="sc-hook lang-ar">لأول مرة، لا تحتاج الذهاب لمكتبك لإرسال بريد إلكتروني — البريد يصل إليك تلقائياً أينما كنت، في جيبك، بلا طلب.</div>
+          <div class="sc-hook lang-en">For the first time, you don't need to go to your office to send an email — mail reaches you automatically wherever you are, in your pocket, without asking.</div>
+        </div>
+        <div class="sc-years">1999 — 2002</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech lang-ar">أول هاتف بلوتوث تجاري</div>
+          <div class="sc-dtech lang-en">The first commercial Bluetooth phone</div>
+          <div class="sc-dnote lang-ar">إريكسون T39 (2001) أول هاتف يدعم البلوتوث تجارياً — أول اتصال لاسلكي قصير المدى فعلي بين الهاتف وملحقاته، بلا أي كابل مادي يربطهما.</div>
+          <div class="sc-dnote lang-en">The Ericsson T39 (2001) is the first phone to commercially support Bluetooth — the first real short-range wireless connection between a phone and its accessories, with no physical cable linking them.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">SOFTWARE</div>
+          <div class="sc-dtech">BlackBerry OS</div>
+          <div class="sc-dnote lang-ar">RIM تطلق جهاز BlackBerry 850 (1999) بميزة "البريد الفوري" (Push Email) — الرسائل تصل تلقائياً فور وصولها للخادم، لا عند طلبها يدوياً؛ لوحة QWERTY فعلية مدمجة تجعله معياراً فورياً في بيئة العمل.</div>
+          <div class="sc-dnote lang-en">RIM launches the BlackBerry 850 (1999) with "push email" — messages arrive automatically the instant they hit the server, not when manually requested; an integrated physical QWERTY keyboard makes it an instant enterprise standard.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">ON-DEVICE AI</div>
+          <div class="sc-dtech lang-ar">لا وجود بعد</div>
+          <div class="sc-dtech lang-en">Doesn't exist yet</div>
+          <div class="sc-dnote lang-ar">حتى نظام البريد الفوري نفسه قائم على قواعد ثابتة (Rule-based)، لا أي شكل من التعلّم الآلي.</div>
+          <div class="sc-dnote lang-en">Even the push-email system itself is rule-based, with no form of machine learning.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">FUTURE UI</div>
+          <div class="sc-dtech lang-ar">لا وجود بعد</div>
+          <div class="sc-dtech lang-en">Doesn't exist yet</div>
+          <div class="sc-dnote lang-ar">لوحة مفاتيح فعلية ونص فقط؛ لا واجهة تتجاوز الشاشة.</div>
+          <div class="sc-dnote lang-en">Physical keyboard and text only; no interface beyond the screen.</div>
+        </div>
+      </div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> موظف يشعر باهتزاز خفيف في جيبه أثناء عشاء عائلي — بريد عمل وصل للتو دون أن يطلبه؛ لحظة يبدأ فيها الخط الفاصل بين العمل والحياة الشخصية بالتلاشي فعلياً لأول مرة.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> an employee feels a light buzz in his pocket during a family dinner — a work email just arrived unasked; the moment the line between work and personal life actually begins to blur for the first time.</div>
+    </div>
+
+    <div class="story-card sc3">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 03 // THE TOUCH REVOLUTION</div>
+          <div class="sc-title lang-ar">ثورة اللمس: الزجاج يستبدل الأزرار للأبد</div>
+          <div class="sc-title lang-en">The Touch Revolution: Glass Permanently Replaces Buttons</div>
+          <div class="sc-hook lang-ar">"وُلدنا جميعاً بأداة إشارة أساسية — أصابعنا"، هكذا يقدّم ستيف جوبز جهازاً يُلغي بضربة واحدة كل لوحات المفاتيح الفعلية التي هيمنت لعقد كامل.</div>
+          <div class="sc-hook lang-en">"We're all born with the ultimate pointing device — our fingers," Steve Jobs says, unveiling a device that in one stroke eliminates every physical keyboard that dominated for a full decade.</div>
+        </div>
+        <div class="sc-years">2007 — 2008</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech lang-ar">شاشة لمس سعوية متعددة النقاط</div>
+          <div class="sc-dtech lang-en">Multi-touch capacitive screen</div>
+          <div class="sc-dnote lang-ar">آيفون الأول (يناير 2007) يستبدل لوحة المفاتيح الفعلية بالكامل بشاشة 3.5 إنش سعوية تدعم اللمس المتعدد — تصميم عتادي جذري لا يزال المعيار السائد حتى اليوم.</div>
+          <div class="sc-dnote lang-en">The first iPhone (January 2007) completely replaces the physical keyboard with a 3.5-inch capacitive multi-touch screen — a radical hardware design that remains the dominant standard to this day.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">SOFTWARE</div>
+          <div class="sc-dtech">iOS وAndroid</div>
+          <div class="sc-dnote lang-ar">آيفون يُطلق مع App Store (يوليو 2008)؛ جوجل تُطلق أندرويد عبر HTC Dream/T-Mobile G1 (سبتمبر 2008) كبديل مفتوح المصدر — نموذج "متجر التطبيقات" يولد: أي مطور خارجي يستطيع نشر برنامج مباشرة لملايين المستخدمين.</div>
+          <div class="sc-dnote lang-en">The iPhone launches with the App Store (July 2008); Google launches Android via the HTC Dream/T-Mobile G1 (September 2008) as an open-source alternative — the "app store" model is born: any outside developer can publish software directly to millions of users.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">ON-DEVICE AI</div>
+          <div class="sc-dtech lang-ar">معالجة صور بسيطة فقط</div>
+          <div class="sc-dtech lang-en">Only simple image processing</div>
+          <div class="sc-dnote lang-ar">تحسين تلقائي بسيط للصورة موجود، لكن أي ذكاء فعلي لاحق (كمساعدات صوتية) سيعتمد كلياً على معالجة سحابية بعيدة، لا محلية.</div>
+          <div class="sc-dnote lang-en">Simple auto image enhancement exists, but any real later intelligence (like voice assistants) will rely entirely on remote cloud processing, not local.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">FUTURE UI</div>
+          <div class="sc-dtech lang-ar">اللمس نفسه هو الابتكار</div>
+          <div class="sc-dtech lang-en">Touch itself is the innovation</div>
+          <div class="sc-dnote lang-ar">لا واجهة تتجاوز الشاشة الفعلية بعد؛ اللمس المتعدد بذاته يُستهلك كابتكار جذري كافٍ لعقد كامل قادم.</div>
+          <div class="sc-dnote lang-en">No interface beyond the physical screen yet; multi-touch itself is consumed as a radical enough innovation for a full coming decade.</div>
+        </div>
+      </div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> صف طويل أمام متجر آبل، الزبائن يحملون أول جهاز بلا أزرار فعلية — بعضهم يشكّك بصوت مسموع: "كيف سنكتب رسالة نصية بلا لوحة مفاتيح حقيقية؟" السؤال نفسه سيبدو غريباً بعد سنوات قليلة فقط.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> a long line outside an Apple Store, customers holding the first device with no physical buttons — some doubt aloud: "How will we text without a real keyboard?" The question itself will sound strange just a few years later.</div>
+    </div>
+
+    <div class="story-card sc4">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 04 // APPS &amp; PROCESSORS MATURE</div>
+          <div class="sc-title lang-ar">نضج التطبيقات والمعالجات: الهاتف يصبح حاسوباً عاماً</div>
+          <div class="sc-title lang-en">Apps &amp; Processors Mature: The Phone Becomes a General Computer</div>
+          <div class="sc-hook lang-ar">سباق تسلّح عتادي وبرمجي متسارع — من هاتف يجري مكالمات إلى منصة تُنجز عليها أي مهمة تقريباً، من المصرفية إلى التصوير الاحترافي.</div>
+          <div class="sc-hook lang-en">An accelerating hardware and software arms race — from a phone that makes calls to a platform capable of nearly any task, from banking to professional photography.</div>
+        </div>
+        <div class="sc-years">2010s</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech lang-ar">معالجات متعددة الأنوية وكاميرات متعددة العدسات</div>
+          <div class="sc-dtech lang-en">Multi-core processors, multi-lens cameras</div>
+          <div class="sc-dnote lang-ar">معالجات ARM متعددة الأنوية (Snapdragon، A-series) وذاكرة أكبر وكاميرات بعدسات متعددة — سباق تسلّح عتادي بين آبل وكوالكوم وسامسونج يتسارع طوال العقد.</div>
+          <div class="sc-dnote lang-en">Multi-core ARM processors (Snapdragon, A-series), larger memory, and multi-lens cameras — a hardware arms race between Apple, Qualcomm, and Samsung accelerates throughout the decade.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">SOFTWARE</div>
+          <div class="sc-dtech lang-ar">نضج منصتي iOS وAndroid</div>
+          <div class="sc-dtech lang-en">iOS &amp; Android platforms mature</div>
+          <div class="sc-dnote lang-ar">نظاما التشغيل ينضجان لمنصتين متكاملتين بملايين التطبيقات؛ سامسونج تطلق سلسلة Galaxy S كمنافس مباشر لآيفون، مرسّخة أندرويد كخيار سائد عالمياً. <span style="opacity:.7;">(بالتوازي، آيباد 2010 يفتح فئة الأجهزة اللوحية كامتداد لنفس نظام iOS — خارج نطاق هذه الصفحة المخصصة للهاتف تحديداً)</span></div>
+          <div class="sc-dnote lang-en">Both operating systems mature into full platforms with millions of apps; Samsung launches the Galaxy S series as a direct iPhone rival, cementing Android as a globally dominant choice. <span style="opacity:.7;">(In parallel, the 2010 iPad opens the tablet category as an extension of the same iOS — outside the scope of this phone-specific page)</span></div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">ON-DEVICE AI</div>
+          <div class="sc-dtech lang-ar">مساعدات صوتية سحابية</div>
+          <div class="sc-dtech lang-en">Cloud-based voice assistants</div>
+          <div class="sc-dnote lang-ar">Siri (2011) وGoogle Now تظهران، لكنهما تعتمدان كلياً تقريباً على الاتصال بالسحابة لمعالجة أي طلب — لا ذكاء حقيقي يعمل بمعزل عن الإنترنت بعد.</div>
+          <div class="sc-dnote lang-en">Siri (2011) and Google Now appear, but rely almost entirely on cloud connectivity to process any request — no real intelligence works offline yet.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">FUTURE UI</div>
+          <div class="sc-dtech lang-ar">لا وجود بعد</div>
+          <div class="sc-dtech lang-en">Doesn't exist yet</div>
+          <div class="sc-dnote lang-ar">لا واجهة تتجاوز اللمس والصوت بعد؛ الجهد كله منصبّ على تحسين ما هو موجود لا اختراع واجهة جديدة.</div>
+          <div class="sc-dnote lang-en">No interface beyond touch and voice yet; all effort is focused on improving what exists, not inventing a new interface.</div>
+        </div>
+      </div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> مستخدم يفتح تطبيق مصرفي، يلتقط صورة احترافية، ويطلب من مساعد صوتي حجز موعد — كل ذلك بجهاز واحد كان قبل عقد واحد فقط أداة اتصال بحتة لا أكثر.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> a user opens a banking app, snaps a professional photo, and asks a voice assistant to book an appointment — all on one device that, just a decade earlier, was a purely a communication tool and nothing more.</div>
+    </div>
+
+    <div class="story-card sc5">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 05 // ON-DEVICE AI</div>
+          <div class="sc-title lang-ar">الذكاء الاصطناعي المدمج: العقل ينتقل من السحابة إلى الجيب</div>
+          <div class="sc-title lang-en">On-Device AI: The Mind Moves From the Cloud to Your Pocket</div>
+          <div class="sc-hook lang-ar">لأول مرة، يستطيع الهاتف "التفكير" دون اتصال بالإنترنت إطلاقاً — رقاقة مخصصة داخل جيبك تُدير نموذج ذكاء اصطناعي محلياً بالكامل.</div>
+          <div class="sc-hook lang-en">For the first time, the phone can "think" with no internet connection at all — a dedicated chip in your pocket running an AI model entirely locally.</div>
+        </div>
+        <div class="sc-years">2017 — 2026</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech lang-ar">أول NPU مخصص</div>
+          <div class="sc-dtech lang-en">The first dedicated NPU</div>
+          <div class="sc-dnote lang-ar">Huawei Kirin 970 (2017) أول رقاقة هاتف تحمل وحدة معالجة عصبية (NPU) منفصلة عن المعالج العام؛ يتبعها Apple Neural Engine (2017) وGoogle Tensor (2021) — عتاد مصمم خصيصاً لعمليات الذكاء الاصطناعي.</div>
+          <div class="sc-dnote lang-en">The Huawei Kirin 970 (2017) is the first phone chip with a dedicated Neural Processing Unit (NPU) separate from the general processor; followed by Apple's Neural Engine (2017) and Google's Tensor (2021) — hardware designed specifically for AI operations.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">SOFTWARE</div>
+          <div class="sc-dtech lang-ar">AI مدمج داخل النظام نفسه</div>
+          <div class="sc-dtech lang-en">AI embedded in the OS itself</div>
+          <div class="sc-dnote lang-ar">Apple Intelligence وGoogle Gemini Nano يدمجان الذكاء الاصطناعي داخل نظام التشغيل نفسه، لا كتطبيق منفصل — النظام يصبح هو نفسه واجهة ذكية تتوسط كل تفاعل.</div>
+          <div class="sc-dnote lang-en">Apple Intelligence and Google's Gemini Nano embed AI directly into the operating system itself, not as a separate app — the system itself becomes an intelligent interface mediating every interaction.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">ON-DEVICE AI</div>
+          <div class="sc-dtech lang-ar">نماذج لغوية محلية كاملة</div>
+          <div class="sc-dtech lang-en">Fully local language models</div>
+          <div class="sc-dnote lang-ar">بحلول 2024-2026، نماذج لغوية مصغّرة (Gemini Nano وما شابهها) تعمل بالكامل محلياً على الجهاز دون أي اتصال إنترنت — خصوصية أعلى وسرعة استجابة فورية، لكن بقدرات أقل من نماذج السحابة الكبرى.</div>
+          <div class="sc-dnote lang-en">By 2024-2026, compact language models (Gemini Nano and similar) run entirely locally on-device without any internet connection — higher privacy and instant response speed, but with less capability than large cloud models.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">FUTURE UI</div>
+          <div class="sc-dtech lang-ar">ARKit وARCore</div>
+          <div class="sc-dtech lang-en">ARKit &amp; ARCore</div>
+          <div class="sc-dnote lang-ar">أدوات مطورين رسمية للواقع المعزز (2017) تراكب محتوى رقمياً فوق كاميرا الهاتف — لا يزال يتطلب النظر عبر شاشة الهاتف، لا نظارة أو عرض هوائي حقيقي. راجع قسم "الترقّب" أدناه للرؤية الأبعد.</div>
+          <div class="sc-dnote lang-en">Official AR developer tools (2017) overlay digital content on the phone's camera view — still requires looking through the phone screen, not glasses or a real aerial display. See the "Outlook" section below for the farther-out vision.</div>
+        </div>
+      </div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد مفتوح:</b> من طوبة بوزن كيلوغرام تُجري مكالمة واحدة بصعوبة، إلى رقاقة بحجم ظفر تُدير نموذج ذكاء اصطناعي كاملاً بلا إنترنت — 53 عاماً بالضبط تفصل بين المشهدين، والفصل التالي لم يُكتب بعد.</div>
+      <div class="sc-foot lang-en">🎬 <b>Open scene:</b> from a one-kilogram brick barely making one call, to a fingernail-sized chip running a complete AI model with no internet — exactly 53 years separate the two scenes, and the next chapter hasn't been written yet.</div>
+    </div>
+
+  </div>
+
+  <!-- ============ OUTLOOK: AERIAL / HOLOGRAPHIC DISPLAY ============ -->
+  <style>
+    .outlook-section{
+      margin-top:56px;padding:28px clamp(16px,4vw,36px);border-radius:16px;
+      background:
+        linear-gradient(rgba(18,10,30,0.93), rgba(18,10,30,0.96)),
+        radial-gradient(circle at 80% 20%, rgba(167,139,250,0.10), transparent 60%);
+      border:1px solid #6d28d955;
+    }
+    .outlook-warn{
+      display:flex;gap:14px;align-items:flex-start;background:rgba(242,166,90,0.10);
+      border:1.5px solid #f2a65a;border-radius:12px;padding:16px 20px;margin-bottom:24px;
+    }
+    .outlook-warn .wicon{font-size:24px;flex-shrink:0;}
+    .outlook-warn .wtext{font-size:13.5px;font-weight:700;color:#ede9fe;line-height:1.8;}
+    .outlook-warn .wtext small{display:block;font-weight:400;color:#b3a2d6;font-size:12px;margin-top:6px;line-height:1.8;}
+    .outlook-eyebrow{font-family:'JetBrains Mono',monospace;color:#a78bfa;font-size:12px;letter-spacing:2px;margin-bottom:10px;}
+    .outlook-title{font-size:22px;font-weight:800;color:#ede9fe;margin:0 0 18px;}
+    .outlook-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+    @media(max-width:900px){.outlook-grid{grid-template-columns:1fr;}}
+    .outlook-card{background:rgba(255,255,255,0.03);border:1px solid #3d2a5c;border-radius:10px;padding:16px 18px;transition:box-shadow .25s;}
+    .outlook-card:hover{box-shadow:0 0 16px rgba(167,139,250,0.3);}
+    .outlook-card .ocnum{font-family:'JetBrains Mono',monospace;font-size:10px;color:#a78bfa;letter-spacing:1px;margin-bottom:6px;}
+    .outlook-card .octitle{font-weight:800;font-size:14px;color:#ede9fe;margin-bottom:6px;}
+    .outlook-card p{font-size:12px;color:#b3a2d6;line-height:1.8;margin:0;}
+    .outlook-sources{font-size:11px;color:#b3a2d6;margin-top:4px;}
+    .outlook-sources a{color:#a78bfa;text-decoration:none;}
+    .outlook-sources a:hover{text-decoration:underline;}
+    .outlook-verdict{background:rgba(167,139,250,0.06);border-inline-start:3px solid #a78bfa;border-radius:6px;padding:14px 18px;font-size:13px;color:#d8d0f5;line-height:1.9;}
+  </style>
+
+  <div class="outlook-section">
+    <div class="outlook-eyebrow">OUTLOOK // <span class="lang-ar">ترقّب تقني — ليس توثيقاً تاريخياً</span><span class="lang-en">Technical outlook — not historical documentation</span></div>
+    <h2 class="outlook-title lang-ar">🔮 الأفق: شاشة تنبثق في الهواء بلا نظارة أو عدسة</h2>
+    <h2 class="outlook-title lang-en">🔮 The Horizon: A Screen That Bursts Into the Air, No Glasses Needed</h2>
+
+    <div class="outlook-warn">
+      <div class="wicon">⚠️</div>
+      <div class="wtext lang-ar">
+        هذا ليس واقعاً معززاً (AR) — بل عرض هوائي حقيقي (Aerial/Volumetric Display)
+        <small>الواقع المعزز يتطلب نظارة أو عدسة تُراكب المحتوى فوق الرؤية؛ ما يصفه هذا القسم تقنية مختلفة تماماً — ضوء يتجمّع فعلياً في نقطة في الهواء المفتوح، مرئي بالعين المجردة دون أي جهاز مساعد. هذه أيضاً <b>ليست</b> ميزة هاتف ذكي تجارية بعد — بل بحث وتطبيقات تجارية محدودة (لافتات، أكشاك) لا تزال بعيدة عن الجيب.</small>
+      </div>
+      <div class="wtext lang-en">
+        This is not augmented reality (AR) — it's a real aerial/volumetric display
+        <small>AR requires glasses or a lens overlaying content onto vision; what this section describes is an entirely different technology — light actually converging at a point in open air, visible to the naked eye with no assistive device. This is also <b>not</b> yet a commercial smartphone feature — it's research and limited commercial deployment (signage, kiosks) still far from the pocket.</small>
+      </div>
+    </div>
+
+    <div class="outlook-grid">
+      <div class="outlook-card">
+        <div class="ocnum">01 · <span class="lang-ar">التقنية القائمة</span><span class="lang-en">EXISTING TECH</span></div>
+        <div class="octitle">ASKA3D Plate</div>
+        <p class="lang-ar">شركة Asukanet اليابانية (تأسست 1995) تطوّر لوحة بصرية خاصة تُجمّع الضوء المنعكس ليُشكّل صورة عائمة في الهواء فعلياً؛ أبحاث وتطبيقات تجارية جارية منذ 2011 — مستخدمة اليوم في المطاعم والفنادق ولوحات المصاعد، لا الهواتف.</p>
+        <p class="lang-en">Japan's Asukanet (founded 1995) develops a special optical plate that gathers reflected light to actually form a floating image in the air; commercial R&amp;D has been ongoing since 2011 — used today in restaurants, hotels, and elevator panels, not phones.</p>
+        <div class="outlook-sources"><a href="https://aska3d.com/en/index.html" target="_blank" rel="noopener">↗ aska3d.com (الرسمي/Official)</a></div>
+      </div>
+      <div class="outlook-card">
+        <div class="ocnum">02 · <span class="lang-ar">حجم السوق</span><span class="lang-en">MARKET SIZE</span></div>
+        <div class="octitle"><span class="lang-ar">نمو حقيقي، لا خيال</span><span class="lang-en">Real Growth, Not Fantasy</span></div>
+        <p class="lang-ar">تقدّر تقارير السوق نمو قطاع الشاشات الهولوغرافية من 6.3 مليار دولار (2026) إلى 32.5 مليار دولار بحلول 2033 — بمعدل نمو سنوي 26.4%، مدفوعاً بتقنية "الهولوغرافيا الكهربائية" التي لا تتطلب نظارة إطلاقاً.</p>
+        <p class="lang-en">Market reports estimate the holographic-display sector growing from $6.3 billion (2026) to $32.5 billion by 2033 — a 26.4% annual growth rate, driven by "electro-holographic" technology that requires no glasses at all.</p>
+        <div class="outlook-sources"><a href="https://www.persistencemarketresearch.com/market-research/holographic-display-market.asp" target="_blank" rel="noopener">↗ Persistence Market Research</a></div>
+      </div>
+      <div class="outlook-card">
+        <div class="ocnum">03 · <span class="lang-ar">أقرب خطوة للهاتف</span><span class="lang-en">CLOSEST STEP TO PHONES</span></div>
+        <div class="octitle"><span class="lang-ar">بحث 2024</span><span class="lang-en">2024 Research</span></div>
+        <p class="lang-ar">باحثون ينشرون طريقة لعرض صور هولوغرافية ثلاثية الأبعاد كاملة الألوان باستخدام شاشة الهاتف الذكي نفسها كمصدر ضوء — بدل الليزر المعتاد؛ لا يزال بحثياً مبكراً، لكنه أقرب إشارة موجودة اليوم لربط هذه التقنية بجهاز الهاتف تحديداً.</p>
+        <p class="lang-en">Researchers publish a method for displaying full-color 3D holographic images using a smartphone's own screen as the light source — instead of the usual laser; still early-stage research, but the closest existing signal linking this technology specifically to the phone device.</p>
+        <div class="outlook-sources"><a href="https://phys.org/news/2024-04-smartphone-screen-3d-layered-holographic.html" target="_blank" rel="noopener">↗ Phys.org</a></div>
+      </div>
+    </div>
+
+    <div class="outlook-verdict lang-ar">
+      <b>الخلاصة الصريحة:</b> التقنية الأساسية (عرض ضوء في الهواء بلا جهاز مساعد) موجودة وتجارية فعلاً — لكن في سياق اللافتات والأكشاك، لا الهاتف الذكي. لا توجد حتى تاريخ كتابة هذه الصفحة (2026) خارطة طريق مؤسسية معلنة من آبل أو سامسونج أو جوجل تربط هذه التقنية بجهاز هاتف تجاري قادم. الرؤية ممكنة فيزيائياً؛ لكنها اليوم استقراء منطقي من اتجاه بحثي حقيقي، لا التزام صناعي موثّق.
+    </div>
+    <div class="outlook-verdict lang-en">
+      <b>The honest verdict:</b> the core technology (projecting light in air with no assistive device) exists and is already commercial — but in the context of signage and kiosks, not the smartphone. As of this page's writing (2026), there is no publicly announced institutional roadmap from Apple, Samsung, or Google linking this technology to an upcoming commercial phone. The vision is physically plausible; but today it's a reasonable extrapolation from a real research direction, not a documented industry commitment.
+    </div>
+  </div>
+
+
+  <!-- ============ FULL CHRONOLOGICAL TIMELINE ============ -->
+  <div class="story-header full-timeline">
+    <div class="eyebrow">APPENDIX // <span class="lang-ar">مرجع سريع بكل التواريخ</span><span class="lang-en">A quick reference for every date</span></div>
+    <h2 class="lang-ar">الخط الزمني الكامل: كل الأحداث بالترتيب</h2>
+    <h2 class="lang-en">The Full Timeline: Every Event, in Order</h2>
+  </div>
+
+  <div class="tl-list lang-ar">
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">1973</div><div class="tl-text"><b>مارتن كوبر</b> يُجري أول مكالمة محمولة في التاريخ — Motorola DynaTAC</div></div>
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">1983</div><div class="tl-text"><b>DynaTAC 8000X</b> يصل تجارياً بسعر 3995 دولاراً</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1994</div><div class="tl-text">إريكسون تطوّر <b>البلوتوث</b> — بديل لاسلكي للكابلات</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1997</div><div class="tl-text"><b>Siemens S10</b> — أول هاتف بشاشة ملونة (4 ألوان)</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1998</div><div class="tl-text"><b>نوكيا تتفوق على موتورولا</b> — 38% حصة سوقية عالمية</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1999</div><div class="tl-text">📧 <b>BlackBerry 850</b> — البريد الفوري يصل لليد لأول مرة</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">2000</div><div class="tl-text"><b>Sharp J-SH04</b> — أول هاتف بكاميرا مدمجة (اليابان حصرياً)</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">2001</div><div class="tl-text"><b>Ericsson T39</b> — أول هاتف بلوتوث تجاري</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">2007</div><div class="tl-text">👆 <b>آيفون الأول</b> — شاشة اللمس تُلغي لوحة المفاتيح للأبد</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">2008</div><div class="tl-text"><b>Android/HTC Dream</b> وApp Store — عصر التطبيقات يبدأ</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2010</div><div class="tl-text">سلسلة <b>Samsung Galaxy S</b> — أندرويد يترسّخ منافساً رئيسياً</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2011</div><div class="tl-text"><b>Siri</b> — أول مساعد صوتي سحابي واسع الانتشار</div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">2017</div><div class="tl-text">🧠 <b>Kirin 970</b> — أول NPU مخصص؛ ARKit/ARCore يُطلقان بالتوازي</div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot"></div><div class="tl-year">2021</div><div class="tl-text"><b>Google Tensor</b> — رقاقة AI مخصصة بالكامل لهواتف Pixel</div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot"></div><div class="tl-year">2024–2026</div><div class="tl-text"><b>نماذج لغوية محلية</b> — Gemini Nano وApple Intelligence بلا سحابة</div></div>
+  </div>
+
+  <div class="tl-list lang-en">
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">1973</div><div class="tl-text"><b>Martin Cooper</b> makes history's first mobile call — the Motorola DynaTAC</div></div>
+    <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">1983</div><div class="tl-text">The <b>DynaTAC 8000X</b> reaches the commercial market at $3,995</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1994</div><div class="tl-text">Ericsson develops <b>Bluetooth</b> — a wireless alternative to cables</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1997</div><div class="tl-text">The <b>Siemens S10</b> — the first phone with a color screen (4 colors)</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1998</div><div class="tl-text"><b>Nokia overtakes Motorola</b> — 38% global market share</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1999</div><div class="tl-text">📧 The <b>BlackBerry 850</b> — push email reaches the hand for the first time</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">2000</div><div class="tl-text">The <b>Sharp J-SH04</b> — the first phone with a built-in camera (Japan-only)</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">2001</div><div class="tl-text">The <b>Ericsson T39</b> — the first commercial Bluetooth phone</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">2007</div><div class="tl-text">👆 The <b>first iPhone</b> — the touchscreen permanently kills the keyboard</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot"></div><div class="tl-year">2008</div><div class="tl-text"><b>Android/HTC Dream</b> &amp; the App Store — the app era begins</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2010</div><div class="tl-text">The <b>Samsung Galaxy S</b> series — Android cements itself as a major rival</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2011</div><div class="tl-text"><b>Siri</b> — the first widely adopted cloud-based voice assistant</div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">2017</div><div class="tl-text">🧠 The <b>Kirin 970</b> — the first dedicated NPU; ARKit/ARCore launch in parallel</div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot"></div><div class="tl-year">2021</div><div class="tl-text"><b>Google Tensor</b> — an AI chip fully dedicated to Pixel phones</div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot"></div><div class="tl-year">2024–2026</div><div class="tl-text"><b>Local language models</b> — Gemini Nano and Apple Intelligence, no cloud needed</div></div>
+  </div>
+
+  <div class="tl-legend lang-ar">
+    <div class="li"><span class="sw" style="background:var(--c0);"></span>الميلاد: أول مكالمة محمولة</div>
+    <div class="li"><span class="sw" style="background:var(--c1);"></span>عصر الهيمنة والميزات</div>
+    <div class="li"><span class="sw" style="background:var(--c2);"></span>اللاسلكي والبريد في اليد</div>
+    <div class="li"><span class="sw" style="background:var(--c3);"></span>ثورة اللمس</div>
+    <div class="li"><span class="sw" style="background:var(--c4);"></span>نضج التطبيقات والمعالجات</div>
+    <div class="li"><span class="sw" style="background:var(--c5);"></span>الذكاء الاصطناعي المدمج</div>
+  </div>
+  <div class="tl-legend lang-en">
+    <div class="li"><span class="sw" style="background:var(--c0);"></span>The Birth: The First Mobile Call</div>
+    <div class="li"><span class="sw" style="background:var(--c1);"></span>The Era of Dominance &amp; Features</div>
+    <div class="li"><span class="sw" style="background:var(--c2);"></span>Wireless &amp; Email in Hand</div>
+    <div class="li"><span class="sw" style="background:var(--c3);"></span>The Touch Revolution</div>
+    <div class="li"><span class="sw" style="background:var(--c4);"></span>Apps &amp; Processors Mature</div>
+    <div class="li"><span class="sw" style="background:var(--c5);"></span>On-Device AI</div>
+  </div>
+
+  <!-- ============ REFERENCE: ANTUTU PERFORMANCE BENCHMARK ============ -->
+  <style>
+    .ref-section{margin-top:56px;}
+    .bench-table-wrap{margin-top:22px;overflow-x:auto;border:1px solid var(--panel-line);border-radius:10px;}
+    table.bench-table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:12.5px;}
+    table.bench-table th{background:var(--panel);color:var(--gold);padding:10px 14px;text-align:center;border-bottom:1px solid var(--panel-line);}
+    table.bench-table td{padding:9px 14px;text-align:center;color:var(--ink-dim);border-bottom:1px solid rgba(255,255,255,0.03);}
+    table.bench-table tr:nth-child(even){background:rgba(255,255,255,0.015);}
+    table.bench-table td.dev{color:var(--ink);font-weight:700;text-align:right;font-family:'Cairo',sans-serif;}
+    table.bench-table td.score{color:var(--gold);font-weight:700;}
+    .bench-note{font-size:12px;color:var(--ink-dim);margin-top:10px;line-height:1.8;}
+    .integrity-warn{
+      margin-top:22px;display:flex;gap:14px;align-items:flex-start;
+      background:rgba(224,99,122,0.08);border:1.5px solid #e0637a;border-radius:12px;padding:16px 20px;
+    }
+    .integrity-warn .iicon{font-size:24px;flex-shrink:0;}
+    .integrity-warn .itext{font-size:13px;font-weight:700;color:var(--ink);line-height:1.8;}
+    .integrity-warn .itext small{display:block;font-weight:400;color:var(--ink-dim);font-size:11.5px;margin-top:6px;line-height:1.85;}
+  </style>
+
+  <div class="story-header ref-section">
+    <div class="eyebrow">REFERENCE // <span class="lang-ar">ملحق مرجعي — قياس الأداء عبر الأجيال</span><span class="lang-en">A reference appendix — measuring performance across generations</span></div>
+    <h2 class="lang-ar">AnTuTu: أداة القياس العالمية لأداء الهواتف</h2>
+    <h2 class="lang-en">AnTuTu: The Global Standard for Phone Performance Testing</h2>
+  </div>
+
+  <div class="terms-note lang-ar">
+    ℹ️ <b>ما هو AnTuTu؟</b> أداة صينية (Beijing AnTuTu Technology، تأسست 2011) تختبر أربعة مكونات — المعالج (CPU)، معالج الرسوميات (GPU)، الذاكرة (MEM)، وتجربة المستخدم (UX) — وتدمجها في رقم إجمالي واحد. أكثر من 200 مليون مستخدم عالمياً، وتستخدمها رسمياً Samsung وQualcomm وARM وMediaTek كمرجع صناعي شبه معياري.
+  </div>
+  <div class="terms-note lang-en">
+    ℹ️ <b>What is AnTuTu?</b> A Chinese tool (Beijing AnTuTu Technology, founded 2011) testing four components — CPU, GPU, memory (MEM), and user experience (UX) — combined into one overall number. Over 200 million users worldwide, and officially used by Samsung, Qualcomm, ARM, and MediaTek as a near-standard industry reference.
+  </div>
+
+  <div class="bench-table-wrap">
+    <table class="bench-table">
+      <tr><th><span class="lang-ar">السنة</span><span class="lang-en">Year</span></th><th><span class="lang-ar">الجهاز الأعلى نتيجة</span><span class="lang-en">Top-Scoring Device</span></th><th><span class="lang-ar">نتيجة AnTuTu</span><span class="lang-en">AnTuTu Score</span></th></tr>
+      <tr><td>2013</td><td class="dev">Samsung Galaxy Note 3</td><td class="score">34,652</td></tr>
+      <tr><td>2015</td><td class="dev">iPhone 6s Plus</td><td class="score">132,621</td></tr>
+      <tr><td>2017</td><td class="dev">iPhone X</td><td class="score">249,030</td></tr>
+      <tr><td>2018</td><td class="dev">iPhone XS</td><td class="score">358,317</td></tr>
+      <tr><td>2026</td><td class="dev"><span class="lang-ar">أعلى رقاقة رائدة (يوليو)</span><span class="lang-en">Top flagship chip (July)</span></td><td class="score">4,005,248</td></tr>
+    </table>
+  </div>
+  <div class="bench-note lang-ar">تضاعفت أعلى نتيجة مسجّلة نحو 115 مرة بين 2013 و2026 — انعكاس مباشر لسباق تسلّح العتاد الموصوف في مسار "عتاد الهاتف" أعلى الصفحة. الأرقام مأخوذة من التقارير الرسمية السنوية لـ AnTuTu.</div>
+  <div class="bench-note lang-en">The top recorded score grew roughly 115-fold between 2013 and 2026 — a direct reflection of the hardware arms race described in the "Phone Hardware" track above. Figures are drawn from AnTuTu's official yearly reports.</div>
+
+  <div class="integrity-warn">
+    <div class="iicon">⚠️</div>
+    <div class="itext lang-ar">
+      تحذير نزاهة: تاريخ موثّق من فضائح التلاعب بالنتائج
+      <small>Samsung Galaxy S4 (2013) رفع تردد المعالج عند رصد تطبيق الاختبار فقط؛ Huawei P20 (2018) اكتشفته AnandTech فحُذف رسمياً من تصنيفات 3DMark؛ Realme GT (2021) حظرته AnTuTu نفسها 3 أشهر؛ MediaTek استخدمت "وضع رياضي" (2020) مخصصاً للاختبار فقط. النتيجة الرقمية وحدها لا تعني أداءً واقعياً موثوقاً — راجع دائماً مراجعات مستقلة إلى جانب أي رقم benchmark.</small>
+    </div>
+    <div class="itext lang-en">
+      Integrity warning: a documented history of score-manipulation scandals
+      <small>Samsung's Galaxy S4 (2013) boosted CPU clocks only when a benchmark app was detected; Huawei's P20 (2018) was caught by AnandTech and officially delisted from 3DMark rankings; Realme's GT (2021) was banned by AnTuTu itself for three months; MediaTek used a benchmark-only "Sports Mode" (2020). A single numeric score alone doesn't mean reliable real-world performance — always check independent reviews alongside any benchmark number.</small>
+    </div>
+  </div>
+
+</div>
+
+<style>
+  .sources-section{margin:56px auto 0;max-width:1400px;padding:28px clamp(16px,4vw,40px) 0;border-top:1px solid var(--panel-line);}
+  .sources-title{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px;letter-spacing:2px;margin-bottom:16px;}
+  .sources-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 28px;}
+  @media(max-width:760px){.sources-list{grid-template-columns:1fr;}}
+  .sources-list a{color:var(--ink-dim);font-size:13px;text-decoration:none;display:flex;align-items:baseline;gap:8px;padding:9px 0;border-bottom:1px dashed var(--panel-line);}
+  .sources-list a:hover{color:var(--gold);}
+  .sources-list .snum{color:var(--gold-dim);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;}
+  .foresight-link{margin:22px auto 40px;max-width:1400px;display:flex;padding:16px clamp(16px,4vw,40px);border-radius:10px;border:1px solid #8b5cf655;background:rgba(139,92,246,0.07);align-items:center;justify-content:center;gap:10px;text-decoration:none;transition:background .2s;}
+  .foresight-link:hover{background:rgba(139,92,246,0.14);}
+  .foresight-link span{color:#b39ffa;font-weight:700;font-size:14px;}
+</style>
+
+<div class="sources-section">
+  <div class="sources-title">SOURCES // <span class="lang-ar">مصادر ومراجع هذه الصفحة</span><span class="lang-en">Sources &amp; References for This Page</span></div>
+  <div class="sources-list">
+    <a href="https://www.iit.edu/student-experience/student-and-alumni-stories/how-phone-call-sparked-technological-revolution" target="_blank" rel="noopener"><span class="snum">01</span><span class="lang-ar">أول مكالمة محمولة — Illinois Institute of Technology</span><span class="lang-en">The First Mobile Call — Illinois Institute of Technology</span></a>
+    <a href="https://www.historytools.org/companies/the-real-reason-nokia-failed-spectacularly" target="_blank" rel="noopener"><span class="snum">02</span><span class="lang-ar">صعود وهيمنة نوكيا — تحليل تاريخي موثّق</span><span class="lang-en">Nokia's Rise &amp; Dominance — Documented Historical Analysis</span></a>
+    <a href="https://www.bluetooth.com/about-us/bluetooth-origin/" target="_blank" rel="noopener"><span class="snum">03</span><span class="lang-ar">أصل تسمية البلوتوث — Bluetooth.com (الرسمي)</span><span class="lang-en">The Origin of the Bluetooth Name — Bluetooth.com (Official)</span></a>
+    <a href="https://www.historytools.org/docs/blackberry-history" target="_blank" rel="noopener"><span class="snum">04</span><span class="lang-ar">تاريخ بلاك بيري والبريد الفوري</span><span class="lang-en">BlackBerry History &amp; Push Email</span></a>
+    <a href="https://amac.us/newsline/lifestyle/apple-ceo-steve-jobs-unveils-the-first-iphone-this-day-in-history/" target="_blank" rel="noopener"><span class="snum">05</span><span class="lang-ar">إطلاق آيفون الأول 2007</span><span class="lang-en">The First iPhone's 2007 Launch</span></a>
+    <a href="https://www.forbes.com/sites/karlfreund/2022/10/13/the-qualcomm-snapdragon-ai-journey/" target="_blank" rel="noopener"><span class="snum">06</span><span class="lang-ar">رحلة الذكاء الاصطناعي في رقاقات Snapdragon — Forbes</span><span class="lang-en">The Snapdragon AI Journey — Forbes</span></a>
+    <a href="https://aska3d.com/en/index.html" target="_blank" rel="noopener"><span class="snum">07</span><span class="lang-ar">تقنية العرض الهوائي ASKA3D (الرسمي)</span><span class="lang-en">ASKA3D Aerial Display Technology (Official)</span></a>
+    <a href="https://www.antutu.com/web/" target="_blank" rel="noopener"><span class="snum">08</span><span class="lang-ar">AnTuTu Benchmark (الرسمي)</span><span class="lang-en">AnTuTu Benchmark (Official)</span></a>
+    <a href="https://en.everybodywiki.com/AnTuTu_smartphone_performance_ranking" target="_blank" rel="noopener"><span class="snum">09</span><span class="lang-ar">أرشيف نتائج AnTuTu السنوية 2013–2018</span><span class="lang-en">AnTuTu's Yearly Score Archive 2013–2018</span></a>
+    <a href="https://versus.com/en/news/antutu-benchmark" target="_blank" rel="noopener"><span class="snum">10</span><span class="lang-ar">فضائح التلاعب بنتائج المعايير — Versus</span><span class="lang-en">Benchmark Manipulation Scandals — Versus</span></a>
+  </div>
+</div>
+
+<a class="foresight-link" href="future-horizon-blueprint.html">
+  <span class="lang-ar">🔮 استكشف الأفق المستقبلي المرتبط بهذا الموضوع ←</span>
+  <span class="lang-en">🔮 Explore the related future horizon ←</span>
+</a>
+<div class="cl-overlay" id="clOverlay">
+  <div class="cl-card">
+    <div class="cl-eyebrow">BEYOND#COMPUTER_SCIENCE // CONTENT RIGHTS</div>
+    <div class="cl-title">تحقق الصلاحية لإلغاء القفل</div>
+    <div class="cl-sub">النسخ والتحديد مقيّدان افتراضياً لحماية المحتوى. أدخل بيانات الدخول لإلغاء القيد لهذه الجلسة فقط.</div>
+    <form id="clForm">
+      <label for="clUser">اسم المستخدم</label>
+      <input type="text" id="clUser" autocomplete="username" required>
+      <label for="clPass">كلمة المرور</label>
+      <input type="password" id="clPass" autocomplete="current-password" required>
+      <div class="cl-actions">
+        <button type="submit" class="cl-submit" id="clSubmitBtn">تحقق</button>
+        <button type="button" class="cl-cancel" id="clCancelBtn">إلغاء</button>
+      </div>
+    </form>
+    <div class="cl-error" id="clError"></div>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('[data-en-title]').forEach(function(el){
+    el.dataset.arTitle = el.title;
+  });
+
+  function applyLang(lang){
+    document.body.classList.toggle("is-en", lang === "en");
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === "en" ? "ltr" : "rtl";
+    document.getElementById("btnAr").classList.toggle("active", lang === "ar");
+    document.getElementById("btnEn").classList.toggle("active", lang === "en");
+    document.querySelectorAll('[data-en-title]').forEach(function(el){
+      el.title = lang === 'en' ? el.dataset.enTitle : el.dataset.arTitle;
+    });
+    try { localStorage.setItem("bcs_lang", lang); } catch (e) {}
+  }
+  document.getElementById("btnAr").addEventListener("click", () => applyLang("ar"));
+  document.getElementById("btnEn").addEventListener("click", () => applyLang("en"));
+  let savedLang = "ar";
+  try { savedLang = localStorage.getItem("bcs_lang") || "ar"; } catch (e) {}
+  applyLang(savedLang);
+
+  document.addEventListener('copy', function(e){ if(sessionStorage.getItem('bcs_copy_unlock')!=='1') e.preventDefault(); });
+  document.addEventListener('cut', function(e){ if(sessionStorage.getItem('bcs_copy_unlock')!=='1') e.preventDefault(); });
+
+  (function(){
+    var clOverlay = document.getElementById('clOverlay');
+    var clForm = document.getElementById('clForm');
+    var clUser = document.getElementById('clUser');
+    var clPass = document.getElementById('clPass');
+    var clError = document.getElementById('clError');
+    var clSubmitBtn = document.getElementById('clSubmitBtn');
+    var clCancelBtn = document.getElementById('clCancelBtn');
+    var copyLockBtn = document.getElementById('copyLockBtn');
+
+    function isUnlocked(){
+      try { return sessionStorage.getItem('bcs_copy_unlock') === '1'; } catch(e){ return false; }
+    }
+    function applyCopyLockUI(){
+      if(!copyLockBtn) return;
+      if(isUnlocked()){
+        copyLockBtn.textContent = '🔓';
+        copyLockBtn.title = 'المحتوى متاح للنسخ — اضغط لإعادة القفل';
+        copyLockBtn.classList.add('cl-active');
+        document.body.classList.add('copy-unlocked');
+      } else {
+        copyLockBtn.textContent = '🔒';
+        copyLockBtn.title = 'حقوق المحتوى — اضغط لإلغاء القيد';
+        copyLockBtn.classList.remove('cl-active');
+        document.body.classList.remove('copy-unlocked');
+      }
+    }
+    function openClModal(){
+      if(!clOverlay) return;
+      clError.style.display = 'none';
+      clUser.value = ''; clPass.value = '';
+      clOverlay.classList.add('open');
+      setTimeout(function(){ clUser.focus(); }, 50);
+    }
+    function closeClModal(){ if(clOverlay) clOverlay.classList.remove('open'); }
+
+    if(copyLockBtn){
+      copyLockBtn.addEventListener('click', function(){
+        if(isUnlocked()){
+          try { sessionStorage.removeItem('bcs_copy_unlock'); } catch(e){}
+          applyCopyLockUI();
+        } else {
+          openClModal();
+        }
+      });
+    }
+    if(clCancelBtn) clCancelBtn.addEventListener('click', closeClModal);
+    if(clOverlay) clOverlay.addEventListener('click', function(e){ if(e.target===clOverlay) closeClModal(); });
+
+    if(clForm){
+      clForm.addEventListener('submit', function(e){
+        e.preventDefault();
+        clError.style.display = 'none';
+        clSubmitBtn.disabled = true;
+        var userInput = clUser.value.trim();
+        var passInput = clPass.value.trim();
+        fetch('access.txt', { cache: 'no-store' }).then(function(res){
+          if(!res.ok) throw new Error('fetch-failed');
+          return res.text();
+        }).then(function(text){
+          var validUser='', validPass='';
+          text.split('\n').forEach(function(line){
+            var l = line.trim();
+            if(l.indexOf('username=')===0) validUser = l.slice('username='.length).trim();
+            if(l.indexOf('password=')===0) validPass = l.slice('password='.length).trim();
+          });
+          if(userInput===validUser && passInput===validPass){
+            try { sessionStorage.setItem('bcs_copy_unlock','1'); } catch(e){}
+            closeClModal();
+            applyCopyLockUI();
+          } else {
+            clError.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة.';
+            clError.style.display = 'block';
+          }
+          clSubmitBtn.disabled = false;
+        }).catch(function(){
+          clError.textContent = 'تعذّر التحقق من بيانات الدخول.';
+          clError.style.display = 'block';
+          clSubmitBtn.disabled = false;
+        });
+      });
+    }
+
+    applyCopyLockUI();
+  })();
+</script>
+</body>
+</html>

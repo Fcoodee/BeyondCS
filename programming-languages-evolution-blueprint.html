@@ -296,6 +296,31 @@
   .tl-legend .li{display:flex;align-items:center;gap:6px;}
   .tl-legend .sw{width:10px;height:10px;border-radius:3px;}
 
+  .terms-note{
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:10px;
+    padding:16px 20px;margin-bottom:20px;font-size:13px;color:var(--ink-dim);line-height:1.9;
+  }
+  .terms-note b{color:var(--ink);}
+  .terms-note{transition:box-shadow .25s;}
+  .terms-note:hover{box-shadow:0 0 16px rgba(211,169,78,0.25);}
+
+  /* ===== Deep-dive: OOP & Algorithms concept cards ===== */
+  .concept-subhead{font-weight:800;font-size:15px;margin:26px 0 14px;color:var(--gold);display:flex;align-items:center;gap:8px;}
+  .concept-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media (max-width:1100px){.concept-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:600px){.concept-grid{grid-template-columns:1fr;}}
+  .concept-card{
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:10px;
+    padding:16px 18px;position:relative;overflow:hidden;
+  }
+  .concept-card::before{content:"";position:absolute;top:0;right:0;left:0;height:4px;background:var(--gold);}
+  .concept-card .cctag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:6px;}
+  .concept-card .cctitle{font-weight:800;font-size:14px;margin-bottom:6px;}
+  .concept-card .ccdesc{font-size:11.5px;color:var(--ink-dim);line-height:1.75;margin-bottom:8px;}
+  .concept-card .ccsource{font-size:10px;color:var(--ink-dim);font-family:'JetBrains Mono',monospace;border-top:1px solid var(--panel-line);padding-top:6px;}
+  .concept-card{transition:box-shadow .25s;}
+  .concept-card:hover{box-shadow:0 0 16px rgba(211,169,78,0.3);}
+
   @media (max-width: 1300px){
     .board-outer{overflow-x:auto;}
     .board, .axis, .chapters-strip{min-width:1500px;}
@@ -1036,6 +1061,87 @@
 
   </div>
 
+  <!-- ============ DEEP DIVE: OOP & ALGORITHMS ============ -->
+  <div class="story-header">
+    <div class="eyebrow">DEEP DIVE // <span class="lang-ar">مبادئ لم يُفردها المسار الزمني الرئيسي بمحطة مستقلة</span><span class="lang-en">Principles the main timeline didn't dedicate an independent station to</span></div>
+    <h2 class="lang-ar">من الإجراءات إلى الكائنات: تأسيس OOP ونظرية الخوارزميات</h2>
+    <h2 class="lang-en">From Procedures to Objects: The Foundations of OOP &amp; Algorithm Theory</h2>
+  </div>
+
+  <div class="terms-note lang-ar" style="margin-bottom:24px;">
+    ℹ️ <b>لماذا قسم منفصل؟</b> المسار الزمني الرئيسي أعلاه يوثّق <b>متى ظهرت كل لغة ولماذا</b>، لا <b>المبادئ البرمجية الداخلية</b> التي تحملها. عقدة C++ (1979–85) في مسار "لغات البرمجة الأساسية" تذكر أنها "أدخلت البرمجة الكائنية" كحدث تاريخي — لكنها لا تشرح من صاغ هذا المبدأ أصلاً ولا كيف تطوّرت نظرية الخوارزميات الكامنة خلف كل لغة. هذا القسم يسدّ تلك الفجوة تحديداً.
+  </div>
+  <div class="terms-note lang-en" style="margin-bottom:24px;">
+    ℹ️ <b>Why a separate section?</b> The main timeline above documents <b>when each language appeared and why</b>, not the <b>underlying programming principles</b> it carries. The C++ node (1979–85) on the "Core Languages" track notes that it "introduced object-oriented programming" as a historical event — but doesn't explain who originated this principle, or how the algorithm theory behind every language actually developed. This section fills that specific gap.
+  </div>
+
+  <div class="concept-subhead lang-ar">🧩 تطور مبادئ البرمجة الكائنية (OOP)</div>
+  <div class="concept-subhead lang-en">🧩 The Evolution of Object-Oriented Programming (OOP)</div>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="cctag">1967</div>
+      <div class="cctitle">Simula</div>
+      <div class="ccdesc lang-ar">كريستن نيغارد وأولي-يوهان دال، في المركز النرويجي للحوسبة، يطوّران أول لغة تقدّم مفهومي "الصنف" (Class) و"الكائن" (Object) فعلياً — لمحاكاة أنظمة العالم الحقيقي المعقّدة، لا لأغراض عامة.</div>
+      <div class="ccdesc lang-en">Kristen Nygaard and Ole-Johan Dahl, at the Norwegian Computing Center, develop the first language to actually introduce the concepts of "class" and "object" — for simulating complex real-world systems, not general-purpose use.</div>
+      <div class="ccsource">Source: IEEE ETHW</div>
+    </div>
+    <div class="concept-card">
+      <div class="cctag">1972</div>
+      <div class="cctitle">Smalltalk</div>
+      <div class="ccdesc lang-ar">آلان كاي وفريقه في Xerox PARC يصوغون مصطلح "Object-Oriented" نفسه، ويقدّمون مبدأً أكثر تطرفاً من Simula: "كل شيء كائن" — حتى الأرقام والأصناف نفسها، لا فقط عناصر المحاكاة.</div>
+      <div class="ccdesc lang-en">Alan Kay and his team at Xerox PARC coin the term "object-oriented" itself, introducing a more radical principle than Simula's: "everything is an object" — even numbers and classes themselves, not just simulation elements.</div>
+      <div class="ccsource">Source: Alan Kay (worrydream.com)</div>
+    </div>
+    <div class="concept-card">
+      <div class="cctag">1979–85</div>
+      <div class="cctitle">C++</div>
+      <div class="ccdesc lang-ar">بيارن ستروستروب يدمج مبادئ OOP القادمة من Simula مباشرة داخل عائلة لغة C — أول مرة تلتقي فيها الكائنية بأداء الأنظمة المنخفضة المستوى. <span style="opacity:.7;">(مذكورة في المسار الزمني الرئيسي أعلاه)</span></div>
+      <div class="ccdesc lang-en">Bjarne Stroustrup merges OOP principles inherited directly from Simula into the C language family — the first time object-orientation meets low-level systems performance. <span style="opacity:.7;">(Covered in the main timeline above)</span></div>
+      <div class="ccsource"><span class="lang-ar">راجع عقدة C++ أعلاه</span><span class="lang-en">See the C++ node above</span></div>
+    </div>
+    <div class="concept-card">
+      <div class="cctag">1995</div>
+      <div class="cctitle">Java</div>
+      <div class="ccdesc lang-ar">جافا تفرض OOP كنموذج افتراضي إلزامي (لا اختيارياً كما في C++)، مقترناً بمبدأ "اكتب مرة، شغّل في أي مكان" — لتصبح OOP بذلك المعيار السائد لتطوير أنظمة المؤسسات. <span style="opacity:.7;">(مذكورة في المسار الزمني الرئيسي أعلاه)</span></div>
+      <div class="ccdesc lang-en">Java enforces OOP as a mandatory default paradigm (not optional as in C++), paired with "write once, run anywhere" — making OOP the prevailing standard for enterprise system development. <span style="opacity:.7;">(Covered in the main timeline above)</span></div>
+      <div class="ccsource"><span class="lang-ar">راجع عقدة Java أعلاه</span><span class="lang-en">See the Java node above</span></div>
+    </div>
+  </div>
+
+  <div class="concept-subhead lang-ar">📐 تأسيس نظرية الخوارزميات وهياكل البيانات</div>
+  <div class="concept-subhead lang-en">📐 The Founding of Algorithm Theory &amp; Data Structures</div>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="cctag">1959–61</div>
+      <div class="cctitle">Quicksort</div>
+      <div class="ccdesc lang-ar">توني هور يبتكر خوارزمية الفرز السريع أثناء عمله على مشروع ترجمة آلية لكلمات روسية — حل عملي لقيود الذاكرة الشحيحة وقتها، يصبح لاحقاً من أكثر خوارزميات الفرز استخداماً في التاريخ (متوسط تعقيد O(n log n)).</div>
+      <div class="ccdesc lang-en">Tony Hoare devises the Quicksort algorithm while working on a Russian machine-translation project — a practical solution to the scarce memory constraints of the time, later becoming one of the most widely used sorting algorithms in history (average O(n log n) complexity).</div>
+      <div class="ccsource">Source: SitePoint</div>
+    </div>
+    <div class="concept-card">
+      <div class="cctag">1968</div>
+      <div class="cctitle">TAOCP <span class="lang-ar">— المجلد 1</span><span class="lang-en">— Vol. 1</span></div>
+      <div class="ccdesc lang-ar">دونالد كنوث ينشر "فن البرمجة الحاسوبية" (المجلد الأول: الخوارزميات الأساسية) — أول معالجة رياضية منهجية لهياكل البيانات (مصفوفات، قوائم مرتبطة، أشجار، مكدّسات، طوابير)، ويُشيع استخدام الترميز المقارِب (Big-O) لتحليل التعقيد.</div>
+      <div class="ccdesc lang-en">Donald Knuth publishes "The Art of Computer Programming" (Vol. 1: Fundamental Algorithms) — the first systematic mathematical treatment of data structures (arrays, linked lists, trees, stacks, queues), and popularizes asymptotic (Big-O) notation for complexity analysis.</div>
+      <div class="ccsource">Source: Computer History Museum</div>
+    </div>
+    <div class="concept-card">
+      <div class="cctag">1973</div>
+      <div class="cctitle">TAOCP <span class="lang-ar">— المجلد 3</span><span class="lang-en">— Vol. 3</span></div>
+      <div class="ccdesc lang-ar">المجلد الثالث "الفرز والبحث" يقدّم ما لا يزال يُعدّ حتى اليوم التحليل الأشمل تاريخياً لخوارزميات الفرز والبحث المختلفة — مرجعاً أساسياً لكل منهج جامعي لاحق في هياكل البيانات.</div>
+      <div class="ccdesc lang-en">Volume 3, "Sorting and Searching," provides what remains, to this day, the most comprehensive historical analysis of sorting and searching algorithms ever written — a foundational reference for every subsequent university data-structures curriculum.</div>
+      <div class="ccsource">Source: Computer History Museum</div>
+    </div>
+    <div class="concept-card">
+      <div class="cctag">1970s–2026</div>
+      <div class="cctitle lang-ar">منهج جامعي راسخ</div>
+      <div class="cctitle lang-en">An Established Curriculum</div>
+      <div class="ccdesc lang-ar">تحليل تعقيد الخوارزميات وهياكل البيانات يصبحان ركيزتين إلزاميتين في كل منهج علوم حاسوب حول العالم — الأساس النظري الذي يُبنى عليه فهم أداء أي برنامج، بصرف النظر عن اللغة المستخدمة لكتابته.</div>
+      <div class="ccdesc lang-en">Algorithm complexity analysis and data structures become two mandatory pillars of every computer science curriculum worldwide — the theoretical foundation underlying how any program's performance is understood, regardless of the language used to write it.</div>
+      <div class="ccsource"><span class="lang-ar">مرجع عام — لا تاريخ حدث واحد</span><span class="lang-en">General reference — no single event date</span></div>
+    </div>
+  </div>
+
   <!-- ============ FULL CHRONOLOGICAL TIMELINE ============ -->
   <div class="story-header full-timeline">
     <div class="eyebrow">APPENDIX // <span class="lang-ar">مرجع سريع بكل التواريخ</span><span class="lang-en">A quick reference for every date</span></div>
@@ -1047,6 +1153,10 @@
     <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">أواخر 1940s</div><div class="tl-text"><b>لغة الآلة والأسمبلي</b> — برمجة مباشرة على المسجلات والذاكرة</div></div>
     <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1957</div><div class="tl-text"><b>Fortran</b> — أول لغة برمجة عليا للحوسبة العلمية</div></div>
     <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1959</div><div class="tl-text"><b>Cobol</b> — لغة عالم الأعمال والمحاسبة</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1959–61</div><div class="tl-text">📐 توني هور يبتكر <b>Quicksort</b> — أساس نظرية الخوارزميات الحديثة</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1967</div><div class="tl-text">🧩 <b>Simula</b> — أول لغة تقدّم مفهومي الصنف والكائن (OOP)</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1968</div><div class="tl-text">📐 كنوث ينشر <b>TAOCP المجلد الأول</b> — تنظيم منهجي لهياكل البيانات</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1972</div><div class="tl-text">🧩 <b>Smalltalk</b> — آلان كاي يصوغ مصطلح "Object-Oriented"</div></div>
     <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1964</div><div class="tl-text"><b>BASIC</b> — لتبسيط تعلّم البرمجة للمبتدئين</div></div>
     <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1969</div><div class="tl-text"><b>إطلاق ARPANET</b> — أول شبكة حواسيب متصلة</div></div>
     <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1970</div><div class="tl-text"><b>Pascal</b> — لتعليم البرمجة البنيوية المنضبطة</div></div>
@@ -1064,6 +1174,10 @@
     <div class="tl-item tl-c0"><div class="tl-dot"></div><div class="tl-year">Late 1940s</div><div class="tl-text"><b>Machine language & Assembly</b> — programming directly against registers and memory</div></div>
     <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1957</div><div class="tl-text"><b>Fortran</b> — the first high-level language for scientific computing</div></div>
     <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1959</div><div class="tl-text"><b>Cobol</b> — the language of business and accounting</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1959–61</div><div class="tl-text">📐 Tony Hoare devises <b>Quicksort</b> — the foundation of modern algorithm theory</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1967</div><div class="tl-text">🧩 <b>Simula</b> — the first language to introduce class and object concepts (OOP)</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1968</div><div class="tl-text">📐 Knuth publishes <b>TAOCP Vol. 1</b> — systematically organizing data structures</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1972</div><div class="tl-text">🧩 <b>Smalltalk</b> — Alan Kay coins the term "object-oriented"</div></div>
     <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1964</div><div class="tl-text"><b>BASIC</b> — to simplify learning to program for beginners</div></div>
     <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1969</div><div class="tl-text"><b>ARPANET launches</b> — the first connected computer network</div></div>
     <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1970</div><div class="tl-text"><b>Pascal</b> — to teach disciplined structured programming</div></div>
@@ -1116,6 +1230,9 @@
     <a href="https://www.computer.org/publications/tech-news/insider-membership-news/timeline-of-programming-languages" target="_blank" rel="noopener"><span class="snum">02</span><span class="lang-ar">الخط الزمني للغات البرمجة — IEEE Computer Society</span><span class="lang-en">Timeline of Programming Languages — IEEE Computer Society</span></a>
     <a href="https://www.hp.com/us-en/shop/tech-takes/computer-history-programming-languages" target="_blank" rel="noopener"><span class="snum">03</span><span class="lang-ar">تاريخ لغات البرمجة — HP Tech Takes</span><span class="lang-en">A Timeline of Programming Languages — HP Tech Takes</span></a>
     <a href="https://www.britannica.com/technology/computer/Apple-Inc" target="_blank" rel="noopener"><span class="snum">04</span><span class="lang-ar">سياق Apple وC/Objective-C — Britannica</span><span class="lang-en">Apple &amp; C/Objective-C Context — Britannica</span></a>
+    <a href="https://ethw.org/Milestones:Object-Oriented_Programming,_1961-1967" target="_blank" rel="noopener"><span class="snum">05</span><span class="lang-ar">نشأة البرمجة الكائنية وSimula — IEEE ETHW (رسمي)</span><span class="lang-en">The Origins of OOP &amp; Simula — IEEE ETHW (Official)</span></a>
+    <a href="https://worrydream.com/EarlyHistoryOfSmalltalk/" target="_blank" rel="noopener"><span class="snum">06</span><span class="lang-ar">التاريخ المبكر لـSmalltalk — بقلم آلان كاي نفسه</span><span class="lang-en">The Early History of Smalltalk — Written by Alan Kay Himself</span></a>
+    <a href="https://computerhistory.org/profile/donald-knuth/" target="_blank" rel="noopener"><span class="snum">07</span><span class="lang-ar">دونالد كنوث — Computer History Museum</span><span class="lang-en">Donald Knuth — Computer History Museum</span></a>
   </div>
 </div>
 
