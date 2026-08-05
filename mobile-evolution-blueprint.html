@@ -2,6 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>الهاتف — من أداة اتصال إلى حاسوب في الجيب | Beyond#Computer_Science</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -1258,24 +1259,78 @@
   </div>
 
   <div class="terms-note lang-ar">
-    ℹ️ <b>ما هو AnTuTu؟</b> أداة صينية (Beijing AnTuTu Technology، تأسست 2011) تختبر أربعة مكونات — المعالج (CPU)، معالج الرسوميات (GPU)، الذاكرة (MEM)، وتجربة المستخدم (UX) — وتدمجها في رقم إجمالي واحد. أكثر من 200 مليون مستخدم عالمياً، وتستخدمها رسمياً Samsung وQualcomm وARM وMediaTek كمرجع صناعي شبه معياري.
+    ℹ️ <b>ما هو AnTuTu؟</b> أداة صينية (Beijing AnTuTu Technology، تأسست 2011)، أكثر من 200 مليون مستخدم عالمياً، تستخدمها رسمياً Samsung وQualcomm وARM وMediaTek كمرجع صناعي شبه معياري.
+    <br><br>
+    <b>معايير القياس الأربعة بالتفصيل:</b>
+    <br>• <b>CPU</b> — سرعة المعالج في العمليات الحسابية متعددة الأنوية وإدارة المهام المتزامنة (Multitasking).
+    <br>• <b>GPU</b> — أداء معالج الرسوميات في عرض المشاهد ثلاثية الأبعاد؛ أهم عامل للألعاب.
+    <br>• <b>MEM</b> — سرعة استجابة الذاكرة العشوائية (RAM) وكفاءة القراءة/الكتابة في التخزين الداخلي.
+    <br>• <b>UX</b> — تجربة الاستخدام الفعلية: سلاسة التطبيقات، تصفح الويب، وتشغيل الفيديو.
+    <br><br>
+    <b>منهجية مهمة:</b> النتيجة المعروضة رسمياً هي <b>متوسط</b> نتائج آلاف الأجهزة الفعلية المُختبرة شهرياً، لا أعلى نتيجة قياسية واحدة؛ ولأن AnTuTu تعتمد تقنيات مختلفة تماماً لكل نظام (Vulkan لأندرويد، Metal لـiOS)، <b>لا يمكن مقارنة نتائج المنصتين مباشرة</b> ببعضهما رقمياً.
   </div>
   <div class="terms-note lang-en">
-    ℹ️ <b>What is AnTuTu?</b> A Chinese tool (Beijing AnTuTu Technology, founded 2011) testing four components — CPU, GPU, memory (MEM), and user experience (UX) — combined into one overall number. Over 200 million users worldwide, and officially used by Samsung, Qualcomm, ARM, and MediaTek as a near-standard industry reference.
+    ℹ️ <b>What is AnTuTu?</b> A Chinese tool (Beijing AnTuTu Technology, founded 2011), with over 200 million users worldwide, officially used by Samsung, Qualcomm, ARM, and MediaTek as a near-standard industry reference.
+    <br><br>
+    <b>The four measurement criteria in detail:</b>
+    <br>• <b>CPU</b> — processor speed in multi-core calculations and concurrent task management (multitasking).
+    <br>• <b>GPU</b> — graphics processor performance rendering 3D scenes; the biggest factor for gaming.
+    <br>• <b>MEM</b> — RAM response speed and read/write efficiency of internal storage.
+    <br>• <b>UX</b> — actual usage experience: app smoothness, web browsing, and video playback.
+    <br><br>
+    <b>An important methodology note:</b> the officially displayed score is the <b>average</b> of thousands of real devices tested monthly, not a single record-high score; and because AnTuTu uses entirely different underlying technologies per platform (Vulkan for Android, Metal for iOS), <b>the two platforms' scores cannot be directly compared</b> numerically.
   </div>
+
+  <div class="story-header" style="margin-top:32px;">
+    <div class="eyebrow">LIVE DATA // <span class="lang-ar">مباشر من antutu.com/web/ranking</span><span class="lang-en">Live from antutu.com/web/ranking</span></div>
+    <h2 class="lang-ar">أعلى 10 أجهزة أداءً — أندرويد وiOS</h2>
+    <h2 class="lang-en">Top 10 Performing Devices — Android &amp; iOS</h2>
+  </div>
+
+  <div class="bench-note lang-ar">📅 آخر تحديث معلن على الموقع الرسمي: <b>يوليو 2026 (نسخة الاختبار V11)</b> — القائمة تُحدَّث شهرياً، والنتائج متوسطات لا أعلى قيمة مسجّلة.</div>
+  <div class="bench-note lang-en">📅 Last update stated on the official site: <b>July 2026 (Test version V11)</b> — the list updates monthly, and results are averages, not record highs.</div>
 
   <div class="bench-table-wrap">
     <table class="bench-table">
-      <tr><th><span class="lang-ar">السنة</span><span class="lang-en">Year</span></th><th><span class="lang-ar">الجهاز الأعلى نتيجة</span><span class="lang-en">Top-Scoring Device</span></th><th><span class="lang-ar">نتيجة AnTuTu</span><span class="lang-en">AnTuTu Score</span></th></tr>
-      <tr><td>2013</td><td class="dev">Samsung Galaxy Note 3</td><td class="score">34,652</td></tr>
-      <tr><td>2015</td><td class="dev">iPhone 6s Plus</td><td class="score">132,621</td></tr>
-      <tr><td>2017</td><td class="dev">iPhone X</td><td class="score">249,030</td></tr>
-      <tr><td>2018</td><td class="dev">iPhone XS</td><td class="score">358,317</td></tr>
-      <tr><td>2026</td><td class="dev"><span class="lang-ar">أعلى رقاقة رائدة (يوليو)</span><span class="lang-en">Top flagship chip (July)</span></td><td class="score">4,005,248</td></tr>
+      <tr><th>#</th><th><span class="lang-ar">جهاز أندرويد</span><span class="lang-en">Android Device</span></th><th><span class="lang-ar">النتيجة</span><span class="lang-en">Score</span></th></tr>
+      <tr><td>1</td><td class="dev">Red Magic 11 Pro</td><td class="score">4,005,248</td></tr>
+      <tr><td>2</td><td class="dev">OPPO Find X9 Ultra</td><td class="score">3,766,902</td></tr>
+      <tr><td>3</td><td class="dev">iQOO 15</td><td class="score">3,714,661</td></tr>
+      <tr><td>4</td><td class="dev">Poco F8 Ultra</td><td class="score">3,668,860</td></tr>
+      <tr><td>5</td><td class="dev">OnePlus 15</td><td class="score">3,646,161</td></tr>
+      <tr><td>6</td><td class="dev">Xiaomi 17 Ultra</td><td class="score">3,579,338</td></tr>
+      <tr><td>7</td><td class="dev">Galaxy S26 Ultra</td><td class="score">3,437,807</td></tr>
+      <tr><td>8</td><td class="dev">vivo X300 Pro</td><td class="score">3,258,010</td></tr>
+      <tr><td>9</td><td class="dev">OPPO Find X9 Pro</td><td class="score">3,254,273</td></tr>
+      <tr><td>10</td><td class="dev">Mi 17</td><td class="score">3,207,732</td></tr>
     </table>
   </div>
-  <div class="bench-note lang-ar">تضاعفت أعلى نتيجة مسجّلة نحو 115 مرة بين 2013 و2026 — انعكاس مباشر لسباق تسلّح العتاد الموصوف في مسار "عتاد الهاتف" أعلى الصفحة. الأرقام مأخوذة من التقارير الرسمية السنوية لـ AnTuTu.</div>
-  <div class="bench-note lang-en">The top recorded score grew roughly 115-fold between 2013 and 2026 — a direct reflection of the hardware arms race described in the "Phone Hardware" track above. Figures are drawn from AnTuTu's official yearly reports.</div>
+
+  <div class="bench-table-wrap" style="margin-top:16px;">
+    <table class="bench-table">
+      <tr><th>#</th><th><span class="lang-ar">جهاز iOS</span><span class="lang-en">iOS Device</span></th><th><span class="lang-ar">النتيجة</span><span class="lang-en">Score</span></th></tr>
+      <tr><td>1</td><td class="dev">iPad Pro 2025 13" (M5)</td><td class="score">3,198,524</td></tr>
+      <tr><td>2</td><td class="dev">iPad Pro 2025 11" (M5)</td><td class="score">3,194,264</td></tr>
+      <tr><td>3</td><td class="dev">iPad Pro 2024 11" (M4)</td><td class="score">2,978,817</td></tr>
+      <tr><td>4</td><td class="dev">iPad Pro 2024 13" (M4)</td><td class="score">2,974,268</td></tr>
+      <tr><td>5</td><td class="dev"><b>iPhone 17 Pro Max</b> (A19 Pro)</td><td class="score">2,434,710</td></tr>
+      <tr><td>6</td><td class="dev">iPad Air 2025 13" (M3)</td><td class="score">2,420,735</td></tr>
+      <tr><td>7</td><td class="dev"><b>iPhone 17 Pro</b> (A19 Pro)</td><td class="score">2,399,382</td></tr>
+      <tr><td>8</td><td class="dev">iPad Air 2025 11" (M3)</td><td class="score">2,357,574</td></tr>
+      <tr><td>9</td><td class="dev">iPad Pro 6 12.9" (M2)</td><td class="score">2,348,972</td></tr>
+      <tr><td>10</td><td class="dev">iPad Air (M2)</td><td class="score">~2,300,000</td></tr>
+    </table>
+  </div>
+  <div class="bench-note lang-ar">
+    ⚠️ <b>ملاحظة صريحة حول قائمة iOS:</b> رقاقة Apple M بذاتها (المستخدمة في آيباد) تتصدر عملياً كل قائمة iOS — <b>7 من أعلى 10 أجهزة آيباد لا آيفون</b>، لأن رقاقات M تحمل أنوية معالجة ورسوميات أكثر وغلافاً حرارياً أكبر لتبديدها. هذا في الواقع يؤكد ما ناقشناه سابقاً: مقارنة أداء خام بحتة تُغفل أن الآيباد جهاز مختلف عن الهاتف في تصميمه الحراري والغرض منه، رغم مشاركته نفس النظام.
+    <br><br>
+    <b>تنبيه على دقة بيانات iOS تحديداً:</b> تبويب iOS في الصفحة الرسمية يُحمَّل بجافاسكريبت تفاعلي، فتعذّر جلبه آلياً بشكل مباشر كما حدث مع تبويب أندرويد؛ الأرقام أعلاه من مرآة موثوقة (mobileguider.com) تستشهد صراحة بمصدرها "AnTuTu Official Ranking" وتطابق تصريحات AnTuTu الإخبارية الرسمية عن نفس الفترة.
+  </div>
+  <div class="bench-note lang-en">
+    ⚠️ <b>An honest note on the iOS list:</b> Apple's M-chip itself (used in the iPad) effectively tops nearly every iOS list — <b>7 of the top 10 devices are iPads, not iPhones</b>, because M-chips carry more processing/graphics cores and a larger thermal shell to dissipate them. This actually confirms what we discussed earlier: a pure raw-performance comparison overlooks that the iPad is a different device in thermal design and purpose, despite sharing the same OS.
+    <br><br>
+    <b>A note on the iOS data's precision specifically:</b> the iOS tab on the official page loads via interactive JavaScript, so it couldn't be fetched directly the way the Android tab was; the figures above come from a verified mirror (mobileguider.com) explicitly citing "AnTuTu Official Ranking" as its source, matching AnTuTu's own official news statements for the same period.
+  </div>
 
   <div class="integrity-warn">
     <div class="iicon">⚠️</div>
@@ -1314,8 +1369,8 @@
     <a href="https://amac.us/newsline/lifestyle/apple-ceo-steve-jobs-unveils-the-first-iphone-this-day-in-history/" target="_blank" rel="noopener"><span class="snum">05</span><span class="lang-ar">إطلاق آيفون الأول 2007</span><span class="lang-en">The First iPhone's 2007 Launch</span></a>
     <a href="https://www.forbes.com/sites/karlfreund/2022/10/13/the-qualcomm-snapdragon-ai-journey/" target="_blank" rel="noopener"><span class="snum">06</span><span class="lang-ar">رحلة الذكاء الاصطناعي في رقاقات Snapdragon — Forbes</span><span class="lang-en">The Snapdragon AI Journey — Forbes</span></a>
     <a href="https://aska3d.com/en/index.html" target="_blank" rel="noopener"><span class="snum">07</span><span class="lang-ar">تقنية العرض الهوائي ASKA3D (الرسمي)</span><span class="lang-en">ASKA3D Aerial Display Technology (Official)</span></a>
-    <a href="https://www.antutu.com/web/" target="_blank" rel="noopener"><span class="snum">08</span><span class="lang-ar">AnTuTu Benchmark (الرسمي)</span><span class="lang-en">AnTuTu Benchmark (Official)</span></a>
-    <a href="https://en.everybodywiki.com/AnTuTu_smartphone_performance_ranking" target="_blank" rel="noopener"><span class="snum">09</span><span class="lang-ar">أرشيف نتائج AnTuTu السنوية 2013–2018</span><span class="lang-en">AnTuTu's Yearly Score Archive 2013–2018</span></a>
+    <a href="https://www.antutu.com/web/ranking" target="_blank" rel="noopener"><span class="snum">08</span><span class="lang-ar">جدول الترتيب الرسمي الحيّ — AnTuTu (المصدر المباشر لأرقام هذه الصفحة)</span><span class="lang-en">Official Live Ranking Table — AnTuTu (the direct source for this page's figures)</span></a>
+    <a href="https://www.mobileguider.com/top-performing-ios-devices/" target="_blank" rel="noopener"><span class="snum">09</span><span class="lang-ar">مرآة بيانات iOS (تستشهد رسمياً بترتيب AnTuTu)</span><span class="lang-en">iOS Data Mirror (explicitly citing AnTuTu's official ranking)</span></a>
     <a href="https://versus.com/en/news/antutu-benchmark" target="_blank" rel="noopener"><span class="snum">10</span><span class="lang-ar">فضائح التلاعب بنتائج المعايير — Versus</span><span class="lang-en">Benchmark Manipulation Scandals — Versus</span></a>
   </div>
 </div>

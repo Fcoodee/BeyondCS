@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الحاسوب — من الصمام المفرغ إلى الحوسبة المحمولة الذكية | Beyond#Computer_Science</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a1826;
+    --bg-grid: #12293e;
+    --panel: #0f2438;
+    --panel-line: #1c3b57;
+    --ink: #e7eef5;
+    --ink-dim: #8fa6bb;
+    --gold: #d3a94e;
+    --gold-dim: #8a7038;
+
+    --lane-identity: #9b8cf2;
+    --lane-identity-bg: rgba(155,140,242,0.10);
+    --lane-files: #4fd0c8;
+    --lane-files-bg: rgba(79,208,200,0.10);
+    --lane-gateway: #f2a65a;
+    --lane-gateway-bg: rgba(242,166,90,0.10);
+    --lane-comms: #ef8c7a;
+    --lane-comms-bg: rgba(239,140,122,0.10);
+    --lane-spatial: #5fd9a8;
+    --lane-spatial-bg: rgba(95,217,168,0.10);
+
+    --c0: #7a8a99;
+    --c1: #6d7fd6;
+    --c2: #3fb6c9;
+    --c3: #a879e0;
+    --c4: #e0a458;
+    --c5: #e0637a;
+    --c6: #5fd9a8;
+    --c7: #e0a458;
+    --holo: #7fd9ff;
+  }
+
+  *{box-sizing:border-box;}
+  body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
+  input, textarea{-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Cairo',sans-serif;}
+
+  body{
+    background-image:
+      linear-gradient(var(--bg-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    padding: 36px 28px 60px;
+  }
+
+  .wrap{max-width:1650px;margin:0 auto;}
+
+  header{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    border-bottom:2px solid var(--panel-line);padding-bottom:18px;margin-bottom:28px;
+    gap:24px;flex-wrap:wrap;
+  }
+  .title-block .eyebrow{
+    font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px;
+    letter-spacing:2px;margin-bottom:8px;
+  }
+  h1{font-size:27px;font-weight:800;margin:0 0 6px;line-height:1.3;}
+  .subtitle{color:var(--ink-dim);font-size:14px;max-width:660px;}
+  .domain-code{
+    font-family:'JetBrains Mono',monospace;text-align:left;direction:ltr;
+    color:var(--ink-dim);font-size:11px;line-height:1.9;
+    border:1px solid var(--panel-line);border-radius:4px;padding:10px 14px;background:var(--panel);
+  }
+  .domain-code b{color:var(--gold);}
+
+  .home-btn{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;
+    color:var(--ink-dim);text-decoration:none;
+    border:1px solid var(--panel-line);border-radius:20px;
+    padding:6px 14px;margin-bottom:14px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .home-btn:hover{color:var(--gold);border-color:var(--gold-dim);}
+  .home-btn .arrow{font-size:13px;}
+
+  .chapters-strip{position:relative;display:grid;grid-template-columns: 200px 1fr;margin-bottom:0;}
+  .chapters-track{position:relative;height:46px;}
+  .chapter-tag{
+    position:absolute;top:0;height:46px;display:flex;flex-direction:column;justify-content:center;
+    padding:0 10px;border-radius:6px 6px 0 0;font-family:'JetBrains Mono',monospace;overflow:hidden;
+  }
+  .chapter-tag .cnum{font-size:9.5px;letter-spacing:1px;opacity:.85;}
+  .chapter-tag .cname{font-size:11px;font-weight:700;color:var(--ink);margin-top:2px;font-family:'Cairo',sans-serif;}
+
+  .axis{position:relative;display:grid;grid-template-columns: 200px 1fr;margin-bottom:2px;}
+  .axis .years{position:relative;height:30px;border-bottom:1px solid var(--panel-line);}
+  .axis .years span{
+    position:absolute;top:0;transform:translateX(50%);
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);font-weight:700;
+  }
+
+  .triggers{position:relative;grid-column: 2 / -1;}
+
+  .board{position:relative;display:grid;grid-template-columns: 200px 1fr;}
+
+  .lane-labels{display:flex;flex-direction:column;}
+  .lane-label{
+    height:150px;display:flex;align-items:center;justify-content:flex-end;
+    padding-inline-end:14px;border-bottom:1px solid var(--panel-line);
+  }
+  .lane-label .tag{font-weight:700;font-size:13px;text-align:right;line-height:1.5;}
+  .lane-label .tag small{
+    display:block;font-family:'JetBrains Mono',monospace;font-weight:400;
+    font-size:9px;color:var(--ink-dim);letter-spacing:0.5px;margin-top:3px;
+  }
+  .lane-label.identity{border-inline-end:4px solid var(--lane-identity);}
+  .lane-label.files{border-inline-end:4px solid var(--lane-files);}
+  .lane-label.gateway{border-inline-end:4px solid var(--lane-gateway);}
+  .lane-label.comms{border-inline-end:4px solid var(--lane-comms);}
+  .lane-label.spatial{border-inline-end:4px solid var(--lane-spatial);}
+
+  .lanes{position:relative;}
+  .lane{
+    position:relative;height:150px;border-bottom:1px solid var(--panel-line);
+    display:flex;align-items:center;padding:0 18px;
+  }
+  .lane.identity{background:var(--lane-identity-bg);}
+  .lane.files{background:var(--lane-files-bg);}
+  .lane.gateway{background:var(--lane-gateway-bg);}
+  .lane.comms{background:var(--lane-comms-bg);}
+  .lane.spatial{background:var(--lane-spatial-bg);}
+
+  .lane-track{position:relative;width:100%;height:2px;background:var(--panel-line);}
+
+  .node{
+    position:absolute;top:50%;transform:translate(50%,-50%);width:176px;
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:6px;
+    padding:8px 10px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,0.35);cursor:default;
+  }
+  .node .period{
+    font-family:'JetBrains Mono',monospace;font-size:8.8px;color:var(--gold);
+    margin-bottom:3px;letter-spacing:0.5px;
+  }
+  .node .name{font-weight:700;font-size:11px;line-height:1.4;}
+  .node.empty{opacity:.5;font-style:italic;}
+  .node.identity{border-top:3px solid var(--lane-identity);}
+  .node.files{border-top:3px solid var(--lane-files);}
+  .node.gateway{border-top:3px solid var(--lane-gateway);}
+  .node.comms{border-top:3px solid var(--lane-comms);}
+  .node.spatial{border-top:3px solid var(--lane-spatial);}
+  .node.holo-node{border-style:dashed;border-color:var(--holo);opacity:.92;}
+  .node.holo-node .period{color:var(--holo);}
+  .dot.holo-dot{background:var(--holo);}
+
+  .qmark{
+    position:absolute;top:50%;transform:translate(50%,-50%);
+    width:11px;height:11px;display:flex;align-items:center;justify-content:center;
+    font-size:11px;cursor:default;z-index:3;
+  }
+  .qmark-label{
+    position:absolute;top:-20px;transform:translateX(50%);
+    font-family:'JetBrains Mono',monospace;font-size:9px;white-space:nowrap;
+  }
+
+  .necessity-banner{
+    display:flex;align-items:center;gap:18px;
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:10px;
+    padding:18px 22px;margin-bottom:26px;
+  }
+  .necessity-banner .nicon{font-size:26px;}
+  .necessity-banner .ntext{font-size:14.5px;font-weight:700;color:var(--ink);}
+  .necessity-banner .ntext small{
+    display:block;font-weight:400;color:var(--ink-dim);font-size:12px;margin-top:4px;line-height:1.7;
+  }
+
+  .terms-note{
+    background:var(--panel);border:1px solid var(--panel-line);border-radius:10px;
+    padding:16px 20px;margin-bottom:20px;font-size:13px;color:var(--ink-dim);line-height:1.9;
+  }
+  .terms-note b{color:var(--ink);}
+  .terms-note{transition:box-shadow .25s;}
+  .terms-note:hover{box-shadow:0 0 16px rgba(211,169,78,0.25);}
+
+  .dot{
+    position:absolute;top:50%;width:9px;height:9px;border-radius:50%;
+    transform:translate(50%,-50%);background:var(--gold);box-shadow:0 0 0 3px var(--bg);
+  }
+
+  .chapter-band{position:absolute;top:0;bottom:0;opacity:.55;pointer-events:none;}
+
+  .trigger-line{position:absolute;top:0;bottom:0;width:0;border-right:1px dashed var(--gold-dim);}
+  .trigger-flag{position:absolute;top:-66px;transform:translateX(50%);width:160px;text-align:center;}
+  .trigger-flag.mini{top:-96px;width:120px;}
+  .trigger-flag.mini .yr{font-size:9.5px;}
+  .trigger-flag.mini .lbl{font-size:9px;}
+  .trigger-flag .yr{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--gold);font-weight:700;}
+  .trigger-flag .lbl{font-size:10.5px;color:var(--ink-dim);line-height:1.3;margin-top:2px;}
+
+  .board-outer{
+    position:relative;border:1px solid var(--panel-line);border-radius:8px;
+    overflow:visible;margin-top:78px;background:var(--panel);
+  }
+
+  .legend{
+    display:flex;gap:20px;flex-wrap:wrap;margin-top:26px;padding-top:18px;
+    border-top:1px solid var(--panel-line);font-size:12px;color:var(--ink-dim);
+  }
+  .legend .item{display:flex;align-items:center;gap:7px;}
+  .legend .swatch{width:12px;height:12px;border-radius:3px;}
+
+  .note{
+    margin-top:22px;background:var(--panel);border:1px solid var(--panel-line);
+    border-radius:8px;padding:16px 20px;font-size:13px;color:var(--ink-dim);line-height:1.9;
+  }
+  .note b{color:var(--ink);}
+  .note code{
+    font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.06);
+    padding:1px 6px;border-radius:4px;color:var(--gold);direction:ltr;display:inline-block;
+  }
+
+  .story-header{margin-top:56px;padding-bottom:14px;border-bottom:2px solid var(--panel-line);}
+  .story-header .eyebrow{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px;letter-spacing:2px;margin-bottom:6px;}
+  .story-header h2{font-size:22px;font-weight:800;margin:0;}
+
+  .story-grid{display:flex;flex-direction:column;gap:18px;margin-top:22px;}
+
+  .story-card{position:relative;background:var(--panel);border:1px solid var(--panel-line);border-radius:10px;overflow:hidden;}
+  .story-card::before{content:"";position:absolute;top:0;bottom:0;right:0;width:5px;}
+  .story-card.sc0::before{background:var(--c0);}
+  .story-card.sc1::before{background:var(--c1);}
+  .story-card.sc2::before{background:var(--c2);}
+  .story-card.sc3::before{background:var(--c3);}
+  .story-card.sc4::before{background:var(--c4);}
+  .story-card.sc5::before{background:var(--c5);}
+  .story-card.sc6::before{background:var(--c6);}
+
+  .story-card-head{
+    padding:18px 22px 14px;border-bottom:1px solid var(--panel-line);
+    display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;
+  }
+  .sc-title-block{max-width:700px;}
+  .sc-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;margin-bottom:6px;}
+  .sc0 .sc-num{color:var(--c0);} .sc1 .sc-num{color:var(--c1);} .sc2 .sc-num{color:var(--c2);}
+  .sc3 .sc-num{color:var(--c3);} .sc4 .sc-num{color:var(--c4);} .sc5 .sc-num{color:var(--c5);}
+  .sc6 .sc-num{color:var(--c6);}
+  .sc-title{font-size:18px;font-weight:800;margin-bottom:6px;}
+  .sc-hook{font-size:13px;color:var(--ink-dim);font-style:italic;line-height:1.8;}
+  .sc-years{
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);font-weight:700;
+    background:rgba(211,169,78,0.08);border:1px solid var(--gold-dim);border-radius:20px;
+    padding:6px 16px;white-space:nowrap;
+  }
+
+  .sc-body{padding:18px 22px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media (max-width:1100px){.sc-body{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:640px){.sc-body{grid-template-columns:1fr;}}
+
+  .sc-domain{background:rgba(255,255,255,0.03);border-radius:8px;padding:12px 14px;border-inline-start:3px solid transparent;}
+  .sc-domain.identity{border-inline-start-color:var(--lane-identity);}
+  .sc-domain.files{border-inline-start-color:var(--lane-files);}
+  .sc-domain.gateway{border-inline-start-color:var(--lane-gateway);}
+  .sc-domain.comms{border-inline-start-color:var(--lane-comms);}
+  .sc-dlabel{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.5px;margin-bottom:5px;}
+  .sc-domain.identity .sc-dlabel{color:var(--lane-identity);}
+  .sc-domain.files .sc-dlabel{color:var(--lane-files);}
+  .sc-domain.gateway .sc-dlabel{color:var(--lane-gateway);}
+  .sc-domain.comms .sc-dlabel{color:var(--lane-comms);}
+  .sc-dtech{font-weight:700;font-size:13px;margin-bottom:5px;line-height:1.4;}
+  .sc-dnote{font-size:12px;color:var(--ink-dim);line-height:1.7;}
+
+  .sc-cross{
+    grid-column:1/-1;
+    background:rgba(211,169,78,0.05);
+    border:1px dashed var(--gold-dim);
+    border-radius:8px;
+    padding:11px 14px;
+    font-size:12px;
+    color:var(--ink-dim);
+    line-height:1.7;
+  }
+  .sc-cross b{color:var(--gold);}
+
+  .sc-foot{padding:13px 22px 18px;font-size:12.5px;color:var(--ink-dim);display:flex;gap:8px;}
+  .sc-foot b{color:var(--ink);}
+
+  .role-strip{
+    display:flex;align-items:center;gap:6px;margin-top:24px;flex-wrap:wrap;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;
+  }
+  .role-strip .role{
+    background:var(--panel);border:1px solid var(--panel-line);color:var(--ink);
+    padding:7px 14px;border-radius:20px;white-space:nowrap;
+  }
+  .role-strip .arrow{color:var(--gold);font-size:15px;}
+
+  /* ===== Full chronological timeline appendix ===== */
+  .full-timeline{margin-top:56px;}
+  .tl-list{position:relative;margin-top:22px;}
+  .tl-list::before{content:"";position:absolute;top:6px;bottom:6px;right:6px;width:1px;background:var(--panel-line);}
+  .tl-item{
+    position:relative;display:flex;gap:16px;align-items:baseline;flex-wrap:wrap;
+    padding:12px 18px 12px 14px;padding-inline-end:30px;border-radius:8px;
+    border-inline-start:3px solid transparent;
+  }
+  .tl-item:nth-child(odd){background:rgba(255,255,255,0.015);}
+  .tl-item .tl-dot{
+    position:absolute;right:2px;top:19px;width:9px;height:9px;border-radius:50%;
+    background:var(--gold);box-shadow:0 0 0 3px var(--bg);z-index:2;
+  }
+  .tl-item .tl-year{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--gold);
+    font-weight:700;min-width:108px;flex-shrink:0;
+  }
+  .tl-item .tl-text{font-size:13px;color:var(--ink-dim);line-height:1.8;flex:1;min-width:200px;}
+  .tl-item .tl-text b{color:var(--ink);font-weight:700;}
+
+  .tl-item.tl-c0{border-inline-start-color:var(--c0);}
+  .tl-item.tl-c0 .tl-dot{background:var(--c0);}
+  .tl-item.tl-c0 .tl-year{color:var(--c0);}
+  .tl-item.tl-c1{border-inline-start-color:var(--c1);}
+  .tl-item.tl-c1 .tl-dot{background:var(--c1);}
+  .tl-item.tl-c1 .tl-year{color:var(--c1);}
+  .tl-item.tl-c2{border-inline-start-color:var(--c2);}
+  .tl-item.tl-c2 .tl-dot{background:var(--c2);}
+  .tl-item.tl-c2 .tl-year{color:var(--c2);}
+  .tl-item.tl-c3{border-inline-start-color:var(--c3);}
+  .tl-item.tl-c3 .tl-dot{background:var(--c3);}
+  .tl-item.tl-c3 .tl-year{color:var(--c3);}
+  .tl-item.tl-c4{border-inline-start-color:var(--c4);}
+  .tl-item.tl-c4 .tl-dot{background:var(--c4);}
+  .tl-item.tl-c4 .tl-year{color:var(--c4);}
+  .tl-item.tl-c5{border-inline-start-color:var(--c5);}
+  .tl-item.tl-c5 .tl-dot{background:var(--c5);}
+  .tl-item.tl-c5 .tl-year{color:var(--c5);}
+  .tl-item.tl-c6{border-inline-start-color:var(--c6);}
+  .tl-item.tl-c6 .tl-dot{background:var(--c6);}
+  .tl-item.tl-c6 .tl-year{color:var(--c6);}
+  .tl-item.tl-holo{border-inline-start-color:var(--holo);}
+  .tl-item.tl-holo .tl-dot{background:var(--holo);}
+  .tl-item.tl-holo .tl-year{color:var(--holo);}
+
+  .tl-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;font-size:11.5px;color:var(--ink-dim);}
+  .tl-legend .li{display:flex;align-items:center;gap:6px;}
+  .tl-legend .sw{width:10px;height:10px;border-radius:3px;}
+
+  @media (max-width: 1300px){
+    .board-outer{overflow-x:auto;}
+    .board, .axis, .chapters-strip{min-width:1500px;}
+  }
+  .lang-en{display:none;}
+  body.is-en .lang-en{display:revert;}
+  body.is-en .lang-ar{display:none;}
+  body.is-en{direction:ltr;}
+
+  .lang-toggle{
+    position:fixed;top:18px;left:18px;z-index:900;
+    display:flex;align-items:center;gap:6px;
+    background:var(--panel);border:1px solid var(--panel-line);
+    border-radius:20px;padding:6px 8px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+    box-shadow:0 6px 18px rgba(0,0,0,0.35);
+  }
+  .lang-toggle button{
+    border:none;background:transparent;color:var(--ink-dim);
+    padding:5px 10px;border-radius:14px;cursor:pointer;
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+    transition:background .15s ease, color .15s ease;
+  }
+  .lang-toggle button.active{background:var(--gold);color:var(--bg);}
+  .lang-toggle button.cl-active{background:#3fae6a;color:#06130b;}
+  body.copy-unlocked{-webkit-user-select:text!important;-moz-user-select:text!important;-ms-user-select:text!important;user-select:text!important;}
+
+  .cl-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(5,12,20,0.75);backdrop-filter:blur(3px);align-items:center;justify-content:center;padding:20px;}
+  .cl-overlay.open{display:flex;}
+  .cl-card{width:100%;max-width:380px;background:var(--panel);border:1px solid var(--panel-line);border-radius:14px;padding:28px 26px;box-shadow:0 24px 60px rgba(0,0,0,0.5);}
+  .cl-eyebrow{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:11px;letter-spacing:2px;margin-bottom:10px;text-align:center;}
+  .cl-title{font-size:17px;font-weight:800;margin:0 0 8px;text-align:center;}
+  .cl-sub{color:var(--ink-dim);font-size:12.5px;text-align:center;margin-bottom:20px;line-height:1.8;}
+  .cl-card label{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-dim);margin-bottom:6px;}
+  .cl-card input{width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--panel-line);border-radius:8px;color:var(--ink);font-family:'Cairo',sans-serif;font-size:14px;padding:10px 13px;margin-bottom:13px;}
+  .cl-card input:focus{outline:none;border-color:var(--gold-dim);}
+  .cl-actions{display:flex;gap:10px;margin-top:4px;}
+  .cl-actions button{flex:1;padding:10px 14px;border-radius:8px;font-family:'Cairo',sans-serif;font-weight:700;font-size:13px;cursor:pointer;}
+  .cl-submit{border:1px solid var(--gold-dim);color:var(--gold);background:rgba(211,169,78,0.08);}
+  .cl-submit:hover{background:var(--gold);color:var(--bg);}
+  .cl-cancel{border:1px solid var(--panel-line);color:var(--ink-dim);background:transparent;}
+  .cl-error{margin-top:12px;font-size:11.5px;padding:8px 11px;border-radius:8px;display:none;background:rgba(224,99,122,0.08);border:1px solid #e0637a;color:#e0637a;}
+</style>
+<style>
+  /* ===== Neon hover glow — matches each element's own accent color ===== */
+  .story-card{transition:box-shadow .25s, transform .18s;}
+  .story-card:hover{transform:translateY(-2px);}
+  .story-card.sc0:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c0) 55%, transparent);}
+  .story-card.sc1:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c1) 55%, transparent);}
+  .story-card.sc2:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c2) 55%, transparent);}
+  .story-card.sc3:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c3) 55%, transparent);}
+  .story-card.sc4:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c4) 55%, transparent);}
+  .story-card.sc5:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c5) 55%, transparent);}
+
+  .node{transition:box-shadow .2s, transform .15s;}
+  .node.win-mini{width:84px;padding:6px 5px;}
+  .node.win-mini .name{font-size:10.5px;line-height:1.35;}
+  .node.win-mini .period{font-size:9px;}
+  .node:hover{transform:scale(1.07);z-index:5;}
+  .node.identity:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-identity) 60%, transparent);}
+  .node.files:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-files) 60%, transparent);}
+  .node.gateway:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-gateway) 60%, transparent);}
+  .node.comms:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-comms) 60%, transparent);}
+
+  .lane-label{transition:box-shadow .2s;}
+  .lane-label.identity:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-identity) 45%, transparent);}
+  .lane-label.files:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-files) 45%, transparent);}
+  .lane-label.gateway:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-gateway) 45%, transparent);}
+  .lane-label.comms:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-comms) 45%, transparent);}
+
+  .metaphor-box{transition:box-shadow .25s;}
+  .metaphor-box:hover{box-shadow:0 0 18px rgba(211,169,78,0.35);}
+  .why8-box{transition:box-shadow .25s;}
+  .why8-box:hover{box-shadow:0 0 18px rgba(211,169,78,0.35);}
+  .encoding-note{transition:box-shadow .25s;}
+  .encoding-note:hover{box-shadow:0 0 18px color-mix(in srgb, var(--lane-identity) 45%, transparent);}
+  .numsys-card{transition:box-shadow .25s, border-color .25s;}
+  .numsys-card:hover{border-color:var(--gold-dim);box-shadow:0 0 16px rgba(211,169,78,0.3);}
+  .letter-cell{transition:box-shadow .25s, border-color .25s;}
+  .letter-cell:hover{border-color:var(--gold-dim);box-shadow:0 0 14px rgba(211,169,78,0.3);}
+  .ethics-card{transition:box-shadow .25s;}
+  .ethics-card:hover{box-shadow:0 0 18px rgba(167,139,250,0.3);}
+  .bridge-card{transition:box-shadow .25s;}
+  .bridge-card:hover{box-shadow:0 0 18px rgba(167,139,250,0.3);}
+  .foresight-link:hover{box-shadow:0 0 20px rgba(139,92,246,0.35);}
+  .chapter-tag{transition:box-shadow .2s, filter .2s;}
+  .chapter-tag:hover{filter:brightness(1.25);box-shadow:0 0 14px rgba(255,255,255,0.15);}
+</style>
+<style>
+  /* ===== Neon hover glow — matches each element's own accent color ===== */
+  .story-card{transition:box-shadow .25s, transform .18s;}
+  .story-card:hover{transform:translateY(-2px);}
+  .story-card.sc0:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c0) 55%, transparent);}
+  .story-card.sc1:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c1) 55%, transparent);}
+  .story-card.sc2:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c2) 55%, transparent);}
+  .story-card.sc3:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c3) 55%, transparent);}
+  .story-card.sc4:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c4) 55%, transparent);}
+  .story-card.sc5:hover{box-shadow:0 0 22px color-mix(in srgb, var(--c5) 55%, transparent);}
+
+  .node{transition:box-shadow .2s, transform .15s;}
+  .node:hover{transform:scale(1.07);z-index:5;}
+  .node.identity:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-identity) 60%, transparent);}
+  .node.files:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-files) 60%, transparent);}
+  .node.gateway:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-gateway) 60%, transparent);}
+  .node.comms:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-comms) 60%, transparent);}
+  .node.spatial:hover{box-shadow:0 0 16px color-mix(in srgb, var(--lane-spatial) 60%, transparent);}
+  .lane-label.spatial:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-spatial) 45%, transparent);}
+  .node.win-mini:hover{transform:scale(1.15);}
+
+  .lane-label{transition:box-shadow .2s;}
+  .lane-label.identity:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-identity) 45%, transparent);}
+  .lane-label.files:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-files) 45%, transparent);}
+  .lane-label.gateway:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-gateway) 45%, transparent);}
+  .lane-label.comms:hover{box-shadow:0 0 14px color-mix(in srgb, var(--lane-comms) 45%, transparent);}
+
+  .metaphor-box{transition:box-shadow .25s;}
+  .metaphor-box:hover{box-shadow:0 0 18px rgba(211,169,78,0.35);}
+  .why8-box{transition:box-shadow .25s;}
+  .why8-box:hover{box-shadow:0 0 18px rgba(211,169,78,0.35);}
+  .encoding-note{transition:box-shadow .25s;}
+  .encoding-note:hover{box-shadow:0 0 18px color-mix(in srgb, var(--lane-identity) 45%, transparent);}
+  .numsys-card{transition:box-shadow .25s, border-color .25s;}
+  .numsys-card:hover{border-color:var(--gold-dim);box-shadow:0 0 16px rgba(211,169,78,0.3);}
+  .letter-cell{transition:box-shadow .25s, border-color .25s;}
+  .letter-cell:hover{border-color:var(--gold-dim);box-shadow:0 0 14px rgba(211,169,78,0.3);}
+  .ethics-card{transition:box-shadow .25s;}
+  .ethics-card:hover{box-shadow:0 0 18px rgba(167,139,250,0.3);}
+  .bridge-card{transition:box-shadow .25s;}
+  .bridge-card:hover{box-shadow:0 0 18px rgba(167,139,250,0.3);}
+  .foresight-link:hover{box-shadow:0 0 20px rgba(139,92,246,0.35);}
+  .chapter-tag{transition:box-shadow .2s, filter .2s;}
+  .chapter-tag:hover{filter:brightness(1.25);box-shadow:0 0 14px rgba(255,255,255,0.15);}
+</style>
+</head>
+
+
+<body>
+
+<div class="lang-toggle">
+  <button id="btnAr" class="active">عربي</button>
+  <button id="btnEn">EN</button>
+  <button id="copyLockBtn" title="حقوق المحتوى — اضغط لإلغاء القيد">🔒</button>
+</div>
+
+<script>
+  if (sessionStorage.getItem("bcs_auth") !== "1") {
+    window.location.href = "index.html";
+  }
+</script>
+<div class="wrap">
+  <a class="home-btn lang-ar" href="index.html"><span class="arrow">→</span> العودة للصفحة الرئيسية</a>
+  <a class="home-btn lang-en" href="index.html"><span class="arrow">→</span> Back to home</a>
+
+  <header>
+    <div class="title-block">
+      <div class="eyebrow">THE COMPUTER // BLUEPRINT NARRATIVE MAP</div>
+      <h1 class="lang-ar">الحاسوب: من الصمام المفرغ إلى الحوسبة المحمولة الذكية</h1>
+      <h1 class="lang-en">The Computer: From the Vacuum Tube to Smart Portable Computing</h1>
+      <div class="subtitle lang-ar">خمسة مسارات متوازية — العتاد، عائلة Windows/DOS، عائلة Linux/Mac، تحوّل الشكل من مكتبي لمحمول، وتقارب GPU/AI — تروي كيف تحوّل "الحاسوب الشخصي" تحديداً عبر 8 محطات. هذه الصفحة لا تكرر تاريخ الحوسبة العام (راجع علوم الحاسوب) ولا نظرية المعالج (راجع البت) — بل تروي الجهاز نفسه فقط.</div>
+      <div class="subtitle lang-en">Five parallel tracks — hardware, the Windows/DOS family, the Linux/Mac family, the desktop-to-laptop form shift, and GPU/AI convergence — tell how "the personal computer" specifically evolved across 8 stations. This page doesn't repeat general computing history (see Computer Science) or processor theory (see The Bit) — it tells the story of the device itself only.</div>
+    </div>
+    <div class="domain-code">
+      <div>SUBJECT: <b>THE COMPUTER</b></div>
+      <div>SPAN: <b>1940s → 2026+</b></div>
+      <div>TRACKS: <b>05</b> · CHAPTERS: <b>08</b> · TRIGGERS: <b>07</b></div>
+    </div>
+  </header>
+
+  <div class="necessity-banner">
+    <div class="nicon">🖥️</div>
+    <div class="ntext lang-ar">
+      من خزانة تملأ غرفة كاملة إلى شريحة تُدير AI محلياً في حضنك
+      <small>هذه الصفحة تروي التقارب — كيف اجتمعت أربع ثورات منفصلة (المعيار الصناعي لـIBM، الواجهة الرسومية لآبل، نظاما تشغيل متنافسان، وتحوّل الشكل الفيزيائي) داخل جهاز واحد على مكتبك ثم في حقيبتك.</small>
+    </div>
+    <div class="ntext lang-en">
+      From a cabinet filling an entire room to a chip running AI locally on your lap
+      <small>This page tells the story of convergence — how four separate revolutions (IBM's industry standard, Apple's graphical interface, two rival operating systems, and a physical form shift) merged inside one device on your desk, then in your bag.</small>
+    </div>
+  </div>
+
+  <div class="board-outer">
+
+    <!-- Chapter banner strip -->
+    <div class="chapters-strip">
+      <div></div>
+      <div class="chapters-track">
+        <div class="chapter-tag" style="right:0%; width:12%; background:color-mix(in srgb, var(--c0) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c0);">CH.00 · 1940s–80</div>
+          <div class="cname lang-ar">جذور ما قبل المعيار</div>
+          <div class="cname lang-en">Roots Before the Standard</div>
+        </div>
+        <div class="chapter-tag" style="right:12%; width:12%; background:color-mix(in srgb, var(--c1) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c1);">CH.01 · 1981</div>
+          <div class="cname lang-ar">IBM PC والمعيار الصناعي</div>
+          <div class="cname lang-en">The IBM PC & Industry Standard</div>
+        </div>
+        <div class="chapter-tag" style="right:24%; width:12%; background:color-mix(in srgb, var(--c2) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c2);">CH.02 · 1984</div>
+          <div class="cname lang-ar">ماكنتوش وثورة الفأرة</div>
+          <div class="cname lang-en">Macintosh & the Mouse Revolution</div>
+        </div>
+        <div class="chapter-tag" style="right:36%; width:12%; background:color-mix(in srgb, var(--c3) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c3);">CH.03 · 1990–92</div>
+          <div class="cname lang-ar">DOS ثم أمر win</div>
+          <div class="cname lang-en">DOS, Then the win Command</div>
+        </div>
+        <div class="chapter-tag" style="right:48%; width:13%; background:color-mix(in srgb, var(--c4) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c4);">CH.04 · 1995–2001</div>
+          <div class="cname lang-ar">عصر Windows الاستهلاكي</div>
+          <div class="cname lang-en">The Consumer Windows Era</div>
+        </div>
+        <div class="chapter-tag" style="right:61%; width:12%; background:color-mix(in srgb, var(--c5) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c5);">CH.05 · 1991–95</div>
+          <div class="cname lang-ar">لينكس يولد</div>
+          <div class="cname lang-en">Linux Is Born</div>
+        </div>
+        <div class="chapter-tag" style="right:73%; width:13%; background:color-mix(in srgb, var(--c6) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c6);">CH.06 · 1991–2008</div>
+          <div class="cname lang-ar">من المكتب إلى الحضن</div>
+          <div class="cname lang-en">From the Desk to Your Lap</div>
+        </div>
+        <div class="chapter-tag" style="right:86%; width:14%; background:color-mix(in srgb, var(--c7) 22%, var(--panel));">
+          <div class="cnum" style="color:var(--c7);">CH.07 · 1999–2026</div>
+          <div class="cname lang-ar">تقارب GPU/AI</div>
+          <div class="cname lang-en">GPU/AI Convergence</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trigger flags row -->
+    <div class="axis" style="margin-top:6px;">
+      <div></div>
+      <div class="triggers" style="grid-column: 2/-1; height:0;">
+        <div class="trigger-flag" style="right:12%;"><div class="yr">1981</div><div class="lbl"><span class="lang-ar">💼 IBM 5150 يضع المعيار</span><span class="lang-en">💼 The IBM 5150 sets the standard</span></div></div>
+        <div class="trigger-flag" style="right:24%;"><div class="yr">1984</div><div class="lbl"><span class="lang-ar">🖱️ ماكنتوش وأول فأرة ناجحة</span><span class="lang-en">🖱️ Macintosh & the first successful mouse</span></div></div>
+        <div class="trigger-flag" style="right:48%;"><div class="yr">1995</div><div class="lbl"><span class="lang-ar">🪟 Windows 95 حدث عالمي</span><span class="lang-en">🪟 Windows 95, a global event</span></div></div>
+        <div class="trigger-flag" style="right:61%;"><div class="yr">1991</div><div class="lbl"><span class="lang-ar">🐧 تورفالدز ينشر لينكس</span><span class="lang-en">🐧 Torvalds releases Linux</span></div></div>
+        <div class="trigger-flag" style="right:73%;"><div class="yr">2008</div><div class="lbl"><span class="lang-ar">✉️ ماك بوك إير من مظروف</span><span class="lang-en">✉️ MacBook Air from an envelope</span></div></div>
+        <div class="trigger-flag" style="right:86%;"><div class="yr">1999</div><div class="lbl"><span class="lang-ar">🎮 أول GPU من NVIDIA</span><span class="lang-en">🎮 The first GPU from NVIDIA</span></div></div>
+      </div>
+    </div>
+
+    <!-- Year axis -->
+    <div class="axis">
+      <div></div>
+      <div class="years">
+        <span style="right:0%;">1940s</span>
+        <span style="right:24%;">1984</span>
+        <span style="right:48%;">1995</span>
+        <span style="right:73%;">2008</span>
+        <span style="right:98%;">2026</span>
+      </div>
+    </div>
+
+    <!-- Board -->
+    <div class="board">
+      <div class="lane-labels">
+        <div class="lane-label identity"><div class="tag"><span class="lang-ar">عتاد الحاسوب</span><span class="lang-en">Computer Hardware</span><small>HARDWARE · VACUUM TUBE → GPU/NPU SILICON</small></div></div>
+        <div class="lane-label files"><div class="tag"><span class="lang-ar">عائلة Windows/DOS</span><span class="lang-en">The Windows/DOS Family</span><small>SOFTWARE · MS-DOS → WINDOWS 11 AI</small></div></div>
+        <div class="lane-label gateway"><div class="tag"><span class="lang-ar">عائلة Linux/Mac</span><span class="lang-en">The Linux/Mac Family</span><small>UNIX-BASED · MAC OS → macOS / LINUX</small></div></div>
+        <div class="lane-label comms"><div class="tag"><span class="lang-ar">من مكتبي إلى محمول</span><span class="lang-en">From Desktop to Laptop</span><small>FORM FACTOR · DESK BOX → ULTRABOOK</small></div></div>
+        <div class="lane-label spatial"><div class="tag"><span class="lang-ar">تقارب GPU/AI</span><span class="lang-en">GPU/AI Convergence</span><small>ACCELERATION · GPU → ON-DEVICE AI</small></div></div>
+      </div>
+
+      <div class="lanes">
+        <!-- HARDWARE lane -->
+        <div class="lane identity">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node identity" style="right:2%;" title="الصمامات المفرغة ثم الترانزستور (1947) يضعان الأساس الفيزيائي لكل ما سيأتي — مُفصَّلان بالكامل في صفحتي علوم الحاسوب والبت، لا يُعاد شرحهما هنا." data-en-title="Vacuum tubes, then the transistor (1947), lay the physical foundation for everything to follow — fully detailed on the Computer Science and Bit pages, not re-explained here.">
+              <div class="period">1940s–1970s</div>
+              <div class="name lang-ar">صمامات ثم ترانزستور<br>(راجع صفحتي البت وعلوم الحاسوب)</div>
+              <div class="name lang-en">Tubes, then the transistor<br>(see The Bit &amp; Computer Science pages)</div>
+            </div>
+            <div class="dot" style="right:14%;"></div>
+            <div class="node identity" style="right:14%;" title="IBM 5150 (أغسطس 1981) يعتمد معالج Intel 8088 بتردد 4.77 ميجاهرتز فقط — متواضع تقنياً، لكن انتشاره الهائل يجعله المعيار الصناعي الفعلي الذي يُقاس عليه كل حاسوب متوافق لاحقاً." data-en-title="The IBM 5150 (August 1981) uses an Intel 8088 processor at just 4.77 MHz — technically modest, but its massive adoption makes it the de facto industry standard every compatible computer is later measured against.">
+              <div class="period">1981</div>
+              <div class="name lang-ar">IBM 5150<br>Intel 8088 بتردد 4.77 ميجاهرتز</div>
+              <div class="name lang-en">IBM 5150<br>Intel 8088 at 4.77 MHz</div>
+            </div>
+            <div class="dot" style="right:26%;"></div>
+            <div class="node identity" style="right:26%;" title="ماكنتوش 128K (يناير 1984) يعتمد معالج Motorola 68000 بتردد 8 ميجاهرتز و128 كيلوبايت ذاكرة فقط — ومعه أول فأرة تُقترن بحاسوب ناجح تجارياً على نطاق واسع." data-en-title="The Macintosh 128K (January 1984) uses a Motorola 68000 processor at 8 MHz with just 128KB of memory — paired with the first mouse bundled with a widely commercially successful computer.">
+              <div class="period">1984</div>
+              <div class="name lang-ar">ماكنتوش 128K<br>Motorola 68000 + أول فأرة ناجحة</div>
+              <div class="name lang-en">Macintosh 128K<br>Motorola 68000 + the first successful mouse</div>
+            </div>
+            <div class="dot" style="right:38%;"></div>
+            <div class="node identity" style="right:38%;" title="معالجات Intel 386 ثم 486 تمنح قوة معالجة كافية لتشغيل واجهة Windows الرسومية بسلاسة مقبولة فوق DOS — عتاد ضروري لنجاح Windows 3.1 لاحقاً." data-en-title="Intel 386, then 486 processors provide enough processing power to run Windows' graphical interface with acceptable smoothness on top of DOS — hardware essential to Windows 3.1's later success.">
+              <div class="period">1990–1992</div>
+              <div class="name lang-ar">معالجات 386 ثم 486<br>تدعم الواجهة الرسومية فوق DOS</div>
+              <div class="name lang-en">386, then 486 processors<br>Enable the GUI on top of DOS</div>
+            </div>
+            <div class="dot" style="right:50%;"></div>
+            <div class="node identity" style="right:50%;" title="معالجات Intel Pentium (منذ 1993) تهيمن على عتاد الحواسيب الشخصية طوال عصر Windows الاستهلاكي بالكامل — أساس مادي واحد يشغّل خمسة إصدارات Windows متتالية." data-en-title="Intel Pentium processors (since 1993) dominate PC hardware throughout the entire consumer Windows era — a single physical foundation running five consecutive Windows versions.">
+              <div class="period">1995–2001</div>
+              <div class="name lang-ar">هيمنة معالجات Pentium<br>عتاد موحّد لكل عصر Windows الاستهلاكي</div>
+              <div class="name lang-en">Pentium processors dominate<br>Unified hardware for the whole consumer-Windows era</div>
+            </div>
+            <div class="dot" style="right:62%;"></div>
+            <div class="node identity empty" style="right:62%;" title="لا عتاد خاص بلينكس؛ يعمل على نفس عتاد PC القياسي المتوافق مع IBM — هذا بالضبط ما يجعله قابلاً للانتشار بلا حاجة لأجهزة مخصصة." data-en-title="No Linux-specific hardware; it runs on the same standard IBM-compatible PC hardware — precisely what makes it spreadable without needing dedicated devices.">
+              <div class="period">1991–1995</div>
+              <div class="name lang-ar">نفس عتاد PC القياسي<br>لا حاجة لأجهزة مخصصة</div>
+              <div class="name lang-en">Same standard PC hardware<br>No dedicated devices needed</div>
+            </div>
+            <div class="dot" style="right:74%;"></div>
+            <div class="node identity" style="right:74%;" title="معالجات محمولة أولى (Intel Mobile Pentium) وبطاريات ليثيوم أيون تحل محل النيكل كادميوم — عتاد أخف استهلاكاً للطاقة يجعل الحوسبة المحمولة الاستهلاكية ممكنة تجارياً لأول مرة." data-en-title="First mobile processors (Intel Mobile Pentium) and lithium-ion batteries replace nickel-cadmium — lower-power hardware makes consumer portable computing commercially viable for the first time.">
+              <div class="period">1991–2008</div>
+              <div class="name lang-ar">معالجات محمولة وبطاريات ليثيوم<br>الحوسبة المحمولة تصبح ممكنة تجارياً</div>
+              <div class="name lang-en">Mobile processors &amp; lithium batteries<br>Portable computing becomes commercially viable</div>
+            </div>
+            <div class="dot namebit-dot" style="right:86%;"></div>
+            <div class="node identity namebit-node" style="right:86%;" title="Intel Core Ultra (اسم رمزي Meteor Lake، ديسمبر 2023) أول معالج حاسوب محمول يحمل NPU مخصصاً لعمليات الذكاء الاصطناعي منفصلاً عن المعالج العام؛ يوازيه Apple Neural Engine على شرائح M — عتاد 'حاسوب AI' يولد رسمياً." data-en-title="Intel Core Ultra (codename Meteor Lake, December 2023) is the first laptop processor to carry a dedicated NPU for AI operations, separate from the general processor; paralleled by Apple's Neural Engine on M-series chips — 'AI PC' hardware is officially born.">
+              <div class="period">2023–2026</div>
+              <div class="name lang-ar">🧠 أول NPU مخصص لحاسوب محمول<br>Intel Core Ultra · Apple Neural Engine</div>
+              <div class="name lang-en">🧠 First dedicated laptop NPU<br>Intel Core Ultra · Apple Neural Engine</div>
+            </div>
+          </div>
+        </div>
+        <!-- WINDOWS/DOS lane -->
+        <div class="lane files">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node files empty" style="right:2%;" title="لا وجود؛ لا حاسوب شخصي بمعناه الحديث بعد." data-en-title="Doesn't exist; no personal computer in the modern sense yet.">
+              <div class="period">—</div>
+              <div class="name lang-ar">لا وجود بعد</div>
+              <div class="name lang-en">Doesn't exist yet</div>
+            </div>
+            <div class="dot" style="right:14%;"></div>
+            <div class="node files" style="right:14%;" title="IBM تتعاقد مع شركة ناشئة اسمها Microsoft (أسسها بيل غيتس وبول ألين قبل 6 سنوات فقط) لتوفير نظام التشغيل؛ PC-DOS/MS-DOS يُطلق مع IBM 5150 — بداية شراكة ستُعيد تشكيل الصناعة بأكملها." data-en-title="IBM contracts a startup called Microsoft (founded by Bill Gates and Paul Allen just 6 years earlier) to supply the operating system; PC-DOS/MS-DOS launches with the IBM 5150 — the start of a partnership that will reshape the entire industry.">
+              <div class="period">1981</div>
+              <div class="name lang-ar">PC-DOS / MS-DOS<br>شراكة IBM-Microsoft تبدأ</div>
+              <div class="name lang-en">PC-DOS / MS-DOS<br>The IBM-Microsoft partnership begins</div>
+            </div>
+            <div class="dot" style="right:26%;"></div>
+            <div class="node files empty" style="right:26%;" title="لا حدث جديد في هذا المسار؛ ماكنتوش يستخدم نظام تشغيله الخاص المنفصل تماماً (راجع مسار Linux/Mac أدناه)، لا DOS." data-en-title="No new event on this track; Macintosh uses its own entirely separate operating system (see the Linux/Mac track below), not DOS.">
+              <div class="period">—</div>
+              <div class="name lang-ar">لا حدث هنا<br>(ماك له مساره الخاص أدناه)</div>
+              <div class="name lang-en">No event here<br>(Mac has its own track below)</div>
+            </div>
+            <div class="dot namebit-dot" style="right:38%;"></div>
+            <div class="node files namebit-node" style="right:38%;" title="Windows 3.1 (أبريل 1992) يُطلق كواجهة رسومية تعمل فوق DOS، لا نظاماً مستقلاً — المستخدم يُقلع الحاسوب في DOS أولاً، ثم يكتب حرفياً الأمر 'win' في سطر الأوامر ليدخل بيئة Windows الرسومية. أكثر من مليون نسخة تُباع خلال أول شهرين فقط." data-en-title="Windows 3.1 (April 1992) launches as a graphical shell running on top of DOS, not a standalone OS — the user boots into DOS first, then literally types the command 'win' at the command line to enter the Windows graphical environment. Over a million copies sell in just the first two months.">
+              <div class="period">1990–1992</div>
+              <div class="name lang-ar">⌨️ أمر "win" يفتح Windows 3.1<br>واجهة فوق DOS، لا نظام مستقل</div>
+              <div class="name lang-en">⌨️ The "win" command opens Windows 3.1<br>A shell over DOS, not a standalone OS</div>
+            </div>
+            <div class="dot" style="right:47%;"></div>
+            <div class="node files win-mini" style="right:47%;" title="Windows 95 (24 أغسطس 1995) يدمج DOS وWindows في نظام واحد، ويقدّم قائمة Start وشريط المهام لأول مرة — إطلاق أشبه بحدث ثقافي عالمي: أكثر من 70 ألف شخص يتابعون الحفل، ومبنى Empire State يضيء بشعاره." data-en-title="Windows 95 (August 24, 1995) merges DOS and Windows into one system, introducing the Start menu and taskbar for the first time — a launch more like a global cultural event: over 70,000 people watch the ceremony, and the Empire State Building lights up with its logo.">
+              <div class="period">1995</div>
+              <div class="name">Windows 95</div>
+            </div>
+            <div class="dot" style="right:53%;"></div>
+            <div class="node files win-mini" style="right:53%;" title="Windows 98 (يونيو 1998، اسم رمزي Memphis) يضيف دعم FAT32 وUSB وDVD، ويدمج متصفح Internet Explorer داخل النظام عبر Active Desktop." data-en-title="Windows 98 (June 1998, codename Memphis) adds FAT32, USB, and DVD support, and integrates the Internet Explorer browser into the system via Active Desktop.">
+              <div class="period">1998</div>
+              <div class="name">Windows 98</div>
+            </div>
+            <div class="dot" style="right:59%;"></div>
+            <div class="node files win-mini" style="right:59%;" title="Windows ME (يونيو 2000، 'Millennium Edition') آخر نظام مبني على نواة DOS/Windows 9x القديمة؛ يُعرف بمشاكل استقرار حادة، ولُقّب ساخراً 'Mistake Edition' — أضعف إصدارات Windows الاستهلاكية على الإطلاق تقييماً." data-en-title="Windows ME (June 2000, 'Millennium Edition') is the last system built on the old DOS/Windows 9x kernel; known for severe stability issues, sarcastically nicknamed the 'Mistake Edition' — the most poorly rated consumer Windows release ever.">
+              <div class="period">2000</div>
+              <div class="name">Windows ME</div>
+            </div>
+            <div class="dot" style="right:65%;"></div>
+            <div class="node files win-mini" style="right:65%;" title="Windows 2000 (فبراير 2000) موجَّه أساساً للأعمال والمؤسسات، مبني على نواة Windows NT الأكثر استقراراً؛ يقدّم خدمات Active Directory لإدارة الشبكات المؤسسية." data-en-title="Windows 2000 (February 2000) is aimed primarily at business and enterprise, built on the more stable Windows NT kernel; introduces Active Directory for enterprise network management.">
+              <div class="period">2000</div>
+              <div class="name">Windows 2000</div>
+            </div>
+            <div class="dot" style="right:71%;"></div>
+            <div class="node files win-mini" style="right:71%;" title="Windows XP (25 أكتوبر 2001) يوحّد أخيراً خطي المستهلكين (9x/ME) والمؤسسات (NT/2000) في نظام واحد مبني على نواة NT المستقرة — يصبح أطول إصدارات Windows عمراً واستخداماً في التاريخ، مستمراً رسمياً حتى 2014." data-en-title="Windows XP (October 25, 2001) finally unifies the consumer line (9x/ME) and the enterprise line (NT/2000) into one system built on the stable NT kernel — becoming the longest-lived, most widely used Windows version in history, officially supported until 2014.">
+              <div class="period">2001</div>
+              <div class="name">Windows XP</div>
+            </div>
+            <div class="dot" style="right:78%;"></div>
+            <div class="node files win-mini" style="right:78%;" title="Windows XP يصبح النظام الافتراضي على أجهزة اللابتوب التجارية المنتشرة (ThinkPad وغيرها) — النظام الذي وحّد سطح المكتب هو نفسه الذي يرافق المستخدم محمولاً لأول مرة على نطاق واسع." data-en-title="Windows XP becomes the default system on widespread commercial laptops (ThinkPad and others) — the system that unified the desktop is the same one now accompanying users portably for the first time at scale.">
+              <div class="period">2001–2008</div>
+              <div class="name lang-ar">XP يرافق المستخدم محمولاً<br>على أجهزة ThinkPad وغيرها</div>
+              <div class="name lang-en">XP goes portable with the user<br>On ThinkPad and other laptops</div>
+            </div>
+            <div class="dot" style="right:86%;"></div>
+            <div class="node files" style="right:86%;" title="Windows 11 يدمج مساعد Copilot المبني على الذكاء الاصطناعي التوليدي مباشرة داخل النظام (2023-2026)، مستفيداً من رقاقات NPU الجديدة لتشغيل بعض ميزاته محلياً بلا اتصال سحابي دائم." data-en-title="Windows 11 integrates the Copilot assistant, built on generative AI, directly into the OS (2023-2026), leveraging new NPU chips to run some features locally without constant cloud connectivity.">
+              <div class="period">2023–2026</div>
+              <div class="name lang-ar">Windows 11 + Copilot AI<br>مدمج بالنظام، مستفيد من NPU</div>
+              <div class="name lang-en">Windows 11 + Copilot AI<br>Built into the OS, leveraging the NPU</div>
+            </div>
+          </div>
+        </div>
+        <!-- LINUX/MAC lane -->
+        <div class="lane gateway">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node gateway empty" style="right:2%;" title="لا وجود بعد." data-en-title="Doesn't exist yet.">
+              <div class="period">—</div>
+              <div class="name lang-ar">لا وجود بعد</div>
+              <div class="name lang-en">Doesn't exist yet</div>
+            </div>
+            <div class="dot" style="right:14%;"></div>
+            <div class="node gateway empty" style="right:14%;" title="لا وجود بعد." data-en-title="Doesn't exist yet.">
+              <div class="period">—</div>
+              <div class="name lang-ar">لا وجود بعد</div>
+              <div class="name lang-en">Doesn't exist yet</div>
+            </div>
+            <div class="dot" style="right:26%;"></div>
+            <div class="node gateway" style="right:26%;" title="نظام تشغيل ماكنتوش الأصلي (لاحقاً 'Mac OS Classic') يُصمَّم بالكامل حول الواجهة الرسومية من الأساس — لا كإضافة فوق نظام نصي، بل كفلسفة تصميم مختلفة جذرياً منذ اليوم الأول." data-en-title="The original Macintosh operating system (later 'Mac OS Classic') is designed entirely around the GUI from the ground up — not as an addition atop a text system, but as a fundamentally different design philosophy from day one.">
+              <div class="period">1984</div>
+              <div class="name lang-ar">نظام ماكنتوش الأصلي<br>مصمَّم حول الواجهة الرسومية من الأساس</div>
+              <div class="name lang-en">The original Macintosh OS<br>Designed around the GUI from the ground up</div>
+            </div>
+            <div class="dot" style="right:38%;"></div>
+            <div class="node gateway empty" style="right:38%;" title="لا حدث جديد؛ ماك يستمر بنظامه المستقل بينما يشتد التنافس مع عالم DOS/Windows." data-en-title="No new event; Mac continues with its independent system while competition with the DOS/Windows world intensifies.">
+              <div class="period">—</div>
+              <div class="name lang-ar">استمرارية Mac OS الكلاسيكي</div>
+              <div class="name lang-en">Classic Mac OS continues</div>
+            </div>
+            <div class="dot" style="right:50%;"></div>
+            <div class="node gateway empty" style="right:50%;" title="ماك يخسر حصة سوقية كبيرة أمام هيمنة Windows الاستهلاكية، رغم استمرار قاعدة مستخدمين وفية في التصميم والإبداع." data-en-title="Mac loses significant market share to Windows' consumer dominance, despite retaining a loyal user base in design and creative work.">
+              <div class="period">1995–2001</div>
+              <div class="name lang-ar">تراجع حصة ماك السوقية<br>أمام هيمنة Windows الاستهلاكية</div>
+              <div class="name lang-en">Mac's market share declines<br>Against Windows' consumer dominance</div>
+            </div>
+            <div class="dot namebit-dot" style="right:62%;"></div>
+            <div class="node gateway namebit-node" style="right:62%;" title="لينوس تورفالدز، طالب فنلندي، يعلن عن نواة Linux (17 سبتمبر 1991) كمشروع هواية مفتوح المصدر بديل لنظام Minix التعليمي. بعد عامين، تتأسس Red Hat (1993) وتطرح أول توزيعة تجارية رسمية (مايو 1995) — لينكس يتحول من مشروع طالب إلى منتج قابل للبيع." data-en-title="Linus Torvalds, a Finnish student, announces the Linux kernel (September 17, 1991) as an open-source hobby project alternative to the educational Minix system. Two years later, Red Hat is founded (1993) and releases the first official commercial distribution (May 1995) — Linux goes from a student project to a sellable product.">
+              <div class="period">1991–1995</div>
+              <div class="name lang-ar">🐧 تورفالدز ينشر Linux (1991)<br>Red Hat يؤسس ويُجاري تجارياً (1993–95)</div>
+              <div class="name lang-en">🐧 Torvalds releases Linux (1991)<br>Red Hat founded, goes commercial (1993–95)</div>
+            </div>
+            <div class="dot" style="right:74%;"></div>
+            <div class="node gateway" style="right:74%;" title="آبل تطلق PowerBook (1991) — أول حاسوب محمول ناجح تجارياً من آبل، يرسّخ عناصر التصميم الحديثة (لوحة تتبّع أمام لوحة المفاتيح)؛ Mac OS X (2001) يعيد بناء نظام ماك بالكامل فوق نواة Unix حقيقية، موحِّداً استقرار Unix بواجهة ماك السهلة." data-en-title="Apple launches the PowerBook (1991) — Apple's first commercially successful laptop, establishing modern design elements (trackpad in front of the keyboard); Mac OS X (2001) completely rebuilds the Mac system on a real Unix kernel, uniting Unix stability with the Mac's easy interface.">
+              <div class="period">1991–2001</div>
+              <div class="name lang-ar">PowerBook (1991)<br>Mac OS X مبني على Unix حقيقي (2001)</div>
+              <div class="name lang-en">PowerBook (1991)<br>Mac OS X built on real Unix (2001)</div>
+            </div>
+            <div class="dot" style="right:86%;"></div>
+            <div class="node gateway" style="right:86%;" title="macOS الحديث يعمل على معالجات Apple Silicon (M-series) بمحرك عصبي (Neural Engine) مدمج؛ توزيعات لينكس الحديثة (Ubuntu وغيرها) تنتشر على أجهزة ARM وبيئات تطوير الذكاء الاصطناعي — كلا المسارين يلتقيان أخيراً عند نفس الوجهة: عتاد AI محلي." data-en-title="Modern macOS runs on Apple Silicon (M-series) processors with a built-in Neural Engine; modern Linux distributions (Ubuntu and others) spread on ARM devices and AI development environments — both tracks finally converge at the same destination: local AI hardware.">
+              <div class="period">2020–2026</div>
+              <div class="name lang-ar">macOS على Apple Silicon<br>لينكس الحديث على ARM/بيئات AI</div>
+              <div class="name lang-en">macOS on Apple Silicon<br>Modern Linux on ARM/AI environments</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DESKTOP TO LAPTOP lane -->
+        <div class="lane comms">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node comms empty" style="right:2%;" title="حواسيب ضخمة تملأ غرفاً كاملة؛ لا مفهوم 'شخصي' أو 'محمول' بعد." data-en-title="Massive computers filling entire rooms; no concept of 'personal' or 'portable' yet.">
+              <div class="period">1940s–1970s</div>
+              <div class="name lang-ar">حواسيب تملأ غرفاً كاملة</div>
+              <div class="name lang-en">Computers filling entire rooms</div>
+            </div>
+            <div class="dot" style="right:14%;"></div>
+            <div class="node comms" style="right:14%;" title="IBM PC يرسّخ 'الصندوق المكتبي' كمعيار الشكل القياسي؛ بالتوازي، Osborne 1 (أبريل 1981) يُسوَّق كأول حاسوب 'محمول' — لكنه بلا بطارية داخلية، ويزن 11 كيلوغراماً؛ 'محمول' بمعنى يمكن نقله، لا استخدامه فعلياً أثناء التنقل." data-en-title="The IBM PC establishes the 'desktop box' as the standard form; in parallel, the Osborne 1 (April 1981) is marketed as the first 'portable' computer — but has no internal battery and weighs 11kg; 'portable' meaning it can be moved, not actually used on the go.">
+              <div class="period">1981</div>
+              <div class="name lang-ar">الصندوق المكتبي معيار IBM<br>Osborne 1: "محمول" بلا بطارية (11كغ)</div>
+              <div class="name lang-en">IBM's desktop box standard<br>Osborne 1: "portable" with no battery (11kg)</div>
+            </div>
+            <div class="dot" style="right:26%;"></div>
+            <div class="node comms" style="right:26%;" title="GRiD Compass (1982) أول حاسوب بتصميم 'الصدفة' (Clamshell) الحقيقي — شاشة تُطوى فوق لوحة المفاتيح، الشكل الذي سيصبح معياراً عالمياً لاحقاً؛ لكنه مخصص للحكومة والجيش والفضاء فقط (وكالة ناسا تستخدمه في برنامج المكوك)، بسعر يصل لمليون دولار — لا استهلاكي إطلاقاً." data-en-title="The GRiD Compass (1982) is the first computer with a true 'clamshell' design — a screen folding over the keyboard, the form that will later become the global standard; but it's exclusive to government, military, and space use (NASA used it in the Shuttle program), priced up to $1 million — not consumer-facing at all.">
+              <div class="period">1982</div>
+              <div class="name lang-ar">GRiD Compass: أول Clamshell حقيقي<br>حكومي/عسكري فقط، لا استهلاكي</div>
+              <div class="name lang-en">GRiD Compass: the first real clamshell<br>Government/military only, not consumer</div>
+            </div>
+            <div class="dot" style="right:38%;"></div>
+            <div class="node comms empty" style="right:38%;" title="لا يزال الحاسوب الشخصي مكتبياً بشكل أساسي للمستهلك العادي؛ محاولات النقل المبكرة (Osborne, GRiD) بقيت هامشية تجارياً." data-en-title="The personal computer remains fundamentally desktop-bound for the average consumer; early portability attempts (Osborne, GRiD) stayed commercially marginal.">
+              <div class="period">1990–1992</div>
+              <div class="name lang-ar">لا يزال مكتبياً أساساً للمستهلك</div>
+              <div class="name lang-en">Still fundamentally desktop for consumers</div>
+            </div>
+            <div class="dot" style="right:50%;"></div>
+            <div class="node comms empty" style="right:50%;" title="عصر Windows الاستهلاكي بأكمله (95 حتى XP) يُستهلَك أساساً على أجهزة مكتبية؛ اللابتوب لا يزال سلعة فاخرة ثانوية لا المعيار السائد." data-en-title="The entire consumer Windows era (95 through XP) is consumed mainly on desktop machines; the laptop remains a secondary luxury item, not the mainstream standard.">
+              <div class="period">1995–2001</div>
+              <div class="name lang-ar">الاستهلاك أساساً مكتبي</div>
+              <div class="name lang-en">Consumption remains mainly desktop</div>
+            </div>
+            <div class="dot" style="right:62%;"></div>
+            <div class="node comms empty" style="right:62%;" title="لا حدث جديد في هذا المسار تحديداً خلال هذه الفترة الزمنية." data-en-title="No new event on this specific track during this period.">
+              <div class="period">1991–1995</div>
+              <div class="name lang-ar">لا حدث جديد هنا</div>
+              <div class="name lang-en">No new event here</div>
+            </div>
+            <div class="dot namebit-dot" style="right:74%;"></div>
+            <div class="node comms namebit-node" style="right:74%;" title="PowerBook (1991) وIBM ThinkPad (أكتوبر 1992) يحققان النجاح التجاري الاستهلاكي الذي فشل فيه Osborne وGRiD — يرسّخان أخيراً 'اللابتوب الحديث' كمعيار مقبول: لوحة تتبّع أمام لوحة المفاتيح، بطارية داخلية فعلية، وزن يقارب 3 كيلوغرامات لا 11." data-en-title="The PowerBook (1991) and IBM ThinkPad (October 1992) achieve the consumer commercial success that Osborne and GRiD failed to — finally establishing the 'modern laptop' as an accepted standard: trackpad in front of the keyboard, a real internal battery, weight near 3kg instead of 11.">
+              <div class="period">1991–1992</div>
+              <div class="name lang-ar">PowerBook وThinkPad<br>اللابتوب الحديث ينجح تجارياً أخيراً</div>
+              <div class="name lang-en">PowerBook &amp; ThinkPad<br>The modern laptop finally succeeds commercially</div>
+            </div>
+            <div class="dot" style="right:86%;"></div>
+            <div class="node comms" style="right:86%;" title="ستيف جوبز يسحب ماك بوك إير من مظروف ورقي عادي على المسرح (15 يناير 2008) — 'أنحف لابتوب في العالم' وقتها، بسمك 1.94 سم في أثخن نقطة؛ يُعيد تعريف معيار 'النحافة' لكل الصناعة اللاحقة." data-en-title="Steve Jobs pulls the MacBook Air out of a plain manila envelope on stage (January 15, 2008) — 'the world's thinnest laptop' at the time, 1.94cm at its thickest point; redefines the 'thinness' standard for the entire industry that follows.">
+              <div class="period">2008</div>
+              <div class="name lang-ar">✉️ ماك بوك إير من مظروف<br>يُعيد تعريف معيار النحافة عالمياً</div>
+              <div class="name lang-en">✉️ MacBook Air from an envelope<br>Redefines the global thinness standard</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GPU/AI CONVERGENCE lane -->
+        <div class="lane spatial">
+          <div class="lane-track">
+            <div class="dot" style="right:2%;"></div>
+            <div class="node spatial empty" style="right:2%;" title="لا وجود بعد." data-en-title="Doesn't exist yet.">
+              <div class="period">—</div>
+              <div class="name lang-ar">لا وجود بعد</div>
+              <div class="name lang-en">Doesn't exist yet</div>
+            </div>
+            <div class="dot" style="right:14%;"></div>
+            <div class="node spatial empty" style="right:14%;" title="بطاقات عرض نصية بسيطة فقط (IBM MDA 1981)؛ لا معالجة رسوميات منفصلة عن المعالج العام." data-en-title="Only simple text display cards (IBM MDA 1981); no graphics processing separate from the general processor.">
+              <div class="period">—</div>
+              <div class="name lang-ar">بطاقات عرض نصية فقط</div>
+              <div class="name lang-en">Text-only display cards</div>
+            </div>
+            <div class="dot" style="right:26%;"></div>
+            <div class="node spatial empty" style="right:26%;" title="لا وجود بعد؛ الرسوميات تُعالَج بالكامل عبر المعالج العام." data-en-title="Doesn't exist yet; graphics are processed entirely through the general processor.">
+              <div class="period">—</div>
+              <div class="name lang-ar">لا وجود بعد</div>
+              <div class="name lang-en">Doesn't exist yet</div>
+            </div>
+            <div class="dot" style="right:38%;"></div>
+            <div class="node spatial empty" style="right:38%;" title="بطاقات VGA (1987 فصاعداً) تحسّن جودة العرض، لكنها لا تزال بلا معالجة رسوميات مستقلة فعلية." data-en-title="VGA cards (1987 onward) improve display quality, but still lack real independent graphics processing.">
+              <div class="period">—</div>
+              <div class="name lang-ar">بطاقات VGA — عرض فقط</div>
+              <div class="name lang-en">VGA cards — display only</div>
+            </div>
+            <div class="dot" style="right:50%;"></div>
+            <div class="node spatial empty" style="right:50%;" title="بطاقات تسريع رسوميات مبكرة (3dfx وغيرها) تظهر لأغراض الألعاب، لكن دون مصطلح 'GPU' الرسمي بعد." data-en-title="Early graphics acceleration cards (3dfx and others) appear for gaming purposes, but without the official term 'GPU' yet.">
+              <div class="period">1995–2001</div>
+              <div class="name lang-ar">مسرّعات رسوميات مبكرة<br>لا مصطلح GPU رسمي بعد</div>
+              <div class="name lang-en">Early graphics accelerators<br>No official "GPU" term yet</div>
+            </div>
+            <div class="dot" style="right:62%;"></div>
+            <div class="node spatial empty" style="right:62%;" title="لا حدث هنا تحديداً." data-en-title="No event here specifically.">
+              <div class="period">—</div>
+              <div class="name lang-ar">لا حدث هنا</div>
+              <div class="name lang-en">No event here</div>
+            </div>
+            <div class="dot namebit-dot" style="right:74%;"></div>
+            <div class="node spatial namebit-node" style="right:74%;" title="NVIDIA تُطلق GeForce 256 (11 أكتوبر 1999)، مُسوَّقة بجرأة كـ'أول GPU في العالم' — أول رقاقة تدمج معالجة التحويل والإضاءة (T&L) داخل شريحة واحدة مستقلة عن المعالج العام. المصطلح نفسه يولد في هذا الإعلان." data-en-title="NVIDIA launches the GeForce 256 (October 11, 1999), boldly marketed as 'the world's first GPU' — the first chip to integrate transform-and-lighting (T&L) processing into a single die separate from the general CPU. The term itself is born in this announcement.">
+              <div class="period">1999</div>
+              <div class="name lang-ar">🎮 أول GPU من NVIDIA<br>GeForce 256 — المصطلح نفسه يولد</div>
+              <div class="name lang-en">🎮 The first GPU from NVIDIA<br>GeForce 256 — the term itself is born</div>
+            </div>
+            <div class="dot namebit-dot" style="right:86%;"></div>
+            <div class="node spatial namebit-node" style="right:86%;" title="Intel Core Ultra (ديسمبر 2023) يجمع للمرة الأولى ثلاث وحدات معالجة متخصصة على شريحة حاسوب محمول واحدة: CPU للمهام العامة، GPU مدمج (Arc) للرسوميات، وNPU مخصص للذكاء الاصطناعي — تقارب كامل يُطلق عليه Intel رسمياً 'عصر حاسوب AI'." data-en-title="Intel Core Ultra (December 2023) combines, for the first time, three specialized processing units on a single laptop chip: a CPU for general tasks, an integrated GPU (Arc) for graphics, and a dedicated NPU for AI — a full convergence Intel officially calls the 'AI PC era'.">
+              <div class="period">2023–2026</div>
+              <div class="name lang-ar">CPU + GPU + NPU على شريحة واحدة<br>"عصر حاسوب AI" رسمياً — Intel</div>
+              <div class="name lang-en">CPU + GPU + NPU on one chip<br>The "AI PC era" officially — Intel</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="legend lang-ar">
+    <div class="item"><span class="swatch" style="background:var(--lane-identity)"></span> عتاد الحاسوب</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-files)"></span> عائلة Windows/DOS</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-gateway)"></span> عائلة Linux/Mac</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-comms)"></span> من مكتبي إلى محمول</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-spatial)"></span> تقارب GPU/AI</div>
+    <div class="item">┄┄ خط ذهبي متقطع = حدث تحوّل محوري (لاحظ كثافة عقد Windows 95→XP في مسار واحد)</div>
+    <div class="item">💡 مرّر المؤشر فوق أي بطاقة لقراءة السياق الكامل</div>
+  </div>
+  <div class="legend lang-en">
+    <div class="item"><span class="swatch" style="background:var(--lane-identity)"></span> Computer Hardware</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-files)"></span> The Windows/DOS Family</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-gateway)"></span> The Linux/Mac Family</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-comms)"></span> From Desktop to Laptop</div>
+    <div class="item"><span class="swatch" style="background:var(--lane-spatial)"></span> GPU/AI Convergence</div>
+    <div class="item">┄┄ Dashed gold line = a pivotal turning point (note the density of Windows 95→XP nodes on one track)</div>
+    <div class="item">💡 Hover over any card to read the full context</div>
+  </div>
+
+  <div class="note lang-ar">
+    <b>لإعادة بنائه في Microsoft Visio:</b> نمط <b>Swimlane Timeline</b> بخمسة مسارات — استخدم <code>File → New → Schedule → Timeline</code>.
+    لاحظ أن مسار "Windows/DOS" يحتوي على 5 عقد متقاربة جداً ضمن نطاق زمني ضيق (1995–2001) بينما بقية المسارات تحتوي عقدة واحدة فقط لنفس النطاق — كثافة متعمّدة تعكس وتيرة إصدار Windows الاستهلاكي السريعة وقتها.
+    <br><br>
+    <b>ملاحظة تقاطع متعمّد:</b> هذه الصفحة تتقاطع عمداً مع علوم الحاسوب (تأسيس IBM/Apple/Microsoft)، البت (نظرية المعالج العامة)، والهاتف (تقارب NPU/GPU للأجهزة المحمولة) — الزاوية هنا محصورة بجهاز الحاسوب الشخصي (مكتبي/محمول) تحديداً، لا الشبكة ولا الهاتف ولا الحوسبة العامة.
+  </div>
+  <div class="note lang-en">
+    <b>To rebuild this in Microsoft Visio:</b> a five-track <b>Swimlane Timeline</b> pattern — use <code>File → New → Schedule → Timeline</code>.
+    Note that the "Windows/DOS" track contains 5 tightly clustered nodes within a narrow time range (1995–2001), while every other track has just one node for the same range — a deliberate density reflecting the fast pace of consumer Windows releases at the time.
+    <br><br>
+    <b>Deliberate cross-reference note:</b> this page intentionally intersects with Computer Science (IBM/Apple/Microsoft founding), The Bit (general processor theory), and Mobile Phone (NPU/GPU convergence for portable devices) — the angle here is confined specifically to the personal computer device (desktop/laptop), not the network, the phone, or general computing.
+  </div>
+
+  <div class="story-header">
+    <div class="eyebrow">FULL NARRATIVE // <span class="lang-ar">كل محطة بتفاصيلها الكاملة</span><span class="lang-en">Every station, in full detail</span></div>
+    <h2 class="lang-ar">الرحلة الكاملة: من صندوق مكتبي إلى شريحة تفكّر في حضنك</h2>
+    <h2 class="lang-en">The Full Journey: From a Desktop Box to a Chip Thinking in Your Lap</h2>
+  </div>
+
+  <div class="role-strip lang-ar">
+    <div class="role">💼 موظف يستقبل أول صندوق IBM مكتبي</div>
+    <span class="arrow">←</span>
+    <div class="role">🖱️ مصمم يلمس فأرة لأول مرة على ماكنتوش</div>
+    <span class="arrow">←</span>
+    <div class="role">⌨️ مستخدم يكتب "win" ليدخل عالماً رسومياً</div>
+    <span class="arrow">←</span>
+    <div class="role">🐧 مطوّر يبني نظاماً بديلاً مجانياً بالكامل</div>
+    <span class="arrow">←</span>
+    <div class="role">🧠 مسافر يشغّل مساعداً ذكياً محلياً في حقيبته</div>
+  </div>
+  <div class="role-strip lang-en">
+    <div class="role">💼 An employee receiving the first IBM desktop box</div>
+    <span class="arrow">←</span>
+    <div class="role">🖱️ A designer touching a mouse for the first time on a Macintosh</div>
+    <span class="arrow">←</span>
+    <div class="role">⌨️ A user typing "win" to enter a graphical world</div>
+    <span class="arrow">←</span>
+    <div class="role">🐧 A developer building an entirely free alternative system</div>
+    <span class="arrow">←</span>
+    <div class="role">🧠 A traveler running a local AI assistant in their bag</div>
+  </div>
+
+  <div class="story-grid">
+
+    <div class="story-card sc0">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 00 // ROOTS BEFORE THE STANDARD</div>
+          <div class="sc-title lang-ar">جذور ما قبل المعيار: قبل أن يكون هناك "حاسوب شخصي"</div>
+          <div class="sc-title lang-en">Roots Before the Standard: Before There Was a "Personal Computer"</div>
+          <div class="sc-hook lang-ar">قبل أن يجلس حاسوب على مكتب أي شخص، كانت الحوسبة امتيازاً لمؤسسات ضخمة فقط — غرف كاملة، لا صناديق مكتبية.</div>
+          <div class="sc-hook lang-en">Before a computer sat on anyone's desk, computing was a privilege reserved for massive institutions only — whole rooms, not desktop boxes.</div>
+        </div>
+        <div class="sc-years">1940s — 1980</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech lang-ar">صمامات ثم ترانزستور</div>
+          <div class="sc-dtech lang-en">Tubes, then the transistor</div>
+          <div class="sc-dnote lang-ar">التطور الفيزيائي الكامل مُفصَّل في صفحتي "البت" و"علوم الحاسوب" — هنا فقط نقطة الانطلاق التي ستُبنى عليها كل محطات هذه الصفحة.</div>
+          <div class="sc-dnote lang-en">The full physical evolution is detailed on "The Bit" and "Computer Science" pages — here only the starting point every station on this page builds on.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">SOFTWARE</div>
+          <div class="sc-dtech lang-ar">لا وجود بعد</div>
+          <div class="sc-dtech lang-en">Doesn't exist yet</div>
+          <div class="sc-dnote lang-ar">لا حاسوب شخصي بمعناه الحديث؛ لا حاجة لنظام تشغيل استهلاكي.</div>
+          <div class="sc-dnote lang-en">No personal computer in the modern sense; no need for a consumer operating system.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">FORM FACTOR</div>
+          <div class="sc-dtech lang-ar">حواسيب تملأ غرفاً</div>
+          <div class="sc-dtech lang-en">Room-filling computers</div>
+          <div class="sc-dnote lang-ar">لا مفهوم "شخصي" أو "محمول" على الإطلاق؛ الحوسبة امتياز مؤسسي بحت.</div>
+          <div class="sc-dnote lang-en">No concept of "personal" or "portable" at all; computing is a purely institutional privilege.</div>
+        </div>
+      </div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> مهندس يمشي بين صفوف من الخزانات المعدنية الضخمة في غرفة مكيّفة بعناية — لا يتخيّل أن كل هذه القوة الحاسوبية ستنكمش يوماً إلى صندوق يجلس على مكتب واحد.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> an engineer walks between rows of massive metal cabinets in a carefully cooled room — unable to imagine all this computing power will one day shrink into a single box on one desk.</div>
+    </div>
+
+    <div class="story-card sc1">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 01 // THE IBM PC & INDUSTRY STANDARD</div>
+          <div class="sc-title lang-ar">IBM PC والمعيار الصناعي: صندوق يُعيد تعريف "الحاسوب"</div>
+          <div class="sc-title lang-en">The IBM PC & Industry Standard: A Box That Redefines "Computer"</div>
+          <div class="sc-hook lang-ar">شركة كانت تصنّع آلات كتابة وحواسيب مركزية ضخمة تراهن فجأة على صندوق صغير يجلس على مكتب موظف عادي — وتربح الرهان بشكل لم تتوقعه.</div>
+          <div class="sc-hook lang-en">A company that made typewriters and massive mainframes suddenly bets on a small box sitting on an ordinary employee's desk — and wins the bet in ways it never expected.</div>
+        </div>
+        <div class="sc-years">1981</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech">IBM 5150</div>
+          <div class="sc-dnote lang-ar">معالج Intel 8088 بتردد 4.77 ميجاهرتز فقط — متواضع حتى بمقاييس عصره، لكن انتشاره التجاري الهائل يجعله المعيار الفعلي الذي تُقاس عليه كل الأجهزة "المتوافقة" لاحقاً.</div>
+          <div class="sc-dnote lang-en">Intel 8088 processor at just 4.77 MHz — modest even by the standards of its era, but its massive commercial spread makes it the de facto standard every subsequent "compatible" machine is measured against.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">SOFTWARE</div>
+          <div class="sc-dtech">PC-DOS / MS-DOS</div>
+          <div class="sc-dnote lang-ar">IBM تتعاقد مع شركة ناشئة صغيرة اسمها Microsoft (أسسها بيل غيتس وبول ألين قبل 6 سنوات فقط) — قرار سيُعيد تشكيل صناعة البرمجيات بأكملها لعقود قادمة.</div>
+          <div class="sc-dnote lang-en">IBM contracts a small startup called Microsoft (founded by Bill Gates and Paul Allen just 6 years earlier) — a decision that will reshape the entire software industry for decades to come.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">FORM FACTOR</div>
+          <div class="sc-dtech lang-ar">الصندوق المكتبي القياسي</div>
+          <div class="sc-dtech lang-en">The standard desktop box</div>
+          <div class="sc-dnote lang-ar">يُرسِّخ "الصندوق المكتبي" كشكل معياري؛ بالتوازي، Osborne 1 يُسوَّق كـ"محمول" رغم وزنه 11 كيلوغراماً وغياب أي بطارية داخلية.</div>
+          <div class="sc-dnote lang-en">Establishes the "desktop box" as a standard form; in parallel, the Osborne 1 is marketed as "portable" despite weighing 11kg with no internal battery.</div>
+        </div>
+      </div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> مدير مكتب يوقّع طلب شراء لعشرات "أجهزة IBM الشخصية" الجديدة — لا يدرك أن هذا القرار الإداري الروتيني سيصبح لاحقاً نقطة تحوّل يُدرَّس تاريخها في كتب إدارة الأعمال.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> an office manager signs a purchase order for dozens of the new "IBM Personal Computers" — unaware this routine administrative decision will later become a turning point taught in business history books.</div>
+    </div>
+
+    <div class="story-card sc2">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 02 // MACINTOSH & THE MOUSE REVOLUTION</div>
+          <div class="sc-title lang-ar">ماكنتوش وثورة الفأرة: الحاسوب "للبقية منا"</div>
+          <div class="sc-title lang-en">Macintosh & the Mouse Revolution: The Computer "For the Rest of Us"</div>
+          <div class="sc-hook lang-ar">إعلان يُبث مرة واحدة فقط خلال السوبر بول — لكنه يُغيّر إلى الأبد فكرة أن الحاسوب يجب أن يُكتب له الأوامر بدل النقر عليه.</div>
+          <div class="sc-hook lang-en">A commercial aired just once during the Super Bowl — but it forever changes the idea that a computer must be commanded by typing instead of clicking.</div>
+        </div>
+        <div class="sc-years">1984</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech">ماكنتوش 128K</div>
+          <div class="sc-dnote lang-ar">معالج Motorola 68000 بتردد 8 ميجاهرتز، 128 كيلوبايت ذاكرة فقط — ضيق شديد جعل الجهاز بطيئاً، لكنه كافٍ لتشغيل أول واجهة رسومية ناجحة تجارياً على نطاق واسع.</div>
+          <div class="sc-dnote lang-en">Motorola 68000 processor at 8 MHz, just 128KB of memory — severe constraints that made the device slow, but enough to run the first widely commercially successful graphical interface.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">SOFTWARE</div>
+          <div class="sc-dtech lang-ar">نظام ماكنتوش الأصلي</div>
+          <div class="sc-dtech lang-en">The original Macintosh OS</div>
+          <div class="sc-dnote lang-ar">مُصمَّم بالكامل حول الفأرة والأيقونات والنوافذ من الأساس، لا كإضافة فوق نظام نصي موجود مسبقاً — فلسفة تصميم مختلفة جذرياً عن عالم DOS.</div>
+          <div class="sc-dnote lang-en">Designed entirely around the mouse, icons, and windows from the ground up, not as an addition atop a pre-existing text system — a fundamentally different design philosophy from the DOS world.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">FORM FACTOR</div>
+          <div class="sc-dtech lang-ar">تصميم "الكل في واحد"</div>
+          <div class="sc-dtech lang-en">"All-in-one" design</div>
+          <div class="sc-dnote lang-ar">شاشة ووحدة معالجة مدمجتان في هيكل عمودي واحد — لا يزال مكتبياً بالكامل، لكن أكثر إحكاماً وتناسقاً بصرياً من صناديق IBM المتوافقة.</div>
+          <div class="sc-dnote lang-en">Screen and processing unit merged into one vertical chassis — still fully desktop-bound, but more compact and visually cohesive than IBM-compatible boxes.</div>
+        </div>
+      </div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> مستخدم جديد يحرّك الفأرة بتردد، يشاهد سهماً على الشاشة يتبع حركة يده فعلياً لأول مرة في حياته — لحظة صغيرة ستُصبح، خلال عقد واحد، البديهية التي لا يتذكّر أحد أنها كانت يوماً غريبة.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> a new user hesitantly moves the mouse, watching an arrow on screen actually follow their hand's movement for the first time in their life — a small moment that, within a decade, becomes the given nobody remembers was ever strange.</div>
+    </div>
+
+    <div class="story-card sc3">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 03 // DOS, THEN THE win COMMAND</div>
+          <div class="sc-title lang-ar">DOS ثم أمر win: الطريق إلى الواجهة الرسومية يمر بسطر أوامر</div>
+          <div class="sc-title lang-en">DOS, Then the win Command: The Road to the GUI Runs Through a Command Line</div>
+          <div class="sc-hook lang-ar">قبل أن تلمس فأرة أو تنقر أيقونة، على المستخدم أن يكتب أولاً — حرفياً — ثلاثة أحرف صغيرة على شاشة سوداء: win.</div>
+          <div class="sc-hook lang-en">Before touching a mouse or clicking an icon, the user must first — literally — type three small letters on a black screen: win.</div>
+        </div>
+        <div class="sc-years">1990 — 1992</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech lang-ar">معالجات 386 ثم 486</div>
+          <div class="sc-dtech lang-en">386, then 486 processors</div>
+          <div class="sc-dnote lang-ar">قوة معالجة كافية أخيراً لتشغيل واجهة رسومية فوق DOS بسلاسة مقبولة — عتاد ضروري كان غائباً في محاولات Windows الأولى الفاشلة نسبياً (Windows 1.0، 1985).</div>
+          <div class="sc-dnote lang-en">Finally enough processing power to run a GUI on top of DOS with acceptable smoothness — hardware that was missing during Windows' relatively unsuccessful early attempts (Windows 1.0, 1985).</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">SOFTWARE</div>
+          <div class="sc-dtech">Windows 3.1</div>
+          <div class="sc-dnote lang-ar">يُطلق أبريل 1992 كواجهة رسومية (Shell) تعمل فوق DOS، لا نظاماً مستقلاً بذاته — يُقلع الحاسوب في DOS أولاً، ثم يكتب المستخدم حرفياً 'win' في سطر الأوامر ليدخل عالم Windows الرسومي. أكثر من مليون نسخة تُباع خلال أول شهرين فقط.</div>
+          <div class="sc-dnote lang-en">Launches April 1992 as a graphical shell running on top of DOS, not a standalone OS in its own right — the computer boots into DOS first, then the user literally types 'win' at the command line to enter the graphical Windows world. Over a million copies sell in just the first two months.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">FORM FACTOR</div>
+          <div class="sc-dtech lang-ar">لا يزال مكتبياً أساساً</div>
+          <div class="sc-dtech lang-en">Still fundamentally desktop</div>
+          <div class="sc-dnote lang-ar">محاولات الحوسبة المحمولة (Osborne, GRiD) لا تزال هامشية تجارياً؛ الغالبية العظمى من مستخدمي Windows 3.1 يجلسون أمام صندوق مكتبي.</div>
+          <div class="sc-dnote lang-en">Portable computing attempts (Osborne, GRiD) remain commercially marginal; the vast majority of Windows 3.1 users sit in front of a desktop box.</div>
+        </div>
+      </div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> موظف مبتدئ يحفظ عن ظهر قلب تعليمة زميله: "اكتب C:\WINDOWS ثم اضغط Enter، ثم اكتب win واضغط Enter مرة أخرى" — طقس بدء تشغيل يومي سيختفي كلياً خلال أقل من عقد واحد فقط.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> a new employee memorizes a colleague's instruction word for word: "type C:\WINDOWS, hit Enter, then type win and hit Enter again" — a daily startup ritual that will vanish entirely within less than a decade.</div>
+    </div>
+    <div class="story-card sc4">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 04 // THE CONSUMER WINDOWS ERA</div>
+          <div class="sc-title lang-ar">عصر Windows الاستهلاكي: خمسة إصدارات في ست سنوات</div>
+          <div class="sc-title lang-en">The Consumer Windows Era: Five Versions in Six Years</div>
+          <div class="sc-hook lang-ar">إطلاق يشبه حدثاً ثقافياً عالمياً — مبنى Empire State يضيء بشعار نظام تشغيل، وطوابير تمتد خارج المتاجر عند منتصف الليل.</div>
+          <div class="sc-hook lang-en">A launch that feels like a global cultural event — the Empire State Building glows with an operating system's logo, and lines stretch outside stores at midnight.</div>
+        </div>
+        <div class="sc-years">1995 — 2001</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech lang-ar">هيمنة معالجات Pentium</div>
+          <div class="sc-dtech lang-en">Pentium processors dominate</div>
+          <div class="sc-dnote lang-ar">عتاد Intel Pentium الموحّد يشغّل خمسة إصدارات Windows متتالية — استقرار عتادي نسبي وسط تسارع برمجي محموم.</div>
+          <div class="sc-dnote lang-en">Unified Intel Pentium hardware runs five consecutive Windows versions — relative hardware stability amid frantic software acceleration.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">SOFTWARE</div>
+          <div class="sc-dtech lang-ar">95 → 98 → ME → 2000 → XP</div>
+          <div class="sc-dtech lang-en">95 → 98 → ME → 2000 → XP</div>
+          <div class="sc-dnote lang-ar"><b>Windows 95</b> (أغسطس) يدمج DOS وWindows، يقدّم قائمة Start. <b>98</b> (يونيو 1998) يضيف USB وDVD. <b>ME</b> (يونيو 2000، آخر نظام على نواة DOS القديمة) يُلقَّب ساخراً "Mistake Edition". <b>2000</b> (فبراير) موجَّه للمؤسسات على نواة NT الأكثر استقراراً. <b>XP</b> (أكتوبر 2001) يوحّد أخيراً خطي المستهلكين والمؤسسات، ليصبح أطول إصدارات Windows عمراً في التاريخ.</div>
+          <div class="sc-dnote lang-en"><b>Windows 95</b> (August) merges DOS and Windows, introduces the Start menu. <b>98</b> (June 1998) adds USB and DVD support. <b>ME</b> (June 2000, the last system on the old DOS kernel) is sarcastically nicknamed the "Mistake Edition." <b>2000</b> (February) targets enterprise on the more stable NT kernel. <b>XP</b> (October 2001) finally unifies the consumer and enterprise lines, becoming the longest-lived Windows version in history.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">FORM FACTOR</div>
+          <div class="sc-dtech lang-ar">الاستهلاك أساساً مكتبي</div>
+          <div class="sc-dtech lang-en">Consumption remains mainly desktop</div>
+          <div class="sc-dnote lang-ar">اللابتوب لا يزال سلعة فاخرة ثانوية طوال هذا العصر بأكمله؛ الغالبية العظمى من مستخدمي Windows 95-XP يجلسون أمام صناديق مكتبية.</div>
+          <div class="sc-dnote lang-en">The laptop remains a secondary luxury item throughout this entire era; the vast majority of Windows 95-XP users sit in front of desktop boxes.</div>
+        </div>
+      </div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> عائلة تتجمّع أمام حاسوبها المكتبي الجديد في عيد الميلاد، يظهر شعار Windows XP الأزرق والأخضر المألوف على الشاشة — نظام سيرافق أجهزة الكمبيوتر حول العالم لأكثر من 13 عاماً قادماً.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> a family gathers around their new desktop computer on Christmas morning, the familiar blue-and-green Windows XP logo appearing on screen — a system that will accompany computers worldwide for more than 13 years to come.</div>
+    </div>
+
+    <div class="story-card sc5">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 05 // LINUX IS BORN</div>
+          <div class="sc-title lang-ar">لينكس يولد: طالب فنلندي يكتب بديلاً مجانياً</div>
+          <div class="sc-title lang-en">Linux Is Born: A Finnish Student Writes a Free Alternative</div>
+          <div class="sc-hook lang-ar">"لن يكون كبيراً أو احترافياً مثل GNU" يكتب طالب متواضع في رسالته الأولى — نواة نظام تشغيل ستُشغِّل لاحقاً أغلب خوادم الإنترنت في العالم.</div>
+          <div class="sc-hook lang-en">"It won't be big and professional like GNU," a modest student writes in his first post — a kernel that will later run most of the world's internet servers.</div>
+        </div>
+        <div class="sc-years">1991 — 1995</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech lang-ar">نفس عتاد PC القياسي</div>
+          <div class="sc-dtech lang-en">Same standard PC hardware</div>
+          <div class="sc-dnote lang-ar">لا حاجة لأي جهاز مخصص؛ لينكس يعمل مباشرة على نفس عتاد IBM المتوافق المنتشر أصلاً — هذا بالضبط ما يجعل انتشاره ممكناً بلا استثمار عتادي إضافي.</div>
+          <div class="sc-dnote lang-en">No dedicated device needed; Linux runs directly on the same already-widespread IBM-compatible hardware — precisely what makes its spread possible with no extra hardware investment.</div>
+        </div>
+        <div class="sc-domain files">
+          <div class="sc-dlabel">SOFTWARE</div>
+          <div class="sc-dtech lang-ar">نواة Linux ثم Red Hat</div>
+          <div class="sc-dtech lang-en">The Linux kernel, then Red Hat</div>
+          <div class="sc-dnote lang-ar">لينوس تورفالدز يعلن عن نواة Linux (17 سبتمبر 1991) كمشروع هواية مفتوح المصدر بديل لنظام Minix التعليمي المحدود. بعد عامين تتأسس Red Hat (1993)، وتطرح أول توزيعة تجارية رسمية (مايو 1995) — لينكس يتحول من مشروع طالب هامشي إلى منتج قابل للبيع فعلياً.</div>
+          <div class="sc-dnote lang-en">Linus Torvalds announces the Linux kernel (September 17, 1991) as an open-source hobby project alternative to the limited educational Minix system. Two years later Red Hat is founded (1993), releasing the first official commercial distribution (May 1995) — Linux goes from a marginal student project to an actually sellable product.</div>
+        </div>
+        <div class="sc-domain comms">
+          <div class="sc-dlabel">FORM FACTOR</div>
+          <div class="sc-dtech lang-ar">لا حدث جديد هنا</div>
+          <div class="sc-dtech lang-en">No new event here</div>
+          <div class="sc-dnote lang-ar">لينكس محايد تماماً تجاه الشكل الفيزيائي للجهاز؛ يعمل على أي عتاد متوافق، مكتبياً كان أو محمولاً لاحقاً.</div>
+          <div class="sc-dnote lang-en">Linux is entirely agnostic to the device's physical form; it runs on any compatible hardware, desktop or later laptop alike.</div>
+        </div>
+      </div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> تورفالدز ينشر رسالة متواضعة على مجموعة أخبار جامعية يطلب فيها ملاحظات على "هواية" برمجية بلا أي طموح تجاري معلن — لا يتخيّل أن هذا الكود سيُشغِّل يوماً أغلب البنية التحتية الرقمية للعالم.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> Torvalds posts a modest message on a university newsgroup asking for feedback on a software "hobby" with no stated commercial ambition — unable to imagine this code will one day run most of the world's digital infrastructure.</div>
+    </div>
+
+    <div class="story-card sc6">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 06 // FROM THE DESK TO YOUR LAP</div>
+          <div class="sc-title lang-ar">من المكتب إلى الحضن: محاولات فاشلة قبل النجاح الحقيقي</div>
+          <div class="sc-title lang-en">From the Desk to Your Lap: Failed Attempts Before Real Success</div>
+          <div class="sc-hook lang-ar">"أول محمول" ليس دائماً الجهاز الذي نجح — Osborne وGRiD سبقا PowerBook وThinkPad بعقد كامل، لكنهما فشلا تجارياً حيث نجح لاحقاً غيرهما.</div>
+          <div class="sc-hook lang-en">The "first portable" isn't always the device that succeeded — Osborne and GRiD preceded PowerBook and ThinkPad by a full decade, but failed commercially where others later succeeded.</div>
+        </div>
+        <div class="sc-years">1981 — 2008</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech lang-ar">معالجات محمولة وبطاريات ليثيوم</div>
+          <div class="sc-dtech lang-en">Mobile processors & lithium batteries</div>
+          <div class="sc-dnote lang-ar">Intel Mobile Pentium وبطاريات ليثيوم أيون تحل محل النيكل كادميوم الثقيل — عتاد أخف استهلاكاً للطاقة يجعل الحوسبة المحمولة الاستهلاكية ممكنة تجارياً فعلياً لأول مرة.</div>
+          <div class="sc-dnote lang-en">Intel Mobile Pentium and lithium-ion batteries replace heavy nickel-cadmium — lower-power hardware makes consumer portable computing commercially viable for the first time.</div>
+        </div>
+        <div class="sc-domain gateway">
+          <div class="sc-dlabel">FORM FACTOR TIMELINE</div>
+          <div class="sc-dtech lang-ar">من الفشل إلى النجاح إلى النحافة</div>
+          <div class="sc-dtech lang-en">From failure, to success, to thinness</div>
+          <div class="sc-dnote lang-ar"><b>Osborne 1</b> (1981، 11كغ، بلا بطارية) و<b>GRiD Compass</b> (1982، أول تصميم Clamshell حقيقي، لكن حكومي/عسكري فقط بسعر يصل مليون دولار) يفشلان تجارياً كمنتج استهلاكي. <b>PowerBook</b> (1991) و<b>ThinkPad</b> (أكتوبر 1992) يحققان أخيراً النجاح التجاري الذي ينقصهما، مرسِّخَين شكل اللابتوب الحديث. <b>ماك بوك إير</b> (يناير 2008) يُعيد تعريف معيار "النحافة" حين يسحبه ستيف جوبز من مظروف ورقي على المسرح.</div>
+          <div class="sc-dnote lang-en">The <b>Osborne 1</b> (1981, 11kg, no battery) and <b>GRiD Compass</b> (1982, the first true clamshell design, but government/military-only at up to $1 million) fail commercially as consumer products. The <b>PowerBook</b> (1991) and <b>ThinkPad</b> (October 1992) finally achieve the commercial success they lacked, establishing the modern laptop form. The <b>MacBook Air</b> (January 2008) redefines the "thinness" standard when Steve Jobs pulls it from a manila envelope on stage.</div>
+        </div>
+      </div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد الإغلاق:</b> رائد فضاء يستخدم GRiD Compass على متن مكوك فضائي عام 1985 — جهاز متطور تقنياً لكنه بعيد تماماً عن متناول أي مستهلك عادي؛ سيمر عقد كامل قبل أن يصل شكله نفسه لحقيبة أي موظف مكتبي.</div>
+      <div class="sc-foot lang-en">🎬 <b>Closing scene:</b> an astronaut uses a GRiD Compass aboard a space shuttle in 1985 — technically advanced but completely out of reach for any ordinary consumer; a full decade will pass before that very form reaches any office worker's bag.</div>
+    </div>
+
+    <div class="story-card sc7">
+      <div class="story-card-head">
+        <div class="sc-title-block">
+          <div class="sc-num">المحطة 07 // GPU/AI CONVERGENCE</div>
+          <div class="sc-title lang-ar">تقارب GPU/AI: ثلاث شرائح تصبح واحدة</div>
+          <div class="sc-title lang-en">GPU/AI Convergence: Three Chips Become One</div>
+          <div class="sc-hook lang-ar">من بطاقة عرض نصية بسيطة قبل أربعة عقود، إلى شريحة واحدة تُدير الرسوميات والذكاء الاصطناعي معاً محلياً — بلا اتصال إنترنت دائم.</div>
+          <div class="sc-hook lang-en">From a simple text display card four decades ago, to a single chip locally running both graphics and AI — with no constant internet connection.</div>
+        </div>
+        <div class="sc-years">1999 — 2026</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-domain identity">
+          <div class="sc-dlabel">HARDWARE</div>
+          <div class="sc-dtech lang-ar">CPU + GPU + NPU على شريحة واحدة</div>
+          <div class="sc-dtech lang-en">CPU + GPU + NPU on one chip</div>
+          <div class="sc-dnote lang-ar">Intel Core Ultra (ديسمبر 2023) يجمع للمرة الأولى ثلاث وحدات معالجة متخصصة على شريحة حاسوب محمول واحدة — Intel تُطلق رسمياً على هذا التقارب اسم "عصر حاسوب AI".</div>
+          <div class="sc-dnote lang-en">Intel Core Ultra (December 2023) combines, for the first time, three specialized processing units on a single laptop chip — Intel officially names this convergence the "AI PC era."</div>
+        </div>
+        <div class="sc-domain spatial">
+          <div class="sc-dlabel">GPU/AI TIMELINE</div>
+          <div class="sc-dtech lang-ar">GeForce 256 (1999) → Core Ultra (2023)</div>
+          <div class="sc-dtech lang-en">GeForce 256 (1999) → Core Ultra (2023)</div>
+          <div class="sc-dnote lang-ar">NVIDIA تُطلق GeForce 256 (11 أكتوبر 1999)، مُسوَّقة بجرأة كـ"أول GPU في العالم" — المصطلح نفسه يولد في هذا الإعلان. بعد 24 عاماً بالضبط، Intel Core Ultra يضيف بُعداً ثالثاً: NPU مخصص للذكاء الاصطناعي، يوازيه Apple Neural Engine على شرائح M — تقارب كامل يجمع الرسوميات والذكاء في جهاز واحد يُحمل باليد.</div>
+          <div class="sc-dnote lang-en">NVIDIA launches the GeForce 256 (October 11, 1999), boldly marketed as "the world's first GPU" — the term itself is born in this announcement. Exactly 24 years later, Intel Core Ultra adds a third dimension: a dedicated NPU for AI, paralleled by Apple's Neural Engine on M-series chips — a full convergence uniting graphics and intelligence in one handheld device.</div>
+        </div>
+      </div>
+      <div class="sc-foot lang-ar">🎬 <b>مشهد مفتوح:</b> من صندوق IBM بمعالج 4.77 ميجاهرتز عام 1981، إلى شريحة تُدير نموذج ذكاء اصطناعي كاملاً بلا إنترنت في حقيبة عام 2026 — 45 عاماً تفصل بين المشهدين، ومسار المسارات الخمسة التي بدأت منفصلة تماماً التقت أخيراً في جهاز واحد.</div>
+      <div class="sc-foot lang-en">🎬 <b>Open scene:</b> from an IBM box with a 4.77 MHz processor in 1981, to a chip running a complete AI model with no internet in a bag in 2026 — 45 years separate the two scenes, and the five tracks that began entirely separate have finally converged in one device.</div>
+    </div>
+
+  </div>
+
+  <!-- ============ FULL CHRONOLOGICAL TIMELINE ============ -->
+  <div class="story-header full-timeline">
+    <div class="eyebrow">APPENDIX // <span class="lang-ar">مرجع سريع بكل التواريخ</span><span class="lang-en">A quick reference for every date</span></div>
+    <h2 class="lang-ar">الخط الزمني الكامل: كل الأحداث بالترتيب</h2>
+    <h2 class="lang-en">The Full Timeline: Every Event, in Order</h2>
+  </div>
+
+  <div class="tl-list lang-ar">
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1981</div><div class="tl-text"><b>IBM 5150</b> — المعالج Intel 8088، ونظام PC-DOS/MS-DOS من Microsoft الناشئة</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1981</div><div class="tl-text"><b>Osborne 1</b> — أول "محمول" تسويقياً، 11 كيلوغراماً بلا بطارية داخلية</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1982</div><div class="tl-text"><b>GRiD Compass</b> — أول تصميم Clamshell حقيقي، حكومي/عسكري فقط</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1984</div><div class="tl-text">🖱️ <b>Apple Macintosh</b> — أول فأرة وواجهة رسومية ناجحتين تجارياً على نطاق واسع</div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1991</div><div class="tl-text">🐧 <b>لينوس تورفالدز</b> يعلن نواة Linux؛ Apple تُطلق <b>PowerBook</b> الأول</div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1992</div><div class="tl-text">⌨️ أمر <b>"win"</b> يفتح Windows 3.1؛ IBM تُطلق <b>ThinkPad</b> الأول</div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot"></div><div class="tl-year">1993</div><div class="tl-text">تأسيس <b>Red Hat</b></div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">1995</div><div class="tl-text"><b>Windows 95</b> يُطلق عالمياً؛ <b>Red Hat Linux</b> أول توزيعة تجارية رسمية</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">1998</div><div class="tl-text"><b>Windows 98</b> — دعم USB وDVD وFAT32</div></div>
+    <div class="tl-item tl-c7"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1999</div><div class="tl-text">🎮 <b>NVIDIA GeForce 256</b> — "أول GPU في العالم"، المصطلح نفسه يولد</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2000</div><div class="tl-text"><b>Windows 2000</b> (فبراير) و<b>Windows ME</b> (يونيو)</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2001</div><div class="tl-text"><b>Windows XP</b> يوحّد خطي المستهلكين والمؤسسات؛ <b>Mac OS X</b> على نواة Unix</div></div>
+    <div class="tl-item tl-c6"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">2008</div><div class="tl-text">✉️ <b>ماك بوك إير</b> من مظروف — يُعيد تعريف معيار النحافة عالمياً</div></div>
+    <div class="tl-item tl-c7"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">2023</div><div class="tl-text">🧠 <b>Intel Core Ultra</b> — أول CPU+GPU+NPU على شريحة حاسوب محمول واحدة</div></div>
+  </div>
+
+  <div class="tl-list lang-en">
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1981</div><div class="tl-text">The <b>IBM 5150</b> — Intel 8088 processor, PC-DOS/MS-DOS from a startup called Microsoft</div></div>
+    <div class="tl-item tl-c1"><div class="tl-dot"></div><div class="tl-year">1981</div><div class="tl-text">The <b>Osborne 1</b> — the first marketed "portable," 11kg with no internal battery</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot"></div><div class="tl-year">1982</div><div class="tl-text">The <b>GRiD Compass</b> — the first true clamshell design, government/military only</div></div>
+    <div class="tl-item tl-c2"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1984</div><div class="tl-text">🖱️ <b>Apple Macintosh</b> — the first widely commercially successful mouse & GUI</div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1991</div><div class="tl-text">🐧 <b>Linus Torvalds</b> announces the Linux kernel; Apple launches the first <b>PowerBook</b></div></div>
+    <div class="tl-item tl-c3"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1992</div><div class="tl-text">⌨️ The <b>"win"</b> command opens Windows 3.1; IBM launches the first <b>ThinkPad</b></div></div>
+    <div class="tl-item tl-c5"><div class="tl-dot"></div><div class="tl-year">1993</div><div class="tl-text"><b>Red Hat</b> is founded</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">1995</div><div class="tl-text"><b>Windows 95</b> launches globally; <b>Red Hat Linux</b>'s first official commercial distribution</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">1998</div><div class="tl-text"><b>Windows 98</b> — USB, DVD, and FAT32 support</div></div>
+    <div class="tl-item tl-c7"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">1999</div><div class="tl-text">🎮 <b>NVIDIA GeForce 256</b> — "the world's first GPU," the term itself is born</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2000</div><div class="tl-text"><b>Windows 2000</b> (February) and <b>Windows ME</b> (June)</div></div>
+    <div class="tl-item tl-c4"><div class="tl-dot"></div><div class="tl-year">2001</div><div class="tl-text"><b>Windows XP</b> unifies consumer & enterprise lines; <b>Mac OS X</b> on a Unix kernel</div></div>
+    <div class="tl-item tl-c6"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">2008</div><div class="tl-text">✉️ The <b>MacBook Air</b> from an envelope — redefines the global thinness standard</div></div>
+    <div class="tl-item tl-c7"><div class="tl-dot" style="background:var(--gold);"></div><div class="tl-year" style="color:var(--gold);">2023</div><div class="tl-text">🧠 <b>Intel Core Ultra</b> — the first CPU+GPU+NPU on a single laptop chip</div></div>
+  </div>
+
+  <div class="tl-legend lang-ar">
+    <div class="li"><span class="sw" style="background:var(--c0);"></span>جذور ما قبل المعيار</div>
+    <div class="li"><span class="sw" style="background:var(--c1);"></span>IBM PC والمعيار الصناعي</div>
+    <div class="li"><span class="sw" style="background:var(--c2);"></span>ماكنتوش وثورة الفأرة</div>
+    <div class="li"><span class="sw" style="background:var(--c3);"></span>DOS ثم أمر win</div>
+    <div class="li"><span class="sw" style="background:var(--c4);"></span>عصر Windows الاستهلاكي</div>
+    <div class="li"><span class="sw" style="background:var(--c5);"></span>لينكس يولد</div>
+    <div class="li"><span class="sw" style="background:var(--c6);"></span>من المكتب إلى الحضن</div>
+    <div class="li"><span class="sw" style="background:var(--c7);"></span>تقارب GPU/AI</div>
+  </div>
+  <div class="tl-legend lang-en">
+    <div class="li"><span class="sw" style="background:var(--c0);"></span>Roots Before the Standard</div>
+    <div class="li"><span class="sw" style="background:var(--c1);"></span>The IBM PC & Industry Standard</div>
+    <div class="li"><span class="sw" style="background:var(--c2);"></span>Macintosh & the Mouse Revolution</div>
+    <div class="li"><span class="sw" style="background:var(--c3);"></span>DOS, Then the win Command</div>
+    <div class="li"><span class="sw" style="background:var(--c4);"></span>The Consumer Windows Era</div>
+    <div class="li"><span class="sw" style="background:var(--c5);"></span>Linux Is Born</div>
+    <div class="li"><span class="sw" style="background:var(--c6);"></span>From the Desk to Your Lap</div>
+    <div class="li"><span class="sw" style="background:var(--c7);"></span>GPU/AI Convergence</div>
+  </div>
+
+
+  <!-- ============ REFERENCE: CINEBENCH LAPTOP CPU BENCHMARK ============ -->
+  <style>
+    .ref-section{margin-top:56px;}
+    .bench-table-wrap{margin-top:22px;overflow-x:auto;border:1px solid var(--panel-line);border-radius:10px;}
+    table.bench-table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:12.5px;}
+    table.bench-table th{background:var(--panel);color:var(--gold);padding:10px 14px;text-align:center;border-bottom:1px solid var(--panel-line);}
+    table.bench-table td{padding:9px 14px;text-align:center;color:var(--ink-dim);border-bottom:1px solid rgba(255,255,255,0.03);}
+    table.bench-table tr:nth-child(even){background:rgba(255,255,255,0.015);}
+    table.bench-table td.dev{color:var(--ink);font-weight:700;text-align:right;font-family:'Cairo',sans-serif;font-size:12px;}
+    table.bench-table td.score{color:var(--gold);font-weight:700;}
+    .bench-note{font-size:12px;color:var(--ink-dim);margin-top:10px;line-height:1.8;}
+    .integrity-warn{
+      margin-top:22px;display:flex;gap:14px;align-items:flex-start;
+      background:rgba(224,99,122,0.08);border:1.5px solid #e0637a;border-radius:12px;padding:16px 20px;
+    }
+    .integrity-warn .iicon{font-size:24px;flex-shrink:0;}
+    .integrity-warn .itext{font-size:13px;font-weight:700;color:var(--ink);line-height:1.8;}
+    .integrity-warn .itext small{display:block;font-weight:400;color:var(--ink-dim);font-size:11.5px;margin-top:6px;line-height:1.85;}
+  </style>
+
+  <div class="story-header ref-section">
+    <div class="eyebrow">REFERENCE // <span class="lang-ar">ملحق مرجعي — قياس أداء المعالج المحمول</span><span class="lang-en">A reference appendix — measuring laptop CPU performance</span></div>
+    <h2 class="lang-ar">Cinebench: أداة القياس العالمية لأداء الحاسوب المحمول</h2>
+    <h2 class="lang-en">Cinebench: The Global Standard for Laptop Performance Testing</h2>
+  </div>
+
+  <div class="terms-note lang-ar">
+    ℹ️ <b>ما هو Cinebench؟</b> أداة مجانية من شركة Maxon الألمانية، تعتمد محرك عرض Cinema 4D لقياس أداء المعالج فعلياً عبر تصيير مشهد ثلاثي الأبعاد معقّد — لا اختبار تركيبي مجرّد، بل عبء عمل حقيقي مشابه لما يواجهه محترفو التصميم والمونتاج.
+    <br><br>
+    <b>معياران أساسيان:</b>
+    <br>• <b>Single Core</b> — أداء نواة معالج واحدة؛ يعكس سرعة الاستجابة في المهام غير القابلة للتوزيع على أنوية متعددة.
+    <br>• <b>Multi Core</b> — أداء كل الأنوية مجتمعة؛ المعيار الأهم لمهام العرض والتصيير والترميز الثقيلة.
+    <br><br>
+    <b>منهجية مهمة:</b> النتائج <b>لا تُقارَن بين إصدارات Cinebench المختلفة</b> (R15، R20، R23، 2024) — كل إصدار يستخدم مشهد تصيير مختلفاً تماماً، فنفس المعالج قد يُسجّل رقمين مختلفين جذرياً بين نسختين. جدول هذه الصفحة يعتمد حصراً على <b>Cinebench 2024</b>، وضع "التوصيل بالكهرباء" (لا البطارية) للحصول على أعلى أداء ممكن.
+  </div>
+  <div class="terms-note lang-en">
+    ℹ️ <b>What is Cinebench?</b> A free tool from Germany's Maxon, using the Cinema 4D rendering engine to measure actual processor performance by rendering a complex 3D scene — not an abstract synthetic test, but a real workload similar to what design and editing professionals face.
+    <br><br>
+    <b>Two core metrics:</b>
+    <br>• <b>Single Core</b> — a single processor core's performance; reflects responsiveness in tasks that can't be spread across multiple cores.
+    <br>• <b>Multi Core</b> — all cores combined; the more important metric for heavy rendering, compositing, and encoding tasks.
+    <br><br>
+    <b>An important methodology note:</b> results <b>cannot be compared across different Cinebench versions</b> (R15, R20, R23, 2024) — each version uses an entirely different rendering scene, so the same processor may score radically different numbers between versions. This page's table relies exclusively on <b>Cinebench 2024</b>, in "Plugged In" mode (not battery), for the highest possible performance.
+  </div>
+
+  <div class="bench-note lang-ar">📅 مصدر البيانات: قاعدة اختبارات مستقلة (Jarrod's Tech) — آخر تحديث للصفحة المصدر: يوليو 2026. الترتيب حسب نتيجة Multi Core.</div>
+  <div class="bench-note lang-en">📅 Data source: an independent testing database (Jarrod's Tech) — source page last updated: July 2026. Sorted by Multi Core score.</div>
+
+  <div class="bench-table-wrap">
+    <table class="bench-table">
+      <tr><th>#</th><th><span class="lang-ar">الحاسوب المحمول والمعالج</span><span class="lang-en">Laptop &amp; CPU</span></th><th><span class="lang-ar">Multi Core</span><span class="lang-en">Multi Core</span></th></tr>
+      <tr><td>1</td><td class="dev">Lenovo Legion 9i (2025) — Core Ultra 9 275HX</td><td class="score">2,251</td></tr>
+      <tr><td>2</td><td class="dev">Alienware 18 Area-51 (2025) — Core Ultra 9 275HX</td><td class="score">2,246</td></tr>
+      <tr><td>3</td><td class="dev">ASUS Strix G16 (2025) — Core Ultra 9 275HX</td><td class="score">2,232</td></tr>
+      <tr><td>4</td><td class="dev">Alienware 16 Area-51 (2025) — Core Ultra 9 275HX</td><td class="score">2,224</td></tr>
+      <tr><td>5</td><td class="dev">Lenovo Legion Pro 7i (2025) — Core Ultra 9 275HX</td><td class="score">2,218</td></tr>
+      <tr><td>6</td><td class="dev">ASUS Strix Scar 16 (2025) — Core Ultra 9 275HX</td><td class="score">2,201</td></tr>
+      <tr><td>7</td><td class="dev">Razer Blade 18 (2025) — Core Ultra 9 275HX</td><td class="score">2,185</td></tr>
+      <tr><td>8</td><td class="dev">MSI Titan 18 HX (2025) — Core Ultra 9 285HX</td><td class="score">2,162</td></tr>
+      <tr><td>9</td><td class="dev">ASUS Strix Scar 18 (2025) — Core Ultra 9 275HX</td><td class="score">2,159</td></tr>
+      <tr><td>10</td><td class="dev">Lenovo Legion Pro 5i (2025) — Core Ultra 9 275HX</td><td class="score">2,121</td></tr>
+    </table>
+  </div>
+  <div class="bench-note lang-ar">🔎 <b>ملاحظة لافتة:</b> كل الحواسيب العشرة الأعلى أداءً تعتمد شريحة Intel Core Ultra 9 275HX/285HX نفسها تقريباً — الفروقات بينها عائدة بالكامل لتصميم التبريد وإدارة الطاقة لدى كل مُصنِّع، لا للمعالج ذاته. هذا يؤكد ما ذكرناه في مسار "تقارب GPU/AI" أعلاه: الشريحة موحّدة، والتنفيذ الفيزيائي حول التبريد هو الفارق الحقيقي.</div>
+  <div class="bench-note lang-en">🔎 <b>A notable observation:</b> all ten top-performing laptops use nearly the same Intel Core Ultra 9 275HX/285HX chip — the differences between them come entirely from each manufacturer's cooling design and power management, not the processor itself. This confirms what's noted in the "GPU/AI Convergence" track above: the chip is unified; the physical implementation around cooling is the real differentiator.</div>
+
+  <div class="integrity-warn">
+    <div class="iicon">⚠️</div>
+    <div class="itext lang-ar">
+      تنبيه منهجي: لماذا لا توجد فضائح تلاعب هنا كما في AnTuTu؟
+      <small>Cinebench يقيس أداءً فعلياً عبر مهمة تصيير حقيقية تستغرق دقائق، لا اختباراً قصيراً يسهل على الشركات "التعرّف عليه" وتعزيزه مؤقتاً كما حدث مع AnTuTu — هذا يجعله أصعب نسبياً على التلاعب المباشر. لكنه يبقى حساساً جداً لجودة تبريد الجهاز: نفس المعالج قد يُسجّل نتيجة أقل بنسبة 20% أو أكثر في هيكل رقيق سيئ التبريد مقارنة بهيكل ألعاب ضخم.</small>
+    </div>
+    <div class="itext lang-en">
+      Methodology note: why no manipulation scandals here like AnTuTu?
+      <small>Cinebench measures actual performance through a real rendering task lasting minutes, not a short test companies can easily "detect" and temporarily boost as happened with AnTuTu — this makes it relatively harder to directly manipulate. But it remains highly sensitive to a device's cooling quality: the same processor may score 20% lower or more in a thin, poorly cooled chassis compared to a bulky gaming chassis.</small>
+    </div>
+  </div>
+
+</div>
+
+<style>
+  .sources-section{margin:56px auto 0;max-width:1400px;padding:28px clamp(16px,4vw,40px) 0;border-top:1px solid var(--panel-line);}
+  .sources-title{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:12px;letter-spacing:2px;margin-bottom:16px;}
+  .sources-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 28px;}
+  @media(max-width:760px){.sources-list{grid-template-columns:1fr;}}
+  .sources-list a{color:var(--ink-dim);font-size:13px;text-decoration:none;display:flex;align-items:baseline;gap:8px;padding:9px 0;border-bottom:1px dashed var(--panel-line);}
+  .sources-list a:hover{color:var(--gold);}
+  .sources-list .snum{color:var(--gold-dim);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;}
+  .foresight-link{margin:22px auto 40px;max-width:1400px;display:flex;padding:16px clamp(16px,4vw,40px);border-radius:10px;border:1px solid #8b5cf655;background:rgba(139,92,246,0.07);align-items:center;justify-content:center;gap:10px;text-decoration:none;transition:background .2s;}
+  .foresight-link:hover{background:rgba(139,92,246,0.14);}
+  .foresight-link span{color:#b39ffa;font-weight:700;font-size:14px;}
+</style>
+
+<div class="sources-section">
+  <div class="sources-title">SOURCES // <span class="lang-ar">مصادر ومراجع هذه الصفحة</span><span class="lang-en">Sources &amp; References for This Page</span></div>
+  <div class="sources-list">
+    <a href="https://www.computerhistory.org/timeline/1981/" target="_blank" rel="noopener"><span class="snum">01</span><span class="lang-ar">IBM PC 1981 — Computer History Museum (الرسمي)</span><span class="lang-en">The 1981 IBM PC — Computer History Museum (Official)</span></a>
+    <a href="https://www.mac-history.net/apple-macintosh/" target="_blank" rel="noopener"><span class="snum">02</span><span class="lang-ar">تاريخ ماكنتوش الكامل — Mac History</span><span class="lang-en">The Full Macintosh History — Mac History</span></a>
+    <a href="https://www.computerhope.com/history/windows.htm" target="_blank" rel="noopener"><span class="snum">03</span><span class="lang-ar">تاريخ إصدارات Windows الكامل — ComputerHope</span><span class="lang-en">The Full Windows Version History — ComputerHope</span></a>
+    <a href="https://en.wikipedia.org/wiki/Linux_kernel" target="_blank" rel="noopener"><span class="snum">04</span><span class="lang-ar">نواة لينكس — التوثيق التاريخي الكامل</span><span class="lang-en">The Linux Kernel — Full Historical Documentation</span></a>
+    <a href="https://www.computerhope.com/history/laptop.htm" target="_blank" rel="noopener"><span class="snum">05</span><span class="lang-ar">تاريخ الحاسوب المحمول الكامل — ComputerHope</span><span class="lang-en">The Full Laptop History — ComputerHope</span></a>
+    <a href="https://videocardz.com/newz/nvidia-geforce-256-the-worlds-first-gpu-marks-its-25th-anniversary" target="_blank" rel="noopener"><span class="snum">06</span><span class="lang-ar">الذكرى الـ25 لأول GPU — VideoCardz</span><span class="lang-en">The First GPU's 25th Anniversary — VideoCardz</span></a>
+    <a href="https://9to5mac.com/2023/01/15/macbook-air-history-and-future-anniversary/" target="_blank" rel="noopener"><span class="snum">07</span><span class="lang-ar">تاريخ ماك بوك إير الكامل — 9to5Mac</span><span class="lang-en">The Full MacBook Air History — 9to5Mac</span></a>
+    <a href="https://en.wikipedia.org/wiki/Meteor_Lake" target="_blank" rel="noopener"><span class="snum">08</span><span class="lang-ar">Intel Core Ultra / Meteor Lake — التوثيق التقني</span><span class="lang-en">Intel Core Ultra / Meteor Lake — Technical Documentation</span></a>
+    <a href="https://jarrods.tech/laptop-cpu-performance-in-cinebench-2024/" target="_blank" rel="noopener"><span class="snum">09</span><span class="lang-ar">قاعدة بيانات Cinebench 2024 للحواسيب المحمولة (المصدر المباشر للجدول)</span><span class="lang-en">The Laptop Cinebench 2024 Database (the direct source for the table)</span></a>
+  </div>
+</div>
+
+<a class="foresight-link" href="future-horizon-blueprint.html">
+  <span class="lang-ar">🔮 استكشف الأفق المستقبلي المرتبط بهذا الموضوع ←</span>
+  <span class="lang-en">🔮 Explore the related future horizon ←</span>
+</a>
+<div class="cl-overlay" id="clOverlay">
+  <div class="cl-card">
+    <div class="cl-eyebrow">BEYOND#COMPUTER_SCIENCE // CONTENT RIGHTS</div>
+    <div class="cl-title">تحقق الصلاحية لإلغاء القفل</div>
+    <div class="cl-sub">النسخ والتحديد مقيّدان افتراضياً لحماية المحتوى. أدخل بيانات الدخول لإلغاء القيد لهذه الجلسة فقط.</div>
+    <form id="clForm">
+      <label for="clUser">اسم المستخدم</label>
+      <input type="text" id="clUser" autocomplete="username" required>
+      <label for="clPass">كلمة المرور</label>
+      <input type="password" id="clPass" autocomplete="current-password" required>
+      <div class="cl-actions">
+        <button type="submit" class="cl-submit" id="clSubmitBtn">تحقق</button>
+        <button type="button" class="cl-cancel" id="clCancelBtn">إلغاء</button>
+      </div>
+    </form>
+    <div class="cl-error" id="clError"></div>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('[data-en-title]').forEach(function(el){
+    el.dataset.arTitle = el.title;
+  });
+
+  function applyLang(lang){
+    document.body.classList.toggle("is-en", lang === "en");
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === "en" ? "ltr" : "rtl";
+    document.getElementById("btnAr").classList.toggle("active", lang === "ar");
+    document.getElementById("btnEn").classList.toggle("active", lang === "en");
+    document.querySelectorAll('[data-en-title]').forEach(function(el){
+      el.title = lang === 'en' ? el.dataset.enTitle : el.dataset.arTitle;
+    });
+    try { localStorage.setItem("bcs_lang", lang); } catch (e) {}
+  }
+  document.getElementById("btnAr").addEventListener("click", () => applyLang("ar"));
+  document.getElementById("btnEn").addEventListener("click", () => applyLang("en"));
+  let savedLang = "ar";
+  try { savedLang = localStorage.getItem("bcs_lang") || "ar"; } catch (e) {}
+  applyLang(savedLang);
+
+  document.addEventListener('copy', function(e){ if(sessionStorage.getItem('bcs_copy_unlock')!=='1') e.preventDefault(); });
+  document.addEventListener('cut', function(e){ if(sessionStorage.getItem('bcs_copy_unlock')!=='1') e.preventDefault(); });
+
+  (function(){
+    var clOverlay = document.getElementById('clOverlay');
+    var clForm = document.getElementById('clForm');
+    var clUser = document.getElementById('clUser');
+    var clPass = document.getElementById('clPass');
+    var clError = document.getElementById('clError');
+    var clSubmitBtn = document.getElementById('clSubmitBtn');
+    var clCancelBtn = document.getElementById('clCancelBtn');
+    var copyLockBtn = document.getElementById('copyLockBtn');
+
+    function isUnlocked(){
+      try { return sessionStorage.getItem('bcs_copy_unlock') === '1'; } catch(e){ return false; }
+    }
+    function applyCopyLockUI(){
+      if(!copyLockBtn) return;
+      if(isUnlocked()){
+        copyLockBtn.textContent = '🔓';
+        copyLockBtn.title = 'المحتوى متاح للنسخ — اضغط لإعادة القفل';
+        copyLockBtn.classList.add('cl-active');
+        document.body.classList.add('copy-unlocked');
+      } else {
+        copyLockBtn.textContent = '🔒';
+        copyLockBtn.title = 'حقوق المحتوى — اضغط لإلغاء القيد';
+        copyLockBtn.classList.remove('cl-active');
+        document.body.classList.remove('copy-unlocked');
+      }
+    }
+    function openClModal(){
+      if(!clOverlay) return;
+      clError.style.display = 'none';
+      clUser.value = ''; clPass.value = '';
+      clOverlay.classList.add('open');
+      setTimeout(function(){ clUser.focus(); }, 50);
+    }
+    function closeClModal(){ if(clOverlay) clOverlay.classList.remove('open'); }
+
+    if(copyLockBtn){
+      copyLockBtn.addEventListener('click', function(){
+        if(isUnlocked()){
+          try { sessionStorage.removeItem('bcs_copy_unlock'); } catch(e){}
+          applyCopyLockUI();
+        } else {
+          openClModal();
+        }
+      });
+    }
+    if(clCancelBtn) clCancelBtn.addEventListener('click', closeClModal);
+    if(clOverlay) clOverlay.addEventListener('click', function(e){ if(e.target===clOverlay) closeClModal(); });
+
+    if(clForm){
+      clForm.addEventListener('submit', function(e){
+        e.preventDefault();
+        clError.style.display = 'none';
+        clSubmitBtn.disabled = true;
+        var userInput = clUser.value.trim();
+        var passInput = clPass.value.trim();
+        fetch('access.txt', { cache: 'no-store' }).then(function(res){
+          if(!res.ok) throw new Error('fetch-failed');
+          return res.text();
+        }).then(function(text){
+          var validUser='', validPass='';
+          text.split('\n').forEach(function(line){
+            var l = line.trim();
+            if(l.indexOf('username=')===0) validUser = l.slice('username='.length).trim();
+            if(l.indexOf('password=')===0) validPass = l.slice('password='.length).trim();
+          });
+          if(userInput===validUser && passInput===validPass){
+            try { sessionStorage.setItem('bcs_copy_unlock','1'); } catch(e){}
+            closeClModal();
+            applyCopyLockUI();
+          } else {
+            clError.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة.';
+            clError.style.display = 'block';
+          }
+          clSubmitBtn.disabled = false;
+        }).catch(function(){
+          clError.textContent = 'تعذّر التحقق من بيانات الدخول.';
+          clError.style.display = 'block';
+          clSubmitBtn.disabled = false;
+        });
+      });
+    }
+
+    applyCopyLockUI();
+  })();
+</script>
+</body>
+</html>
